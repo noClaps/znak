@@ -149,8 +149,33 @@ export default function parser(input: string): Token[] {
       continue;
     }
 
-    // Default paragraph
-    buffer += lines[lineCursor];
+    // HTML Elements
+    if (lines[lineCursor].match(/^\<.+\>/gm)) {
+      // Dump buffer as paragraph
+      if (buffer) {
+        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        buffer = "";
+      }
+
+      while (!lines[lineCursor - 1].match(/<\/.+\>$/gm)) {
+        buffer += `${lines[lineCursor]}\n`;
+        lineCursor++;
+      }
+
+      tokens.push({ element: "raw", contents: [buffer] });
+      buffer = "";
+      continue;
+    }
+
+    // Paragraph
+    while (lines[lineCursor]) {
+      buffer += lines[lineCursor];
+      lineCursor++;
+    }
+    if (buffer) {
+      tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+    }
+    buffer = "";
   }
 
   if (buffer) {

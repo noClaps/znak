@@ -194,11 +194,13 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         contents: inlineFormatting(linkTitle),
         attributes: { href: linkURL },
       });
+      continue;
     }
 
     // Default
     buffer += line[cursor];
   }
+
   if (buffer) {
     contents.push(buffer);
   }
