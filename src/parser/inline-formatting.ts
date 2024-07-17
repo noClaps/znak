@@ -197,6 +197,27 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       continue;
     }
 
+    // Inline math ($)
+    if (line[cursor] === "$" && line.slice(cursor).includes("$")) {
+      // Push existing buffer and reset buffer
+      if (buffer) {
+        contents.push(buffer);
+        buffer = "";
+      }
+
+      let math = "";
+      for (cursor++; line[cursor] !== "$"; cursor++) {
+        math += line[cursor];
+      }
+      contents.push({
+        element: "math",
+        contents: [math],
+        attributes: { "data-display": "inline" },
+      });
+
+      continue;
+    }
+
     // Default
     buffer += line[cursor];
   }

@@ -167,6 +167,27 @@ export default function parser(input: string): Token[] {
       continue;
     }
 
+    // Math block
+    if (lines[lineCursor] === "$$") {
+      // Dump buffer as paragraph
+      if (buffer) {
+        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        buffer = "";
+      }
+
+      for (lineCursor++; lines[lineCursor] !== "$$"; lineCursor++) {
+        buffer += lines[lineCursor];
+      }
+
+      tokens.push({
+        element: "math",
+        contents: [buffer],
+        attributes: { "data-display": "block" },
+      });
+      buffer = "";
+      continue;
+    }
+
     // Paragraph
     while (lines[lineCursor]) {
       buffer += lines[lineCursor];
