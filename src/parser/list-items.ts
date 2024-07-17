@@ -1,4 +1,4 @@
-import parser from ".";
+import parser from "./index";
 
 export function orderedListItems(input: string): Token[] {
   const lines = input
