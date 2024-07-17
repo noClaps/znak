@@ -5,6 +5,7 @@ import images from "./images";
 import codeBlock from "./code-block";
 import { orderedListItems, unorderedListItems } from "./list-items";
 import tables from "./tables";
+import GitHubSlugger from "github-slugger";
 
 /**
  * A function that parser the input markdown string. The entire markdown string should be passed into this function.
@@ -15,6 +16,7 @@ export default function parser(input: string): Token[] {
   const lines = input.trim().split("\n");
   const tokens: Token[] = [];
   let buffer = "";
+  const slugger = new GitHubSlugger();
 
   for (let lineCursor = 0; lineCursor < lines.length; lineCursor++) {
     // Headings
@@ -25,7 +27,7 @@ export default function parser(input: string): Token[] {
         buffer = "";
       }
 
-      tokens.push(headings(lines[lineCursor]));
+      tokens.push(headings(lines[lineCursor], slugger));
       continue;
     }
 

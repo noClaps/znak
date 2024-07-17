@@ -1,8 +1,10 @@
 {
-  "name": "znak",
-  "module": "index.ts",
+  "name": "@noclaps/znak",
+  "version": "0.1.1",
+  "module": "./index.ts",
   "type": "module",
   "devDependencies": {
+    "@changesets/cli": "^2.27.7",
     "@types/bun": "^1.1.6",
     "@types/katex": "^0.16.7"
   },
@@ -10,7 +12,9 @@
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "test": "bun test/test.ts"
+    "test": "bun test/test.ts",
+    "release": "bun release.ts && changeset publish",
+    "changeset": "changeset"
   },
   "dependencies": {
     "github-slugger": "^2.0.0",

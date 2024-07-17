@@ -1,6 +1,0 @@
-{
-  "$schema": "https://jsr.io/schema/config-file.v1.json",
-  "name": "@noclaps/znak",
-  "version": "0.1.1",
-  "exports": "./index.ts"
-}

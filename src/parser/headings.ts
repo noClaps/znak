@@ -1,7 +1,7 @@
 import inlineFormatting from "./inline-formatting";
-import GitHubSlugger from "github-slugger";
+import type GitHubSlugger from "github-slugger";
 
-export default function headings(line: string): Token {
+export default function headings(line: string, slugger: GitHubSlugger): Token {
   let level = 0;
   let cursor = 0;
   let char = line[cursor];
@@ -13,7 +13,7 @@ export default function headings(line: string): Token {
   }
 
   const content = line.slice(cursor + 1);
-  const slug = new GitHubSlugger().slug(content);
+  const slug = slugger.slug(content);
   return {
     element: `h${level}`,
     contents: inlineFormatting(content),
