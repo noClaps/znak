@@ -3,9 +3,16 @@ import inlineFormatting from "./inline-formatting";
 export default function images(line: string): Token {
   let imageTitle = "";
   let imageURL = "";
+  let isInsideNestedBlock = false;
   // Start with cursor inside image title
   for (let cursor = 2; cursor < line.length; cursor++) {
-    while (line[cursor] !== "]") {
+    while (line[cursor] !== "]" || isInsideNestedBlock) {
+      if (line[cursor] === "[") {
+        isInsideNestedBlock = true;
+      }
+      if (line[cursor] === "]" && isInsideNestedBlock) {
+        isInsideNestedBlock = false;
+      }
       imageTitle += line[cursor];
       cursor++;
     }
