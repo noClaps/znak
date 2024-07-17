@@ -1,5 +1,5 @@
 {
-  "name": "markdown-parser",
+  "name": "znak",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {

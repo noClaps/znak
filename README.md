@@ -1,4 +1,4 @@
-# markdown-parser
+# Znak
 
 A basic Markdown-like parser and renderer.
 

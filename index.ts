@@ -1,11 +1,18 @@
 import parser from "./src/parser";
 import renderer from "./src/renderer";
-import test from "./test/test.md" with { type: "text" };
 
-const parserOutput = parser(test);
-Bun.write("./test/syntax-tree.json", JSON.stringify(parserOutput));
-const renderedHTML = await Promise.all(
-  parserOutput.map(async (po) => await renderer(po)),
-).then((ro) => ro.join(""));
+class Znak {
+  #md: string;
+  constructor(input: string) {
+    this.#md = input;
+  }
 
-Bun.write("./test/output.html", renderedHTML);
+  async renderToHTML() {
+    const parserOutput = parser(this.#md);
+    return await Promise.all(
+      parserOutput.map(async (po) => await renderer(po)),
+    ).then((ro) => ro.join(""));
+  }
+}
+
+export default Znak;
