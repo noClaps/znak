@@ -3,12 +3,17 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "^1.1.6"
+    "@types/bun": "^1.1.6",
+    "@types/katex": "^0.16.7"
   },
   "peerDependencies": {
     "typescript": "^5.5.3"
   },
   "scripts": {
     "parse": "bun index.ts"
+  },
+  "dependencies": {
+    "katex": "^0.16.11",
+    "shiki": "^1.10.3"
   }
 }
