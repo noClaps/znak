@@ -3,7 +3,7 @@ import { codeToHtml, type BundledTheme } from "shiki";
 
 export default async function renderer(
   token: Token,
-  codeTheme: BundledTheme = "github-dark",
+  codeTheme: BundledTheme,
 ): Promise<string> {
   switch (token.element) {
     case "math": {
@@ -48,7 +48,7 @@ export default async function renderer(
         if (typeof item === "string") {
           contents += item;
         } else {
-          contents += await renderer(item);
+          contents += await renderer(item, codeTheme);
         }
       }
 
