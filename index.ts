@@ -7,7 +7,7 @@ class Znak {
     this.#md = input;
   }
 
-  async renderToHTML() {
+  async renderToHTML(): Promise<string> {
     const parserOutput = parser(this.#md);
     return await Promise.all(
       parserOutput.map(async (po) => await renderer(po)),
