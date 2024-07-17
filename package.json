@@ -10,9 +10,10 @@
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "parse": "bun index.ts"
+    "test": "bun test/test.ts"
   },
   "dependencies": {
+    "github-slugger": "^2.0.0",
     "katex": "^0.16.11",
     "shiki": "^1.10.3"
   }
