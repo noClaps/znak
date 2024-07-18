@@ -167,7 +167,11 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     }
 
     // Links
-    if (line[cursor] === "[" && line.slice(cursor).match(/^\[.*\]\(.+\)/gm)) {
+    if (
+      line[cursor] === "[" &&
+      line.slice(cursor).includes("](") &&
+      line.slice(cursor).includes(")")
+    ) {
       // Push existing buffer and reset buffer
       if (buffer) {
         contents.push(buffer);

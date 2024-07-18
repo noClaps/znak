@@ -62,7 +62,7 @@ export default function parser(input: string): Token[] {
     }
 
     // Images
-    if (lines[lineCursor].match(/^!\[.*\]\(.+\)/gm)) {
+    if (lines[lineCursor].startsWith("![") && lines[lineCursor].endsWith(")")) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
@@ -177,7 +177,7 @@ export default function parser(input: string): Token[] {
 
       while (
         !lines[lineCursor - 1] ||
-        !lines[lineCursor - 1].match(/<\/.+\>$/gm)
+        !lines[lineCursor].match(/<\/(\w|-)+>$/gm)
       ) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
