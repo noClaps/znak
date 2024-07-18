@@ -1,5 +1,12 @@
 # @noclaps/znak
 
+## 0.4.2
+
+### Patch Changes
+
+- b94825f: Fix regex security issues
+- 8300f6d: Remove CHANGELOG.md from JSR output
+
 ## 0.4.1
 
 ### Patch Changes
