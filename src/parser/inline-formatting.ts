@@ -197,8 +197,11 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       continue;
     }
 
-    // Inline math ($)
-    if (line[cursor] === "$" && line.slice(cursor).includes("$")) {
+    // Inline math ($$)
+    if (
+      line[cursor] + line[cursor + 1] === "$$" &&
+      line.slice(cursor).includes("$$")
+    ) {
       // Push existing buffer and reset buffer
       if (buffer) {
         contents.push(buffer);
@@ -206,7 +209,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       let math = "";
-      for (cursor++; line[cursor] !== "$"; cursor++) {
+      for (cursor += 2; line[cursor] + line[cursor + 1] !== "$$"; cursor++) {
         math += line[cursor];
       }
       contents.push({
@@ -215,6 +218,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         attributes: { "data-display": "inline" },
       });
 
+      cursor++;
       continue;
     }
 

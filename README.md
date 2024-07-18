@@ -232,7 +232,7 @@ _italic text_
 
 [link text](https://zerolimits.dev)
 
-Inline $x+y$ math
+Inline $$x+y$$ math
 ```
 
 Outputs:
