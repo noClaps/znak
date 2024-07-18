@@ -245,7 +245,7 @@ _italic text_
 
 ~~strikethrough~~
 
-==highlight==
+<mark>highlight</mark>
 
 <sub>sub</sub>script
 
