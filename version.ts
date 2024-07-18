@@ -10,7 +10,6 @@ Bun.write(
       include: [
         "src/**/*.ts",
         "bun.lockb",
-        "CHANGELOG.md",
         "index.ts",
         "LICENSE",
         "package.json",
