@@ -108,7 +108,7 @@ export default function parser(input: string): Token[] {
       }
 
       while (
-        lines[lineCursor].startsWith("   ") ||
+        (lines[lineCursor] && lines[lineCursor].startsWith("   ")) ||
         lines[lineCursor].match(/^\d+\./gm) ||
         lines[lineCursor] === ""
       ) {
@@ -133,7 +133,7 @@ export default function parser(input: string): Token[] {
       }
 
       while (
-        lines[lineCursor].startsWith("- ") ||
+        (lines[lineCursor] && lines[lineCursor].startsWith("- ")) ||
         lines[lineCursor].startsWith("  ") ||
         lines[lineCursor] === ""
       ) {
