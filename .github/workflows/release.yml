@@ -12,6 +12,7 @@ permissions:
   issues: write
   pull-requests: write
   packages: write
+  id-token: write
 
 jobs:
   release:
@@ -31,6 +32,6 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          version: bun version
+          publish: bun publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
