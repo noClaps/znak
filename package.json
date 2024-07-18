@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "bun test/test.ts",
-    "publish": "changeset tag && bun version.ts && bunx jsr publish",
+    "publish": "changeset tag && bun version.ts && bunx jsr publish --allow-dirty",
     "changeset": "changeset"
   },
   "dependencies": {
