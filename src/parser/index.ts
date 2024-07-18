@@ -108,12 +108,16 @@ export default function parser(input: string): Token[] {
       }
 
       while (
-        lines[lineCursor] &&
-        lines[lineCursor].match(/^(\d+\. |\s{3,}).+/gm)
+        lines[lineCursor].startsWith("   ") ||
+        lines[lineCursor].match(/^\d+\./gm) ||
+        lines[lineCursor] === ""
       ) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
+
+      // Move back a line to start with the next element
+      lineCursor--;
 
       tokens.push({ element: "ol", contents: orderedListItems(buffer) });
       buffer = "";
@@ -121,17 +125,24 @@ export default function parser(input: string): Token[] {
     }
 
     // Unordered list [-, 2 space indentation]
-    if (lines[lineCursor].match(/^- /gm)) {
+    if (lines[lineCursor].startsWith("- ")) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
         buffer = "";
       }
 
-      while (lines[lineCursor] && lines[lineCursor].match(/^(- |\s{2,}).+/gm)) {
+      while (
+        lines[lineCursor].startsWith("- ") ||
+        lines[lineCursor].startsWith("  ") ||
+        lines[lineCursor] === ""
+      ) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
+
+      // Move back a line to start with the next element
+      lineCursor--;
 
       tokens.push({ element: "ul", contents: unorderedListItems(buffer) });
       buffer = "";

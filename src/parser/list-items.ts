@@ -10,8 +10,8 @@ export function orderedListItems(input: string): Token[] {
     contents: parser(
       line
         .split("\n")
-        .map((l) => (l.match(/^\s{3}/gm) ? l.replace(/^\s{3}/gm, "") : l))
-        .join("\n"),
+        .map((l) => (l.startsWith("   ") ? l.replace("   ", "") : l))
+        .join("\n")
     ),
   }));
   return tokens;
@@ -27,8 +27,8 @@ export function unorderedListItems(input: string): Token[] {
     contents: parser(
       line
         .split("\n")
-        .map((l) => (l.match(/^\s{2}/gm) ? l.replace(/^\s{2}/gm, "") : l))
-        .join("\n"),
+        .map((l) => (l.startsWith("  ") ? l.replace("  ", "") : l))
+        .join("\n")
     ),
   }));
   return tokens;
