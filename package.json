@@ -12,7 +12,6 @@
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "test": "bun test/test.ts",
     "publish": "changeset tag && bun version.ts && bunx jsr publish --allow-dirty",
     "changeset": "changeset"
   },
