@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - .changeset/**
   workflow_dispatch:
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
