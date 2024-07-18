@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.3.0
+
+### Minor Changes
+
+- 8035bb6: Change inline math symbol from `# @noclaps/znak to `$` since a single dollar sign was causing issues when the intention was to display an actual money amount
+
 ## 0.2.0
 
 ### Minor Changes
