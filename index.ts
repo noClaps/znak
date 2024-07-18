@@ -21,11 +21,12 @@ export default class Znak {
   /**
    * @param [input] The input text to be converted to HTML. This can be from a
    * Markdown file as long as the syntax is supported by Znak. See the
-   * [documentation](https://github.com/noClaps/znak) for the supported syntax.
+   * [documentation](https://github.com/noClaps/znak#syntax) for the supported
+   * syntax.
    *
    * @param [codeTheme] The theme for code blocks. This is set to "github-dark"
    * by default, and can be set to any of the syntax highlighting themes
-   * included in [Shiki](https://shiki.style).
+   * included in [Shiki](https://shiki.style/themes).
    */
   constructor(input: string, codeTheme: BundledTheme = "github-dark") {
     this.#md = input;
