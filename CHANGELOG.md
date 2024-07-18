@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.4.0
+
+### Minor Changes
+
+- 1c8556d: Add `headings()` method to return the list of headings in the input file
+
 ## 0.3.0
 
 ### Minor Changes
