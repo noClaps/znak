@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "bun test/test.ts",
-    "release": "bun release.ts && changeset publish",
+    "version": "bun release.ts && changeset version",
     "changeset": "changeset"
   },
   "dependencies": {
