@@ -247,9 +247,9 @@ _italic text_
 
 ==highlight==
 
-~sub~script
+<sub>sub</sub>script
 
-^super^script
+<sup>super</sup>script
 
 [link text](https://zerolimits.dev)
 
