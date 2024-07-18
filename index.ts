@@ -7,7 +7,7 @@ import renderer from "./src/renderer";
  * of Markdown syntax, and is stricter and more opinionated. It has features
  * like syntax highlighting, KaTeX support, and heading IDs built-in.
  *
- * Usage:
+ * @example
  * ```ts
  * const text = "# Hello World";
  * const outputHTML = await new Znak(text).renderToHTML();
@@ -34,11 +34,12 @@ export default class Znak {
 
   /**
    * The method that outputs HTML for the given input text.
+   * @returns An HTML string created from the input text.
    */
   async renderToHTML(): Promise<string> {
     const parserOutput = parser(this.#md);
     return await Promise.all(
-      parserOutput.map(async (po) => await renderer(po, this.#codeTheme)),
+      parserOutput.map(async (po) => await renderer(po, this.#codeTheme))
     ).then((ro) => ro.join(""));
   }
 }
