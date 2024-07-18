@@ -81,10 +81,15 @@ export default function parser(input: string): Token[] {
         buffer = "";
       }
 
+      const backtickCount = (lines[lineCursor].match("`") || []).length;
+
       // Move inside code block
       buffer += `${lines[lineCursor]}\n`;
       lineCursor++;
-      while (lines[lineCursor] && lines[lineCursor] !== "```") {
+      while (
+        lines[lineCursor] &&
+        lines[lineCursor] !== "`".repeat(backtickCount)
+      ) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
