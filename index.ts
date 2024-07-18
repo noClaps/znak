@@ -43,4 +43,24 @@ export default class Znak {
       parserOutput.map(async (po) => await renderer(po, this.#codeTheme))
     ).then((ro) => ro.join(""));
   }
+
+  /**
+   * A method that returns the headings in the given input text.
+   * @returns A list of headings in the given input text.
+   */
+  headings(): Heading[] {
+    const parserOutput = parser(this.#md);
+    const headings: Heading[] = [];
+
+    for (const token of parserOutput) {
+      if (!token.element.match(/h\d/)) continue;
+      headings.push({
+        depth: +token.element.slice(-1),
+        slug: token.attributes!.id,
+        title: token.contents[0].toString(),
+      });
+    }
+
+    return headings;
+  }
 }
