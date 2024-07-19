@@ -170,16 +170,17 @@ export default function parser(input: string): Token[] {
     }
 
     // HTML Elements
-    if (lines[lineCursor].match(/^\<.+\>/gm)) {
+    if (lines[lineCursor].startsWith("<")) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
         buffer = "";
       }
 
-      while (lines[lineCursor] && !lines[lineCursor].match(/<\/(\w|-)+>$/gm)) {
-        buffer += `${lines[lineCursor]}\n`;
+      buffer += `${lines[lineCursor]}\n`;
+      while (!lines[lineCursor].includes("</")) {
         lineCursor++;
+        buffer += `${lines[lineCursor]}\n`;
       }
 
       tokens.push({ element: "raw", contents: [buffer] });
