@@ -1,5 +1,18 @@
 # @noclaps/znak
 
+## 0.4.3
+
+### Patch Changes
+
+- b44735d: Fix brackets in link text
+- d142e02: Fix code blocks closing on single backtick
+- cedc2e3: Fix links with parentheses inside them
+- 5d4c1b7: Fix code blocks
+- eaf1224: Fix bug with HTML elements parsing
+- 07fd878: Fix code blocks parsing
+- 8c984fb: Fix HTML elements not working (again)
+- 70aedab: Fix parsing condition for lists
+
 ## 0.4.2
 
 ### Patch Changes
