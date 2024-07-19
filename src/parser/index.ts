@@ -207,10 +207,7 @@ export default function parser(input: string): Token[] {
     }
 
     // Paragraph
-    while (lines[lineCursor]) {
-      buffer += lines[lineCursor];
-      lineCursor++;
-    }
+    buffer += lines[lineCursor];
     if (buffer) {
       tokens.push({ element: "p", contents: inlineFormatting(buffer) });
     }
