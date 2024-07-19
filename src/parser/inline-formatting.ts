@@ -179,11 +179,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       // Move cursor inside link title
-      cursor++;
       let linkTitle = "";
-      while (line[cursor] !== "]") {
+      let isInsideNestedBlock = false;
+      for (cursor++; line[cursor] !== "]" || isInsideNestedBlock; cursor++) {
+        if (line[cursor] === "[") {
+          isInsideNestedBlock = true;
+        }
+        if (line[cursor] === "]") {
+          isInsideNestedBlock = false;
+        }
         linkTitle += line[cursor];
-        cursor++;
       }
 
       // Move cursor inside link URL
