@@ -175,10 +175,7 @@ export default function parser(input: string): Token[] {
         buffer = "";
       }
 
-      while (
-        !lines[lineCursor - 1] ||
-        !lines[lineCursor].match(/<\/(\w|-)+>$/gm)
-      ) {
+      while (lines[lineCursor] && !lines[lineCursor].match(/<\/(\w|-)+>$/gm)) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
