@@ -23,6 +23,8 @@ A parser for a Markdown-like markup language that supports a smaller subset of M
    const text = "# Hello World"; // Your text to be rendered.
    const renderedHTML = await new Znak(text).renderToHTML();
    // <h1 id="hello-world">Hello World</h1>
+   const headings = new Znak(text).headings();
+   // [{depth: 1, slug: "hello-world", title: "Hello World"}]
    ```
 
 You will have to include the KaTeX CSS file somewhere in your page for it to render correctly. See [KaTeX browser usage](https://katex.org/docs/browser) for instructions.
@@ -42,6 +44,7 @@ code {
 class Znak {
   constructor(input: string, codeTheme: BundledTheme = "github-dark");
   async renderToHTML(): Promise<string>;
+  headings(): Heading[];
 }
 ```
 
