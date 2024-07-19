@@ -86,10 +86,7 @@ export default function parser(input: string): Token[] {
       // Move inside code block
       buffer += `${lines[lineCursor]}\n`;
       lineCursor++;
-      while (
-        lines[lineCursor] &&
-        lines[lineCursor] !== "`".repeat(backtickCount)
-      ) {
+      while (!lines[lineCursor].endsWith("`".repeat(backtickCount))) {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
