@@ -232,6 +232,8 @@ _italic text_
 
 [link text](https://zerolimits.dev)
 
+[link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)
+
 Inline $$x+y$$ math
 ```
 
@@ -252,6 +254,8 @@ _italic text_
 <sup>super</sup>script
 
 [link text](https://zerolimits.dev)
+
+[link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)
 
 Inline $x+y$ math
 
