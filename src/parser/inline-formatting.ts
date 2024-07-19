@@ -187,11 +187,18 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       // Move cursor inside link URL
-      cursor += 2;
       let linkURL = "";
-      while (line[cursor] !== ")") {
+      let isInsideLink = false;
+      for (cursor += 2; line[cursor] !== ")" || isInsideLink; cursor++) {
+        if (line[cursor] === "<") {
+          isInsideLink = true;
+          continue;
+        }
+        if (line[cursor] === ">") {
+          isInsideLink = false;
+          continue;
+        }
         linkURL += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "a",
