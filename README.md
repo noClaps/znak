@@ -204,7 +204,7 @@ This will be output exactly as-is, without any formatting applied to it.
 
 ### Math block
 
-Both math blocks and inline math follow $LaTeX$ syntax.
+Both math blocks and inline math follow $\LaTeX$ syntax.
 
 ```md
 $$
