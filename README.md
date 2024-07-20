@@ -1,6 +1,6 @@
 # Znak
 
-A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like syntax highlighting, KaTeX, and heading IDs built-in.
+A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like [Shiki](https://shiki.style) syntax highlighting, [KaTeX](https://katex.org), and heading IDs built-in.
 
 ## Usage
 
@@ -181,8 +181,8 @@ Outputs:
 ### Tables
 
 ```md
-| title | description | heading 1 | heading 2 |
-| :--- | :---: | ---: | --- |
+| title        |  description   |     heading 1 | heading 2              |
+| :----------- | :------------: | ------------: | ---------------------- |
 | left-aligned | center-aligned | right-aligned | default text alignment |
 ```
 
@@ -203,6 +203,8 @@ Content here
 This will be output exactly as-is, without any formatting applied to it.
 
 ### Math block
+
+Both math blocks and inline math follow $LaTeX$ syntax.
 
 ```md
 $$
