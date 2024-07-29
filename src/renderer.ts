@@ -3,7 +3,7 @@ import { codeToHtml, type BundledTheme } from "shiki";
 
 export default async function renderer(
   token: Token,
-  codeTheme: BundledTheme,
+  codeTheme: BundledTheme
 ): Promise<string> {
   switch (token.element) {
     case "math": {
@@ -28,7 +28,7 @@ export default async function renderer(
           lang: token.attributes["data-lang"] || "plaintext",
           theme: codeTheme,
           structure: "inline",
-        },
+        }
       )}</code>`;
     }
 
@@ -39,8 +39,8 @@ export default async function renderer(
     default: {
       const attributeList = token.attributes
         ? Object.keys(token.attributes)
-            .map((key) => `${key}="${token.attributes![key]}"`)
-            .join(" ")
+            .map((key) => ` ${key}="${token.attributes![key]}"`)
+            .join("")
         : "";
       let contents: string = "";
 
@@ -52,7 +52,7 @@ export default async function renderer(
         }
       }
 
-      return `<${token.element} ${attributeList}>${contents}</${token.element}>`;
+      return `<${token.element}${attributeList}>${contents}</${token.element}>`;
     }
   }
 }
