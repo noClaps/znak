@@ -122,7 +122,7 @@ Outputs:
 
 Outputs:
 
-![alt text](https://picsum.photos/300)
+<figure><img src="https://picsum.photos/300" alt="alt text"></img><figcaption>alt text</figcaption></figure>
 
 ### Code block
 
