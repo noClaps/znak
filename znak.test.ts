@@ -196,7 +196,6 @@ This is some text in a note.
 ).toBe(
   `<div class="note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`
 );
-
 expect(
   await test(`
 ::: quote A QUOTE {href="https://zerolimits.dev"}
@@ -206,7 +205,6 @@ This is some text in a quote.
 ).toBe(
   `<div class="quote"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`
 );
-
 expect(
   await test(`
 ::: quote A QUOTE {href="https://zerolimits.dev" class="bold"}
@@ -214,9 +212,8 @@ This is some text in a quote.
 :::
   `)
 ).toBe(
-  `<div class="quote"><p class=\"quote-heading\"><b class="bold"><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`
+  `<div class="quote" class="bold"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`
 );
-
 expect(
   await test(`
 ::: warning
@@ -225,6 +222,19 @@ This is some text in a warning.
   `)
 ).toBe(
   `<div class="warning"><p class=\"warning-heading\"><b>WARNING</b></p><p>This is some text in a warning.</p></div>`
+);
+expect(
+  await test(`
+:::: block1 This is the outer container
+You can have some text here.
+
+::: block2 This is the inner container
+This can have some more text.
+:::
+::::
+`)
+).toBe(
+  `<div class="block1"><p class="block1-heading"><b>This is the outer container</b></p><p>You can have some text here.</p><div class="block2"><p class="block2-heading"><b>This is the inner container</b></p><p>This can have some more text.</p></div></div>`
 );
 
 // Misc

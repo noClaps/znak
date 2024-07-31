@@ -269,3 +269,93 @@ These can also be used inside most other text blocks, such as inside blockquotes
 ```md
 > This is quite a **bold** statement!
 ```
+
+### Containers
+
+You can add custom containers like:
+
+```md
+::: quote
+This is a quote container
+:::
+```
+
+```html
+<div class="quote">
+  <p class="quote-heading"><b>QUOTE</b></p>
+  <p>This is a quote container</p>
+</div>
+```
+
+These can also have a custom title:
+
+```md
+::: note Note title
+This is a note container
+:::
+```
+
+```html
+<div class="note">
+  <p class="note-heading"><b>Note title</b></p>
+  <p>This is a note container</p>
+</div>
+```
+
+and additional attributes:
+
+```md
+::: warning Warning title {id="an-id"}
+This is a warning container
+:::
+```
+
+```html
+<div class="warning" id="an-id">
+  <p class="warning-heading"><b>Warning title</b></p>
+  <p>This is a warning container</p>
+</div>
+```
+
+If an `href` attribute is provided, the title automatically becomes a link:
+
+```md
+::: quote A wise quote {href="https://zerolimits.dev"}
+The title above becomes [a wise quote](https://zerolimits.dev).
+
+Oh yeah, you can use **formatting** _inside_ here. Everything works.
+:::
+```
+
+```html
+<div class="quote" id="an-id">
+  <p class="quote-heading"><b><a href="https://zerolimits.dev">A wise quote</a></b></p>
+  <p>The title above becomes <a href="https://zerolimits.dev">a wise quote</a></p>
+  <p>Oh yeah, you can use <strong>formatting</strong> <em>inside</em> here. Everything works.</p>
+</div>
+```
+
+You can also nest containers by adding more colons to the outside one.
+
+```md
+:::: block1 This is the outer container
+You can have some text here.
+
+::: block2 This is the inner container
+This can have some more text.
+:::
+::::
+```
+
+```html
+<div class="block1">
+  <p class="block1-heading"><b>This is the outer container</b></p>
+  <p>You can have some text here.</p>
+  <div class="block2">
+    <p class="block2-heading"><b>This is the inner container</b></p>
+    <p>This can have some more text.</p>
+  </div>
+</div>
+```
+
+These are not styled by default and should be styled by you.

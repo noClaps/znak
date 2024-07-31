@@ -6,6 +6,7 @@ import codeBlock from "./code-block";
 import { orderedListItems, unorderedListItems } from "./list-items";
 import tables from "./tables";
 import GitHubSlugger from "github-slugger";
+import containers from "./containers";
 
 /**
  * A function that parser the input markdown string. The entire markdown string should be passed into this function.
@@ -202,8 +203,36 @@ export default function parser(input: string): Token[] {
       continue;
     }
 
+    // Container
+    if (lines[lineCursor].startsWith(":::")) {
+      // Dump buffer as paragraph
+      if (buffer) {
+        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        buffer = "";
+      }
+
+      const colonCount = (lines[lineCursor].split(" ")[0].match(/:/g) || [])
+        .length;
+
+      // Move inside container
+      buffer += `${lines[lineCursor]}\n`;
+      for (
+        lineCursor++;
+        lines[lineCursor] !== ":".repeat(colonCount);
+        lineCursor++
+      ) {
+        buffer += `${lines[lineCursor]}\n`;
+      }
+
+      tokens.push(containers(buffer));
+      buffer = "";
+      continue;
+    }
+
     // Paragraph
-    buffer += lines[lineCursor];
+    for (lineCursor; lines[lineCursor]; lineCursor++) {
+      buffer += lines[lineCursor];
+    }
     if (buffer) {
       tokens.push({ element: "p", contents: inlineFormatting(buffer) });
     }
