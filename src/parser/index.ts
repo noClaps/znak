@@ -97,7 +97,7 @@ export default function parser(input: string): Token[] {
     }
 
     // Ordered list (1., 3 space indentation)
-    if (lines[lineCursor].match(/^\d+\. /gm)) {
+    if (lines[lineCursor].match(/^\d+\. /m)) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
@@ -105,9 +105,7 @@ export default function parser(input: string): Token[] {
       }
 
       while (
-        (lines[lineCursor] &&
-          (lines[lineCursor].startsWith("   ") ||
-            lines[lineCursor].match(/^\d+\./gm))) ||
+        (lines[lineCursor] && lines[lineCursor].match(/^(\d+\. |   |\t)/m)) ||
         lines[lineCursor] === ""
       ) {
         buffer += `${lines[lineCursor]}\n`;
@@ -131,9 +129,7 @@ export default function parser(input: string): Token[] {
       }
 
       while (
-        (lines[lineCursor] &&
-          (lines[lineCursor].startsWith("- ") ||
-            lines[lineCursor].startsWith("  "))) ||
+        (lines[lineCursor] && lines[lineCursor].match(/^(- |  |\t)/m)) ||
         lines[lineCursor] === ""
       ) {
         buffer += `${lines[lineCursor]}\n`;

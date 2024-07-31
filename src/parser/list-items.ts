@@ -5,15 +5,21 @@ export function orderedListItems(input: string): Token[] {
     .split(/^\d+\. /gm)
     .filter((l) => l)
     .map((l) => l.trim());
-  const tokens: Token[] = lines.map((line) => ({
-    element: "li",
-    contents: parser(
-      line
-        .split("\n")
-        .map((l) => (l.startsWith("   ") ? l.replace("   ", "") : l))
-        .join("\n")
-    ),
-  }));
+
+  const tokens: Token[] = lines.map((line) => {
+    const segments = line.split("\n");
+    if (segments.length === 1) return { element: "li", contents: parser(line) };
+
+    return {
+      element: "li",
+      contents: parser(
+        `${segments[0]}\n\n${segments
+          .slice(1)
+          .map((l) => l.replace(/^(   |\t)/m, ""))
+          .join("\n")}`
+      ),
+    };
+  });
   return tokens;
 }
 
@@ -22,14 +28,19 @@ export function unorderedListItems(input: string): Token[] {
     .split(/^- /gm)
     .filter((l) => l)
     .map((l) => l.trim());
-  const tokens: Token[] = lines.map((line) => ({
-    element: "li",
-    contents: parser(
-      line
-        .split("\n")
-        .map((l) => (l.startsWith("  ") ? l.replace("  ", "") : l))
-        .join("\n")
-    ),
-  }));
+  const tokens: Token[] = lines.map((line) => {
+    const segments = line.split("\n");
+    if (segments.length === 1) return { element: "li", contents: parser(line) };
+
+    return {
+      element: "li",
+      contents: parser(
+        `${segments[0]}\n\n${segments
+          .slice(1)
+          .map((l) => l.replace(/^(  |\t)/m, ""))
+          .join("\n")}`
+      ),
+    };
+  });
   return tokens;
 }
