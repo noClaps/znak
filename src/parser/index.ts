@@ -49,7 +49,7 @@ export default function parser(input: string): Token[] {
     }
 
     // Horizontal rule
-    if (lines[lineCursor] === "---") {
+    if (lines[lineCursor].match(/^-{3,}$/m)) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
