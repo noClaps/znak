@@ -7,10 +7,11 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       buffer += line[++cursor];
       continue;
     }
+
     // Bold (**)
     if (
-      line[cursor] + line[cursor + 1] === "**" &&
-      line.slice(cursor + 2).includes("**")
+      (line[cursor] + line[cursor + 1]).match(/(\*{2}|_{2})/) &&
+      line.slice(cursor + 2).match(/(\*{2}|_{2})/)
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
@@ -18,12 +19,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         buffer = "";
       }
 
+      const delimiter = line[cursor] + line[cursor + 1];
+
       // Move cursor to inside bold block
-      cursor += 2;
       let boldBuffer = "";
-      while (line[cursor] + line[cursor + 1] !== "**") {
+      for (
+        cursor += 2;
+        line[cursor] + line[cursor + 1] !== delimiter;
+        cursor++
+      ) {
         boldBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "strong",
@@ -34,19 +39,18 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     }
 
     // Italics (_)
-    if (line[cursor] === "_" && line.slice(cursor + 1).includes("_")) {
+    if (line[cursor].match(/[\*_]/) && line.slice(cursor + 1).match(/[\*_]/)) {
       // Push existing buffer and reset buffer
       if (buffer) {
         contents.push(buffer);
         buffer = "";
       }
 
+      const delimiter = line[cursor];
       // Move cursor to inside italic block
-      cursor++;
       let italicBuffer = "";
-      while (line[cursor] !== "_") {
+      for (cursor++; line[cursor] !== delimiter; cursor++) {
         italicBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "em",
@@ -64,11 +68,9 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       // Move cursor to inside code block
-      cursor++;
       let codeBuffer = "";
-      while (line[cursor] !== "`") {
+      for (cursor++; line[cursor] !== "`"; cursor++) {
         codeBuffer += line[cursor];
-        cursor++;
       }
       // Code content is not formatted
       contents.push({ element: "code", contents: [codeBuffer] });
@@ -87,11 +89,9 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       // Move cursor to inside bold block
-      cursor += 2;
       let strikethroughBuffer = "";
-      while (line[cursor] + line[cursor + 1] !== "~~") {
+      for (cursor += 2; line[cursor] + line[cursor + 1] !== "~~"; cursor++) {
         strikethroughBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "s",
@@ -113,11 +113,9 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       // Move cursor to inside bold block
-      cursor += 2;
       let highlightBuffer = "";
-      while (line[cursor] + line[cursor + 1] !== "==") {
+      for (cursor += 2; line[cursor] + line[cursor + 1] !== "=="; cursor++) {
         highlightBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "mark",
@@ -135,12 +133,10 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         buffer = "";
       }
 
-      // Move cursor to inside italic block
-      cursor++;
+      // Move cursor to inside subscript block
       let subscriptBuffer = "";
-      while (line[cursor] !== "~") {
+      for (cursor++; line[cursor] !== "~"; cursor++) {
         subscriptBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "sub",
@@ -157,12 +153,10 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         buffer = "";
       }
 
-      // Move cursor to inside italic block
-      cursor++;
+      // Move cursor to inside superscript block
       let superscriptBuffer = "";
-      while (line[cursor] !== "^") {
+      for (cursor++; line[cursor] !== "^"; cursor++) {
         superscriptBuffer += line[cursor];
-        cursor++;
       }
       contents.push({
         element: "sup",
