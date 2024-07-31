@@ -2,6 +2,11 @@ export default function inlineFormatting(line: string): (string | Token)[] {
   const contents: (string | Token)[] = [];
   let buffer = "";
   for (let cursor = 0; cursor < line.length; cursor++) {
+    // Escape characters
+    if (line[cursor] === "\\") {
+      buffer += line[++cursor];
+      continue;
+    }
     // Bold (**)
     if (
       line[cursor] + line[cursor + 1] === "**" &&
