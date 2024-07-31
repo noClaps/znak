@@ -1,5 +1,21 @@
 # @noclaps/znak
 
+## 0.5.0
+
+### Minor Changes
+
+- 077bb71: Add support for both underscores (\_) and asterisks (\*) for bold and italic
+- f7cb857: Add containers
+- 5223327: Add support for escape characters
+- 2ae9a6e: Add support for tabs in lists
+- 9a187bf: Add support for horizontal rules longer than 3 dashes (-)
+
+### Patch Changes
+
+- 8f2e0bd: Properly trim blockquote lines
+- 5889718: Fix issue with space after element tagname
+- 4457e7b: Add tests
+
 ## 0.4.3
 
 ### Patch Changes
