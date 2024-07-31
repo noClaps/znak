@@ -1,12 +1,12 @@
-import inlineFormatting from "./inline-formatting";
-import headings from "./headings";
-import blockquotes from "./blockquotes";
-import images from "./images";
-import codeBlock from "./code-block";
-import { orderedListItems, unorderedListItems } from "./list-items";
-import tables from "./tables";
 import GitHubSlugger from "github-slugger";
-import containers from "./containers";
+import blockquotes from "./blockquotes.ts";
+import codeBlock from "./code-block.ts";
+import containers from "./containers.ts";
+import headings from "./headings.ts";
+import images from "./images.ts";
+import inlineFormatting from "./inline-formatting.ts";
+import { orderedListItems, unorderedListItems } from "./list-items.ts";
+import tables from "./tables.ts";
 
 /**
  * A function that parser the input markdown string. The entire markdown string should be passed into this function.

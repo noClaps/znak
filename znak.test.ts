@@ -1,4 +1,4 @@
-import Znak from ".";
+import Znak from "./index.ts";
 import katex from "katex";
 import { expect } from "bun:test";
 import { codeToHtml } from "shiki";

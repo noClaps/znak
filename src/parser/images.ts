@@ -1,4 +1,4 @@
-import inlineFormatting from "./inline-formatting";
+import inlineFormatting from "./inline-formatting.ts";
 
 export default function images(line: string): Token {
   let imageTitle = "";

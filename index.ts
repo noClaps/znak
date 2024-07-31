@@ -1,6 +1,6 @@
 import type { BundledTheme } from "shiki";
-import parser from "./src/parser";
-import renderer from "./src/renderer";
+import parser from "./src/parser/index.ts";
+import renderer from "./src/renderer.ts";
 
 /**
  * A parser for a Markdown-like markup language that supports a smaller subset

@@ -1,4 +1,4 @@
-import inlineFormatting from "./inline-formatting";
+import inlineFormatting from "./inline-formatting.ts";
 
 export default function tables(input: string): Token {
   const lines = input.trim().split("\n");

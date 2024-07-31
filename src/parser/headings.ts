@@ -1,5 +1,5 @@
-import inlineFormatting from "./inline-formatting";
 import type GitHubSlugger from "github-slugger";
+import inlineFormatting from "./inline-formatting.ts";
 
 export default function headings(line: string, slugger: GitHubSlugger): Token {
   let level = 0;

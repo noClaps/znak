@@ -1,4 +1,4 @@
-import parser from ".";
+import parser from "./index.ts";
 
 export default function containers(input: string): Token {
   const lines = input.split("\n");
