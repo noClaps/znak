@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.6.0
+
+### Minor Changes
+
+- 42ab604: Set code block theme colors by default. Previously this needed to be done by the user.
+
 ## 0.5.1
 
 ### Patch Changes
