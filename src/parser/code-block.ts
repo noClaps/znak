@@ -4,13 +4,8 @@ export default function codeBlock(input: string): Token {
   const code = lines.slice(1, -1).join("\n").trim();
 
   return {
-    element: "pre",
-    contents: [
-      {
-        element: "code",
-        contents: [code],
-        attributes: { "data-lang": language },
-      },
-    ],
+    element: "code-block",
+    contents: [code],
+    attributes: { "data-lang": language },
   };
 }

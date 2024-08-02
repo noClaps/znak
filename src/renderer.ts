@@ -7,29 +7,16 @@ export default async function renderer(
 ): Promise<string> {
   switch (token.element) {
     case "math": {
-      // Math
       return katex.renderToString(token.contents[0].toString(), {
         displayMode: token.attributes!["data-display"] === "block",
       });
     }
 
-    case "code": {
-      if (!token.attributes) {
-        // Inline code or no language set
-        return `<code>${token.contents}</code>`;
-      }
-
-      const attributeList = Object.keys(token.attributes)
-        .map((key) => `${key}="${token.attributes![key]}"`)
-        .join(" ");
-      return `<code ${attributeList}>${await codeToHtml(
-        token.contents[0].toString(),
-        {
-          lang: token.attributes["data-lang"] || "plaintext",
-          theme: codeTheme,
-          structure: "inline",
-        }
-      )}</code>`;
+    case "code-block": {
+      return await codeToHtml(token.contents[0].toString(), {
+        lang: token.attributes!["data-lang"] || "plaintext",
+        theme: codeTheme,
+      });
     }
 
     case "container": {

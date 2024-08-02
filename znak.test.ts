@@ -92,11 +92,10 @@ expect(await test(`![alt text](https://picsum.photos/300)`)).toBe(
 
 // Code block
 expect(await test('```py\nprint("Your code here")\n```')).toBe(
-  `<pre><code data-lang="py">${await codeToHtml(`print("Your code here")`, {
+  await codeToHtml(`print("Your code here")`, {
     lang: "py",
     theme: "github-dark",
-    structure: "inline",
-  })}</code></pre>`
+  })
 );
 
 // Lists

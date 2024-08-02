@@ -18,6 +18,6 @@
   "dependencies": {
     "github-slugger": "^2.0.0",
     "katex": "^0.16.11",
-    "shiki": "^1.12.0"
+    "shiki": "^1.12.1"
   }
 }
