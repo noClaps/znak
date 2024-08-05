@@ -72,6 +72,9 @@ expect(
 expect(await test("Inline $$x+y$$ math")).toBe(
   `<p>Inline ${katex.renderToString("x+y")} math</p>`
 );
+expect(await test("This is a **line** with multiple **bold** words")).toBe(
+  "<p>This is a <strong>line</strong> with multiple <strong>bold</strong> words</p>"
+);
 
 // Blockquotes
 expect(await test(`> This is text in a blockquote`)).toBe(
@@ -182,7 +185,7 @@ $$
 
 // Escaped characters
 expect(await test("This is \\**escaped bold**")).toBe(
-  "<p>This is *<em>escaped bold</em>*</p>"
+  "<p>This is **escaped bold**</p>"
 );
 
 // Containers
@@ -246,6 +249,18 @@ string
 expect(await test("> This is quite a **bold** statement!")).toBe(
   "<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>"
 );
+
 // Empty blocks
 expect(await test(":::")).toBe("<p>:::</p>");
 expect(await test("```")).toBe("<p>```</p>");
+expect(await test("****")).toBe("<p>****</p>");
+expect(await test("__")).toBe("<p>__</p>");
+expect(await test("$$$$")).toBe("<p>$$$$</p>");
+expect(await test("[](https://zerolimits.dev)")).toBe(
+  "<p>[](https://zerolimits.dev)</p>"
+);
+expect(await test("[link]()")).toBe("<p>[link]()</p>");
+expect(await test("^^")).toBe("<p>^^</p>");
+expect(await test("~~")).toBe("<p>~~</p>");
+expect(await test("====")).toBe("<p>====</p>");
+expect(await test("~~~~")).toBe("<p>~~~~</p>");

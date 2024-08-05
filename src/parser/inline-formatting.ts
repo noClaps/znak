@@ -24,10 +24,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor += 2; line[cursor] + line[cursor + 1] !== "**"; cursor++) {
         boldBuffer += line[cursor];
       }
-      contents.push({
-        element: "strong",
-        contents: inlineFormatting(boldBuffer),
-      });
+
+      if (!boldBuffer) {
+        contents.push("****");
+      } else {
+        contents.push({
+          element: "strong",
+          contents: inlineFormatting(boldBuffer),
+        });
+      }
+
       cursor++;
       continue;
     }
@@ -45,10 +51,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor++; line[cursor] !== "_"; cursor++) {
         italicBuffer += line[cursor];
       }
-      contents.push({
-        element: "em",
-        contents: inlineFormatting(italicBuffer),
-      });
+
+      if (!italicBuffer) {
+        contents.push("__");
+      } else {
+        contents.push({
+          element: "em",
+          contents: inlineFormatting(italicBuffer),
+        });
+      }
+
       continue;
     }
 
@@ -65,8 +77,14 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor++; line[cursor] !== "`"; cursor++) {
         codeBuffer += line[cursor];
       }
-      // Code content is not formatted
-      contents.push({ element: "code", contents: [codeBuffer] });
+
+      if (!codeBuffer) {
+        contents.push("``");
+      } else {
+        // Code content is not formatted
+        contents.push({ element: "code", contents: [codeBuffer] });
+      }
+
       continue;
     }
 
@@ -86,10 +104,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor += 2; line[cursor] + line[cursor + 1] !== "~~"; cursor++) {
         strikethroughBuffer += line[cursor];
       }
-      contents.push({
-        element: "s",
-        contents: inlineFormatting(strikethroughBuffer),
-      });
+
+      if (!strikethroughBuffer) {
+        contents.push("~~~~");
+      } else {
+        contents.push({
+          element: "s",
+          contents: inlineFormatting(strikethroughBuffer),
+        });
+      }
+
       cursor++;
       continue;
     }
@@ -110,10 +134,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor += 2; line[cursor] + line[cursor + 1] !== "=="; cursor++) {
         highlightBuffer += line[cursor];
       }
-      contents.push({
-        element: "mark",
-        contents: inlineFormatting(highlightBuffer),
-      });
+
+      if (!highlightBuffer) {
+        contents.push("====");
+      } else {
+        contents.push({
+          element: "mark",
+          contents: inlineFormatting(highlightBuffer),
+        });
+      }
+
       cursor++;
       continue;
     }
@@ -131,10 +161,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor++; line[cursor] !== "~"; cursor++) {
         subscriptBuffer += line[cursor];
       }
-      contents.push({
-        element: "sub",
-        contents: inlineFormatting(subscriptBuffer),
-      });
+
+      if (!subscriptBuffer) {
+        contents.push("~~");
+      } else {
+        contents.push({
+          element: "sub",
+          contents: inlineFormatting(subscriptBuffer),
+        });
+      }
+
       continue;
     }
 
@@ -151,10 +187,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor++; line[cursor] !== "^"; cursor++) {
         superscriptBuffer += line[cursor];
       }
-      contents.push({
-        element: "sup",
-        contents: inlineFormatting(superscriptBuffer),
-      });
+
+      if (!superscriptBuffer) {
+        contents.push("^^");
+      } else {
+        contents.push({
+          element: "sup",
+          contents: inlineFormatting(superscriptBuffer),
+        });
+      }
+
       continue;
     }
 
@@ -197,11 +239,17 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         }
         linkURL += line[cursor];
       }
-      contents.push({
-        element: "a",
-        contents: inlineFormatting(linkTitle),
-        attributes: { href: linkURL },
-      });
+
+      if (!linkTitle || !linkURL) {
+        contents.push(`[${linkTitle}](${linkURL})`);
+      } else {
+        contents.push({
+          element: "a",
+          contents: inlineFormatting(linkTitle),
+          attributes: { href: linkURL },
+        });
+      }
+
       continue;
     }
 
@@ -220,11 +268,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       for (cursor += 2; line[cursor] + line[cursor + 1] !== "$$"; cursor++) {
         math += line[cursor];
       }
-      contents.push({
-        element: "math",
-        contents: [math],
-        attributes: { "data-display": "inline" },
-      });
+
+      if (!math) {
+        contents.push("$$$$");
+      } else {
+        contents.push({
+          element: "math",
+          contents: [math],
+          attributes: { "data-display": "inline" },
+        });
+      }
 
       cursor++;
       continue;
