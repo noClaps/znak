@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.6.1
+
+### Patch Changes
+
+- 085eee5: Fix triple delimiter formatting for `***bold and italic***` and `___bold and italic___`
+
 ## 0.6.0
 
 ### Minor Changes
