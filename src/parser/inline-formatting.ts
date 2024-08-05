@@ -23,11 +23,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
 
       // Move cursor to inside bold block
       let boldBuffer = "";
-      for (
-        cursor += 2;
-        line[cursor] + line[cursor + 1] !== delimiter;
-        cursor++
-      ) {
+      for (cursor += 2; cursor !== line.lastIndexOf(delimiter); cursor++) {
         boldBuffer += line[cursor];
       }
       contents.push({
