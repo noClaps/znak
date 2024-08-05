@@ -182,6 +182,7 @@ a^2 + b^2 = c^2
 $$
 `)
 ).toBe(katex.renderToString("a^2 + b^2 = c^2", { displayMode: true }));
+expect(await test("$$")).toBe("<p>$$</p>");
 
 // Escaped characters
 expect(await test("This is \\**escaped bold**")).toBe(

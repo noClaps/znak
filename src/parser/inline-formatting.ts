@@ -256,7 +256,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     // Inline math ($$)
     if (
       line[cursor] + line[cursor + 1] === "$$" &&
-      line.slice(cursor).includes("$$")
+      line.slice(cursor + 2).includes("$$")
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {

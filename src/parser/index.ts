@@ -188,7 +188,10 @@ export default function parser(input: string): Token[] {
     }
 
     // Math block
-    if (lines[lineCursor] === "$$") {
+    if (
+      lines[lineCursor] === "$$" &&
+      lines.slice(lineCursor + 1).includes("$$")
+    ) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
