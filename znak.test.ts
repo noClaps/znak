@@ -252,3 +252,6 @@ string
 expect(await test("> This is quite a **bold** statement!")).toBe(
   "<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>"
 );
+// Empty blocks
+expect(await test(":::")).toBe("<p>:::</p>");
+expect(await test("```")).toBe("<p>```</p>");

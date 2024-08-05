@@ -75,7 +75,12 @@ export default function parser(input: string): Token[] {
     }
 
     // Code block
-    if (lines[lineCursor].startsWith("```")) {
+    if (
+      lines[lineCursor].startsWith("```") &&
+      lines
+        .slice(lineCursor + 1)
+        .includes("`".repeat((lines[lineCursor].match(/`/g) || []).length))
+    ) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
@@ -204,7 +209,14 @@ export default function parser(input: string): Token[] {
     }
 
     // Container
-    if (lines[lineCursor].startsWith(":::")) {
+    if (
+      lines[lineCursor].startsWith(":::") &&
+      lines
+        .slice(lineCursor + 1)
+        .includes(
+          ":".repeat((lines[lineCursor].split(" ")[0].match(/:/g) || []).length)
+        )
+    ) {
       // Dump buffer as paragraph
       if (buffer) {
         tokens.push({ element: "p", contents: inlineFormatting(buffer) });
