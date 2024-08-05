@@ -10,8 +10,8 @@ export default function inlineFormatting(line: string): (string | Token)[] {
 
     // Bold (**)
     if (
-      (line[cursor] + line[cursor + 1]).match(/(\*{2}|_{2})/) &&
-      line.slice(cursor + 2).match(/(\*{2}|_{2})/)
+      line[cursor] + line[cursor + 1] === "**" &&
+      line.slice(cursor + 2).includes("**")
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
@@ -19,11 +19,9 @@ export default function inlineFormatting(line: string): (string | Token)[] {
         buffer = "";
       }
 
-      const delimiter = line[cursor] + line[cursor + 1];
-
       // Move cursor to inside bold block
       let boldBuffer = "";
-      for (cursor += 2; cursor !== line.lastIndexOf(delimiter); cursor++) {
+      for (cursor += 2; line[cursor] + line[cursor + 1] !== "**"; cursor++) {
         boldBuffer += line[cursor];
       }
       contents.push({
@@ -35,17 +33,16 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     }
 
     // Italics (_)
-    if (line[cursor].match(/[\*_]/) && line.slice(cursor + 1).match(/[\*_]/)) {
+    if (line[cursor] === "_" && line.slice(cursor + 1).includes("_")) {
       // Push existing buffer and reset buffer
       if (buffer) {
         contents.push(buffer);
         buffer = "";
       }
 
-      const delimiter = line[cursor];
       // Move cursor to inside italic block
       let italicBuffer = "";
-      for (cursor++; line[cursor] !== delimiter; cursor++) {
+      for (cursor++; line[cursor] !== "_"; cursor++) {
         italicBuffer += line[cursor];
       }
       contents.push({

@@ -31,12 +31,6 @@ expect(await test("_**bold and italic text**_")).toBe(
 expect(await test("**_bold and italic text_**")).toBe(
   "<p><strong><em>bold and italic text</em></strong></p>"
 );
-expect(await test("***bold and italic text***")).toBe(
-  "<p><strong><em>bold and italic text</em></strong></p>"
-);
-expect(await test("___bold and italic text___")).toBe(
-  "<p><strong><em>bold and italic text</em></strong></p>"
-);
 expect(await test("This is some `inline code`")).toBe(
   "<p>This is some <code>inline code</code></p>"
 );
