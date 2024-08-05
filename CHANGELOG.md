@@ -1,5 +1,16 @@
 # @noclaps/znak
 
+## 0.7.0
+
+### Minor Changes
+
+- df3649c: Remove `__` for bold and `*` for italics
+
+### Patch Changes
+
+- a5e44e0: Fix empty inline formatting blocks not rendering
+- d3031cf: Fix crashes for empty code and container blocks
+
 ## 0.6.1
 
 ### Patch Changes
