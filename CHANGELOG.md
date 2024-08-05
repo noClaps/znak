@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.7.1
+
+### Patch Changes
+
+- c6c2016: Fix crashing on opening math block. This was caused by improper checks for whether there was a closing tag for the math block, both inline and blocks.
+
 ## 0.7.0
 
 ### Minor Changes
