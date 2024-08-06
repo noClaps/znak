@@ -35,7 +35,7 @@ export default async function renderer(
         }
       }
 
-      return `<div class="${type}"${attrWithoutHref}><p class="${type}-heading"><b>${
+      return `<div class="znak-container ${type}"${attrWithoutHref}><p class="${type}-heading"><b>${
         href
           ? `<a ${href} target="_blank" rel="noopener noreferrer">${title}</a>`
           : title
