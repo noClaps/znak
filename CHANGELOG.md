@@ -1,5 +1,11 @@
 # @noclaps/znak
 
+## 0.7.2
+
+### Patch Changes
+
+- 062c744: Add `znak-container` class to all custom containers
+
 ## 0.7.1
 
 ### Patch Changes
