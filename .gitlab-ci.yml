@@ -50,4 +50,5 @@ publish_job:
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
   script:
+    - bun install --frozen-lockfile
     - bunx jsr publish --token "$JSR_TOKEN"
