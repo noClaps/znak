@@ -1,0 +1,16 @@
+{
+  "$schema": "https://jsr.io/schema/config-file.v1.json",
+  "name": "@noclaps/znak",
+  "version": "0.7.2",
+  "exports": "./index.ts",
+  "publish": {
+    "include": [
+      "src/**/*.ts",
+      "bun.lockb",
+      "index.ts",
+      "LICENSE",
+      "package.json",
+      "README.md"
+    ]
+  }
+}

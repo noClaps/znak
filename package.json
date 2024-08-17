@@ -1,19 +1,12 @@
 {
   "name": "@noclaps/znak",
-  "version": "0.7.2",
-  "module": "./index.ts",
   "type": "module",
   "devDependencies": {
-    "@changesets/cli": "^2.27.7",
     "@types/bun": "^1.1.6",
     "@types/katex": "^0.16.7"
   },
   "peerDependencies": {
     "typescript": "^5.5.4"
-  },
-  "scripts": {
-    "publish": "changeset tag && bun version.ts && bunx jsr publish --allow-dirty",
-    "changeset": "changeset"
   },
   "dependencies": {
     "github-slugger": "^2.0.0",
