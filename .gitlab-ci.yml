@@ -2,7 +2,7 @@ stages:
   - test
   - prepare
   - release
-  # - publish
+  - publish
 
 test_job:
   stage: test
@@ -43,11 +43,12 @@ release_job:
       links:
         - name: "Container Image $CI_COMMIT_TAG"
           url: "https://$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_SLUG:$CI_COMMIT_SHA"
-# publish_job:
-#   stage: publish
-#   image: oven/bun
-#   rules:
-#     - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
-#   script:
-#     - bun install --frozen-lockfile
-#     - bunx jsr publish --token "$JSR_TOKEN"
+
+publish_job:
+  stage: publish
+  image: oven/bun
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
+  script:
+    - bun install --frozen-lockfile
+    - bunx jsr publish --token "$JSR_TOKEN"
