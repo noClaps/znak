@@ -50,4 +50,4 @@ publish_job:
   rules:
     - if: '$CI_COMMIT_TAG =~ /^v?\d+\.\d+\.\d+$/'
   script:
-    - bunx jsr publish
+    - bunx jsr publish --token $JSR_TOKEN
