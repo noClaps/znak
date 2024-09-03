@@ -29,20 +29,6 @@ export default async function renderer(
 
     case "token":
       switch (token.tokenName) {
-        case "math": {
-          const firstChild = token.children[0];
-          if (!firstChild || firstChild.type !== "text") {
-            throw new Error(`Invalid child for math token: ${firstChild}`);
-          }
-          if (!token.properties) {
-            throw new Error(`Math token has no properties: ${token}`);
-          }
-
-          return katex.renderToString(firstChild.value, {
-            displayMode: token.properties["data-display"] === "block",
-          });
-        }
-
         case "code-block": {
           const firstChild = token.children[0];
           if (!firstChild || firstChild.type !== "text") {

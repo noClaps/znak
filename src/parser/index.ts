@@ -7,6 +7,7 @@ import images from "./images.ts";
 import inlineFormatting from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
 import tables from "./tables.ts";
+import { renderMath } from "../utils/math.ts";
 
 /**
  * A function that parser the input markdown string. The entire markdown string should be passed into this function.
@@ -252,12 +253,7 @@ export default function parser(
         buffer += lines[lineCursor];
       }
 
-      tokens.push({
-        type: "token",
-        tokenName: "math",
-        children: [{ type: "text", value: buffer }],
-        properties: { "data-display": "block" },
-      });
+      tokens.push(renderMath(buffer, true));
       buffer = "";
       continue;
     }

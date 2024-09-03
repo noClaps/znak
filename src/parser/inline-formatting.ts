@@ -1,3 +1,5 @@
+import { renderMath } from "../utils/math.ts";
+
 export default function inlineFormatting(
   line: string,
 ): (HastText | HastElement | HastToken)[] {
@@ -285,12 +287,7 @@ export default function inlineFormatting(
       if (!math) {
         contents.push({ type: "text", value: "$$$$" });
       } else {
-        contents.push({
-          type: "token",
-          tokenName: "math",
-          children: [{ type: "text", value: math }],
-          properties: { "data-display": "inline" },
-        });
+        contents.push(renderMath(math, false));
       }
 
       cursor++;
