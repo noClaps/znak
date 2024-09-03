@@ -1,6 +1,6 @@
 import parser from "./index.ts";
 
-export default function containers(input: string): HastToken {
+export default function containers(input: string): HastElement {
   const lines = input.split("\n");
   const type = lines[0].split(" ")[1];
 
@@ -14,6 +14,7 @@ export default function containers(input: string): HastToken {
   ) {
     title += values[valuesCursor];
   }
+  title = title.trim() || type.toUpperCase();
 
   let attr = "";
   for (
@@ -24,16 +25,54 @@ export default function containers(input: string): HastToken {
     attr += values[valuesCursor];
   }
 
+  const href = attr.split(" ").find((a) => a.startsWith("href")) || "";
+  const className = attr.split(" ").find((a) => a.startsWith("class")) || "";
+  const clearAttr = attr.replace(href, "").replace(className, "").trim();
+
+  let attrObject: Record<string, string> = {};
+  if (clearAttr) {
+    for (const a of clearAttr.split(" ")) {
+      const [key, val] = a.split("=");
+      attrObject[key] = val.slice(1, -1);
+    }
+  }
+
   const content = lines.slice(1, -1).join("\n").trim();
 
   return {
-    type: "token",
-    tokenName: "container",
-    children: parser(content),
+    type: "element",
+    tagName: "div",
     properties: {
-      type,
-      title: title.trim(),
-      attr,
+      class: `znak-container ${type}${className && ` ${className.split("=")[1].slice(1, -1)}`}`,
+      ...attrObject,
     },
+    children: [
+      {
+        type: "element",
+        tagName: "p",
+        properties: { class: `${type}-heading` },
+        children: [
+          {
+            type: "element",
+            tagName: "b",
+            children: [
+              href
+                ? {
+                    type: "element",
+                    tagName: "a",
+                    properties: {
+                      href: href.split("=")[1].slice(1, -1) || "",
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                    },
+                    children: [{ type: "text", value: title }],
+                  }
+                : { type: "text", value: title },
+            ],
+          },
+        ],
+      },
+      ...parser(content),
+    ],
   };
 }

@@ -215,7 +215,7 @@ This is some text in a quote.
 :::
   `),
 ).toBe(
-  `<div class="znak-container quote" class="bold"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+  `<div class="znak-container quote bold"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
 );
 expect(
   await test(`
@@ -238,6 +238,15 @@ This can have some more text.
 `),
 ).toBe(
   `<div class="znak-container block1"><p class="block1-heading"><b>This is the outer container</b></p><p>You can have some text here.</p><div class="znak-container block2"><p class="block2-heading"><b>This is the inner container</b></p><p>This can have some more text.</p></div></div>`,
+);
+expect(
+  await test(`
+::: note A NOTE {id="my-note"}
+This is some text in a note.
+:::
+  `),
+).toBe(
+  `<div class="znak-container note" id="my-note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
 );
 
 // Misc

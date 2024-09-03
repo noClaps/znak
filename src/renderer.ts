@@ -60,26 +60,6 @@ export default async function renderer(
           });
         }
 
-        case "container":
-          if (!token.properties) {
-            throw new Error(`Container token has no properties: ${token}`);
-          }
-          const type = token.properties.type;
-          const title = token.properties.title || type.toUpperCase();
-          const attr = token.properties.attr;
-          const href = attr.split(" ").find((a) => a.startsWith("href")) || "";
-          const attrWithoutHref = attr.replace(href, "");
-
-          let contents = "";
-          for (const item of token.children) {
-            contents += await renderer(item, codeTheme);
-          }
-          return `<div class="znak-container ${type}"${attrWithoutHref}><p class="${type}-heading"><b>${
-            href
-              ? `<a ${href} target="_blank" rel="noopener noreferrer">${title}</a>`
-              : title
-          }</b></p>${contents}</div>`;
-
         default:
           throw new Error(`Unrecognised token: ${token}`);
       }
