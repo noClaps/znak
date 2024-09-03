@@ -1,5 +1,21 @@
 # @noclaps/znak
 
+## v0.8.1
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.0...v0.8.1)
+
+### 🩹 Fixes
+
+- Check whether a language is provided in code block ([5b83415](https://gitlab.com/noClaps/znak-lang/commit/5b83415))
+
+### 📖 Documentation
+
+- Update usage example to be synchronous ([6192188](https://gitlab.com/noClaps/znak-lang/commit/6192188))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.8.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.7.3...v0.8.0)
