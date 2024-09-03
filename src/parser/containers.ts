@@ -1,6 +1,6 @@
 import parser from "./index.ts";
 
-export default function containers(input: string): Token {
+export default function containers(input: string): HastToken {
   const lines = input.split("\n");
   const type = lines[0].split(" ")[1];
 
@@ -27,9 +27,10 @@ export default function containers(input: string): Token {
   const content = lines.slice(1, -1).join("\n").trim();
 
   return {
-    element: "container",
-    contents: parser(content),
-    attributes: {
+    type: "token",
+    tokenName: "container",
+    children: parser(content),
+    properties: {
       type,
       title: title.trim(),
       attr,
