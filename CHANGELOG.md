@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.8.2
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.1...v0.8.2)
+
+### 🩹 Fixes
+
+- Initialise slugger occurrences properly ([3e28e25](https://gitlab.com/noClaps/znak-lang/commit/3e28e25))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.8.1
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.0...v0.8.1)
