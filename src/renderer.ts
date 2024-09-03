@@ -1,10 +1,4 @@
-import katex from "katex";
-import { codeToHtml, type BundledTheme } from "shiki";
-
-export default async function renderer(
-  token: HastText | HastToken | HastElement,
-  codeTheme: BundledTheme,
-): Promise<string> {
+export default function renderer(token: HastText | HastElement) {
   switch (token.type) {
     case "text":
       return token.value;
@@ -18,7 +12,7 @@ export default async function renderer(
 
       let contents = "";
       for (const item of token.children) {
-        contents += await renderer(item, codeTheme);
+        contents += renderer(item);
       }
 
       if (token.children.length === 0) {
@@ -26,28 +20,5 @@ export default async function renderer(
       }
 
       return `<${token.tagName}${attributeList}>${contents}</${token.tagName}>`;
-
-    case "token":
-      switch (token.tokenName) {
-        case "code-block": {
-          const firstChild = token.children[0];
-          if (!firstChild || firstChild.type !== "text") {
-            throw new Error(
-              `Invalid child for code-block token: ${firstChild}`,
-            );
-          }
-          if (!token.properties) {
-            throw new Error(`Code-block token has no properties: ${token}`);
-          }
-
-          return await codeToHtml(firstChild.value, {
-            lang: token.properties["data-lang"] || "plaintext",
-            theme: codeTheme,
-          });
-        }
-
-        default:
-          throw new Error(`Unrecognised token: ${token}`);
-      }
   }
 }

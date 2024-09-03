@@ -1,9 +1,7 @@
 import { renderMath } from "../utils/math.ts";
 
-export default function inlineFormatting(
-  line: string,
-): (HastText | HastElement | HastToken)[] {
-  const contents: (HastText | HastElement | HastToken)[] = [];
+export default function inlineFormatting(line: string) {
+  const contents: (HastText | HastElement)[] = [];
   let buffer = "";
   for (let cursor = 0; cursor < line.length; cursor++) {
     // Escape characters

@@ -1,4 +1,6 @@
 import GitHubSlugger from "github-slugger";
+import type { BundledTheme } from "shiki";
+import { renderMath } from "../utils/math.ts";
 import blockquotes from "./blockquotes.ts";
 import codeBlock from "./code-block.ts";
 import containers from "./containers.ts";
@@ -7,18 +9,10 @@ import images from "./images.ts";
 import inlineFormatting from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
 import tables from "./tables.ts";
-import { renderMath } from "../utils/math.ts";
 
-/**
- * A function that parser the input markdown string. The entire markdown string should be passed into this function.
- * @param input The markdown string to be parsed
- * @returns A tree of tokens
- */
-export default function parser(
-  input: string,
-): (HastElement | HastText | HastToken)[] {
+export default async function parser(input: string, codeTheme: BundledTheme) {
   const lines = input.trim().split("\n");
-  const tokens: (HastElement | HastText | HastToken)[] = [];
+  const tokens: (HastElement | HastText)[] = [];
   let buffer = "";
   const slugger = new GitHubSlugger();
 
@@ -55,7 +49,7 @@ export default function parser(
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
-      tokens.push(blockquotes(buffer));
+      tokens.push(await blockquotes(buffer, codeTheme));
       buffer = "";
       continue;
     }
@@ -120,7 +114,7 @@ export default function parser(
         lineCursor++;
       }
 
-      tokens.push(codeBlock(buffer));
+      tokens.push(await codeBlock(buffer, codeTheme));
       buffer = "";
       continue;
     }
@@ -151,7 +145,7 @@ export default function parser(
       tokens.push({
         type: "element",
         tagName: "ol",
-        children: orderedListItems(buffer),
+        children: await orderedListItems(buffer, codeTheme),
       });
       buffer = "";
       continue;
@@ -183,7 +177,7 @@ export default function parser(
       tokens.push({
         type: "element",
         tagName: "ul",
-        children: unorderedListItems(buffer),
+        children: await unorderedListItems(buffer, codeTheme),
       });
       buffer = "";
       continue;
@@ -292,7 +286,7 @@ export default function parser(
         buffer += `${lines[lineCursor]}\n`;
       }
 
-      tokens.push(containers(buffer));
+      tokens.push(await containers(buffer, codeTheme));
       buffer = "";
       continue;
     }

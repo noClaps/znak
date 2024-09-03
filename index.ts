@@ -38,10 +38,8 @@ export default class Znak {
    * @returns An HTML string created from the input text.
    */
   async renderToHTML(): Promise<string> {
-    const parserOutput = parser(this.#md);
-    return await Promise.all(
-      parserOutput.map(async (po) => await renderer(po, this.#codeTheme))
-    ).then((ro) => ro.join(""));
+    const parserOutput = await parser(this.#md, this.#codeTheme);
+    return parserOutput.map((po) => renderer(po)).join("");
   }
 
   /**

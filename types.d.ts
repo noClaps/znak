@@ -1,15 +1,8 @@
-type HastToken = {
-  type: "token";
-  tokenName: string;
-  properties?: Record<string, string>;
-  children: (HastElement | HastText | HastToken)[];
-};
-
 type HastElement = {
   type: "element";
   tagName: string;
   properties?: Record<string, string>;
-  children: (HastElement | HastText | HastToken)[];
+  children: (HastElement | HastText)[];
 };
 
 type HastText = {
