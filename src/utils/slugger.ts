@@ -9,7 +9,7 @@ export class Slugger {
   }
 
   slug(heading: string, depth: number) {
-    let slug = heading.replace(/[^a-zA-Z0-9]/, "-").toLowerCase();
+    let slug = heading.replaceAll(/[^a-zA-Z0-9]/g, "-").toLowerCase();
     if (this.#occurrences[slug]) {
       slug += `-${this.#occurrences[slug]}`;
       this.#occurrences[slug]++;

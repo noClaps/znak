@@ -6,6 +6,9 @@ import { codeToHtml } from "shiki";
 function test(md: string) {
   return new Znak(md).renderToHTML();
 }
+function testHeadings(md: string) {
+  return new Znak(md).headings();
+}
 
 // Headings
 expect(test("# Heading 1")).toBe(`<h1 id="heading-1">Heading 1</h1>`);
@@ -14,6 +17,12 @@ expect(test("### Heading 3")).toBe(`<h3 id="heading-3">Heading 3</h3>`);
 expect(test("#### Heading 4")).toBe(`<h4 id="heading-4">Heading 4</h4>`);
 expect(test("##### Heading 5")).toBe(`<h5 id="heading-5">Heading 5</h5>`);
 expect(test("###### Heading 6")).toBe(`<h6 id="heading-6">Heading 6</h6>`);
+expect(testHeadings("## Heading 2")).toEqual([
+  { depth: 2, slug: "heading-2", title: "Heading 2" },
+]);
+expect(testHeadings("### This_is-a🍪heading")).toEqual([
+  { depth: 3, slug: "this-is-a--heading", title: "This_is-a🍪heading" },
+]);
 
 // Horizontal rule
 expect(test("---")).toBe("<hr />");
