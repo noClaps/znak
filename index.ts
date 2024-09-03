@@ -10,7 +10,7 @@ import renderer from "./src/renderer.ts";
  * @example
  * ```ts
  * const text = "# Hello World";
- * const outputHTML = await new Znak(text).renderToHTML();
+ * const outputHTML = new Znak(text).renderToHTML();
  * // <h1 id="hello-world">Hello World</h1>
  * ```
  */
