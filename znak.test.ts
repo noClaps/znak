@@ -107,6 +107,12 @@ expect(test('```py\nprint("Your code here")\n```')).toBe(
     theme: "github-dark",
   }),
 );
+expect(test("```\nThis is some text in a code block\n```")).toBe(
+  await codeToHtml("This is some text in a code block", {
+    lang: "plaintext",
+    theme: "github-dark",
+  }),
+);
 
 // Lists
 expect(
