@@ -37,30 +37,17 @@ export default class Znak {
    * The method that outputs HTML for the given input text.
    * @returns An HTML string created from the input text.
    */
-  async renderToHTML(): Promise<string> {
-    const parserOutput = parser(this.#md);
-    return await Promise.all(
-      parserOutput.map(async (po) => await renderer(po, this.#codeTheme))
-    ).then((ro) => ro.join(""));
+  renderToHTML(): string {
+    const parserOutput = parser(this.#md, this.#codeTheme);
+    return parserOutput.map((po) => renderer(po)).join("");
   }
 
   /**
-   * A method that returns the headings in the given input text.
+   * A method that returns the headings in the given input text. The headings
+   * are only generated if `renderToHTML` is called at least once.
    * @returns A list of headings in the given input text.
    */
   headings(): Heading[] {
-    const parserOutput = parser(this.#md);
-    const headings: Heading[] = [];
-
-    for (const token of parserOutput) {
-      if (!token.element.match(/h\d/)) continue;
-      headings.push({
-        depth: +token.element.slice(-1),
-        slug: token.attributes!.id,
-        title: token.contents[0].toString(),
-      });
-    }
-
-    return headings;
+    return parser(this.#md, this.#codeTheme, true);
   }
 }

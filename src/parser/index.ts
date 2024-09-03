@@ -1,4 +1,5 @@
-import GitHubSlugger from "github-slugger";
+import type { BundledTheme } from "shiki";
+import { renderMath } from "../utils/math.ts";
 import blockquotes from "./blockquotes.ts";
 import codeBlock from "./code-block.ts";
 import containers from "./containers.ts";
@@ -7,24 +8,37 @@ import images from "./images.ts";
 import inlineFormatting from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
 import tables from "./tables.ts";
+import { Slugger } from "../utils/slugger.ts";
 
-/**
- * A function that parser the input markdown string. The entire markdown string should be passed into this function.
- * @param input The markdown string to be parsed
- * @returns A tree of tokens
- */
-export default function parser(input: string): Token[] {
+export default function parse(
+  input: string,
+  codeTheme: BundledTheme,
+  returnHeadings: true,
+): Heading[];
+export default function parse(
+  input: string,
+  codeTheme: BundledTheme,
+): (HastElement | HastText)[];
+export default function parse(
+  input: string,
+  codeTheme: BundledTheme,
+  returnHeadings: boolean = false,
+) {
+  const slugger = new Slugger();
   const lines = input.trim().split("\n");
-  const tokens: Token[] = [];
+  const tokens: (HastElement | HastText)[] = [];
   let buffer = "";
-  const slugger = new GitHubSlugger();
 
   for (let lineCursor = 0; lineCursor < lines.length; lineCursor++) {
     // Headings
     if (lines[lineCursor].match(/^#{1,6} .+/gm)) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -36,7 +50,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].startsWith(">")) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -44,7 +62,7 @@ export default function parser(input: string): Token[] {
         buffer += `${lines[lineCursor]}\n`;
         lineCursor++;
       }
-      tokens.push(blockquotes(buffer));
+      tokens.push(blockquotes(buffer, codeTheme));
       buffer = "";
       continue;
     }
@@ -53,11 +71,15 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].match(/^-{3,}$/m)) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
-      tokens.push({ element: "hr", contents: [] });
+      tokens.push({ type: "element", tagName: "hr", children: [] });
       buffer = "";
       continue;
     }
@@ -66,7 +88,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].startsWith("![") && lines[lineCursor].endsWith(")")) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -83,7 +109,11 @@ export default function parser(input: string): Token[] {
     ) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -97,7 +127,7 @@ export default function parser(input: string): Token[] {
         lineCursor++;
       }
 
-      tokens.push(codeBlock(buffer));
+      tokens.push(codeBlock(buffer, codeTheme));
       buffer = "";
       continue;
     }
@@ -106,7 +136,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].match(/^\d+\. /m)) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -121,7 +155,11 @@ export default function parser(input: string): Token[] {
       // Move back a line to start with the next element
       lineCursor--;
 
-      tokens.push({ element: "ol", contents: orderedListItems(buffer) });
+      tokens.push({
+        type: "element",
+        tagName: "ol",
+        children: orderedListItems(buffer, codeTheme),
+      });
       buffer = "";
       continue;
     }
@@ -130,7 +168,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].startsWith("- ")) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -145,7 +187,11 @@ export default function parser(input: string): Token[] {
       // Move back a line to start with the next element
       lineCursor--;
 
-      tokens.push({ element: "ul", contents: unorderedListItems(buffer) });
+      tokens.push({
+        type: "element",
+        tagName: "ul",
+        children: unorderedListItems(buffer, codeTheme),
+      });
       buffer = "";
       continue;
     }
@@ -154,7 +200,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].startsWith("| ")) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -172,7 +222,11 @@ export default function parser(input: string): Token[] {
     if (lines[lineCursor].startsWith("<")) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -182,7 +236,7 @@ export default function parser(input: string): Token[] {
         buffer += `${lines[lineCursor]}\n`;
       }
 
-      tokens.push({ element: "raw", contents: [buffer] });
+      tokens.push({ type: "text", value: buffer });
       buffer = "";
       continue;
     }
@@ -194,7 +248,11 @@ export default function parser(input: string): Token[] {
     ) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -202,11 +260,7 @@ export default function parser(input: string): Token[] {
         buffer += lines[lineCursor];
       }
 
-      tokens.push({
-        element: "math",
-        contents: [buffer],
-        attributes: { "data-display": "block" },
-      });
+      tokens.push(renderMath(buffer, true));
       buffer = "";
       continue;
     }
@@ -217,12 +271,18 @@ export default function parser(input: string): Token[] {
       lines
         .slice(lineCursor + 1)
         .includes(
-          ":".repeat((lines[lineCursor].split(" ")[0].match(/:/g) || []).length)
+          ":".repeat(
+            (lines[lineCursor].split(" ")[0].match(/:/g) || []).length,
+          ),
         )
     ) {
       // Dump buffer as paragraph
       if (buffer) {
-        tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+        tokens.push({
+          type: "element",
+          tagName: "p",
+          children: inlineFormatting(buffer),
+        });
         buffer = "";
       }
 
@@ -239,7 +299,7 @@ export default function parser(input: string): Token[] {
         buffer += `${lines[lineCursor]}\n`;
       }
 
-      tokens.push(containers(buffer));
+      tokens.push(containers(buffer, codeTheme));
       buffer = "";
       continue;
     }
@@ -249,14 +309,24 @@ export default function parser(input: string): Token[] {
       buffer += lines[lineCursor];
     }
     if (buffer) {
-      tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+      tokens.push({
+        type: "element",
+        tagName: "p",
+        children: inlineFormatting(buffer),
+      });
     }
     buffer = "";
   }
 
   if (buffer) {
-    tokens.push({ element: "p", contents: inlineFormatting(buffer) });
+    tokens.push({
+      type: "element",
+      tagName: "p",
+      children: inlineFormatting(buffer),
+    });
   }
+
+  if (returnHeadings) return slugger.headings;
 
   return tokens;
 }

@@ -1,6 +1,6 @@
 import inlineFormatting from "./inline-formatting.ts";
 
-export default function tables(input: string): Token {
+export default function tables(input: string): HastElement {
   const lines = input.trim().split("\n");
   const thead = lines[0]
     .split("|")
@@ -18,18 +18,22 @@ export default function tables(input: string): Token {
       return "";
     });
 
-  const token: Token = {
-    element: "table",
-    contents: [
+  const token: HastElement = {
+    type: "element",
+    tagName: "table",
+    children: [
       {
-        element: "thead",
-        contents: [
+        type: "element",
+        tagName: "thead",
+        children: [
           {
-            element: "tr",
-            contents: thead.map((th, index) => ({
-              element: "th",
-              contents: inlineFormatting(th),
-              attributes: {
+            type: "element",
+            tagName: "tr",
+            children: thead.map((th, index) => ({
+              type: "element",
+              tagName: "th",
+              children: inlineFormatting(th),
+              properties: {
                 align: alignments[index],
               },
             })),
@@ -37,16 +41,19 @@ export default function tables(input: string): Token {
         ],
       },
       {
-        element: "tbody",
-        contents: lines.slice(2).map((line) => ({
-          element: "tr",
-          contents: line
+        type: "element",
+        tagName: "tbody",
+        children: lines.slice(2).map((line) => ({
+          type: "element",
+          tagName: "tr",
+          children: line
             .split("|")
             .filter((c) => c)
             .map((col, index) => ({
-              element: "td",
-              contents: inlineFormatting(col.trim()),
-              attributes: { align: alignments[index] },
+              type: "element",
+              tagName: "td",
+              children: inlineFormatting(col.trim()),
+              properties: { align: alignments[index] },
             })),
         })),
       },

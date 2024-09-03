@@ -1,5 +1,7 @@
-export default function inlineFormatting(line: string): (string | Token)[] {
-  const contents: (string | Token)[] = [];
+import { renderMath } from "../utils/math.ts";
+
+export default function inlineFormatting(line: string) {
+  const contents: (HastText | HastElement)[] = [];
   let buffer = "";
   for (let cursor = 0; cursor < line.length; cursor++) {
     // Escape characters
@@ -15,7 +17,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -26,11 +28,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!boldBuffer) {
-        contents.push("****");
+        contents.push({ type: "text", value: "****" });
       } else {
         contents.push({
-          element: "strong",
-          contents: inlineFormatting(boldBuffer),
+          type: "element",
+          tagName: "strong",
+          children: inlineFormatting(boldBuffer),
         });
       }
 
@@ -42,7 +45,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     if (line[cursor] === "_" && line.slice(cursor + 1).includes("_")) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -53,11 +56,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!italicBuffer) {
-        contents.push("__");
+        contents.push({ type: "text", value: "__" });
       } else {
         contents.push({
-          element: "em",
-          contents: inlineFormatting(italicBuffer),
+          type: "element",
+          tagName: "em",
+          children: inlineFormatting(italicBuffer),
         });
       }
 
@@ -68,7 +72,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     if (line[cursor] === "`" && line.slice(cursor + 1).includes("`")) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -79,10 +83,14 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!codeBuffer) {
-        contents.push("``");
+        contents.push({ type: "text", value: "``" });
       } else {
         // Code content is not formatted
-        contents.push({ element: "code", contents: [codeBuffer] });
+        contents.push({
+          type: "element",
+          tagName: "code",
+          children: [{ type: "text", value: codeBuffer }],
+        });
       }
 
       continue;
@@ -95,7 +103,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -106,11 +114,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!strikethroughBuffer) {
-        contents.push("~~~~");
+        contents.push({ type: "text", value: "~~~~" });
       } else {
         contents.push({
-          element: "s",
-          contents: inlineFormatting(strikethroughBuffer),
+          type: "element",
+          tagName: "s",
+          children: inlineFormatting(strikethroughBuffer),
         });
       }
 
@@ -125,7 +134,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -136,11 +145,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!highlightBuffer) {
-        contents.push("====");
+        contents.push({ type: "text", value: "====" });
       } else {
         contents.push({
-          element: "mark",
-          contents: inlineFormatting(highlightBuffer),
+          type: "element",
+          tagName: "mark",
+          children: inlineFormatting(highlightBuffer),
         });
       }
 
@@ -152,7 +162,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     if (line[cursor] === "~" && line.slice(cursor + 1).includes("~")) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -163,11 +173,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!subscriptBuffer) {
-        contents.push("~~");
+        contents.push({ type: "text", value: "~~" });
       } else {
         contents.push({
-          element: "sub",
-          contents: inlineFormatting(subscriptBuffer),
+          type: "element",
+          tagName: "sub",
+          children: inlineFormatting(subscriptBuffer),
         });
       }
 
@@ -178,7 +189,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     if (line[cursor] === "^" && line.slice(cursor + 1).includes("^")) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -189,11 +200,12 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!superscriptBuffer) {
-        contents.push("^^");
+        contents.push({ type: "text", value: "^^" });
       } else {
         contents.push({
-          element: "sup",
-          contents: inlineFormatting(superscriptBuffer),
+          type: "element",
+          tagName: "sup",
+          children: inlineFormatting(superscriptBuffer),
         });
       }
 
@@ -208,7 +220,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -241,12 +253,13 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!linkTitle || !linkURL) {
-        contents.push(`[${linkTitle}](${linkURL})`);
+        contents.push({ type: "text", value: `[${linkTitle}](${linkURL})` });
       } else {
         contents.push({
-          element: "a",
-          contents: inlineFormatting(linkTitle),
-          attributes: { href: linkURL },
+          type: "element",
+          tagName: "a",
+          children: inlineFormatting(linkTitle),
+          properties: { href: linkURL },
         });
       }
 
@@ -260,7 +273,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
     ) {
       // Push existing buffer and reset buffer
       if (buffer) {
-        contents.push(buffer);
+        contents.push({ type: "text", value: buffer });
         buffer = "";
       }
 
@@ -270,13 +283,9 @@ export default function inlineFormatting(line: string): (string | Token)[] {
       }
 
       if (!math) {
-        contents.push("$$$$");
+        contents.push({ type: "text", value: "$$$$" });
       } else {
-        contents.push({
-          element: "math",
-          contents: [math],
-          attributes: { "data-display": "inline" },
-        });
+        contents.push(renderMath(math, false));
       }
 
       cursor++;
@@ -288,7 +297,7 @@ export default function inlineFormatting(line: string): (string | Token)[] {
   }
 
   if (buffer) {
-    contents.push(buffer);
+    contents.push({ type: "text", value: buffer });
   }
 
   return contents;

@@ -1,6 +1,6 @@
 import inlineFormatting from "./inline-formatting.ts";
 
-export default function images(line: string): Token {
+export default function images(line: string): HastElement {
   let imageTitle = "";
   let imageURL = "";
   let isInsideNestedBlock = false;
@@ -25,14 +25,20 @@ export default function images(line: string): Token {
     }
   }
   return {
-    element: "figure",
-    contents: [
+    type: "element",
+    tagName: "figure",
+    children: [
       {
-        element: "img",
-        contents: [],
-        attributes: { src: imageURL, alt: imageTitle },
+        type: "element",
+        tagName: "img",
+        children: [],
+        properties: { src: imageURL, alt: imageTitle },
       },
-      { element: "figcaption", contents: inlineFormatting(imageTitle) },
+      {
+        type: "element",
+        tagName: "figcaption",
+        children: inlineFormatting(imageTitle),
+      },
     ],
   };
 }

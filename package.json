@@ -2,15 +2,14 @@
   "name": "@noclaps/znak",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "^1.1.6",
+    "@types/bun": "^1.1.8",
     "@types/katex": "^0.16.7"
   },
   "peerDependencies": {
     "typescript": "^5.5.4"
   },
   "dependencies": {
-    "github-slugger": "^2.0.0",
     "katex": "^0.16.11",
-    "shiki": "^1.13.0"
+    "shiki": "^1.16.1"
   }
 }
