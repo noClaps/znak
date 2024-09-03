@@ -1,5 +1,65 @@
 # @noclaps/znak
 
+## v0.8.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.7.3...v0.8.0)
+
+### 🩹 Fixes
+
+- Fix bug with slugger and add tests ([14b237c](https://gitlab.com/noClaps/znak-lang/commit/14b237c))
+
+### 💅 Refactors
+
+- Use hast-like structure to create syntax tree ([a7e1387](https://gitlab.com/noClaps/znak-lang/commit/a7e1387))
+- Inline container generation into the parser ([105bbcc](https://gitlab.com/noClaps/znak-lang/commit/105bbcc))
+- Do math rendering during parsing and add it as a HastText node ([525242d](https://gitlab.com/noClaps/znak-lang/commit/525242d))
+- Use Shiki's codeToHast function for code blocks ([b8443a3](https://gitlab.com/noClaps/znak-lang/commit/b8443a3))
+- Replace github-slugger with self-made slugger ([c159223](https://gitlab.com/noClaps/znak-lang/commit/c159223))
+- ⚠️  Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+
+### 🤖 CI
+
+- Don't publish to JSR using pipelines ([85bd19f](https://gitlab.com/noClaps/znak-lang/commit/85bd19f))
+- Don't publish to JSR using pipelines" ([c2dbd15](https://gitlab.com/noClaps/znak-lang/commit/c2dbd15))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
+## v0.1.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.7.3...v0.1.0)
+
+### 🩹 Fixes
+
+- Fix bug with slugger and add tests ([14b237c](https://gitlab.com/noClaps/znak-lang/commit/14b237c))
+
+### 💅 Refactors
+
+- Use hast-like structure to create syntax tree ([a7e1387](https://gitlab.com/noClaps/znak-lang/commit/a7e1387))
+- Inline container generation into the parser ([105bbcc](https://gitlab.com/noClaps/znak-lang/commit/105bbcc))
+- Do math rendering during parsing and add it as a HastText node ([525242d](https://gitlab.com/noClaps/znak-lang/commit/525242d))
+- Use Shiki's codeToHast function for code blocks ([b8443a3](https://gitlab.com/noClaps/znak-lang/commit/b8443a3))
+- Replace github-slugger with self-made slugger ([c159223](https://gitlab.com/noClaps/znak-lang/commit/c159223))
+- ⚠️  Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+
+### 🤖 CI
+
+- Don't publish to JSR using pipelines ([85bd19f](https://gitlab.com/noClaps/znak-lang/commit/85bd19f))
+- Don't publish to JSR using pipelines" ([c2dbd15](https://gitlab.com/noClaps/znak-lang/commit/c2dbd15))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## 0.7.2
 
 ### Patch Changes
