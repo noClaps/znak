@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import Parser from "./src/parser/index.ts";
+import parser from "./src/parser/index.ts";
 import renderer from "./src/renderer.ts";
 
 /**
@@ -17,7 +17,6 @@ import renderer from "./src/renderer.ts";
 export default class Znak {
   #md: string;
   #codeTheme: BundledTheme;
-  #parser: Parser;
 
   /**
    * @param [input] The input text to be converted to HTML. This can be from a
@@ -32,15 +31,14 @@ export default class Znak {
   constructor(input: string, codeTheme: BundledTheme = "github-dark") {
     this.#md = input;
     this.#codeTheme = codeTheme;
-    this.#parser = new Parser(this.#md, this.#codeTheme);
   }
 
   /**
    * The method that outputs HTML for the given input text.
    * @returns An HTML string created from the input text.
    */
-  async renderToHTML(): Promise<string> {
-    const parserOutput = await this.#parser.parse();
+  renderToHTML(): string {
+    const parserOutput = parser(this.#md, this.#codeTheme);
     return parserOutput.map((po) => renderer(po)).join("");
   }
 
@@ -50,6 +48,6 @@ export default class Znak {
    * @returns A list of headings in the given input text.
    */
   headings(): Heading[] {
-    return this.#parser.headings();
+    return parser(this.#md, this.#codeTheme, true);
   }
 }

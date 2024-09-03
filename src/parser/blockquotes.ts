@@ -1,10 +1,10 @@
 import type { BundledTheme } from "shiki";
-import Parser from "./index.ts";
+import parser from "./index.ts";
 
-export default async function blockquotes(
+export default function blockquotes(
   input: string,
   codeTheme: BundledTheme,
-): Promise<HastElement> {
+): HastElement {
   const lines = input
     .split("\n")
     .map((line) => line.slice(1).trim())
@@ -13,6 +13,6 @@ export default async function blockquotes(
   return {
     type: "element",
     tagName: "blockquote",
-    children: await new Parser(lines, codeTheme).parse(),
+    children: parser(lines, codeTheme),
   };
 }
