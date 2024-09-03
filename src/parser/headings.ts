@@ -1,10 +1,7 @@
-import type GitHubSlugger from "github-slugger";
 import inlineFormatting from "./inline-formatting.ts";
+import type { Slugger } from "../utils/slugger.ts";
 
-export default function headings(
-  line: string,
-  slugger: GitHubSlugger,
-): HastElement {
+export default function headings(line: string, slugger: Slugger): HastElement {
   let level = 0;
   let cursor = 0;
   let char = line[cursor];
@@ -16,7 +13,7 @@ export default function headings(
   }
 
   const content = line.slice(cursor + 1);
-  const slug = slugger.slug(content);
+  const slug = slugger.slug(content, level);
   return {
     type: "element",
     tagName: `h${level}`,

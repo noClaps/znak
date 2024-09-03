@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import Parser from "./index.ts";
 
 export async function orderedListItems(input: string, codeTheme: BundledTheme) {
   const lines = input
@@ -14,20 +14,20 @@ export async function orderedListItems(input: string, codeTheme: BundledTheme) {
         return {
           type: "element",
           tagName: "li",
-          children: await parser(line, codeTheme),
+          children: await new Parser(line, codeTheme).parse(),
         };
       }
 
       return {
         type: "element",
         tagName: "li",
-        children: await parser(
+        children: await new Parser(
           `${segments[0]}\n\n${segments
             .slice(1)
             .map((l) => l.replace(/^(   |\t)/m, ""))
             .join("\n")}`,
           codeTheme,
-        ),
+        ).parse(),
       };
     }),
   );
@@ -49,20 +49,20 @@ export async function unorderedListItems(
         return {
           type: "element",
           tagName: "li",
-          children: await parser(line, codeTheme),
+          children: await new Parser(line, codeTheme).parse(),
         };
       }
 
       return {
         type: "element",
         tagName: "li",
-        children: await parser(
+        children: await new Parser(
           `${segments[0]}\n\n${segments
             .slice(1)
             .map((l) => l.replace(/^(  |\t)/m, ""))
             .join("\n")}`,
           codeTheme,
-        ),
+        ).parse(),
       };
     }),
   );

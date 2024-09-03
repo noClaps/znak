@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import parser from "./src/parser/index.ts";
+import Parser from "./src/parser/index.ts";
 import renderer from "./src/renderer.ts";
 
 /**
@@ -17,6 +17,7 @@ import renderer from "./src/renderer.ts";
 export default class Znak {
   #md: string;
   #codeTheme: BundledTheme;
+  #parser: Parser;
 
   /**
    * @param [input] The input text to be converted to HTML. This can be from a
@@ -31,6 +32,7 @@ export default class Znak {
   constructor(input: string, codeTheme: BundledTheme = "github-dark") {
     this.#md = input;
     this.#codeTheme = codeTheme;
+    this.#parser = new Parser(this.#md, this.#codeTheme);
   }
 
   /**
@@ -38,27 +40,16 @@ export default class Znak {
    * @returns An HTML string created from the input text.
    */
   async renderToHTML(): Promise<string> {
-    const parserOutput = await parser(this.#md, this.#codeTheme);
+    const parserOutput = await this.#parser.parse();
     return parserOutput.map((po) => renderer(po)).join("");
   }
 
   /**
-   * A method that returns the headings in the given input text.
+   * A method that returns the headings in the given input text. The headings
+   * are only generated if `renderToHTML` is called at least once.
    * @returns A list of headings in the given input text.
    */
   headings(): Heading[] {
-    const parserOutput = parser(this.#md);
-    const headings: Heading[] = [];
-
-    for (const token of parserOutput) {
-      if (!token.element.match(/h\d/)) continue;
-      headings.push({
-        depth: +token.element.slice(-1),
-        slug: token.attributes!.id,
-        title: token.contents[0].toString(),
-      });
-    }
-
-    return headings;
+    return this.#parser.headings();
   }
 }

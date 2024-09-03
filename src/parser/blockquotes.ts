@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import Parser from "./index.ts";
 
 export default async function blockquotes(
   input: string,
@@ -13,6 +13,6 @@ export default async function blockquotes(
   return {
     type: "element",
     tagName: "blockquote",
-    children: await parser(lines, codeTheme),
+    children: await new Parser(lines, codeTheme).parse(),
   };
 }

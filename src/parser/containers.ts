@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import Parser from "./index.ts";
 
 export default async function containers(
   input: string,
@@ -76,7 +76,7 @@ export default async function containers(
           },
         ],
       },
-      ...(await parser(content, codeTheme)),
+      ...(await new Parser(content, codeTheme).parse()),
     ],
   };
 }
