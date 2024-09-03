@@ -43,8 +43,7 @@ export default class Znak {
   }
 
   /**
-   * A method that returns the headings in the given input text. The headings
-   * are only generated if `renderToHTML` is called at least once.
+   * A method that returns the headings in the given input text.
    * @returns A list of headings in the given input text.
    */
   headings(): Heading[] {
