@@ -23,6 +23,15 @@ expect(testHeadings("## Heading 2")).toEqual([
 expect(testHeadings("### This_is-a🍪heading")).toEqual([
   { depth: 3, slug: "this-is-a--heading", title: "This_is-a🍪heading" },
 ]);
+expect(
+  test(`
+## Heading
+### Heading
+#### Heading
+`),
+).toBe(
+  `<h2 id="heading">Heading</h2><h3 id="heading-1">Heading</h3><h4 id="heading-2">Heading</h4>`,
+);
 
 // Horizontal rule
 expect(test("---")).toBe("<hr />");

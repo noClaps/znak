@@ -9,10 +9,13 @@ export class Slugger {
   }
 
   slug(heading: string, depth: number) {
-    let slug = heading.replaceAll(/[^a-zA-Z0-9]/g, "-").toLowerCase();
-    if (this.#occurrences[slug]) {
-      slug += `-${this.#occurrences[slug]}`;
-      this.#occurrences[slug]++;
+    const cleanHeading = heading.replaceAll(/[^a-zA-Z0-9]/g, "-").toLowerCase();
+    let slug = cleanHeading;
+    if (this.#occurrences[cleanHeading]) {
+      slug += `-${this.#occurrences[cleanHeading]}`;
+      this.#occurrences[cleanHeading]++;
+    } else {
+      this.#occurrences[cleanHeading] = 1;
     }
 
     this.headings.push({ depth, slug, title: heading });
