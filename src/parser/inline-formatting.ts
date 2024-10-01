@@ -1,3 +1,4 @@
+import { escapeHTML } from "../utils/escape-html.ts";
 import { renderMath } from "../utils/math.ts";
 
 export default function inlineFormatting(line: string) {
@@ -89,7 +90,12 @@ export default function inlineFormatting(line: string) {
         contents.push({
           type: "element",
           tagName: "code",
-          children: [{ type: "text", value: codeBuffer }],
+          children: [
+            {
+              type: "text",
+              value: escapeHTML(codeBuffer),
+            },
+          ],
         });
       }
 

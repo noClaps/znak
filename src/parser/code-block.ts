@@ -4,6 +4,7 @@ import {
   type BundledTheme,
 } from "shiki";
 import { highlightSyntax } from "../utils/syntax-highlighting.ts";
+import { escapeHTML } from "../utils/escape-html.ts";
 
 export default function codeBlock(input: string, codeTheme: BundledTheme) {
   const lines = input.split("\n");
@@ -14,9 +15,9 @@ export default function codeBlock(input: string, codeTheme: BundledTheme) {
     throw new Error(`Language not supported by Shiki: ${language}`);
   }
 
-  return highlightSyntax(
-    code,
-    codeTheme,
-    (language as BundledLanguage) || "plaintext",
-  );
+  if (language) {
+    return highlightSyntax(code, codeTheme, language as BundledLanguage);
+  }
+
+  return highlightSyntax(escapeHTML(code), codeTheme);
 }
