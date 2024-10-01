@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.8.3
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.2...v0.8.3)
+
+### 🩹 Fixes
+
+- Escape HTML in code blocks when appropriate ([8a64b2d](https://gitlab.com/noClaps/znak-lang/commit/8a64b2d))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.8.2
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.1...v0.8.2)
