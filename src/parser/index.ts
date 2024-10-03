@@ -32,32 +32,12 @@ export default function parse(
 	for (let lineCursor = 0; lineCursor < lines.length; lineCursor++) {
 		// Headings
 		if (lines[lineCursor].match(/^#{1,6} .+/gm)) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			tokens.push(headings(lines[lineCursor], slugger));
 			continue;
 		}
 
 		// Blockquotes
 		if (lines[lineCursor].startsWith(">")) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			while (lines[lineCursor] && lines[lineCursor].startsWith(">")) {
 				buffer += `${lines[lineCursor]}\n`;
 				lineCursor++;
@@ -69,16 +49,6 @@ export default function parse(
 
 		// Horizontal rule
 		if (lines[lineCursor].match(/^-{3,}$/m)) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			tokens.push({ type: "element", tagName: "hr", children: [] });
 			buffer = "";
 			continue;
@@ -86,16 +56,6 @@ export default function parse(
 
 		// Images
 		if (lines[lineCursor].startsWith("![") && lines[lineCursor].endsWith(")")) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			tokens.push(images(lines[lineCursor]));
 			continue;
 		}
@@ -107,16 +67,6 @@ export default function parse(
 				.slice(lineCursor + 1)
 				.includes("`".repeat((lines[lineCursor].match(/`/g) || []).length))
 		) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			const backtickCount = (lines[lineCursor].match(/`/g) || []).length;
 
 			// Move inside code block
@@ -134,16 +84,6 @@ export default function parse(
 
 		// Ordered list (1., 3 space indentation)
 		if (lines[lineCursor].match(/^\d+\. /m)) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			while (
 				(lines[lineCursor] && lines[lineCursor].match(/^(\d+\. |   |\t)/m)) ||
 				lines[lineCursor] === ""
@@ -166,16 +106,6 @@ export default function parse(
 
 		// Unordered list [-, 2 space indentation]
 		if (lines[lineCursor].startsWith("- ")) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			while (
 				(lines[lineCursor] && lines[lineCursor].match(/^(- |  |\t)/m)) ||
 				lines[lineCursor] === ""
@@ -198,16 +128,6 @@ export default function parse(
 
 		// Tables
 		if (lines[lineCursor].startsWith("| ")) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			while (lines[lineCursor] && lines[lineCursor].startsWith("| ")) {
 				buffer += `${lines[lineCursor]}\n`;
 				lineCursor++;
@@ -220,16 +140,6 @@ export default function parse(
 
 		// HTML Elements
 		if (lines[lineCursor].startsWith("<")) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			buffer += `${lines[lineCursor]}\n`;
 			while (!lines[lineCursor].includes("</")) {
 				lineCursor++;
@@ -246,16 +156,6 @@ export default function parse(
 			lines[lineCursor] === "$$" &&
 			lines.slice(lineCursor + 1).includes("$$")
 		) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			for (lineCursor++; lines[lineCursor] !== "$$"; lineCursor++) {
 				buffer += lines[lineCursor];
 			}
@@ -279,16 +179,6 @@ export default function parse(
 				)
 				?.endsWith(":")
 		) {
-			// Dump buffer as paragraph
-			if (buffer) {
-				tokens.push({
-					type: "element",
-					tagName: "p",
-					children: inlineFormatting(buffer),
-				});
-				buffer = "";
-			}
-
 			const colonCount = (lines[lineCursor].split(" ")[0].match(/:/g) || [])
 				.length;
 
@@ -319,14 +209,6 @@ export default function parse(
 			});
 		}
 		buffer = "";
-	}
-
-	if (buffer) {
-		tokens.push({
-			type: "element",
-			tagName: "p",
-			children: inlineFormatting(buffer),
-		});
 	}
 
 	if (returnHeadings) return slugger.headings;
