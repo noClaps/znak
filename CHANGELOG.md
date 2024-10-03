@@ -1,5 +1,46 @@
 # @noclaps/znak
 
+## v0.9.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.3...v0.9.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️  Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+
+### 🩹 Fixes
+
+- Fix invalid container openers not being parsed correctly ([87a9aac](https://gitlab.com/noClaps/znak-lang/commit/87a9aac))
+- Fix invalid code block openers not being parsed correctly ([43995d5](https://gitlab.com/noClaps/znak-lang/commit/43995d5))
+
+### 📖 Documentation
+
+- Remove extra version from changelog ([8a9a1ea](https://gitlab.com/noClaps/znak-lang/commit/8a9a1ea))
+
+### 🏡 Chore
+
+- Update dependencies ([77d1f51](https://gitlab.com/noClaps/znak-lang/commit/77d1f51))
+- Update syntax highlighting engine creation code ([5c054ce](https://gitlab.com/noClaps/znak-lang/commit/5c054ce))
+- Remove unneeded code ([2e09da3](https://gitlab.com/noClaps/znak-lang/commit/2e09da3))
+
+### ✅ Tests
+
+- Add missing tests for syntax and use proper testing features ([689b442](https://gitlab.com/noClaps/znak-lang/commit/689b442))
+
+### 🎨 Styles
+
+- Switch to using tabs for indentation ([6a69923](https://gitlab.com/noClaps/znak-lang/commit/6a69923))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️  Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.8.3
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.2...v0.8.3)
