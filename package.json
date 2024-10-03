@@ -1,16 +1,16 @@
 {
-  "name": "@noclaps/znak",
-  "version": "0.8.3",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "^1.1.8",
-    "@types/katex": "^0.16.7"
-  },
-  "peerDependencies": {
-    "typescript": "^5.5.4"
-  },
-  "dependencies": {
-    "katex": "^0.16.11",
-    "shiki": "^1.16.1"
-  }
+	"name": "@noclaps/znak",
+	"version": "0.8.3",
+	"type": "module",
+	"devDependencies": {
+		"@types/bun": "^1.1.10",
+		"@types/katex": "^0.16.7",
+	},
+	"peerDependencies": {
+		"typescript": "^5.6.2"
+	},
+	"dependencies": {
+		"katex": "^0.16.11",
+		"shiki": "^1.21.0"
+	}
 }
