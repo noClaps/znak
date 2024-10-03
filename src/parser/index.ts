@@ -270,11 +270,14 @@ export default function parse(
 			lines[lineCursor].startsWith(":::") &&
 			lines
 				.slice(lineCursor + 1)
-				.includes(
-					":".repeat(
-						(lines[lineCursor].split(" ")[0].match(/:/g) || []).length,
+				.find((l) =>
+					l.startsWith(
+						":".repeat(
+							(lines[lineCursor].split(" ")[0].match(/:/g) || []).length,
+						),
 					),
 				)
+				?.endsWith(":")
 		) {
 			// Dump buffer as paragraph
 			if (buffer) {
