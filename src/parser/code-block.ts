@@ -12,10 +12,12 @@ export default function codeBlock(input: string, codeTheme: BundledTheme) {
 	const code = lines.slice(1, -1).join("\n").trim();
 
 	if (language && !(language in bundledLanguages)) {
-		throw new Error(`Language not supported by Shiki: ${language}`);
+		console.error(
+			`Language not supported by Shiki: ${language}, continuing as plaintext`,
+		);
 	}
 
-	if (language) {
+	if (language && language in bundledLanguages) {
 		return highlightSyntax(code, codeTheme, language as BundledLanguage);
 	}
 

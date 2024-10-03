@@ -160,6 +160,14 @@ test("Code block", async () => {
 			theme: "github-dark",
 		}),
 	);
+	expect(
+		testRender("```skajdlas\nThis is for a language that doesn't exist\n```"),
+	).toBe(
+		// Have to do it this way because if I do `escapeHTML` on the input, then
+		// `codeToHtml` escapes the `&` in `&#x27` and that causes an error. This
+		// works fine for now, though I'm not a fan of hardcoding it this way.
+		'<pre class="shiki github-dark" style="background-color:#24292e;color:#e1e4e8" tabindex="0"><code><span class="line"><span>This is for a language that doesn&#x27;t exist</span></span></code></pre>',
+	);
 });
 
 test("Lists", () => {
