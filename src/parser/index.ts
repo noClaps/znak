@@ -65,7 +65,12 @@ export default function parse(
 			lines[lineCursor].startsWith("```") &&
 			lines
 				.slice(lineCursor + 1)
-				.includes("`".repeat((lines[lineCursor].match(/`/g) || []).length))
+				.find((l) =>
+					l.startsWith(
+						"`".repeat((lines[lineCursor].match(/`/g) || []).length),
+					),
+				)
+				?.endsWith("`")
 		) {
 			const backtickCount = (lines[lineCursor].match(/`/g) || []).length;
 
