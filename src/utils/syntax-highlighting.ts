@@ -1,5 +1,4 @@
 import {
-	createWasmOnigEngine,
 	createHighlighterCoreSync,
 	type BundledLanguage,
 	type BundledTheme,
@@ -9,6 +8,7 @@ import {
 	type ThemeRegistration,
 	bundledThemesInfo,
 } from "shiki";
+import { createOnigurumaEngine } from "shiki/engine/oniguruma";
 
 const langs: MaybeArray<LanguageRegistration>[] = [];
 for (const bl of bundledLanguagesInfo) {
@@ -22,7 +22,7 @@ for (const bt of bundledThemesInfo) {
 	themes.push(theme);
 }
 
-const engine = await createWasmOnigEngine(import("shiki/wasm"));
+const engine = await createOnigurumaEngine(import("shiki/wasm"));
 const shiki = createHighlighterCoreSync({
 	langs,
 	themes,
