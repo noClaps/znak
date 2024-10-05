@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.9.1
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.0...v0.9.1)
+
+### 💅 Refactors
+
+- Simplify syntax highlighter code ([a157637](https://gitlab.com/noClaps/znak-lang/commit/a157637))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.9.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.3...v0.9.0)
