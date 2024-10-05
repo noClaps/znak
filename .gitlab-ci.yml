@@ -1,7 +1,5 @@
 stages:
   - test
-  - prepare
-  - release
   - publish
 
 test_job:
