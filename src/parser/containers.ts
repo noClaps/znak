@@ -33,7 +33,7 @@ export default function containers(
 	const className = attr.split(" ").find((a) => a.startsWith("class")) || "";
 	const clearAttr = attr.replace(href, "").replace(className, "").trim();
 
-	let attrObject: Record<string, string> = {};
+	const attrObject: Record<string, string> = {};
 	if (clearAttr) {
 		for (const a of clearAttr.split(" ")) {
 			const [key, val] = a.split("=");
