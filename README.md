@@ -23,7 +23,7 @@ and then import it in your code:
 import Znak from "@noclaps/znak";
 
 const text = "# Hello World"; // Your text to be rendered.
-const renderedHTML = await new Znak(text).renderToHTML();
+const renderedHTML = new Znak(text).renderToHTML();
 // <h1 id="hello-world">Hello World</h1>
 const headings = new Znak(text).headings();
 // [{depth: 1, slug: "hello-world", title: "Hello World"}]
