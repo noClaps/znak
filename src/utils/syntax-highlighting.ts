@@ -15,7 +15,12 @@ export function highlightSyntax(
 	code: string,
 	theme: BundledTheme,
 	lang?: BundledLanguage,
-) {
-	return shiki.codeToHast(code, { lang: lang || "plaintext", theme })
-		.children[0] as HastElement;
+): HastText {
+	return {
+		type: "text",
+		value: shiki.codeToHtml(code, {
+			lang: lang || "plaintext",
+			theme,
+		}),
+	};
 }
