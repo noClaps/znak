@@ -138,7 +138,7 @@ test("Inline formatting", async () => {
 	);
 
 	expect(await testRender("Inline $$x+y$$ math")).toBe(
-		`<p>Inline ${katex.renderToString("x+y")} math</p>`,
+		`<p>Inline ${katex.renderToString("x+y", { output: "mathml" })} math</p>`,
 	);
 	expect(
 		await testRender("This is a **line** with multiple **bold** words"),
@@ -283,7 +283,12 @@ $$
 a^2 + b^2 = c^2
 $$
 `),
-	).toBe(katex.renderToString("a^2 + b^2 = c^2", { displayMode: true }));
+	).toBe(
+		katex.renderToString("a^2 + b^2 = c^2", {
+			displayMode: true,
+			output: "mathml",
+		}),
+	);
 	expect(await testRender("$$")).toBe("<p>$$</p>");
 });
 
