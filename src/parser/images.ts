@@ -1,6 +1,6 @@
-import inlineFormatting from "./inline-formatting.ts";
+import { inlineFormatting } from "./inline-formatting.ts";
 
-export default function images(line: string): HastElement {
+export function images(line: string): HastElement {
 	let imageTitle = "";
 	let imageURL = "";
 	let isInsideNestedBlock = false;

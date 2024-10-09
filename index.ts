@@ -1,6 +1,7 @@
 import type { BundledTheme } from "shiki";
-import parser from "./src/parser/index.ts";
-import renderer from "./src/renderer.ts";
+import { parse, parseHeadings } from "./src/parser/index.ts";
+import { renderer } from "./src/renderer.ts";
+import type { Heading } from "./src/utils/slugger.ts";
 
 /**
  * A parser for a Markdown-like markup language that supports a smaller subset
@@ -38,7 +39,7 @@ export default class Znak {
 	 * @returns An HTML string created from the input text.
 	 */
 	renderToHTML(): string {
-		const parserOutput = parser(this.#md, this.#codeTheme);
+		const parserOutput = parse(this.#md, this.#codeTheme);
 		return parserOutput.map((po) => renderer(po)).join("");
 	}
 
@@ -47,6 +48,6 @@ export default class Znak {
 	 * @returns A list of headings in the given input text.
 	 */
 	headings(): Heading[] {
-		return parser(this.#md, this.#codeTheme, true);
+		return parseHeadings(this.#md);
 	}
 }

@@ -1,7 +1,7 @@
 import { escapeHTML } from "../utils/escape-html.ts";
 import { renderMath } from "../utils/math.ts";
 
-export default function inlineFormatting(line: string) {
+export function inlineFormatting(line: string) {
 	const contents: (HastText | HastElement)[] = [];
 	let buffer = "";
 	for (let cursor = 0; cursor < line.length; cursor++) {

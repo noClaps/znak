@@ -1,5 +1,5 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import { parse } from "./index.ts";
 
 export function orderedListItems(input: string, codeTheme: BundledTheme) {
 	const lines = input
@@ -13,14 +13,14 @@ export function orderedListItems(input: string, codeTheme: BundledTheme) {
 			return {
 				type: "element",
 				tagName: "li",
-				children: parser(line, codeTheme),
+				children: parse(line, codeTheme),
 			};
 		}
 
 		return {
 			type: "element",
 			tagName: "li",
-			children: parser(
+			children: parse(
 				`${segments[0]}\n\n${segments
 					.slice(1)
 					.map((l) => l.replace(/^(   |\t)/m, ""))
@@ -44,14 +44,14 @@ export function unorderedListItems(input: string, codeTheme: BundledTheme) {
 			return {
 				type: "element",
 				tagName: "li",
-				children: parser(line, codeTheme),
+				children: parse(line, codeTheme),
 			};
 		}
 
 		return {
 			type: "element",
 			tagName: "li",
-			children: parser(
+			children: parse(
 				`${segments[0]}\n\n${segments
 					.slice(1)
 					.map((l) => l.replace(/^(  |\t)/m, ""))

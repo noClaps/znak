@@ -1,7 +1,7 @@
-import inlineFormatting from "./inline-formatting.ts";
+import { inlineFormatting } from "./inline-formatting.ts";
 import type { Slugger } from "../utils/slugger.ts";
 
-export default function headings(line: string, slugger: Slugger): HastElement {
+export function headings(line: string, slugger: Slugger): HastElement {
 	let level = 0;
 	let cursor = 0;
 	let char = line[cursor];

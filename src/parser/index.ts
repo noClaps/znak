@@ -1,29 +1,29 @@
 import type { BundledTheme } from "shiki";
 import { renderMath } from "../utils/math.ts";
-import blockquotes from "./blockquotes.ts";
-import codeBlock from "./code-block.ts";
-import containers from "./containers.ts";
-import headings from "./headings.ts";
-import images from "./images.ts";
-import inlineFormatting from "./inline-formatting.ts";
+import { blockquotes } from "./blockquotes.ts";
+import { codeBlock } from "./code-block.ts";
+import { containers } from "./containers.ts";
+import { headings } from "./headings.ts";
+import { images } from "./images.ts";
+import { inlineFormatting } from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
-import tables from "./tables.ts";
+import { tables } from "./tables.ts";
 import { Slugger } from "../utils/slugger.ts";
 
-export default function parse(
-	input: string,
-	codeTheme: BundledTheme,
-	returnHeadings: true,
-): Heading[];
-export default function parse(
-	input: string,
-	codeTheme: BundledTheme,
-): (HastElement | HastText)[];
-export default function parse(
-	input: string,
-	codeTheme: BundledTheme,
-	returnHeadings: boolean = false,
-) {
+export function parseHeadings(input: string) {
+	const slugger = new Slugger();
+
+	const matches = input.matchAll(/^(#{1,6}) (.+)/gm);
+	for (const match of matches) {
+		const level = match[1].length;
+		const heading = match[2];
+		slugger.slug(heading, level);
+	}
+
+	return slugger.headings;
+}
+
+export function parse(input: string, codeTheme: BundledTheme) {
 	const slugger = new Slugger();
 	const lines = input.trim().split("\n");
 	const tokens: (HastElement | HastText)[] = [];
@@ -215,8 +215,6 @@ export default function parse(
 		}
 		buffer = "";
 	}
-
-	if (returnHeadings) return slugger.headings;
 
 	return tokens;
 }

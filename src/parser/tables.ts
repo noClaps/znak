@@ -1,6 +1,6 @@
-import inlineFormatting from "./inline-formatting.ts";
+import { inlineFormatting } from "./inline-formatting.ts";
 
-export default function tables(input: string): HastElement {
+export function tables(input: string): HastElement {
 	const lines = input.trim().split("\n");
 	const thead = lines[0]
 		.split("|")

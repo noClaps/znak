@@ -5,7 +5,7 @@ import {
 } from "shiki";
 import { highlightSyntax } from "../utils/syntax-highlighting.ts";
 
-export default function codeBlock(input: string, codeTheme: BundledTheme) {
+export function codeBlock(input: string, codeTheme: BundledTheme) {
 	const lines = input.split("\n");
 	const language = lines[0].replaceAll("`", "");
 	const code = lines.slice(1, -1).join("\n").trim();

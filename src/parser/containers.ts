@@ -1,7 +1,7 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import { parse } from "./index.ts";
 
-export default function containers(
+export function containers(
 	input: string,
 	codeTheme: BundledTheme,
 ): HastElement {
@@ -76,7 +76,7 @@ export default function containers(
 					},
 				],
 			},
-			...parser(content, codeTheme),
+			...parse(content, codeTheme),
 		],
 	};
 }

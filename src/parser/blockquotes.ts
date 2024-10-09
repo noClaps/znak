@@ -1,7 +1,7 @@
 import type { BundledTheme } from "shiki";
-import parser from "./index.ts";
+import { parse } from "./index.ts";
 
-export default function blockquotes(
+export function blockquotes(
 	input: string,
 	codeTheme: BundledTheme,
 ): HastElement {
@@ -13,6 +13,6 @@ export default function blockquotes(
 	return {
 		type: "element",
 		tagName: "blockquote",
-		children: parser(lines, codeTheme),
+		children: parse(lines, codeTheme),
 	};
 }

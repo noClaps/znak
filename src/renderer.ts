@@ -1,4 +1,4 @@
-export default function renderer(token: HastText | HastElement) {
+export function renderer(token: HastText | HastElement) {
 	switch (token.type) {
 		case "text":
 			return token.value;
