@@ -1,4 +1,4 @@
-import Znak from "../../index.ts";
+import { render } from "../../index.ts";
 
 const inputElem = document.querySelector<HTMLTextAreaElement>("#input");
 if (!inputElem) throw new Error("Input element not found");
@@ -7,7 +7,7 @@ const outputElem = document.querySelector("output");
 if (!outputElem) throw new Error("Output element not found");
 
 inputElem.addEventListener("input", async () => {
-	outputElem.innerHTML = new Znak(inputElem.value).renderToHTML();
+	outputElem.innerHTML = render(inputElem.value);
 });
 
 inputElem.addEventListener("keydown", (e) => {

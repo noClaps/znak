@@ -1,13 +1,13 @@
-import Znak from "./index.ts";
+import { render, headings } from "./index.ts";
 import katex from "katex";
 import { expect, test } from "bun:test";
 import { codeToHtml } from "shiki";
 
 function testRender(md: string) {
-	return new Znak(md).renderToHTML();
+	return render(md);
 }
 function testHeadings(md: string) {
-	return new Znak(md).headings();
+	return headings(md);
 }
 
 test("Headings", () => {
