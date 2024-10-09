@@ -7,7 +7,7 @@ const outputElem = document.querySelector("output");
 if (!outputElem) throw new Error("Output element not found");
 
 inputElem.addEventListener("input", async () => {
-	outputElem.innerHTML = render(inputElem.value);
+	outputElem.innerHTML = await render(inputElem.value);
 });
 
 inputElem.addEventListener("keydown", (e) => {
