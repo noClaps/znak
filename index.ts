@@ -18,7 +18,7 @@ import type { Heading } from "./src/utils/slugger.ts";
 export async function render(
 	input: string,
 	codeTheme: BundledTheme = "github-dark",
-) {
+): Promise<string> {
 	const parserOutput = await parse(input, codeTheme);
 	return parserOutput.map((po) => renderer(po)).join("");
 }
