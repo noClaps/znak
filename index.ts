@@ -15,8 +15,11 @@ import type { Heading } from "./src/utils/slugger.ts";
  *
  * @returns An HTML string created from the input text.
  */
-export function render(input: string, codeTheme: BundledTheme = "github-dark") {
-	const parserOutput = parse(input, codeTheme);
+export async function render(
+	input: string,
+	codeTheme: BundledTheme = "github-dark",
+) {
+	const parserOutput = await parse(input, codeTheme);
 	return parserOutput.map((po) => renderer(po)).join("");
 }
 

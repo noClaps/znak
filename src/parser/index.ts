@@ -23,7 +23,7 @@ export function parseHeadings(input: string) {
 	return slugger.headings;
 }
 
-export function parse(input: string, codeTheme: BundledTheme) {
+export async function parse(input: string, codeTheme: BundledTheme) {
 	const slugger = new Slugger();
 	const lines = input.trim().split("\n");
 	const tokens: (HastElement | HastText)[] = [];
@@ -42,7 +42,7 @@ export function parse(input: string, codeTheme: BundledTheme) {
 				buffer += `${lines[lineCursor]}\n`;
 				lineCursor++;
 			}
-			tokens.push(blockquotes(buffer, codeTheme));
+			tokens.push(await blockquotes(buffer, codeTheme));
 			buffer = "";
 			continue;
 		}
@@ -82,7 +82,7 @@ export function parse(input: string, codeTheme: BundledTheme) {
 				lineCursor++;
 			}
 
-			tokens.push(codeBlock(buffer, codeTheme));
+			tokens.push(await codeBlock(buffer, codeTheme));
 			buffer = "";
 			continue;
 		}
@@ -103,7 +103,7 @@ export function parse(input: string, codeTheme: BundledTheme) {
 			tokens.push({
 				type: "element",
 				tagName: "ol",
-				children: orderedListItems(buffer, codeTheme),
+				children: await orderedListItems(buffer, codeTheme),
 			});
 			buffer = "";
 			continue;
@@ -125,7 +125,7 @@ export function parse(input: string, codeTheme: BundledTheme) {
 			tokens.push({
 				type: "element",
 				tagName: "ul",
-				children: unorderedListItems(buffer, codeTheme),
+				children: await unorderedListItems(buffer, codeTheme),
 			});
 			buffer = "";
 			continue;
@@ -197,7 +197,7 @@ export function parse(input: string, codeTheme: BundledTheme) {
 				buffer += `${lines[lineCursor]}\n`;
 			}
 
-			tokens.push(containers(buffer, codeTheme));
+			tokens.push(await containers(buffer, codeTheme));
 			buffer = "";
 			continue;
 		}

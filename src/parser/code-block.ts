@@ -5,7 +5,7 @@ import {
 } from "shiki";
 import { highlightSyntax } from "../utils/syntax-highlighting.ts";
 
-export function codeBlock(input: string, codeTheme: BundledTheme) {
+export async function codeBlock(input: string, codeTheme: BundledTheme) {
 	const lines = input.split("\n");
 	const language = lines[0].replaceAll("`", "");
 	const code = lines.slice(1, -1).join("\n").trim();
@@ -17,8 +17,8 @@ export function codeBlock(input: string, codeTheme: BundledTheme) {
 	}
 
 	if (language && language in bundledLanguages) {
-		return highlightSyntax(code, codeTheme, language as BundledLanguage);
+		return await highlightSyntax(code, codeTheme, language as BundledLanguage);
 	}
 
-	return highlightSyntax(code, codeTheme);
+	return await highlightSyntax(code, codeTheme);
 }

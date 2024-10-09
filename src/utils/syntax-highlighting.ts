@@ -1,24 +1,13 @@
-import {
-	type BundledLanguage,
-	bundledLanguages,
-	type BundledTheme,
-	bundledThemes,
-	createHighlighter,
-} from "shiki";
+import { codeToHtml, type BundledTheme, type BundledLanguage } from "shiki";
 
-const shiki = await createHighlighter({
-	themes: Object.keys(bundledThemes),
-	langs: Object.keys(bundledLanguages),
-});
-
-export function highlightSyntax(
+export async function highlightSyntax(
 	code: string,
 	theme: BundledTheme,
 	lang?: BundledLanguage,
-): HastText {
+): Promise<HastText> {
 	return {
 		type: "text",
-		value: shiki.codeToHtml(code, {
+		value: await codeToHtml(code, {
 			lang: lang || "plaintext",
 			theme,
 		}),

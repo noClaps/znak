@@ -1,10 +1,10 @@
 import type { BundledTheme } from "shiki";
 import { parse } from "./index.ts";
 
-export function containers(
+export async function containers(
 	input: string,
 	codeTheme: BundledTheme,
-): HastElement {
+): Promise<HastElement> {
 	const lines = input.split("\n");
 	const type = lines[0].split(" ")[1];
 
@@ -76,7 +76,7 @@ export function containers(
 					},
 				],
 			},
-			...parse(content, codeTheme),
+			...(await parse(content, codeTheme)),
 		],
 	};
 }
