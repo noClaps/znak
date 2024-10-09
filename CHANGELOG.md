@@ -1,5 +1,45 @@
 # @noclaps/znak
 
+## v0.10.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.1...v0.10.0)
+
+### 🚀 Enhancements
+
+- Change to using codeToHtml for syntax highlighting ([7874520](https://gitlab.com/noClaps/znak-lang/commit/7874520))
+- Add demo site ([696a727](https://gitlab.com/noClaps/znak-lang/commit/696a727))
+- Create a faster function to parse headings, and use named exports ([fdea29b](https://gitlab.com/noClaps/znak-lang/commit/fdea29b))
+- ⚠️  Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️  Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️  Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+
+### 📖 Documentation
+
+- Remove await from README example ([2ff0dba](https://gitlab.com/noClaps/znak-lang/commit/2ff0dba))
+
+### 🏡 Chore
+
+- Change attrObject variable in container parser to const ([a494aed](https://gitlab.com/noClaps/znak-lang/commit/a494aed))
+
+### 🎨 Styles
+
+- **demo:** Switch to using tabs for indentation ([1ad4822](https://gitlab.com/noClaps/znak-lang/commit/1ad4822))
+
+### 🤖 CI
+
+- Don't publish to GitLab Releases ([e6db68d](https://gitlab.com/noClaps/znak-lang/commit/e6db68d))
+- Remove GitLab Releases publishing stages from `stages` list ([5a133e3](https://gitlab.com/noClaps/znak-lang/commit/5a133e3))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️  Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️  Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.9.1
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.0...v0.9.1)
