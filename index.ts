@@ -24,6 +24,11 @@ export async function render(
 }
 
 /**
+ * @param [input] The input text to extract the headings from. This can be from
+ * a Markdown file as long as the syntax is supported by Znak. See the
+ * [documentation](https://github.com/noClaps/znak#syntax) for the supported
+ * syntax.
+ *
  * A method that returns the headings in the given input text.
  * @returns A list of headings in the given input text.
  */

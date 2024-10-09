@@ -20,10 +20,10 @@ deno add @noclaps/znak
 and then import it in your code:
 
 ```ts
-import { renderToHTML, headings } from "@noclaps/znak";
+import { render, headings } from "@noclaps/znak";
 
 const text = "# Hello World"; // Your text to be rendered.
-const renderedHTML = renderToHTML(text);
+const renderedHTML = await render(text);
 // <h1 id="hello-world">Hello World</h1>
 const headings = headings(text);
 // [{depth: 1, slug: "hello-world", title: "Hello World"}]
