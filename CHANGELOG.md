@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.10.1
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.0...v0.10.1)
+
+### ✅ Tests
+
+- Update tests to match new MathML output ([d3f3c30](https://gitlab.com/noClaps/znak-lang/commit/d3f3c30))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.10.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.1...v0.10.0)
