@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.10.2
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.1...v0.10.2)
+
+### 🏡 Chore
+
+- Add return type for render function ([3532e5c](https://gitlab.com/noClaps/znak-lang/commit/3532e5c))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.10.1
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.0...v0.10.1)
