@@ -1,5 +1,35 @@
 # @noclaps/znak
 
+## v0.11.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.2...v0.11.0)
+
+### 🚀 Enhancements
+
+- Create new CodeTheme type and export it ([d313fee](https://gitlab.com/noClaps/znak-lang/commit/d313fee))
+- Export Heading type ([3ff7d2f](https://gitlab.com/noClaps/znak-lang/commit/3ff7d2f))
+- ⚠️  Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+
+### 🩹 Fixes
+
+- Load all languages beforehand ([a5e59f9](https://gitlab.com/noClaps/znak-lang/commit/a5e59f9))
+
+### 📖 Documentation
+
+- Update documentation to reflect new names and types ([34c1b75](https://gitlab.com/noClaps/znak-lang/commit/34c1b75))
+
+### 🏡 Chore
+
+- Update dependencies ([2d03eec](https://gitlab.com/noClaps/znak-lang/commit/2d03eec))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.10.2
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.1...v0.10.2)
