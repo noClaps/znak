@@ -1,5 +1,6 @@
 import {
 	type BundledLanguage,
+	bundledLanguages,
 	createHighlighterCore,
 	createOnigurumaEngine,
 } from "shiki";
@@ -7,7 +8,7 @@ import type { CodeTheme } from "../../index.ts";
 
 const shiki = await createHighlighterCore({
 	themes: [],
-	langs: [],
+	langs: Object.values(bundledLanguages),
 	engine: createOnigurumaEngine(import("shiki/wasm")),
 });
 
@@ -17,9 +18,6 @@ export async function highlightSyntax(
 	lang?: BundledLanguage,
 ): Promise<HastText> {
 	await shiki.loadTheme(theme);
-	if (lang) {
-		await shiki.loadLanguage(import(`shiki/langs/${lang}.mjs`));
-	}
 	return {
 		type: "text",
 		value: shiki.codeToHtml(code, {
