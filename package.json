@@ -3,15 +3,15 @@
 	"version": "0.10.2",
 	"type": "module",
 	"devDependencies": {
-		"@types/bun": "^1.1.10",
+		"@types/bun": "^1.1.11",
 		"@types/katex": "^0.16.7",
-		"@types/mocha": "^10.0.8"
+		"@types/mocha": "^10.0.9"
 	},
 	"peerDependencies": {
-		"typescript": "^5.6.2"
+		"typescript": "^5.6.3"
 	},
 	"dependencies": {
 		"katex": "^0.16.11",
-		"shiki": "^1.21.0"
+		"shiki": "^1.22.0"
 	}
 }
