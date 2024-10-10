@@ -20,6 +20,7 @@ import type { Heading } from "./src/utils/slugger.ts";
  * [Shiki's documentation](https://shiki.style/guide/load-theme).
  */
 export type CodeTheme = ThemeRegistration;
+export { type Heading };
 
 /**
  * @param [input] The input text to be converted to HTML. This can be from a
