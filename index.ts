@@ -1,7 +1,25 @@
 import type { BundledTheme } from "shiki";
+import type { ThemeRegistration } from "shiki";
 import { parse, parseHeadings } from "./src/parser/index.ts";
 import { renderer } from "./src/renderer.ts";
 import type { Heading } from "./src/utils/slugger.ts";
+/**
+ * A code theme. This is taken from Shiki's ThemeRegistration type. You can
+ * use it to make your own themes and pass them in to the `render()` function.
+ *
+ * @example
+ * ```ts
+ * import { type CodeTheme, render } from "@noclaps/znak";
+ * const myTheme: CodeTheme = {
+ *   // ...
+ * };
+ *
+ * await render(input, myTheme);
+ * ```
+ * You can read about how to create themes in
+ * [Shiki's documentation](https://shiki.style/guide/load-theme).
+ */
+export type CodeTheme = ThemeRegistration;
 
 /**
  * @param [input] The input text to be converted to HTML. This can be from a

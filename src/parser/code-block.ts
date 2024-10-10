@@ -1,11 +1,8 @@
-import {
-	bundledLanguages,
-	type BundledLanguage,
-	type BundledTheme,
-} from "shiki";
+import { bundledLanguages, type BundledLanguage } from "shiki";
+import type { CodeTheme } from "../../index.ts";
 import { highlightSyntax } from "../utils/syntax-highlighting.ts";
 
-export async function codeBlock(input: string, codeTheme: BundledTheme) {
+export async function codeBlock(input: string, codeTheme: CodeTheme) {
 	const lines = input.split("\n");
 	const language = lines[0].replaceAll("`", "");
 	const code = lines.slice(1, -1).join("\n").trim();

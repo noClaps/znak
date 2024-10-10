@@ -1,7 +1,7 @@
-import type { BundledTheme } from "shiki";
+import type { CodeTheme } from "../../index.ts";
 import { parse } from "./index.ts";
 
-export async function orderedListItems(input: string, codeTheme: BundledTheme) {
+export async function orderedListItems(input: string, codeTheme: CodeTheme) {
 	const lines = input
 		.split(/^\d+\. /gm)
 		.filter((l) => l)
@@ -35,10 +35,7 @@ export async function orderedListItems(input: string, codeTheme: BundledTheme) {
 	return tokens;
 }
 
-export async function unorderedListItems(
-	input: string,
-	codeTheme: BundledTheme,
-) {
+export async function unorderedListItems(input: string, codeTheme: CodeTheme) {
 	const lines = input
 		.split(/^- /gm)
 		.filter((l) => l)

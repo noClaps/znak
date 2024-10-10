@@ -1,5 +1,6 @@
-import type { BundledTheme } from "shiki";
+import type { CodeTheme } from "../../index.ts";
 import { renderMath } from "../utils/math.ts";
+import { Slugger } from "../utils/slugger.ts";
 import { blockquotes } from "./blockquotes.ts";
 import { codeBlock } from "./code-block.ts";
 import { containers } from "./containers.ts";
@@ -8,7 +9,6 @@ import { images } from "./images.ts";
 import { inlineFormatting } from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
 import { tables } from "./tables.ts";
-import { Slugger } from "../utils/slugger.ts";
 
 export function parseHeadings(input: string) {
 	const slugger = new Slugger();
@@ -23,7 +23,7 @@ export function parseHeadings(input: string) {
 	return slugger.headings;
 }
 
-export async function parse(input: string, codeTheme: BundledTheme) {
+export async function parse(input: string, codeTheme: CodeTheme) {
 	const slugger = new Slugger();
 	const lines = input.trim().split("\n");
 	const tokens: (HastElement | HastText)[] = [];

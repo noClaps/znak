@@ -1,9 +1,9 @@
-import type { BundledTheme } from "shiki";
+import type { CodeTheme } from "../../index.ts";
 import { parse } from "./index.ts";
 
 export async function blockquotes(
 	input: string,
-	codeTheme: BundledTheme,
+	codeTheme: CodeTheme,
 ): Promise<HastElement> {
 	const lines = input
 		.split("\n")

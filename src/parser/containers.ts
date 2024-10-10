@@ -1,9 +1,9 @@
-import type { BundledTheme } from "shiki";
+import type { CodeTheme } from "../../index.ts";
 import { parse } from "./index.ts";
 
 export async function containers(
 	input: string,
-	codeTheme: BundledTheme,
+	codeTheme: CodeTheme,
 ): Promise<HastElement> {
 	const lines = input.split("\n");
 	const type = lines[0].split(" ")[1];
