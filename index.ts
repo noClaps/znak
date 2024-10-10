@@ -24,6 +24,8 @@ export type CodeTheme = ThemeRegistration;
 export { type Heading };
 
 /**
+ * A function that renders the input text to HTML.
+ *
  * @param [input] The input text to be converted to HTML. This can be from a
  * Markdown file as long as the syntax is supported by Znak. See the
  * [documentation](https://github.com/noClaps/znak#syntax) for the supported
@@ -50,12 +52,13 @@ export async function render(
 }
 
 /**
+ * A function that returns the headings in the given input text.
+ *
  * @param [input] The input text to extract the headings from. This can be from
  * a Markdown file as long as the syntax is supported by Znak. See the
  * [documentation](https://github.com/noClaps/znak#syntax) for the supported
  * syntax.
  *
- * A method that returns the headings in the given input text.
  * @returns A list of headings in the given input text.
  */
 export function headings(input: string): Heading[] {
