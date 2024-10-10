@@ -1,5 +1,5 @@
 import { render, headings } from "./index.ts";
-import katex from "katex";
+import Temml from "temml";
 import { expect, test } from "bun:test";
 import { codeToHtml } from "shiki";
 
@@ -138,7 +138,7 @@ test("Inline formatting", async () => {
 	);
 
 	expect(await testRender("Inline $$x+y$$ math")).toBe(
-		`<p>Inline ${katex.renderToString("x+y", { output: "mathml" })} math</p>`,
+		`<p>Inline ${Temml.renderToString("x+y")} math</p>`,
 	);
 	expect(
 		await testRender("This is a **line** with multiple **bold** words"),
@@ -283,12 +283,7 @@ $$
 a^2 + b^2 = c^2
 $$
 `),
-	).toBe(
-		katex.renderToString("a^2 + b^2 = c^2", {
-			displayMode: true,
-			output: "mathml",
-		}),
-	);
+	).toBe(Temml.renderToString("a^2 + b^2 = c^2", { displayMode: true }));
 	expect(await testRender("$$")).toBe("<p>$$</p>");
 });
 

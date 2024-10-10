@@ -1,11 +1,10 @@
-import katex from "katex";
+import Temml from "temml";
 
 export function renderMath(input: string, isBlock: boolean): HastText {
 	return {
 		type: "text",
-		value: katex.renderToString(input, {
+		value: Temml.renderToString(input, {
 			displayMode: isBlock,
-			output: "mathml",
 		}),
 	};
 }
