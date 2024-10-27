@@ -1,24 +1,25 @@
 export function renderer(token: HastText | HastElement) {
-	switch (token.type) {
-		case "text":
-			return token.value;
+  switch (token.type) {
+    case "text":
+      return token.value;
 
-		case "element":
-			const attributeList = token.properties
-				? Object.keys(token.properties)
-						.map((key) => ` ${key}="${token.properties![key]}"`)
-						.join("")
-				: "";
+    case "element":
+      let attributeList = "";
+      if (token.properties) {
+        for (const [key, value] of token.properties) {
+          attributeList += ` ${key}="${value}"`;
+        }
+      }
 
-			let contents = "";
-			for (const item of token.children) {
-				contents += renderer(item);
-			}
+      let contents = "";
+      for (const item of token.children) {
+        contents += renderer(item);
+      }
 
-			if (token.children.length === 0) {
-				return `<${token.tagName}${attributeList} />`;
-			}
+      if (token.children.length === 0) {
+        return `<${token.tagName}${attributeList} />`;
+      }
 
-			return `<${token.tagName}${attributeList}>${contents}</${token.tagName}>`;
-	}
+      return `<${token.tagName}${attributeList}>${contents}</${token.tagName}>`;
+  }
 }

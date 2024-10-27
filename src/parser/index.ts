@@ -38,7 +38,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
         type: "element",
         tagName: `h${level}`,
         children: inlineFormatting(content),
-        properties: { id: slug },
+        properties: new Map([["id", `${slug}`]]),
       });
       continue;
     }

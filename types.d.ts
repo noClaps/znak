@@ -1,11 +1,11 @@
 type HastElement = {
-	type: "element";
-	tagName: string;
-	properties?: Record<string, string>;
-	children: (HastElement | HastText)[];
+  type: "element";
+  tagName: string;
+  properties?: Map<string, string>;
+  children: (HastElement | HastText)[];
 };
 
 type HastText = {
-	type: "text";
-	value: string;
+  type: "text";
+  value: string;
 };
