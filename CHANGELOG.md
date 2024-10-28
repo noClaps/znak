@@ -1,5 +1,46 @@
 # @noclaps/znak
 
+## v0.11.1
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.0...v0.11.1)
+
+### 🚀 Enhancements
+
+- Switch KaTeX for Temml ([b3ea42f](https://gitlab.com/noClaps/znak-lang/commit/b3ea42f))
+- **demo:** Use build and dev scripts instead of Makefile ([fe3a198](https://gitlab.com/noClaps/znak-lang/commit/fe3a198))
+
+### 🔥 Performance
+
+- Use Shiki's codeToHtml instead of making new highlighter ([d3daadf](https://gitlab.com/noClaps/znak-lang/commit/d3daadf))
+
+### 🩹 Fixes
+
+- Fix errors when HTML element wasn't closed and trim HTML parsed output ([4372d02](https://gitlab.com/noClaps/znak-lang/commit/4372d02))
+
+### 💅 Refactors
+
+- Inline blockquotes and headings functions ([8dc257d](https://gitlab.com/noClaps/znak-lang/commit/8dc257d))
+- Replace Records with Maps ([9d099c0](https://gitlab.com/noClaps/znak-lang/commit/9d099c0))
+- Inline code blocks parsing ([3807564](https://gitlab.com/noClaps/znak-lang/commit/3807564))
+- **demo:** Use non-null assertion for query selectors ([927b053](https://gitlab.com/noClaps/znak-lang/commit/927b053))
+
+### 📖 Documentation
+
+- Add a short description to exported functions ([7e5af95](https://gitlab.com/noClaps/znak-lang/commit/7e5af95))
+
+### 🏡 Chore
+
+- Remove unneeded @types/katex package from dev deps ([c06d6a8](https://gitlab.com/noClaps/znak-lang/commit/c06d6a8))
+- Update dependencies ([d57bc99](https://gitlab.com/noClaps/znak-lang/commit/d57bc99))
+
+### ✅ Tests
+
+- Add benchmarking tests ([8c9d803](https://gitlab.com/noClaps/znak-lang/commit/8c9d803))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.11.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.2...v0.11.0)
