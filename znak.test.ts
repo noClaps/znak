@@ -272,8 +272,10 @@ Content here
 `),
   ).toBe(`<div>
 Content here
-</div>
-`);
+</div>`);
+  expect(await testRender(`<u>This element isn't closed`)).toBe(
+    `<u>This element isn't closed`,
+  );
 });
 
 test("Math blocks", async () => {

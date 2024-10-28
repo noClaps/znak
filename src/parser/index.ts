@@ -179,12 +179,18 @@ export async function parse(input: string, codeTheme: CodeTheme) {
     // HTML Elements
     if (lines[lineCursor].startsWith("<")) {
       buffer += `${lines[lineCursor]}\n`;
+
+      if (!lines.slice(lineCursor - 1).find((line) => line.includes("</"))) {
+        tokens.push({ type: "text", value: buffer.trim() });
+        continue;
+      }
+
       while (!lines[lineCursor].includes("</")) {
         lineCursor++;
         buffer += `${lines[lineCursor]}\n`;
       }
 
-      tokens.push({ type: "text", value: buffer });
+      tokens.push({ type: "text", value: buffer.trim() });
       buffer = "";
       continue;
     }
