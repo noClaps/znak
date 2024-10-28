@@ -1,4 +1,4 @@
-import { render, type CodeTheme } from "../index.ts";
+import { render } from "../index.ts";
 
 const md = await Bun.file("bench/bench.md").text();
 
