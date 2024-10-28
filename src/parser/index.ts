@@ -4,7 +4,6 @@ import { renderMath } from "../utils/math.ts";
 import { Slugger } from "../utils/slugger.ts";
 import { highlightSyntax } from "../utils/syntax-highlighting.ts";
 import { containers } from "./containers.ts";
-import { images } from "./images.ts";
 import { inlineFormatting } from "./inline-formatting.ts";
 import { orderedListItems, unorderedListItems } from "./list-items.ts";
 import { tables } from "./tables.ts";
@@ -73,7 +72,31 @@ export async function parse(input: string, codeTheme: CodeTheme) {
 
     // Images
     if (lines[lineCursor].startsWith("![") && lines[lineCursor].endsWith(")")) {
-      tokens.push(images(lines[lineCursor]));
+      const line = lines[lineCursor];
+      const imageSplit = line.lastIndexOf("](");
+      const imageTitle = line.slice(2, imageSplit);
+      const imageURL = line.slice(imageSplit + 2, -1);
+
+      tokens.push({
+        type: "element",
+        tagName: "figure",
+        children: [
+          {
+            type: "element",
+            tagName: "img",
+            children: [],
+            properties: new Map([
+              ["src", `${imageURL}`],
+              ["alt", `${imageTitle}`],
+            ]),
+          },
+          {
+            type: "element",
+            tagName: "figcaption",
+            children: inlineFormatting(imageTitle),
+          },
+        ],
+      });
       continue;
     }
 
