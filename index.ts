@@ -44,11 +44,11 @@ export { type Heading };
  * @returns An HTML string created from the input text.
  */
 export async function render(
-	input: string,
-	codeTheme: CodeTheme = githubDark,
+  input: string,
+  codeTheme: CodeTheme = githubDark,
 ): Promise<string> {
-	const parserOutput = await parse(input, codeTheme);
-	return parserOutput.map((po) => renderer(po)).join("");
+  const parserOutput = await parse(input, codeTheme);
+  return parserOutput.map((po) => renderer(po)).join("");
 }
 
 /**
@@ -62,5 +62,5 @@ export async function render(
  * @returns A list of headings in the given input text.
  */
 export function headings(input: string): Heading[] {
-	return parseHeadings(input);
+  return parseHeadings(input);
 }

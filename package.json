@@ -1,16 +1,19 @@
 {
-	"name": "@noclaps/znak",
-	"version": "0.11.0",
-	"type": "module",
-	"devDependencies": {
-		"@types/bun": "^1.1.11",
-		"@types/mocha": "^10.0.9"
-	},
-	"peerDependencies": {
-		"typescript": "^5.6.3"
-	},
-	"dependencies": {
-		"shiki": "^1.22.0",
-		"temml": "^0.10.29"
-	}
+  "name": "@noclaps/znak",
+  "version": "0.11.0",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "^1.1.12",
+    "@types/mocha": "^10.0.9"
+  },
+  "peerDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "shiki": "^1.22.1",
+    "temml": "^0.10.29"
+  },
+  "scripts": {
+    "bench": "bun run bench/bench.ts"
+  }
 }
