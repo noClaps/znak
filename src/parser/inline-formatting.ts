@@ -22,11 +22,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside bold block
-      let boldBuffer = "";
-      for (cursor += 2; line[cursor] + line[cursor + 1] !== "**"; cursor++) {
-        boldBuffer += line[cursor];
-      }
+      const nextIndexOfBold = line.indexOf("**", cursor + 2);
+      const boldBuffer = line.slice(cursor + 2, nextIndexOfBold);
 
       if (!boldBuffer) {
         contents.push({ type: "text", value: "****" });
@@ -38,7 +35,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
-      cursor++;
+      cursor = nextIndexOfBold + 1;
       continue;
     }
 
@@ -50,11 +47,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside italic block
-      let italicBuffer = "";
-      for (cursor++; line[cursor] !== "_"; cursor++) {
-        italicBuffer += line[cursor];
-      }
+      const nextIndexOfItalic = line.indexOf("_", cursor + 1);
+      const italicBuffer = line.slice(cursor + 1, nextIndexOfItalic);
 
       if (!italicBuffer) {
         contents.push({ type: "text", value: "__" });
@@ -66,6 +60,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
+      cursor = nextIndexOfItalic;
       continue;
     }
 
@@ -77,11 +72,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside code block
-      let codeBuffer = "";
-      for (cursor++; line[cursor] !== "`"; cursor++) {
-        codeBuffer += line[cursor];
-      }
+      const nextIndexOfCode = line.indexOf("`", cursor + 1);
+      const codeBuffer = line.slice(cursor + 1, nextIndexOfCode);
 
       if (!codeBuffer) {
         contents.push({ type: "text", value: "``" });
@@ -99,6 +91,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
+      cursor = nextIndexOfCode;
       continue;
     }
 
@@ -113,11 +106,11 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside bold block
-      let strikethroughBuffer = "";
-      for (cursor += 2; line[cursor] + line[cursor + 1] !== "~~"; cursor++) {
-        strikethroughBuffer += line[cursor];
-      }
+      const nextIndexOfStrikethrough = line.indexOf("~~", cursor + 2);
+      const strikethroughBuffer = line.slice(
+        cursor + 2,
+        nextIndexOfStrikethrough,
+      );
 
       if (!strikethroughBuffer) {
         contents.push({ type: "text", value: "~~~~" });
@@ -129,7 +122,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
-      cursor++;
+      cursor = nextIndexOfStrikethrough + 1;
       continue;
     }
 
@@ -144,11 +137,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside bold block
-      let highlightBuffer = "";
-      for (cursor += 2; line[cursor] + line[cursor + 1] !== "=="; cursor++) {
-        highlightBuffer += line[cursor];
-      }
+      const nextIndexOfHighlight = line.indexOf("==", cursor + 2);
+      const highlightBuffer = line.slice(cursor + 2, nextIndexOfHighlight);
 
       if (!highlightBuffer) {
         contents.push({ type: "text", value: "====" });
@@ -160,7 +150,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
-      cursor++;
+      cursor = nextIndexOfHighlight + 1;
       continue;
     }
 
@@ -172,11 +162,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside subscript block
-      let subscriptBuffer = "";
-      for (cursor++; line[cursor] !== "~"; cursor++) {
-        subscriptBuffer += line[cursor];
-      }
+      const nextIndexOfSubscript = line.indexOf("~", cursor + 1);
+      const subscriptBuffer = line.slice(cursor + 1, nextIndexOfSubscript);
 
       if (!subscriptBuffer) {
         contents.push({ type: "text", value: "~~" });
@@ -188,6 +175,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
+      cursor = nextIndexOfSubscript;
       continue;
     }
 
@@ -199,11 +187,8 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      // Move cursor to inside superscript block
-      let superscriptBuffer = "";
-      for (cursor++; line[cursor] !== "^"; cursor++) {
-        superscriptBuffer += line[cursor];
-      }
+      const nextIndexOfSuperscript = line.indexOf("^", cursor + 1);
+      const superscriptBuffer = line.slice(cursor + 1, nextIndexOfSuperscript);
 
       if (!superscriptBuffer) {
         contents.push({ type: "text", value: "^^" });
@@ -215,6 +200,7 @@ export function inlineFormatting(line: string) {
         });
       }
 
+      cursor = nextIndexOfSuperscript;
       continue;
     }
 
@@ -246,6 +232,7 @@ export function inlineFormatting(line: string) {
       // Move cursor inside link URL
       let linkURL = "";
       let isInsideLink = false;
+
       for (cursor += 2; line[cursor] !== ")" || isInsideLink; cursor++) {
         if (line[cursor] === "<") {
           isInsideLink = true;
@@ -283,18 +270,16 @@ export function inlineFormatting(line: string) {
         buffer = "";
       }
 
-      let math = "";
-      for (cursor += 2; line[cursor] + line[cursor + 1] !== "$$"; cursor++) {
-        math += line[cursor];
-      }
+      const nextIndexOfMath = line.indexOf("$$", cursor + 2);
+      const mathBuffer = line.slice(cursor + 2, nextIndexOfMath);
 
-      if (!math) {
+      if (!mathBuffer) {
         contents.push({ type: "text", value: "$$$$" });
       } else {
-        contents.push(renderMath(math, false));
+        contents.push(renderMath(mathBuffer, false));
       }
 
-      cursor++;
+      cursor = nextIndexOfMath + 1;
       continue;
     }
 
