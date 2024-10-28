@@ -1,14 +1,14 @@
 import { inlineFormatting } from "./inline-formatting.ts";
 
 export function tables(input: string): HastElement {
-  const lines = input.trim().split("\n");
-  const thead = lines[0]
+  const [headRow, alignmentsRow, ...tbody] = input.trim().split("\n");
+  const thead = headRow
+    .slice(1, -1)
     .split("|")
-    .filter((c) => c)
     .map((col) => col.trim());
-  const alignments = lines[1]
+  const alignments = alignmentsRow
+    .slice(1, -1)
     .split("|")
-    .filter((c) => c)
     .map((col) => {
       const trimmedCol = col.trim();
       if (trimmedCol.startsWith(":") && trimmedCol.endsWith(":"))
@@ -41,12 +41,12 @@ export function tables(input: string): HastElement {
       {
         type: "element",
         tagName: "tbody",
-        children: lines.slice(2).map((line) => ({
+        children: tbody.map((line) => ({
           type: "element",
           tagName: "tr",
           children: line
+            .slice(1, -1)
             .split("|")
-            .filter((c) => c)
             .map((col, index) => ({
               type: "element",
               tagName: "td",
