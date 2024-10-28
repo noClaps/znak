@@ -5,29 +5,18 @@ export async function containers(
   input: string,
   codeTheme: CodeTheme,
 ): Promise<HastElement> {
-  const lines = input.split("\n");
-  const type = lines[0].split(" ")[1];
+  const [head, ...body] = input.split("\n");
+  const [_, type, ...meta] = head.split(" ");
 
-  const values = lines[0].split(" ").slice(2).join(" ");
-  let valuesCursor = 0;
-  let title = "";
-  for (
-    valuesCursor;
-    valuesCursor < values.length && values[valuesCursor] !== "{";
-    valuesCursor++
-  ) {
-    title += values[valuesCursor];
-  }
-  title = title.trim() || type.toUpperCase();
+  const values = meta.join(" ");
+  const nextIndexOfAttr = values.indexOf("{");
 
-  let attr = "";
-  for (
-    valuesCursor++;
-    valuesCursor < values.length && values[valuesCursor] !== "}";
-    valuesCursor++
-  ) {
-    attr += values[valuesCursor];
-  }
+  const title =
+    values
+      .slice(0, nextIndexOfAttr === -1 ? undefined : nextIndexOfAttr)
+      .trim() || type.toUpperCase();
+  const attr =
+    nextIndexOfAttr === -1 ? "" : values.slice(nextIndexOfAttr + 1, -1);
 
   const href = attr.split(" ").find((a) => a.startsWith("href")) || "";
   const className = attr.split(" ").find((a) => a.startsWith("class")) || "";
@@ -41,7 +30,7 @@ export async function containers(
     }
   }
 
-  const content = lines.slice(1, -1).join("\n").trim();
+  const content = body.slice(0, -1).join("\n").trim();
 
   return {
     type: "element",
