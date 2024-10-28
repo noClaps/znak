@@ -1,7 +1,8 @@
+import { bundledLanguages, type BundledLanguage } from "shiki";
 import type { CodeTheme } from "../../index.ts";
 import { renderMath } from "../utils/math.ts";
 import { Slugger } from "../utils/slugger.ts";
-import { codeBlock } from "./code-block.ts";
+import { highlightSyntax } from "../utils/syntax-highlighting.ts";
 import { containers } from "./containers.ts";
 import { images } from "./images.ts";
 import { inlineFormatting } from "./inline-formatting.ts";
@@ -89,17 +90,33 @@ export async function parse(input: string, codeTheme: CodeTheme) {
         ?.endsWith("`")
     ) {
       const backtickCount = (lines[lineCursor].match(/`/g) || []).length;
+      const codeBuffer: string[] = [];
 
       // Move inside code block
-      buffer += `${lines[lineCursor]}\n`;
-      lineCursor++;
-      while (!lines[lineCursor].endsWith("`".repeat(backtickCount))) {
-        buffer += `${lines[lineCursor]}\n`;
+      const language = lines[lineCursor].replaceAll("`", "");
+      for (
         lineCursor++;
+        !lines[lineCursor].endsWith("`".repeat(backtickCount));
+        lineCursor++
+      ) {
+        codeBuffer.push(lines[lineCursor]);
+      }
+      const code = codeBuffer.join("\n").trim();
+
+      if (language) {
+        if (Object.keys(bundledLanguages).includes(language)) {
+          tokens.push(
+            await highlightSyntax(code, codeTheme, language as BundledLanguage),
+          );
+          continue;
+        }
+
+        console.error(
+          `Language not supported by Shiki: ${language}, continuing as plaintext`,
+        );
       }
 
-      tokens.push(await codeBlock(buffer, codeTheme));
-      buffer = "";
+      tokens.push(await highlightSyntax(code, codeTheme));
       continue;
     }
 
