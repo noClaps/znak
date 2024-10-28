@@ -1,10 +1,7 @@
 import { render } from "../../index.ts";
 
-const inputElem = document.querySelector<HTMLTextAreaElement>("#input");
-if (!inputElem) throw new Error("Input element not found");
-
-const outputElem = document.querySelector("output");
-if (!outputElem) throw new Error("Output element not found");
+const inputElem = document.querySelector<HTMLTextAreaElement>("#input")!;
+const outputElem = document.querySelector("output")!;
 
 inputElem.addEventListener("input", async () => {
   outputElem.innerHTML = await render(inputElem.value);
