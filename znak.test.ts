@@ -352,7 +352,7 @@ This is some text in a note.
 :::
   `),
   ).toBe(
-    `<div class="znak-container note" id="my-note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
+    `<div id="my-note" class="znak-container note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
   );
 });
 

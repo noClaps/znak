@@ -11,37 +11,32 @@ export async function containers(
   const values = meta.join(" ");
   const nextIndexOfAttr = values.indexOf("{");
 
-  const title =
-    values
-      .slice(0, nextIndexOfAttr === -1 ? undefined : nextIndexOfAttr)
-      .trim() || type.toUpperCase();
   const attr =
     nextIndexOfAttr === -1 ? "" : values.slice(nextIndexOfAttr + 1, -1);
-
-  const href = attr.split(" ").find((a) => a.startsWith("href")) || "";
-  const className = attr.split(" ").find((a) => a.startsWith("class")) || "";
-  const clearAttr = attr.replace(href, "").replace(className, "").trim();
+  const title = values.replace(`{${attr}}`, "").trim() || type.toUpperCase();
 
   const attrObject = new Map<string, string>();
-  if (clearAttr) {
-    for (const a of clearAttr.split(" ")) {
+  if (attr) {
+    for (const a of attr.split(" ")) {
       const [key, val] = a.split("=");
       attrObject.set(key, val.slice(1, -1));
     }
   }
+
+  attrObject.set(
+    "class",
+    `znak-container ${type} ${attrObject.get("class") ?? ""}`.trim(),
+  );
+
+  const href = attrObject.get("href");
+  attrObject.delete("href");
 
   const content = body.slice(0, -1).join("\n").trim();
 
   return {
     type: "element",
     tagName: "div",
-    properties: new Map([
-      [
-        "class",
-        `znak-container ${type}${className && ` ${className.split("=")[1].slice(1, -1)}`}`,
-      ],
-      ...attrObject,
-    ]),
+    properties: attrObject,
     children: [
       {
         type: "element",
@@ -57,7 +52,7 @@ export async function containers(
                     type: "element",
                     tagName: "a",
                     properties: new Map([
-                      ["href", href.split("=")[1].slice(1, -1) || ""],
+                      ["href", href],
                       ["target", "_blank"],
                       ["rel", "noopener noreferrer"],
                     ]),
