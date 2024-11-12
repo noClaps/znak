@@ -1,5 +1,31 @@
 # @noclaps/znak
 
+## v0.11.2
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.1...v0.11.2)
+
+### 💅 Refactors
+
+- Inline and simplify image parsing code ([d6213df](https://gitlab.com/noClaps/znak-lang/commit/d6213df))
+- Simplify a lot of inline formatting parsing ([0b1d336](https://gitlab.com/noClaps/znak-lang/commit/0b1d336))
+- Simplify container parsing ([ed2ec26](https://gitlab.com/noClaps/znak-lang/commit/ed2ec26))
+- Further simplify container parsing ([37c6bbf](https://gitlab.com/noClaps/znak-lang/commit/37c6bbf))
+- Use array destructuring and slices in table parsing ([2345684](https://gitlab.com/noClaps/znak-lang/commit/2345684))
+
+### 📖 Documentation
+
+- Make input param for render and heading functions compulsory ([7529fc3](https://gitlab.com/noClaps/znak-lang/commit/7529fc3))
+
+### 🏡 Chore
+
+- **bench:** Remove unneeded import ([4406f7d](https://gitlab.com/noClaps/znak-lang/commit/4406f7d))
+- Update dependencies ([cf02cef](https://gitlab.com/noClaps/znak-lang/commit/cf02cef))
+- Update dependencies ([f62cb91](https://gitlab.com/noClaps/znak-lang/commit/f62cb91))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.11.1
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.0...v0.11.1)
