@@ -4,9 +4,7 @@
   "type": "module",
   "devDependencies": {
     "@types/bun": "^1.1.14",
-    "@types/mocha": "^10.0.10"
-  },
-  "peerDependencies": {
+    "@types/mocha": "^10.0.10",
     "typescript": "^5.7.2"
   },
   "dependencies": {
