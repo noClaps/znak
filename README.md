@@ -1,6 +1,6 @@
 # Znak
 
-A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like [Shiki](https://shiki.style) syntax highlighting, [KaTeX](https://katex.org), and heading IDs built-in.
+A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like [Shiki](https://shiki.style) syntax highlighting, LaTeX, and heading IDs built-in.
 
 The full documentation for Znak, such as the types and syntax, are available [here](https://docs.zerolimits.dev/znak).
 
