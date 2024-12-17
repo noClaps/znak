@@ -8,8 +8,8 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "shiki": "^1.23.1",
-    "temml": "^0.10.31"
+    "shiki": "^1.24.2",
+    "temml": "^0.10.32"
   },
   "scripts": {
     "bench": "bun run bench/bench.ts"
