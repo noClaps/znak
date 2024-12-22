@@ -8,7 +8,7 @@
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@noclaps/highlight": "npm:@jsr/noclaps__highlight",
+    "@noclaps/highlight": "npm:@jsr/noclaps__highlight@0.2.1",
     "temml": "^0.10.32"
   },
   "scripts": {
