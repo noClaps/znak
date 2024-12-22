@@ -1,10 +1,12 @@
-import { render } from "../../index.ts";
-
 const inputElem = document.querySelector<HTMLTextAreaElement>("#input")!;
 const outputElem = document.querySelector("output")!;
 
 inputElem.addEventListener("input", async () => {
-  outputElem.innerHTML = await render(inputElem.value);
+  const output = await fetch("/render", {
+    method: "POST",
+    body: inputElem.value,
+  }).then((r) => r.text());
+  outputElem.innerHTML = output;
 });
 
 inputElem.addEventListener("keydown", (e) => {

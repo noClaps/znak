@@ -1,12 +1,13 @@
-import type { ThemeRegistration } from "shiki";
+import type { Theme } from "@noclaps/highlight";
 import { parse, parseHeadings } from "./src/parser/index.ts";
 import { renderer } from "./src/renderer.ts";
 import type { Heading } from "./src/utils/slugger.ts";
-import githubDark from "shiki/themes/github-dark.mjs";
+import { githubTheme } from "./src/utils/syntax-highlighting.ts";
 
 /**
- * A code theme. This is taken from Shiki's ThemeRegistration type. You can
- * use it to make your own themes and pass them in to the `render()` function.
+ * A code theme. This is taken from `@noclaps/highlight`'s ThemeRegistration
+ * type. You can use it to make your own themes and pass them in to the
+ * `render()` function.
  *
  * @example
  * ```ts
@@ -15,12 +16,10 @@ import githubDark from "shiki/themes/github-dark.mjs";
  *   // ...
  * };
  *
- * await render(input, myTheme);
+ * render(input, myTheme);
  * ```
- * You can read about how to create themes in
- * [Shiki's documentation](https://shiki.style/guide/load-theme).
  */
-export type CodeTheme = ThemeRegistration;
+export type CodeTheme = Theme;
 export { type Heading };
 
 /**
@@ -32,22 +31,26 @@ export { type Heading };
  * syntax.
  *
  * @param [codeTheme] The theme for code blocks. This is set to GitHub Dark
- * by default, and can be set to any of the syntax highlighting themes
- * included in [Shiki](https://shiki.style/themes). To use a different theme,
- * add Shiki as a dependency and import the theme using:
+ * by default. To use a different theme, you must find one online, or create
+ * one yourself:
  * ```ts
- * import theme from "shiki/themes/[theme].mjs
+ * import { type CodeTheme } from "@noclaps/znak";
+ * const theme: CodeTheme = {
+ *   // ...
+ * }
  *
- * await render(input, theme)
+ * render(input, theme)
  * ```
+ * An example of a theme can be found in the [`@noclaps/highlight`
+ * repository](https://gitlab.com/noClaps/highlight/-/blob/main/highlight.test.ts)
  *
  * @returns An HTML string created from the input text.
  */
-export async function render(
+export function render(
   input: string,
-  codeTheme: CodeTheme = githubDark,
-): Promise<string> {
-  const parserOutput = await parse(input, codeTheme);
+  codeTheme: CodeTheme = githubTheme,
+): string {
+  const parserOutput = parse(input, codeTheme);
   return parserOutput.map((po) => renderer(po)).join("");
 }
 

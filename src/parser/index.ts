@@ -1,4 +1,4 @@
-import { bundledLanguages, type BundledLanguage } from "shiki";
+import { bundledLanguages, type BundledLanguage } from "@noclaps/highlight";
 import type { CodeTheme } from "../../index.ts";
 import { renderMath } from "../utils/math.ts";
 import { Slugger } from "../utils/slugger.ts";
@@ -21,7 +21,7 @@ export function parseHeadings(input: string) {
   return slugger.headings;
 }
 
-export async function parse(input: string, codeTheme: CodeTheme) {
+export function parse(input: string, codeTheme?: CodeTheme) {
   const slugger = new Slugger();
   const lines = input.trim().split("\n");
   const tokens: (HastElement | HastText)[] = [];
@@ -57,7 +57,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
       tokens.push({
         type: "element",
         tagName: "blockquote",
-        children: await parse(blockquoteLines, codeTheme),
+        children: parse(blockquoteLines, codeTheme),
       });
       buffer = "";
       continue;
@@ -127,9 +127,9 @@ export async function parse(input: string, codeTheme: CodeTheme) {
       const code = codeBuffer.join("\n").trim();
 
       if (language) {
-        if (Object.keys(bundledLanguages).includes(language)) {
+        if (bundledLanguages.includes(language)) {
           tokens.push(
-            await highlightSyntax(code, codeTheme, language as BundledLanguage),
+            highlightSyntax(code, codeTheme, language as BundledLanguage),
           );
           continue;
         }
@@ -139,7 +139,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
         );
       }
 
-      tokens.push(await highlightSyntax(code, codeTheme));
+      tokens.push(highlightSyntax(code, codeTheme));
       continue;
     }
 
@@ -159,7 +159,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
       tokens.push({
         type: "element",
         tagName: "ol",
-        children: await orderedListItems(buffer, codeTheme),
+        children: orderedListItems(buffer, codeTheme),
       });
       buffer = "";
       continue;
@@ -181,7 +181,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
       tokens.push({
         type: "element",
         tagName: "ul",
-        children: await unorderedListItems(buffer, codeTheme),
+        children: unorderedListItems(buffer, codeTheme),
       });
       buffer = "";
       continue;
@@ -259,7 +259,7 @@ export async function parse(input: string, codeTheme: CodeTheme) {
         buffer += `${lines[lineCursor]}\n`;
       }
 
-      tokens.push(await containers(buffer, codeTheme));
+      tokens.push(containers(buffer, codeTheme));
       buffer = "";
       continue;
     }

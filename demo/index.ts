@@ -1,11 +1,16 @@
 import type { ServeOptions } from "bun";
 import { watch } from "node:fs";
+import { render } from "../index.ts";
 
 const serveOptions: ServeOptions = {
-  async fetch({ url }) {
-    const path = new URL(url).pathname;
+  async fetch(req) {
+    const path = new URL(req.url).pathname;
 
     switch (path) {
+      case "/render": {
+        const markup = await req.text();
+        return new Response(render(markup));
+      }
       case "/":
         return new Response(Bun.file("src/index.html"));
       case "/style.css":

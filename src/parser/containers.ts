@@ -1,10 +1,7 @@
 import type { CodeTheme } from "../../index.ts";
 import { parse } from "./index.ts";
 
-export async function containers(
-  input: string,
-  codeTheme: CodeTheme,
-): Promise<HastElement> {
+export function containers(input: string, codeTheme?: CodeTheme): HastElement {
   const [head, ...body] = input.split("\n");
   const [_, type, ...meta] = head.split(" ");
 
@@ -63,7 +60,7 @@ export async function containers(
           },
         ],
       },
-      ...(await parse(content, codeTheme)),
+      ...parse(content, codeTheme),
     ],
   };
 }

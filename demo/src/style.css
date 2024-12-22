@@ -47,15 +47,15 @@ output {
     overflow-wrap: break-word;
     padding: 0 1rem;
 
-    .shiki {
+    .ts-highlight {
         padding: 0.5rem;
         border-radius: 0.25rem;
     }
 
-    code:not(.shiki code) {
+    code:not(.ts-highlight code) {
         padding: 0.25rem;
         border-radius: 0.25rem;
-        background-color: #24292e;
-        color: #e1e4e8;
+        background-color: #0d1117ff;
+        color: #f0f6fcff;
     }
 }
