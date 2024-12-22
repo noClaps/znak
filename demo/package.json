@@ -8,5 +8,8 @@
     "dev": "bun run index.ts",
     "serve": "bun run index.ts"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "hono": "^4.6.14"
+  }
 }

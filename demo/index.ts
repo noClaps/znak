@@ -1,38 +1,27 @@
-import type { ServeOptions } from "bun";
-import { watch } from "node:fs";
 import { render } from "../index.ts";
+import { Hono } from "hono";
 
-const serveOptions: ServeOptions = {
-  async fetch(req) {
-    const path = new URL(req.url).pathname;
+const app = new Hono();
 
-    switch (path) {
-      case "/render": {
-        const markup = await req.text();
-        return new Response(render(markup));
-      }
-      case "/":
-        return new Response(Bun.file("src/index.html"));
-      case "/style.css":
-        return new Response(Bun.file("src/style.css"));
-      case "/script.js":
-        const script = await Bun.build({
-          entrypoints: ["src/script.ts"],
-        }).then((bo) => bo.outputs[0].text());
-        return new Response(script, {
-          headers: { "content-type": "application/javascript" },
-        });
-      default:
-        return new Response("Not found", { status: 404 });
-    }
-  },
-};
+app
+  .get("/", async (c) => {
+    return c.html(await Bun.file("src/index.html").text());
+  })
+  .get("/style.css", async (c) => {
+    c.header("Content-Type", "text/css");
+    return c.body(await Bun.file("src/style.css").text());
+  })
+  .get("/script.js", async (c) => {
+    const script = await Bun.build({
+      entrypoints: ["src/script.ts"],
+    }).then((bo) => bo.outputs[0].text());
 
-const server = Bun.serve(serveOptions);
-console.log(`Server started at ${server.url}`);
+    c.header("Content-Type", "text/javascript");
+    return c.body(script);
+  })
+  .post("/render", async (c) => {
+    const markup = await c.req.text();
+    return c.text(render(markup));
+  });
 
-watch("src", (event, filename) => {
-  console.log(`Detected ${event} on ${filename}`);
-  server.reload(serveOptions);
-  console.log("Reloaded.");
-});
+export default app;
