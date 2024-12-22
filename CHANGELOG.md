@@ -1,5 +1,31 @@
 # @noclaps/znak
 
+## v0.12.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.2...v0.12.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+
+### 📖 Documentation
+
+- Remove KaTeX from README ([2b4ec49](https://gitlab.com/noClaps/znak-lang/commit/2b4ec49))
+
+### 🏡 Chore
+
+- Update dependencies ([3d58e72](https://gitlab.com/noClaps/znak-lang/commit/3d58e72))
+- Move typescript into dev deps ([9015e51](https://gitlab.com/noClaps/znak-lang/commit/9015e51))
+- Update dependencies ([cc881b7](https://gitlab.com/noClaps/znak-lang/commit/cc881b7))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.11.2
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.1...v0.11.2)

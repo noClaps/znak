@@ -1,6 +1,6 @@
 {
   "name": "@noclaps/znak",
-  "version": "0.11.2",
+  "version": "0.12.0",
   "type": "module",
   "devDependencies": {
     "@types/bun": "^1.1.14",
