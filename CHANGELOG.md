@@ -1,5 +1,17 @@
 # @noclaps/znak
 
+## v0.12.1
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.0...v0.12.1)
+
+### 🤖 CI
+
+- Use Homebrew image ([0f3985b](https://gitlab.com/noClaps/znak-lang/commit/0f3985b))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.12.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.2...v0.12.0)
