@@ -1,5 +1,21 @@
 # @noclaps/znak
 
+## v0.12.2
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.1...v0.12.2)
+
+### 🚀 Enhancements
+
+- **demo:** Switch to Hono for Cloudflare Workers ([29c0ff6](https://gitlab.com/noClaps/znak-lang/commit/29c0ff6))
+
+### 🏡 Chore
+
+- Version @noclaps/highlight dependency ([84186c6](https://gitlab.com/noClaps/znak-lang/commit/84186c6))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.12.1
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.0...v0.12.1)
