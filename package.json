@@ -5,6 +5,7 @@
   "devDependencies": {
     "@types/bun": "^1.1.14",
     "@types/mocha": "^10.0.10",
+    "hono": "^4.6.14",
     "typescript": "^5.7.2"
   },
   "dependencies": {
@@ -12,7 +13,8 @@
     "temml": "^0.10.32"
   },
   "scripts": {
-    "bench": "bun run bench/bench.ts"
+    "bench": "bun run bench/bench.ts",
+    "dev": "bun run demo/index.ts"
   },
   "trustedDependencies": [
     "tree-sitter",

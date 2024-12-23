@@ -1,5 +1,6 @@
 stages:
   - test
+  - deploy
   - publish
 
 image: homebrew/brew
@@ -12,6 +13,13 @@ test_job:
   script:
     - bun install
     - bun test
+
+deploy_job:
+  stage: deploy
+  before_script:
+    - brew install flyctl
+  script:
+    - fly deploy
 
 publish_job:
   stage: publish
