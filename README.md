@@ -10,11 +10,7 @@ Install the package as a dependency to your project:
 
 ```sh
 # Use the command for your package manager
-npx jsr add @noclaps/znak
-yarn dlx jsr add @noclaps/znak
-pnpm dlx jsr add @noclaps/znak
-bunx jsr add @noclaps/znak
-deno add jsr:@noclaps/znak
+bun add @noclaps/znak --registry https://npm.zerolimits.dev
 ```
 
 and then import it in your code:

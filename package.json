@@ -40,5 +40,14 @@
     "tree-sitter-rust",
     "tree-sitter-scala",
     "tree-sitter-typescript"
+  ],
+  "exports": "./index.ts",
+  "files": [
+    "src/",
+    "bun.lockb",
+    "index.ts",
+    "LICENSE",
+    "package.json",
+    "README.md"
   ]
 }
