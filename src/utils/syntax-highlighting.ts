@@ -4,7 +4,6 @@ import {
   type BundledLanguage,
 } from "@noclaps/highlight";
 import type { CodeTheme } from "../../index.ts";
-import { escapeHTML } from "./escape-html.ts";
 
 export const githubTheme: CodeTheme = {
   bg: "#0d1117ff",
