@@ -1,5 +1,10 @@
-import { highlight, type BundledLanguage } from "@noclaps/highlight";
+import {
+  bundledLanguages,
+  highlight,
+  type BundledLanguage,
+} from "@noclaps/highlight";
 import type { CodeTheme } from "../../index.ts";
+import { escapeHTML } from "./escape-html.ts";
 
 export const githubTheme: CodeTheme = {
   bg: "#0d1117ff",
@@ -135,7 +140,7 @@ export const githubTheme: CodeTheme = {
 
 export function highlightSyntax(
   code: string,
-  theme: CodeTheme,
+  theme?: CodeTheme,
   lang?: BundledLanguage,
 ): HastText {
   return {

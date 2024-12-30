@@ -3,7 +3,7 @@ import { render } from "../index.ts";
 const md = await Bun.file("bench/bench.md").text();
 
 const t0 = Bun.nanoseconds();
-await render(md);
+render(md);
 const t1 = Bun.nanoseconds();
 
 console.log(`Time to output: ${(t1 - t0) / (1000 * 1000)}ms`);

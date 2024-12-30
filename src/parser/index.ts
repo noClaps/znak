@@ -127,7 +127,7 @@ export function parse(input: string, codeTheme?: CodeTheme) {
       const code = codeBuffer.join("\n").trim();
 
       if (language) {
-        if (bundledLanguages.includes(language)) {
+        if (bundledLanguages.includes(language as BundledLanguage)) {
           tokens.push(
             highlightSyntax(code, codeTheme, language as BundledLanguage),
           );
@@ -135,7 +135,7 @@ export function parse(input: string, codeTheme?: CodeTheme) {
         }
 
         console.error(
-          `Language not supported by Shiki: ${language}, continuing as plaintext`,
+          `Language not supported by Highlight: ${language}, continuing as plaintext`,
         );
       }
 
