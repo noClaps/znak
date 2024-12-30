@@ -19,11 +19,10 @@ test_job:
 
 deploy_job:
   stage: deploy
+  image: flyio/flyctl
   allow_failure: true
-  before_script:
-    - brew install flyctl
   script:
-    - fly deploy
+    - fly deploy --config fly.toml --access-token $FLY_API_TOKEN
 
 publish_job:
   stage: publish

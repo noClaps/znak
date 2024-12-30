@@ -1,10 +1,7 @@
-FROM homebrew/brew:latest
+FROM oven/bun
 
-RUN brew install python
-RUN brew install oven-sh/bun/bun
-
-COPY bun.lockb package.json .npmrc ./
-RUN bun install --frozen-lockfile
+COPY bun.lockb package.json bunfig.toml ./
+RUN bun install
 
 COPY . .
 
