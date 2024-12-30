@@ -1,5 +1,25 @@
 # @noclaps/znak
 
+## v0.12.3
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.2...v0.12.3)
+
+### 🚀 Enhancements
+
+- Publish to self-hosted registry ([39446a8](https://gitlab.com/noClaps/znak-lang/commit/39446a8))
+- Update dependencies ([29b4d0d](https://gitlab.com/noClaps/znak-lang/commit/29b4d0d))
+
+### 🤖 CI
+
+- Deploy demo site to Fly.io ([96178d4](https://gitlab.com/noClaps/znak-lang/commit/96178d4))
+- Update CI to deploy to self-hosted registry ([0990329](https://gitlab.com/noClaps/znak-lang/commit/0990329))
+- Use Bun whoami to check if publishing is possible with Bun ([1b953f9](https://gitlab.com/noClaps/znak-lang/commit/1b953f9))
+- Remove -b from bun test ([3de97c6](https://gitlab.com/noClaps/znak-lang/commit/3de97c6))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.12.2
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.1...v0.12.2)
