@@ -5,9 +5,8 @@ import type { Heading } from "./src/utils/slugger.ts";
 import { githubTheme } from "./src/utils/syntax-highlighting.ts";
 
 /**
- * A code theme. This is taken from `@noclaps/highlight`'s ThemeRegistration
- * type. You can use it to make your own themes and pass them in to the
- * `render()` function.
+ * A code theme. This is taken from `@noclaps/highlight`'s Theme type. You can
+ * use it to make your own themes and pass them in to the `render()` function.
  *
  * @example
  * ```ts
