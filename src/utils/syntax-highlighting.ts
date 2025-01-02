@@ -1,8 +1,4 @@
-import {
-  bundledLanguages,
-  highlight,
-  type BundledLanguage,
-} from "@noclaps/highlight";
+import { highlight, type BundledLanguage } from "@noclaps/highlight";
 import type { CodeTheme } from "../../index.ts";
 
 export const githubTheme: CodeTheme = {
