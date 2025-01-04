@@ -1,5 +1,29 @@
 # @noclaps/znak
 
+## v0.12.4
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.3...v0.12.4)
+
+### 📖 Documentation
+
+- Fix type name in doc comment ([6e366db](https://gitlab.com/noClaps/znak-lang/commit/6e366db))
+
+### 🏡 Chore
+
+- **demo:** Fix Dockerfile' ([d69dbfb](https://gitlab.com/noClaps/znak-lang/commit/d69dbfb))
+- Remove unused import ([64ae66e](https://gitlab.com/noClaps/znak-lang/commit/64ae66e))
+- Remove unused import ([03d0246](https://gitlab.com/noClaps/znak-lang/commit/03d0246))
+- Update dependencies ([e310f17](https://gitlab.com/noClaps/znak-lang/commit/e310f17))
+
+### 🤖 CI
+
+- Fix deploy job ([f928b56](https://gitlab.com/noClaps/znak-lang/commit/f928b56))
+- Fix deploy job again ([5b7c4d2](https://gitlab.com/noClaps/znak-lang/commit/5b7c4d2))
+
+### ❤️ Contributors
+
+- NoClaps <04plugs-bios@icloud.com>
+
 ## v0.12.3
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.2...v0.12.3)
