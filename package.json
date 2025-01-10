@@ -20,7 +20,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
-    "@noclaps/highlight": "^0.3.3",
+    "@noclaps/highlight": "^0.3.4",
     "temml": "^0.10.32"
   },
   "scripts": {
