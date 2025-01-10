@@ -10,7 +10,7 @@ Install the package as a dependency to your project:
 
 ```sh
 # Use the command for your package manager
-bun add @noclaps/znak --registry https://npm.zerolimits.dev
+bun add @noclaps/znak
 ```
 
 and then import it in your code:

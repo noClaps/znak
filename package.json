@@ -2,6 +2,17 @@
   "name": "@noclaps/znak",
   "version": "0.12.4",
   "type": "module",
+  "description": "A parser for a Markdown-like markup language",
+  "homepage": "https://gitlab.com/noClaps/znak-lang",
+  "bugs": {
+    "url": "https://gitlab.com/noClaps/znak-lang/-/issues"
+  },
+  "license": "0BSD",
+  "author": "noClaps <contact@zerolimits.dev> (https://zerolimits.dev)",
+  "repository": {
+    "type": "git",
+    "url": "gitlab:noClaps/znak-lang"
+  },
   "devDependencies": {
     "@types/bun": "^1.1.16",
     "@types/mocha": "^10.0.10",
@@ -19,9 +30,9 @@
   "exports": "./index.ts",
   "files": [
     "src/",
-    "index.ts",
-    "LICENSE",
-    "package.json",
-    "README.md"
-  ]
+    "index.ts"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

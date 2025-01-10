@@ -7,8 +7,7 @@ image: homebrew/brew
 before_script:
   - brew install node
   - brew install oven-sh/bun/bun
-  - npm set registry "https://npm.zerolimits.dev"
-  - echo "//npm.zerolimits.dev/:_authToken=\"$NPM_AUTH_TOKEN\"" > .npmrc
+  - echo "//registry.npmjs.org/:_authToken=\"$NPM_AUTH_TOKEN\"" > .npmrc
   - bun pm whoami
 
 test_job:
