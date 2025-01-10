@@ -25,12 +25,14 @@
   },
   "scripts": {
     "bench": "bun run bench/bench.ts",
-    "build": "bun build index.ts --minify --outdir dist --target node",
+    "build": "bun run build.ts",
     "dev": "bun run demo/index.ts"
   },
   "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "dist/index.js"
+    "dist/index.js",
+    "dist/index.d.ts"
   ],
   "publishConfig": {
     "access": "public"
