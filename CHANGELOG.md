@@ -1,5 +1,24 @@
 # @noclaps/znak
 
+## v0.12.6
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.5...v0.12.6)
+
+### 📦 Build
+
+- Use build.ts file and bundle types ([181cc62](https://gitlab.com/noClaps/znak-lang/commit/181cc62))
+
+### 🏡 Chore
+
+- Fix repo url in package.json ([91940f3](https://gitlab.com/noClaps/znak-lang/commit/91940f3))
+- Remove bunfig.toml ([303c64e](https://gitlab.com/noClaps/znak-lang/commit/303c64e))
+- Update dependencies ([90e7481](https://gitlab.com/noClaps/znak-lang/commit/90e7481))
+- Update dependencies ([75c07cc](https://gitlab.com/noClaps/znak-lang/commit/75c07cc))
+
+### ❤️ Contributors
+
+- NoClaps <git@zerolimits.dev>
+
 ## v0.12.5
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.4...v0.12.5)
