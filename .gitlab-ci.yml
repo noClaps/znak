@@ -8,7 +8,7 @@ before_script:
   - brew install node
   - brew install oven-sh/bun/bun
   - npm config set //registry.npmjs.org/:_authToken ${NPM_AUTH_TOKEN}
-  - bun pm whoami
+  - npm whoami
 
 test_job:
   stage: test
@@ -30,4 +30,4 @@ publish_job:
     - if: $CI_COMMIT_TAG
   script:
     - bun run build
-    - bun publish
+    - npm publish
