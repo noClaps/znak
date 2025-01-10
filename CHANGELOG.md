@@ -1,5 +1,25 @@
 # @noclaps/znak
 
+## v0.12.5
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.4...v0.12.5)
+
+### 🏡 Chore
+
+- Update dependencies ([3f1b58f](https://gitlab.com/noClaps/znak-lang/commit/3f1b58f))
+- Publish to npmjs.com instead ([cb48d1d](https://gitlab.com/noClaps/znak-lang/commit/cb48d1d))
+- Build output before publishing ([bc35402](https://gitlab.com/noClaps/znak-lang/commit/bc35402))
+
+### 🤖 CI
+
+- Use npm config ([e7c5d3f](https://gitlab.com/noClaps/znak-lang/commit/e7c5d3f))
+- Use npm commands instead of bun ([b0e938a](https://gitlab.com/noClaps/znak-lang/commit/b0e938a))
+- Install dependencies before building ([b7dba85](https://gitlab.com/noClaps/znak-lang/commit/b7dba85))
+
+### ❤️ Contributors
+
+- NoClaps <git@zerolimits.dev>
+
 ## v0.12.4
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.3...v0.12.4)
