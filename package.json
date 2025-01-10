@@ -11,7 +11,7 @@
   "author": "noClaps <contact@zerolimits.dev> (https://zerolimits.dev)",
   "repository": {
     "type": "git",
-    "url": "gitlab:noClaps/znak-lang"
+    "url": "git+https://gitlab.com/noClaps/znak-lang.git"
   },
   "devDependencies": {
     "@types/bun": "^1.1.16",
