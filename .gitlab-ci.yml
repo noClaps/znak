@@ -7,7 +7,7 @@ image: homebrew/brew
 before_script:
   - brew install node
   - brew install oven-sh/bun/bun
-  - echo "//registry.npmjs.org/:_authToken=\"$NPM_AUTH_TOKEN\"" > .npmrc
+  - npm config set //registry.npmjs.org/:_authToken ${NPM_AUTH_TOKEN}
   - bun pm whoami
 
 test_job:
