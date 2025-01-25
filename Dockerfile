@@ -2,7 +2,7 @@ FROM homebrew/brew
 
 RUN brew install oven-sh/bun/bun
 
-COPY bun.lock package.json bunfig.toml ./
+COPY bun.lock package.json ./
 RUN bun install
 
 COPY . .
