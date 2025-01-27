@@ -41,7 +41,7 @@ export { type Heading };
  * render(input, theme)
  * ```
  * An example of a theme can be found in the [`@noclaps/highlight`
- * repository](https://gitlab.com/noClaps/highlight/-/blob/main/highlight.test.ts)
+ * repository](https://github.com/noClaps/highlight/blob/main/highlight.test.ts)
  *
  * @returns An HTML string created from the input text.
  */
