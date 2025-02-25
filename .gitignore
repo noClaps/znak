@@ -1,2 +1,6 @@
 node_modules/
-test/
+znak
+
+# Added by cargo
+
+/target

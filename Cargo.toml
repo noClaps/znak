@@ -1,0 +1,20 @@
+[package]
+name = "znak-lang"
+version = {workspace = true}
+edition = {workspace = true}
+
+[workspace]
+members = ["bin/"]
+
+[workspace.package]
+version = "0.12.6"
+edition = "2021"
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+highlight = { git = "https://gitlab.com/noClaps/highlight", version = "0.5.2" }
+pulldown-latex = "0.7.1"
+regex = "1.11.1"
+serde = "1.0.218"

@@ -1,37 +1,40 @@
-import { render, headings } from "./index.ts";
-import Temml from "temml";
+import { $ } from "bun";
 import { expect, test } from "bun:test";
-import { highlight } from "@noclaps/highlight";
-import { githubTheme } from "./src/utils/syntax-highlighting.ts";
 
-function testRender(md: string) {
-  return render(md);
+async function testRender(md: string) {
+  return (await $`echo ${md} | ./znak -`.text()).trim();
 }
-function testHeadings(md: string) {
-  return headings(md);
+async function testHeadings(md: string) {
+  return await $`echo ${md} | ./znak - --headings`.json();
 }
 
-test("Headings", () => {
-  expect(testRender("# Heading 1")).toBe(`<h1 id="heading-1">Heading 1</h1>`);
-  expect(testRender("## Heading 2")).toBe(`<h2 id="heading-2">Heading 2</h2>`);
-  expect(testRender("### Heading 3")).toBe(`<h3 id="heading-3">Heading 3</h3>`);
-  expect(testRender("#### Heading 4")).toBe(
+test("Headings", async () => {
+  expect(await testRender("# Heading 1")).toBe(
+    `<h1 id="heading-1">Heading 1</h1>`,
+  );
+  expect(await testRender("## Heading 2")).toBe(
+    `<h2 id="heading-2">Heading 2</h2>`,
+  );
+  expect(await testRender("### Heading 3")).toBe(
+    `<h3 id="heading-3">Heading 3</h3>`,
+  );
+  expect(await testRender("#### Heading 4")).toBe(
     `<h4 id="heading-4">Heading 4</h4>`,
   );
-  expect(testRender("##### Heading 5")).toBe(
+  expect(await testRender("##### Heading 5")).toBe(
     `<h5 id="heading-5">Heading 5</h5>`,
   );
-  expect(testRender("###### Heading 6")).toBe(
+  expect(await testRender("###### Heading 6")).toBe(
     `<h6 id="heading-6">Heading 6</h6>`,
   );
-  expect(testHeadings("## Heading 2")).toEqual([
+  expect(await testHeadings("## Heading 2")).toEqual([
     { depth: 2, slug: "heading-2", title: "Heading 2" },
   ]);
-  expect(testHeadings("### This_is-a🍪heading")).toEqual([
-    { depth: 3, slug: "this-is-a--heading", title: "This_is-a🍪heading" },
+  expect(await testHeadings("### This_is-a🍪heading")).toEqual([
+    { depth: 3, slug: "this-is-a-heading", title: "This_is-a🍪heading" },
   ]);
   expect(
-    testRender(`
+    await testRender(`
 ## Heading
 ### Heading
 #### Heading
@@ -41,91 +44,113 @@ test("Headings", () => {
   );
 });
 
-test("Horizontal rule", () => {
-  expect(testRender("---")).toBe("<hr />");
-  expect(testRender("-----")).toBe("<hr />");
-  expect(testRender("-------asdsa")).not.toBe("<hr />");
+test("Horizontal rule", async () => {
+  expect(await testRender("---")).toBe("<hr />");
+  expect(await testRender("-----")).toBe("<hr />");
+  expect(await testRender("-------asdsa")).not.toBe("<hr />");
 });
 
-test("Inline formatting", () => {
-  expect(testRender("**bold text**")).toBe("<p><strong>bold text</strong></p>");
-  expect(testRender("_italic text_")).toBe("<p><em>italic text</em></p>");
-  expect(testRender("_**bold and italic text**_")).toBe(
+test("Inline formatting", async () => {
+  expect(await testRender("**bold text**")).toBe(
+    "<p><strong>bold text</strong></p>",
+  );
+  expect(await testRender("_italic text_")).toBe("<p><em>italic text</em></p>");
+  expect(await testRender("_**bold and italic text**_")).toBe(
     "<p><em><strong>bold and italic text</strong></em></p>",
   );
-  expect(testRender("**_bold and italic text_**")).toBe(
+  expect(await testRender("**_bold and italic text_**")).toBe(
     "<p><strong><em>bold and italic text</em></strong></p>",
   );
-  expect(testRender("This is some `inline code`")).toBe(
+  expect(await testRender("This is some `inline code`")).toBe(
     "<p>This is some <code>inline code</code></p>",
   );
-  expect(testRender("This is a [link](https://zerolimits.dev)")).toBe(
+  expect(await testRender("This is a [link](https://zerolimits.dev)")).toBe(
     `<p>This is a <a href="https://zerolimits.dev">link</a></p>`,
   );
-  expect(testRender("This is a **[bold link](https://zerolimits.dev)**")).toBe(
+  expect(
+    await testRender("This is a **[bold link](https://zerolimits.dev)**"),
+  ).toBe(
     `<p>This is a <strong><a href="https://zerolimits.dev">bold link</a></strong></p>`,
   );
-  expect(testRender("This is a [**bold link**](https://zerolimits.dev)")).toBe(
+  expect(
+    await testRender("This is a [**bold link**](https://zerolimits.dev)"),
+  ).toBe(
     `<p>This is a <a href="https://zerolimits.dev"><strong>bold link</strong></a></p>`,
   );
-  expect(testRender("This is an _[italic link](https://zerolimits.dev)_")).toBe(
+  expect(
+    await testRender("This is an _[italic link](https://zerolimits.dev)_"),
+  ).toBe(
     `<p>This is an <em><a href="https://zerolimits.dev">italic link</a></em></p>`,
   );
-  expect(testRender("This is an [_italic link_](https://zerolimits.dev)")).toBe(
+  expect(
+    await testRender("This is an [_italic link_](https://zerolimits.dev)"),
+  ).toBe(
     `<p>This is an <a href="https://zerolimits.dev"><em>italic link</em></a></p>`,
   );
-  expect(testRender("This is a `[code link](https://zerolimits.dev)`")).toBe(
-    `<p>This is a <code>[code link](https://zerolimits.dev)</code></p>`,
-  );
-  expect(testRender("This is a [`code link`](https://zerolimits.dev)")).toBe(
+  expect(
+    await testRender("This is a `[code link](https://zerolimits.dev)`"),
+  ).toBe(`<p>This is a <code>[code link](https://zerolimits.dev)</code></p>`);
+  expect(
+    await testRender("This is a [`code link`](https://zerolimits.dev)"),
+  ).toBe(
     `<p>This is a <a href="https://zerolimits.dev"><code>code link</code></a></p>`,
   );
-  expect(testRender("This is formatting inside a `**code** _block_`")).toBe(
-    "<p>This is formatting inside a <code>**code** _block_</code></p>",
+  expect(
+    await testRender("This is formatting inside a `**code** _block_`"),
+  ).toBe("<p>This is formatting inside a <code>**code** _block_</code></p>");
+  expect(await testRender(`~~strikethrough~~`)).toBe(
+    "<p><s>strikethrough</s></p>",
   );
-  expect(testRender(`~~strikethrough~~`)).toBe("<p><s>strikethrough</s></p>");
-  expect(testRender(`This is a sentence with ~~strikethrough~~ in it`)).toBe(
-    "<p>This is a sentence with <s>strikethrough</s> in it</p>",
+  expect(
+    await testRender(`This is a sentence with ~~strikethrough~~ in it`),
+  ).toBe("<p>This is a sentence with <s>strikethrough</s> in it</p>");
+  expect(await testRender("==highlight==")).toBe(
+    "<p><mark>highlight</mark></p>",
   );
-  expect(testRender("==highlight==")).toBe("<p><mark>highlight</mark></p>");
-  expect(testRender(`This is a sentence with ==highlight== in it`)).toBe(
+  expect(await testRender(`This is a sentence with ==highlight== in it`)).toBe(
     "<p>This is a sentence with <mark>highlight</mark> in it</p>",
   );
-  expect(testRender("~sub~script")).toBe("<p><sub>sub</sub>script</p>");
-  expect(testRender(`This is a sentence with ~sub~script in it`)).toBe(
+  expect(await testRender("~sub~script")).toBe("<p><sub>sub</sub>script</p>");
+  expect(await testRender(`This is a sentence with ~sub~script in it`)).toBe(
     "<p>This is a sentence with <sub>sub</sub>script in it</p>",
   );
-  expect(testRender("^super^script")).toBe("<p><sup>super</sup>script</p>");
-  expect(testRender(`This is a sentence with ^super^script in it`)).toBe(
+  expect(await testRender("^super^script")).toBe(
+    "<p><sup>super</sup>script</p>",
+  );
+  expect(await testRender(`This is a sentence with ^super^script in it`)).toBe(
     "<p>This is a sentence with <sup>super</sup>script in it</p>",
   );
   expect(
-    testRender(
+    await testRender(
       "[link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)",
     ),
   ).toBe(
     `<p><a href="https://en.wikipedia.org/wiki/Rust_(programming_language)">link with parentheses</a></p>`,
   );
   expect(
-    testRender("[Some [square braces] inside a link](https://zerolimits.dev)"),
+    await testRender(
+      "[Some [square braces] inside a link](https://zerolimits.dev)",
+    ),
   ).toBe(
     `<p><a href="https://zerolimits.dev">Some [square braces] inside a link</a></p>`,
   );
 
-  expect(testRender("Inline $$x+y$$ math")).toBe(
-    `<p>Inline ${Temml.renderToString("x+y")} math</p>`,
+  expect(await testRender("Inline $$x+y$$ math")).toBe(
+    `<p>Inline <math display=\"inline\"><mi>x</mi><mo>+</mo><mi>y</mi></math> math</p>`,
   );
-  expect(testRender("This is a **line** with multiple **bold** words")).toBe(
+  expect(
+    await testRender("This is a **line** with multiple **bold** words"),
+  ).toBe(
     "<p>This is a <strong>line</strong> with multiple <strong>bold</strong> words</p>",
   );
 });
 
-test("Blockquotes", () => {
-  expect(testRender(`> This is text in a blockquote`)).toBe(
+test("Blockquotes", async () => {
+  expect(await testRender(`> This is text in a blockquote`)).toBe(
     "<blockquote><p>This is text in a blockquote</p></blockquote>",
   );
   expect(
-    testRender(`
+    await testRender(`
 > This is a
 >
 > multiline blockquote
@@ -135,40 +160,46 @@ test("Blockquotes", () => {
   );
 });
 
-test("Images", () => {
-  expect(testRender(`![alt text](https://picsum.photos/300)`)).toBe(
-    `<figure><img src="https://picsum.photos/300" alt="alt text" /><figcaption>alt text</figcaption></figure>`,
-  );
+test("Images", async () => {
+  expect(await testRender(`![alt text](https://picsum.photos/300)`)).toBeOneOf([
+    '<figure><img src="https://picsum.photos/300" alt="alt text" /><figcaption>alt text</figcaption></figure>',
+    '<figure><img alt="alt text" src="https://picsum.photos/300" /><figcaption>alt text</figcaption></figure>',
+  ]);
   expect(
-    testRender(
+    await testRender(
       `![This contains a [link](https://picsum.photos)](https://picsum.photos/300)`,
     ),
-  ).toBe(
+  ).toBeOneOf([
     `<figure><img src="https://picsum.photos/300" alt="This contains a [link](https://picsum.photos)" /><figcaption>This contains a <a href="https://picsum.photos">link</a></figcaption></figure>`,
-  );
+    `<figure><img alt="This contains a [link](https://picsum.photos)" src="https://picsum.photos/300" /><figcaption>This contains a <a href="https://picsum.photos">link</a></figcaption></figure>`,
+  ]);
 });
 
-test("Code block", () => {
-  expect(testRender('```py\nprint("Your code here")\n```')).toBe(
-    highlight(`print("Your code here")`, "py", githubTheme),
+test("Code block", async () => {
+  expect(await testRender('```py\nprint("Your code here")\n```')).toBe(
+    (
+      await $`echo ${`print("Your code here")`} | highlight - -t theme.toml -l py`.text()
+    ).trim(),
   );
-  expect(testRender("```\nThis is some text in a code block\n```")).toBe(
-    highlight("This is some text in a code block", "plaintext", githubTheme),
+  expect(await testRender("```\nThis is some text in a code block\n```")).toBe(
+    (
+      await $`echo "This is some text in a code block" | highlight - -t theme.toml -l plaintext`.text()
+    ).trim(),
   );
   expect(
-    testRender("```skajdlas\nThis is for a language that doesn't exist\n```"),
-  ).toBe(
-    highlight(
-      "This is for a language that doesn't exist",
-      "plaintext",
-      githubTheme,
+    await testRender(
+      "```skajdlas\nThis is for a language that doesn't exist\n```",
     ),
+  ).toBe(
+    (
+      await $`echo "This is for a language that doesn't exist" | highlight - -t theme.toml -l plaintext`.text()
+    ).trim(),
   );
 });
 
-test("Lists", () => {
+test("Lists", async () => {
   expect(
-    testRender(`
+    await testRender(`
 1. list item 1
 2. list item 2
 3. list item 3
@@ -180,7 +211,7 @@ test("Lists", () => {
     "<ol><li><p>list item 1</p></li><li><p>list item 2</p></li><li><p>list item 3</p><ol><li><p>nested list item 1 (3 space or 1 tab indentation allowed)</p></li><li><p>nested list item 2</p><ol><li><p>You can nest as far as you want</p></li></ol></li></ol></li></ol>",
   );
   expect(
-    testRender(`
+    await testRender(`
 1. list item 1
 2. list item 2
 3. list item 3
@@ -192,7 +223,7 @@ test("Lists", () => {
     "<ol><li><p>list item 1</p></li><li><p>list item 2</p></li><li><p>list item 3</p><ol><li><p>nested list item 1 (3 space or 1 tab indentation allowed)</p></li><li><p>nested list item 2</p><ol><li><p>You can nest as far as you want</p></li></ol></li></ol></li></ol>",
   );
   expect(
-    testRender(`
+    await testRender(`
 - list item 1 (only - allowed for list)
 - list item 2
 - list item 3
@@ -204,7 +235,7 @@ test("Lists", () => {
     "<ul><li><p>list item 1 (only - allowed for list)</p></li><li><p>list item 2</p></li><li><p>list item 3</p><ul><li><p>nested list item 1 (2 space or 1 tab indentation allowed)</p></li><li><p>nested list item 2</p><ul><li><p>You can nest as far as you want</p></li></ul></li></ul></li></ul>",
   );
   expect(
-    testRender(`
+    await testRender(`
 - list item 1 (only - allowed for list)
 - list item 2
 - list item 3
@@ -217,9 +248,9 @@ test("Lists", () => {
   );
 });
 
-test("Tables", () => {
+test("Tables", async () => {
   expect(
-    testRender(`
+    await testRender(`
 | title        |  description   |     heading 1 | heading 2              |
 | :----------- | :------------: | ------------: | ---------------------- |
 | left-aligned | center-aligned | right-aligned | default text alignment |
@@ -229,9 +260,9 @@ test("Tables", () => {
   );
 });
 
-test("HTML Elements", () => {
+test("HTML Elements", async () => {
   expect(
-    testRender(`
+    await testRender(`
 <div>
 Content here
 </div>
@@ -239,67 +270,79 @@ Content here
   ).toBe(`<div>
 Content here
 </div>`);
-  expect(testRender(`<u>This element isn't closed`)).toBe(
+  expect(await testRender(`<u>This element isn't closed`)).toBe(
     `<u>This element isn't closed`,
   );
 });
 
-test("Math blocks", () => {
+test("Math blocks", async () => {
   expect(
-    testRender(`
+    await testRender(`
 $$
 a^2 + b^2 = c^2
 $$
 `),
-  ).toBe(Temml.renderToString("a^2 + b^2 = c^2", { displayMode: true }));
-  expect(testRender("$$")).toBe("<p>$$</p>");
+  ).toBe(
+    '<math display="block"><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></math>',
+  );
+  expect(await testRender("$$")).toBe("<p>$$</p>");
 });
 
-test("Escaped characters", () => {
-  expect(testRender("This is \\**escaped bold**")).toBe(
+test("Escaped characters", async () => {
+  expect(await testRender("This is \\**escaped bold**")).toBe(
     "<p>This is **escaped bold**</p>",
   );
 });
 
-test("Containers", () => {
+test("Containers", async () => {
   expect(
-    testRender(`
+    await testRender(`
 ::: note A NOTE
 This is some text in a note.
 :::
-  `),
+`),
   ).toBe(
     `<div class="znak-container note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
   );
   expect(
-    testRender(`
+    await testRender(`
 ::: quote A QUOTE {href="https://zerolimits.dev"}
 This is some text in a quote.
 :::
-  `),
-  ).toBe(
-    `<div class="znak-container quote"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-  );
+`),
+  ).toBeOneOf([
+    `<div class="znak-container quote"><p class="quote-heading"><b><a href="https://zerolimits.dev" rel="noopener noreferrer" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote"><p class="quote-heading"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote"><p class="quote-heading"><b><a rel="noopener noreferrer" href="https://zerolimits.dev" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote"><p class="quote-heading"><b><a rel="noopener noreferrer" target="_blank" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote"><p class="quote-heading"><b><a target="_blank" rel="noopener noreferrer" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote"><p class="quote-heading"><b><a target="_blank" href="https://zerolimits.dev" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+  ]);
   expect(
-    testRender(`
+    await testRender(`
 ::: quote A QUOTE {href="https://zerolimits.dev" class="bold"}
 This is some text in a quote.
 :::
-  `),
-  ).toBe(
-    `<div class="znak-container quote bold"><p class=\"quote-heading\"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-  );
+`),
+  ).toBeOneOf([
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a href="https://zerolimits.dev" rel="noopener noreferrer" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a rel="noopener noreferrer" href="https://zerolimits.dev" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a rel="noopener noreferrer" target="_blank" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a target="_blank" href="https://zerolimits.dev" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+    `<div class="znak-container quote bold"><p class="quote-heading"><b><a target="_blank" rel="noopener noreferrer" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
+  ]);
   expect(
-    testRender(`
+    await testRender(`
 ::: warning
 This is some text in a warning.
 :::
-  `),
+`),
   ).toBe(
     `<div class="znak-container warning"><p class=\"warning-heading\"><b>WARNING</b></p><p>This is some text in a warning.</p></div>`,
   );
   expect(
-    testRender(`
+    await testRender(`
 :::: block1 This is the outer container
 You can have some text here.
 
@@ -312,40 +355,41 @@ This can have some more text.
     `<div class="znak-container block1"><p class="block1-heading"><b>This is the outer container</b></p><p>You can have some text here.</p><div class="znak-container block2"><p class="block2-heading"><b>This is the inner container</b></p><p>This can have some more text.</p></div></div>`,
   );
   expect(
-    testRender(`
+    await testRender(`
 ::: note A NOTE {id="my-note"}
 This is some text in a note.
 :::
-  `),
-  ).toBe(
+`),
+  ).toBeOneOf([
     `<div id="my-note" class="znak-container note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
-  );
+    `<div class="znak-container note" id="my-note"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
+  ]);
 });
 
-test("Misc", () => {
+test("Misc", async () => {
   expect(
-    testRender(`
+    await testRender(`
 This is a multi line
 string
 `),
   ).toBe("<p>This is a multi linestring</p>");
-  expect(testRender("> This is quite a **bold** statement!")).toBe(
+  expect(await testRender("> This is quite a **bold** statement!")).toBe(
     "<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>",
   );
 });
 
-test("Empty blocks", () => {
-  expect(testRender(":::")).toBe("<p>:::</p>");
-  expect(testRender("```")).toBe("<p>```</p>");
-  expect(testRender("****")).toBe("<p>****</p>");
-  expect(testRender("__")).toBe("<p>__</p>");
-  expect(testRender("$$$$")).toBe("<p>$$$$</p>");
-  expect(testRender("[](https://zerolimits.dev)")).toBe(
+test("Empty blocks", async () => {
+  expect(await testRender(":::")).toBe("<p>:::</p>");
+  expect(await testRender("```")).toBe("<p>```</p>");
+  expect(await testRender("****")).toBe("<p>****</p>");
+  expect(await testRender("__")).toBe("<p>__</p>");
+  expect(await testRender("$$$$")).toBe("<p>$$$$</p>");
+  expect(await testRender("[](https://zerolimits.dev)")).toBe(
     "<p>[](https://zerolimits.dev)</p>",
   );
-  expect(testRender("[link]()")).toBe("<p>[link]()</p>");
-  expect(testRender("^^")).toBe("<p>^^</p>");
-  expect(testRender("~~")).toBe("<p>~~</p>");
-  expect(testRender("====")).toBe("<p>====</p>");
-  expect(testRender("~~~~")).toBe("<p>~~~~</p>");
+  expect(await testRender("[link]()")).toBe("<p>[link]()</p>");
+  expect(await testRender("^^")).toBe("<p>^^</p>");
+  expect(await testRender("~~")).toBe("<p>~~</p>");
+  expect(await testRender("====")).toBe("<p>====</p>");
+  expect(await testRender("~~~~")).toBe("<p>~~~~</p>");
 });
