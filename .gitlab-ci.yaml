@@ -1,0 +1,24 @@
+stages:
+  - deploy
+
+variables:
+  PROJECT_NAME: znak
+  TAP_REPO: noClaps/homebrew-tap
+
+# Create formula and publish to tap
+deploy_formula:
+  stage: deploy
+  image: ruby:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+    - when: manual
+  script:
+    - apt-get update && apt-get install -y git
+    - git config --global user.name "GitLab CI"
+    - git config --global user.email "gitlab-ci@example.com"
+
+    # Clone tap repo using HTTPS with token and trigger workflow
+    - git clone https://oauth2:${GITHUB_TOKEN}@github.com/${TAP_REPO}.git tap
+    - cd tap
+    - git tag $PROJECT_NAME-$CI_COMMIT_TAG -m "$CI_COMMIT_TAG"
+    - git push https://oauth2:${GITHUB_TOKEN}@github.com/${TAP_REPO}.git
