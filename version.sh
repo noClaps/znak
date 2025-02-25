@@ -1,0 +1,1 @@
+bunx changelogen --output -r $@
