@@ -1,5 +1,41 @@
 # @noclaps/znak
 
+## v0.13.0
+
+[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.6...v0.13.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+
+### 🩹 Fixes
+
+- Use bun.lock instead of bun.lockb in Dockerfile ([7b2f128](https://gitlab.com/noClaps/znak-lang/commit/7b2f128))
+
+### 📖 Documentation
+
+- Update Highlight URL to GitHub ([c6420f8](https://gitlab.com/noClaps/znak-lang/commit/c6420f8))
+
+### 🏡 Chore
+
+- Update dependencies and switch to text lockfile ([5fe41a6](https://gitlab.com/noClaps/znak-lang/commit/5fe41a6))
+- Update dependencies ([eaf2995](https://gitlab.com/noClaps/znak-lang/commit/eaf2995))
+- Update dependencies ([22203ed](https://gitlab.com/noClaps/znak-lang/commit/22203ed))
+- Remove demo ([3610dde](https://gitlab.com/noClaps/znak-lang/commit/3610dde))
+- Add version script ([04ce431](https://gitlab.com/noClaps/znak-lang/commit/04ce431))
+
+### 🤖 CI
+
+- Remove copying bunfig.toml ([950d930](https://gitlab.com/noClaps/znak-lang/commit/950d930))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+
+### ❤️ Contributors
+
+- NoClaps <git@zerolimits.dev>
+
 ## v0.12.6
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.5...v0.12.6)
