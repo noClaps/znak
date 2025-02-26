@@ -4,7 +4,7 @@ use regex::Regex;
 pub fn parse_headings(input: String) -> Vec<Heading> {
     let mut slugger = Slugger::new();
 
-    let re = match Regex::new(r"^(#{1,6}) (.+)") {
+    let re = match Regex::new(r"(?m)^(#{1,6}) (.+)") {
         Ok(re) => re,
         Err(_) => {
             unreachable!()
