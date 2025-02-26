@@ -14,7 +14,7 @@ edition = "2021"
 crate-type = ["lib"]
 
 [dependencies]
-highlight = { git = "https://gitlab.com/noClaps/highlight", version = "0.5.2" }
+highlight = { git = "https://gitlab.com/noClaps/highlight", version = "0.6.1" }
 pulldown-latex = "0.7.1"
 regex = "1.11.1"
 serde = "1.0.218"

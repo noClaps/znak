@@ -204,8 +204,8 @@ checksum = "fbf6a919d6cf397374f7dfeeea91d974c7c0a7221d0d0f4f20d859d329e53fcc"
 
 [[package]]
 name = "highlight"
-version = "0.5.2"
-source = "git+https://gitlab.com/noClaps/highlight#8e5e941a0010baf42411b232e761deb4e7545510"
+version = "0.6.1"
+source = "git+https://gitlab.com/noClaps/highlight#610362543254f9be89d1017e0fc08015fa935e6a"
 dependencies = [
  "serde",
  "toml",
