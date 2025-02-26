@@ -45,9 +45,7 @@ fn main() {
 
     let mut theme_file = String::new();
     match args.theme {
-        None => {
-            theme_file = include_str!("../../theme.toml").to_string();
-        }
+        None => theme_file = "[highlights]".to_string(),
         Some(mut theme) => match theme.read_to_string(&mut theme_file) {
             Ok(_) => (),
             Err(err) => {
