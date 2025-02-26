@@ -2,25 +2,45 @@
 
 A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like syntax highlighting, LaTeX, and heading IDs built-in.
 
-The full documentation for Znak, such as the types and syntax, are available [here](https://docs.zerolimits.dev/znak).
+You can read the syntax [here](./docs/syntax.md).
+
+## Installation
+
+You can install it using Homebrew on macOS/Linux:
+
+```sh
+brew install noclaps/tap/lsdeps
+```
+
+or you can build from source:
+
+```sh
+cargo install --git https://gitlab.com/noClaps/znak-lang
+```
 
 ## Usage
 
-Install the package as a dependency to your project:
+```
+Usage: znak [OPTIONS] <INPUT>
 
-```sh
-# Use the command for your package manager
-bun add @noclaps/znak
+Arguments:
+  <INPUT>  Path to the Znak file to build to HTML
+
+Options:
+  -t, --theme <THEME>  Path to theme TOML file, leave empty if you don't want syntax highlighting
+      --headings       Whether or not the CLI should return headings
+  -h, --help           Print help
+  -V, --version        Print version
 ```
 
-and then import it in your code:
+You can use it by running:
 
-```ts
-import { render, headings } from "@noclaps/znak";
+```sh
+znak path/to/file.md -t path/to/theme.toml
+```
 
-const text = "# Hello World"; // Your text to be rendered.
-const renderedHTML = render(text);
-// <h1 id="hello-world">Hello World</h1>
-const headings = headings(text);
-// [{depth: 1, slug: "hello-world", title: "Hello World"}]
+and the output HTML will be printed to `stdout`. If you want to write to a file, you can use the `>` operator, for example:
+
+```sh
+znak README.md -t theme.toml > out.html
 ```
