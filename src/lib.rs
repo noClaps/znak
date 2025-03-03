@@ -30,7 +30,7 @@ mod test;
 ///   ```
 ///   An example of the GitHub Dark theme can be found in [`theme.toml`].
 ///
-/// [documentation]: https://docs.zerolimits.dev/znak/syntax
+/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn render(input: String, code_theme: Theme) -> String {
     let parser_output = parse(input, code_theme);
     parser_output
@@ -47,7 +47,7 @@ pub fn render(input: String, code_theme: Theme) -> String {
 /// Markdown file as long as the syntax is supported by Znak. See the [documentation]
 /// for the supported syntax.
 ///
-/// [documentation]: https://docs.zerolimits.dev/znak/syntax
+/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn headings(input: String) -> Vec<Heading> {
     parse_headings(input)
 }
