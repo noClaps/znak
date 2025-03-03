@@ -1,9 +1,16 @@
 stages:
+  - test
   - deploy
 
 variables:
   PROJECT_NAME: znak
   TAP_REPO: noClaps/homebrew-tap
+
+test:
+  stage: test
+  image: rust:latest
+  script:
+    - cargo test
 
 # Create formula and publish to tap
 deploy_formula:
