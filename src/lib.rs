@@ -9,6 +9,9 @@ mod renderer;
 mod types;
 mod utils;
 
+#[cfg(test)]
+mod test;
+
 /// A function that renders the input text to HTML.
 ///
 /// # Arguments
