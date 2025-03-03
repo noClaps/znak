@@ -9,7 +9,7 @@ You can read the syntax [here](./docs/syntax.md).
 You can install it using Homebrew on macOS/Linux:
 
 ```sh
-brew install noclaps/tap/lsdeps
+brew install noclaps/tap/znak
 ```
 
 or you can build from source:
