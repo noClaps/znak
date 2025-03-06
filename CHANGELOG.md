@@ -1,12 +1,30 @@
 # @noclaps/znak
 
+## v0.14.0
+
+### Breaking changes
+
+- Turn off highlighting if no theme is passed in. Previously the CLI would use the GitHub Dark theme, now code blocks are not highlighted at all.
+
+### New features
+
+- Add new underline syntax feature. You can now use `__underlined text__` to get <u>underlined text</u>.
+
+### Other changes
+
+- Update dependencies
+- Add installation, usage and syntax docs. These were moved here from the `docs.zerolimits.dev` site.
+- Fix `parse_headings()` only returning one heading.
+- Add docs for `--headings` and `--help` flags.
+- Fix `brew install` command in README. It used to point to the wrong formula.
+
 ## v0.13.0
 
 [compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.6...v0.13.0)
 
 ### 🚀 Enhancements
 
-- ⚠️  Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
 
 ### 🩹 Fixes
 
@@ -30,7 +48,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
 
 ### ❤️ Contributors
 
@@ -154,7 +172,7 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
 
 ### 📖 Documentation
 
@@ -168,7 +186,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
 
 ### ❤️ Contributors
 
@@ -249,7 +267,7 @@
 
 - Create new CodeTheme type and export it ([d313fee](https://gitlab.com/noClaps/znak-lang/commit/d313fee))
 - Export Heading type ([3ff7d2f](https://gitlab.com/noClaps/znak-lang/commit/3ff7d2f))
-- ⚠️  Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
 
 ### 🩹 Fixes
 
@@ -265,7 +283,7 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
 
 ### ❤️ Contributors
 
@@ -304,9 +322,9 @@
 - Change to using codeToHtml for syntax highlighting ([7874520](https://gitlab.com/noClaps/znak-lang/commit/7874520))
 - Add demo site ([696a727](https://gitlab.com/noClaps/znak-lang/commit/696a727))
 - Create a faster function to parse headings, and use named exports ([fdea29b](https://gitlab.com/noClaps/znak-lang/commit/fdea29b))
-- ⚠️  Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
-- ⚠️  Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
-- ⚠️  Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️ Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
 
 ### 📖 Documentation
 
@@ -327,9 +345,9 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
-- ⚠️  Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
-- ⚠️  Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️ Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
 
 ### ❤️ Contributors
 
@@ -353,8 +371,8 @@
 
 ### 🚀 Enhancements
 
-- ⚠️  Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
-- ⚠️  Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
 
 ### 🩹 Fixes
 
@@ -381,8 +399,8 @@
 
 #### ⚠️ Breaking Changes
 
-- ⚠️  Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
-- ⚠️  Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
 
 ### ❤️ Contributors
 
