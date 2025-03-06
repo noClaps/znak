@@ -138,6 +138,8 @@ _italic text_
 [link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)
 
 Inline $$x+y$$ math
+
+__underlined text__
 ```
 
 These can also be used inside most other text blocks, such as inside blockquotes:
