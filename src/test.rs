@@ -199,6 +199,14 @@ fn inline_formatting() {
         "This is a **line** with multiple **bold** words",
         "<p>This is a <strong>line</strong> with multiple <strong>bold</strong> words</p>",
     );
+    test_render(
+        "This is some __underlined__ text",
+        "<p>This is some <u>underlined</u> text</p>",
+    );
+    test_render(
+        "This is some ___italic text_ in some underlined__ text",
+        "<p>This is some <u><em>italic text</em> in some underlined</u> text</p>",
+    );
 }
 
 #[test]

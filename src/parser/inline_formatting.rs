@@ -66,6 +66,94 @@ pub fn inline_formatting(line: String) -> Vec<Node> {
             continue;
         }
 
+        // Underline (__)
+        if &line[cursor..cur(cursor, 2)] == "__" && line[cur(cursor, 2)..].contains("__") {
+            // Push existing buffer and reset buffer
+            if !buffer.is_empty() {
+                contents.push(Node::text(&buffer));
+                buffer.clear();
+            }
+
+            let next = find_str(&line, cur(cursor, 2), "__");
+            let temp_buf = line[cur(cursor, 2)..next].to_string();
+
+            if temp_buf.is_empty() {
+                contents.push(Node::text("____"));
+            } else {
+                contents.push(Node::element("u", None, inline_formatting(temp_buf)));
+            }
+
+            cursor = next;
+            cursor = cur(cursor, 2);
+            continue;
+        }
+
+        // Strikethrough (~~)
+        if &line[cursor..cur(cursor, 2)] == "~~" && line[cur(cursor, 2)..].contains("~~") {
+            // Push existing buffer and reset buffer
+            if !buffer.is_empty() {
+                contents.push(Node::text(&buffer));
+                buffer.clear();
+            }
+
+            let next = find_str(&line, cur(cursor, 2), "~~");
+            let temp_buf = line[cur(cursor, 2)..next].to_string();
+
+            if temp_buf.is_empty() {
+                contents.push(Node::text("~~~~"));
+            } else {
+                contents.push(Node::element("s", None, inline_formatting(temp_buf)));
+            }
+
+            cursor = next;
+            cursor = cur(cursor, 2);
+            continue;
+        }
+
+        // Highlight (==)
+        if &line[cursor..cur(cursor, 2)] == "==" && line[cur(cursor, 2)..].contains("==") {
+            // Push existing buffer and reset buffer
+            if !buffer.is_empty() {
+                contents.push(Node::text(&buffer));
+                buffer.clear();
+            }
+
+            let next = find_str(&line, cur(cursor, 2), "==");
+            let temp_buf = line[cursor + 2..next].to_string();
+
+            if temp_buf.is_empty() {
+                contents.push(Node::text("===="));
+            } else {
+                contents.push(Node::element("mark", None, inline_formatting(temp_buf)));
+            }
+
+            cursor = next;
+            cursor = cur(cursor, 2);
+            continue;
+        }
+
+        // Inline math ($$)
+        if &line[cursor..cur(cursor, 2)] == "$$" && line[cur(cursor, 2)..].contains("$$") {
+            // Push existing buffer and reset buffer
+            if !buffer.is_empty() {
+                contents.push(Node::text(&buffer));
+                buffer.clear();
+            }
+
+            let next = find_str(&line, cur(cursor, 2), "$$");
+            let temp_buf = line[cursor + 2..next].to_string();
+
+            if temp_buf.is_empty() {
+                contents.push(Node::text("$$$$"));
+            } else {
+                contents.push(render_math(temp_buf, DisplayMode::Inline));
+            }
+
+            cursor = next;
+            cursor = cur(cursor, 2);
+            continue;
+        }
+
         // Italics (_)
         if &line[cursor..cur(cursor, 1)] == "_" && line[cur(cursor, 1)..].contains("_") {
             // Push existing buffer and reset buffer
@@ -111,50 +199,6 @@ pub fn inline_formatting(line: String) -> Vec<Node> {
 
             cursor = next;
             cursor = cur(cursor, 1);
-            continue;
-        }
-
-        // Strikethrough (~~)
-        if &line[cursor..cur(cursor, 2)] == "~~" && line[cur(cursor, 2)..].contains("~~") {
-            // Push existing buffer and reset buffer
-            if !buffer.is_empty() {
-                contents.push(Node::text(&buffer));
-                buffer.clear();
-            }
-
-            let next = find_str(&line, cur(cursor, 2), "~~");
-            let temp_buf = line[cur(cursor, 2)..next].to_string();
-
-            if temp_buf.is_empty() {
-                contents.push(Node::text("~~~~"));
-            } else {
-                contents.push(Node::element("s", None, inline_formatting(temp_buf)));
-            }
-
-            cursor = next;
-            cursor = cur(cursor, 2);
-            continue;
-        }
-
-        // Highlight (==)
-        if &line[cursor..cur(cursor, 2)] == "==" && line[cur(cursor, 2)..].contains("==") {
-            // Push existing buffer and reset buffer
-            if !buffer.is_empty() {
-                contents.push(Node::text(&buffer));
-                buffer.clear();
-            }
-
-            let next = find_str(&line, cur(cursor, 2), "==");
-            let temp_buf = line[cursor + 2..next].to_string();
-
-            if temp_buf.is_empty() {
-                contents.push(Node::text("===="));
-            } else {
-                contents.push(Node::element("mark", None, inline_formatting(temp_buf)));
-            }
-
-            cursor = next;
-            cursor = cur(cursor, 2);
             continue;
         }
 
@@ -258,28 +302,6 @@ pub fn inline_formatting(line: String) -> Vec<Node> {
             }
 
             cursor = cur(cursor, 1);
-            continue;
-        }
-
-        // Inline math ($$)
-        if &line[cursor..cur(cursor, 2)] == "$$" && line[cur(cursor, 2)..].contains("$$") {
-            // Push existing buffer and reset buffer
-            if !buffer.is_empty() {
-                contents.push(Node::text(&buffer));
-                buffer.clear();
-            }
-
-            let next = find_str(&line, cur(cursor, 2), "$$");
-            let temp_buf = line[cursor + 2..next].to_string();
-
-            if temp_buf.is_empty() {
-                contents.push(Node::text("$$$$"));
-            } else {
-                contents.push(render_math(temp_buf, DisplayMode::Inline));
-            }
-
-            cursor = next;
-            cursor = cur(cursor, 2);
             continue;
         }
 
