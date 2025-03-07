@@ -1,0 +1,6 @@
+[tools]
+rust = "1.85.0"
+
+[tasks.build]
+run = ["cargo build -r --workspace", "cp target/release/znak ."]
+quiet = true
