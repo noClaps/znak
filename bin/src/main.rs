@@ -2,7 +2,7 @@ use std::{io::Read, process::exit};
 
 use clap::Parser;
 use clio::Input;
-use znak_lang::{headings, render};
+use znak_lang::{frontmatter, headings, render};
 
 #[derive(Debug, Parser)]
 #[command(version, name = "znak")]
@@ -18,6 +18,10 @@ struct Args {
     /// Whether or not the CLI should return headings
     #[arg(long)]
     headings: bool,
+
+    /// Whether or not the CLI should return frontmatter
+    #[arg(long)]
+    frontmatter: bool,
 }
 
 fn main() {
@@ -40,6 +44,21 @@ fn main() {
                 exit(1)
             }
         };
+        return;
+    }
+
+    if args.frontmatter {
+        match frontmatter(input) {
+            Some(fm) => match serde_json::to_string(&fm) {
+                Ok(fm) => println!("{fm}"),
+                Err(err) => {
+                    eprintln!("ERROR: Error serialising frontmatter: {err}");
+                    exit(1)
+                }
+            },
+            None => (),
+        };
+
         return;
     }
 

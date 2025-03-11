@@ -1,7 +1,8 @@
 pub use highlight::Theme;
 
-use parser::{headings::parse_headings, parser::parse};
+use parser::{frontmatter::parse_frontmatter, headings::parse_headings, parser::parse};
 use renderer::renderer;
+use std::collections::HashMap;
 use utils::slugger::Heading;
 
 mod parser;
@@ -32,6 +33,17 @@ mod test;
 ///
 /// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn render(input: String, code_theme: Theme) -> String {
+    // Strip out frontmatter
+    let lines = input.trim().lines().collect::<Vec<&str>>();
+    let mut cur = 0;
+    if lines[cur] == "---" && lines[cur + 1..].contains(&"---") {
+        while lines[cur] == "---" {
+            cur += 1;
+        }
+        cur += 1;
+    }
+
+    let input = lines[cur..].join("\n");
     let parser_output = parse(input, code_theme);
     parser_output
         .into_iter()
@@ -50,4 +62,17 @@ pub fn render(input: String, code_theme: Theme) -> String {
 /// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn headings(input: String) -> Vec<Heading> {
     parse_headings(input)
+}
+
+/// A function that returns the frontmatter in the given input text.
+///
+/// # Arguments
+///
+/// - `input`: The input text to extract the frontmatter from. This can be from
+/// a Markdown file as long as the syntax is supported by Znak. See the [documentation]
+/// for the supported syntax.
+///
+/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
+pub fn frontmatter(input: String) -> Option<HashMap<String, String>> {
+    parse_frontmatter(input)
 }

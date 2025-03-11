@@ -1,3 +1,8 @@
+---
+title: Benchmark file
+description: This file is used for benchmarking
+---
+
 # Heading 1
 
 ## Heading 2

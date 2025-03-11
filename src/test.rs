@@ -1,7 +1,8 @@
 use highlight::highlight;
 use pulldown_latex::{config::DisplayMode, push_mathml, Parser, RenderConfig, Storage};
+use std::collections::HashMap;
 
-use crate::{parse_headings, render, Heading, Theme};
+use crate::{frontmatter, headings, render, Heading, Theme};
 
 fn test_render(input: &str, test: &str) {
     let github_dark_toml = include_str!("../theme.toml");
@@ -49,13 +50,18 @@ fn test_render_one_of(input: &str, tests: Vec<&str>) {
 }
 
 fn test_headings(input: &str, test: Vec<Heading>) {
-    let headings = parse_headings(input.to_string());
+    let headings = headings(input.to_string());
     assert_eq!(headings.len(), test.len());
     for i in 0..headings.len() {
         assert_eq!(headings[i].depth, test[i].depth);
         assert_eq!(headings[i].slug, test[i].slug);
         assert_eq!(headings[i].title, test[i].title);
     }
+}
+
+fn test_frontmatter(input: &str, test: HashMap<String, String>) {
+    let fm = frontmatter(input.to_string());
+    assert_eq!(fm, Some(test));
 }
 
 fn render_math(input: &str, display_mode: DisplayMode) -> String {
@@ -74,7 +80,7 @@ fn render_math(input: &str, display_mode: DisplayMode) -> String {
 }
 
 #[test]
-fn headings() {
+fn headings_test() {
     test_render("# Heading 1", "<h1 id=\"heading-1\">Heading 1</h1>");
     test_render("## Heading 2", "<h2 id=\"heading-2\">Heading 2</h2>");
     test_render("### Heading 3", "<h3 id=\"heading-3\">Heading 3</h3>");
@@ -497,4 +503,55 @@ fn empty_blocks() {
     test_render("~~", "<p>~~</p>");
     test_render("====", "<p>====</p>");
     test_render("~~~~", "<p>~~~~</p>");
+}
+#[test]
+fn front_matter() {
+    let mut hm = HashMap::new();
+    hm.insert("title".to_string(), "A title".to_string());
+    hm.insert(
+        "description".to_string(),
+        "Some description here".to_string(),
+    );
+    hm.insert("date".to_string(), "2025-03-11".to_string());
+    test_frontmatter(
+        "
+---
+title: A title
+description: Some description here
+date: 2025-03-11
+---
+",
+        hm.clone(),
+    );
+
+    test_frontmatter(
+        "
+---
+title: A title
+description: Some description here
+date: 2025-03-11
+---
+
+Some extra text here.
+",
+        hm,
+    );
+
+    let mut hm2 = HashMap::new();
+    hm2.insert(
+        "title".to_string(),
+        "Google: A Misrepresented Evil".to_string(),
+    );
+    test_frontmatter(
+        "
+---
+title: Google: A Misrepresented Evil
+---
+
+This was a post about Google. There's also a <hr /> below to see what happens
+
+---
+",
+        hm2,
+    );
 }
