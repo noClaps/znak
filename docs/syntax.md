@@ -74,6 +74,21 @@ This can have some more text.
 
 These are not styled by default and should be styled by you.
 
+## Frontmatter
+
+You can have frontmatter at the top of files, like so:
+
+```md
+---
+title: Document title
+description: Document description
+---
+
+Your content here
+```
+
+This will be skipped during regular parsing. If you'd like to get this frontmatter out, you can use the `frontmatter()` function when using the crate, and the `--frontmatter` flag when using the CLI.
+
 ## Headings
 
 ```md
@@ -139,7 +154,7 @@ _italic text_
 
 Inline $$x+y$$ math
 
-__underlined text__
+**underlined text**
 ```
 
 These can also be used inside most other text blocks, such as inside blockquotes:
