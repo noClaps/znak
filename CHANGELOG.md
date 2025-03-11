@@ -1,5 +1,24 @@
 # @noclaps/znak
 
+## v0.14.1
+
+## New features
+
+- Add support for parsing frontmatter. You can now add frontmatter to the top of your file like so:
+
+  ```md
+  ---
+  title: Document title
+  description: Document description
+  ---
+  ```
+
+  It will be skipped with regular HTML generation. If you'd like to get the frontmatter out, you can use the `frontmatter()` function in the crate, or the `--frontmatter` flag in the CLI.
+
+## Other changes
+- Fix extra line of text occurring after containers.
+- Add docs for frontmatter syntax.
+
 ## v0.14.0
 
 ### Breaking changes

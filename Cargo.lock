@@ -944,7 +944,7 @@ dependencies = [
 
 [[package]]
 name = "znak-bin"
-version = "0.14.0"
+version = "0.14.1"
 dependencies = [
  "clap",
  "clio",
@@ -954,7 +954,7 @@ dependencies = [
 
 [[package]]
 name = "znak-lang"
-version = "0.14.0"
+version = "0.14.1"
 dependencies = [
  "highlight",
  "pulldown-latex",
