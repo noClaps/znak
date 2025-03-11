@@ -295,6 +295,7 @@ pub fn parse(input: String, code_theme: Theme) -> Vec<Node> {
             }
 
             tokens.push(containers(buffer.clone(), code_theme.clone()));
+            buffer.clear();
             line_cursor += 1;
             continue;
         }

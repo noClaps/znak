@@ -470,6 +470,18 @@ This is some text in a note.
             r#"<div class="znak-container note" id="my-note"><p class="note-heading"><b>A NOTE</b></p><p>This is some text in a note.</p></div>"#,
         ],
     );
+    test_render(
+        "
+::: note A NOTE
+This is some text in a note.
+:::
+
+::: warning
+This is some text in a warning.
+:::
+",
+        r#"<div class="znak-container note"><p class="note-heading"><b>A NOTE</b></p><p>This is some text in a note.</p></div><div class="znak-container warning"><p class="warning-heading"><b>WARNING</b></p><p>This is some text in a warning.</p></div>"#,
+    );
 }
 
 #[test]
@@ -504,6 +516,7 @@ fn empty_blocks() {
     test_render("====", "<p>====</p>");
     test_render("~~~~", "<p>~~~~</p>");
 }
+
 #[test]
 fn front_matter() {
     let mut hm = HashMap::new();
