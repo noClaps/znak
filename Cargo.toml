@@ -1,12 +1,5 @@
 [package]
 name = "znak-lang"
-version = {workspace = true}
-edition = {workspace = true}
-
-[workspace]
-members = ["bin/"]
-
-[workspace.package]
 version = "0.14.1"
 edition = "2021"
 
