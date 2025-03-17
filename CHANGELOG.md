@@ -1,19 +1,25 @@
 # @noclaps/znak
 
+## v0.15.1
+
+### Other changes
+
+- Fix bug where frontmatter was leaking into content.
+
 ## v0.15.0
 
-## Breaking changes
+### Breaking changes
 
 - Remove executable. Znak no longer has a binary target, and is instead only a library.
 
-## Other changes
+### Other changes
 
 - Rewrite inline formatting to fix special characters bug. The bug involved special characters (like `à`) being used inline in text, but since Rust iterates over bytes instead `char`s, they weren't being handled properly. The rewrite changed all the inline formatting code to use `char`s instead, and the bug seems to be fixed!
 - Fix underlined text syntax in docs. The docs previously said `**underlined**` and now say `__underlined__`
 
 ## v0.14.1
 
-## New features
+### New features
 
 - Add support for parsing frontmatter. You can now add frontmatter to the top of your file like so:
 
@@ -26,7 +32,7 @@
 
   It will be skipped with regular HTML generation. If you'd like to get the frontmatter out, you can use the `frontmatter()` function in the crate, or the `--frontmatter` flag in the CLI.
 
-## Other changes
+### Other changes
 - Fix extra line of text occurring after containers.
 - Add docs for frontmatter syntax.
 
