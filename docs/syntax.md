@@ -154,7 +154,7 @@ _italic text_
 
 Inline $$x+y$$ math
 
-**underlined text**
+__underlined text__
 ```
 
 These can also be used inside most other text blocks, such as inside blockquotes:
