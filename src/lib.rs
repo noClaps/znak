@@ -37,7 +37,8 @@ pub fn render(input: String, code_theme: Theme) -> String {
     let lines = input.trim().lines().collect::<Vec<&str>>();
     let mut cur = 0;
     if lines[cur] == "---" && lines[cur + 1..].contains(&"---") {
-        while lines[cur] == "---" {
+        cur += 1;
+        while lines[cur] != "---" {
             cur += 1;
         }
         cur += 1;

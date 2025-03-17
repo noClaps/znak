@@ -571,4 +571,40 @@ This was a post about Google. There's also a <hr /> below to see what happens
 ",
         hm2,
     );
+
+    let mut hm3 = HashMap::new();
+    hm3.insert(
+        "title".to_string(),
+        "Intro to Privacy, Security and Anonymity".to_string(),
+    );
+    hm3.insert(
+        "description".to_string(),
+        "How to protect yourself from the internet, on the internet".to_string(),
+    );
+    hm3.insert("date".to_string(), "2022-04-06".to_string());
+    hm3.insert("lastmod".to_string(), "2023-03-09".to_string());
+    test_frontmatter("
+---
+title: Intro to Privacy, Security and Anonymity
+description: How to protect yourself from the internet, on the internet
+date: 2022-04-06
+lastmod: 2023-03-09
+---
+
+---
+
+I've really gotten into this stuff over the last 2 years or so. I probably shouldn't have, since I had a lot of (arguably) more important stuff going on during that time, and focusing on that might have been better for me and my future. But I digress.
+", hm3);
+    test_render("
+---
+title: Intro to Privacy, Security and Anonymity
+description: How to protect yourself from the internet, on the internet
+date: 2022-04-06
+lastmod: 2023-03-09
+---
+
+---
+
+I've really gotten into this stuff over the last 2 years or so. I probably shouldn't have, since I had a lot of (arguably) more important stuff going on during that time, and focusing on that might have been better for me and my future. But I digress.
+", "<hr /><p>I've really gotten into this stuff over the last 2 years or so. I probably shouldn't have, since I had a lot of (arguably) more important stuff going on during that time, and focusing on that might have been better for me and my future. But I digress.</p>");
 }
