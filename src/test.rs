@@ -213,6 +213,10 @@ fn inline_formatting() {
         "This is some ___italic text_ in some underlined__ text",
         "<p>This is some <u><em>italic text</em> in some underlined</u> text</p>",
     );
+    test_render(
+        "Special characters: “_voilà_!”",
+        "<p>Special characters: “<em>voilà</em>!”</p>",
+    );
 }
 
 #[test]
