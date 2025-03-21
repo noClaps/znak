@@ -1,9 +1,9 @@
 pub use highlight::Theme;
+pub use utils::slugger::Heading;
 
 use parser::{frontmatter::parse_frontmatter, headings::parse_headings, parser::parse};
 use renderer::renderer;
 use std::collections::HashMap;
-use utils::slugger::Heading;
 
 mod parser;
 mod renderer;
