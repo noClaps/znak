@@ -56,35 +56,35 @@
 
 ## v0.13.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.6...v0.13.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.6...v0.13.0)
 
 ### 🚀 Enhancements
 
-- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://github.com/noClaps/znak-lang/commit/4e74017))
 
 ### 🩹 Fixes
 
-- Use bun.lock instead of bun.lockb in Dockerfile ([7b2f128](https://gitlab.com/noClaps/znak-lang/commit/7b2f128))
+- Use bun.lock instead of bun.lockb in Dockerfile ([7b2f128](https://github.com/noClaps/znak-lang/commit/7b2f128))
 
 ### 📖 Documentation
 
-- Update Highlight URL to GitHub ([c6420f8](https://gitlab.com/noClaps/znak-lang/commit/c6420f8))
+- Update Highlight URL to GitHub ([c6420f8](https://github.com/noClaps/znak-lang/commit/c6420f8))
 
 ### 🏡 Chore
 
-- Update dependencies and switch to text lockfile ([5fe41a6](https://gitlab.com/noClaps/znak-lang/commit/5fe41a6))
-- Update dependencies ([eaf2995](https://gitlab.com/noClaps/znak-lang/commit/eaf2995))
-- Update dependencies ([22203ed](https://gitlab.com/noClaps/znak-lang/commit/22203ed))
-- Remove demo ([3610dde](https://gitlab.com/noClaps/znak-lang/commit/3610dde))
-- Add version script ([04ce431](https://gitlab.com/noClaps/znak-lang/commit/04ce431))
+- Update dependencies and switch to text lockfile ([5fe41a6](https://github.com/noClaps/znak-lang/commit/5fe41a6))
+- Update dependencies ([eaf2995](https://github.com/noClaps/znak-lang/commit/eaf2995))
+- Update dependencies ([22203ed](https://github.com/noClaps/znak-lang/commit/22203ed))
+- Remove demo ([3610dde](https://github.com/noClaps/znak-lang/commit/3610dde))
+- Add version script ([04ce431](https://github.com/noClaps/znak-lang/commit/04ce431))
 
 ### 🤖 CI
 
-- Remove copying bunfig.toml ([950d930](https://gitlab.com/noClaps/znak-lang/commit/950d930))
+- Remove copying bunfig.toml ([950d930](https://github.com/noClaps/znak-lang/commit/950d930))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://gitlab.com/noClaps/znak-lang/commit/4e74017))
+- ⚠️ Rewrite in Rust into a CLI and crate ([4e74017](https://github.com/noClaps/znak-lang/commit/4e74017))
 
 ### ❤️ Contributors
 
@@ -92,18 +92,18 @@
 
 ## v0.12.6
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.5...v0.12.6)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.5...v0.12.6)
 
 ### 📦 Build
 
-- Use build.ts file and bundle types ([181cc62](https://gitlab.com/noClaps/znak-lang/commit/181cc62))
+- Use build.ts file and bundle types ([181cc62](https://github.com/noClaps/znak-lang/commit/181cc62))
 
 ### 🏡 Chore
 
-- Fix repo url in package.json ([91940f3](https://gitlab.com/noClaps/znak-lang/commit/91940f3))
-- Remove bunfig.toml ([303c64e](https://gitlab.com/noClaps/znak-lang/commit/303c64e))
-- Update dependencies ([90e7481](https://gitlab.com/noClaps/znak-lang/commit/90e7481))
-- Update dependencies ([75c07cc](https://gitlab.com/noClaps/znak-lang/commit/75c07cc))
+- Fix repo url in package.json ([91940f3](https://github.com/noClaps/znak-lang/commit/91940f3))
+- Remove bunfig.toml ([303c64e](https://github.com/noClaps/znak-lang/commit/303c64e))
+- Update dependencies ([90e7481](https://github.com/noClaps/znak-lang/commit/90e7481))
+- Update dependencies ([75c07cc](https://github.com/noClaps/znak-lang/commit/75c07cc))
 
 ### ❤️ Contributors
 
@@ -111,19 +111,19 @@
 
 ## v0.12.5
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.4...v0.12.5)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.4...v0.12.5)
 
 ### 🏡 Chore
 
-- Update dependencies ([3f1b58f](https://gitlab.com/noClaps/znak-lang/commit/3f1b58f))
-- Publish to npmjs.com instead ([cb48d1d](https://gitlab.com/noClaps/znak-lang/commit/cb48d1d))
-- Build output before publishing ([bc35402](https://gitlab.com/noClaps/znak-lang/commit/bc35402))
+- Update dependencies ([3f1b58f](https://github.com/noClaps/znak-lang/commit/3f1b58f))
+- Publish to npmjs.com instead ([cb48d1d](https://github.com/noClaps/znak-lang/commit/cb48d1d))
+- Build output before publishing ([bc35402](https://github.com/noClaps/znak-lang/commit/bc35402))
 
 ### 🤖 CI
 
-- Use npm config ([e7c5d3f](https://gitlab.com/noClaps/znak-lang/commit/e7c5d3f))
-- Use npm commands instead of bun ([b0e938a](https://gitlab.com/noClaps/znak-lang/commit/b0e938a))
-- Install dependencies before building ([b7dba85](https://gitlab.com/noClaps/znak-lang/commit/b7dba85))
+- Use npm config ([e7c5d3f](https://github.com/noClaps/znak-lang/commit/e7c5d3f))
+- Use npm commands instead of bun ([b0e938a](https://github.com/noClaps/znak-lang/commit/b0e938a))
+- Install dependencies before building ([b7dba85](https://github.com/noClaps/znak-lang/commit/b7dba85))
 
 ### ❤️ Contributors
 
@@ -131,24 +131,24 @@
 
 ## v0.12.4
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.3...v0.12.4)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.3...v0.12.4)
 
 ### 📖 Documentation
 
-- Fix type name in doc comment ([6e366db](https://gitlab.com/noClaps/znak-lang/commit/6e366db))
+- Fix type name in doc comment ([6e366db](https://github.com/noClaps/znak-lang/commit/6e366db))
 
 ### 🏡 Chore
 
-- **demo:** Fix Dockerfile' ([d69dbfb](https://gitlab.com/noClaps/znak-lang/commit/d69dbfb))
-- Remove unused import ([64ae66e](https://gitlab.com/noClaps/znak-lang/commit/64ae66e))
-- Remove unused import ([03d0246](https://gitlab.com/noClaps/znak-lang/commit/03d0246))
-- Update dependencies ([e310f17](https://gitlab.com/noClaps/znak-lang/commit/e310f17))
+- **demo:** Fix Dockerfile' ([d69dbfb](https://github.com/noClaps/znak-lang/commit/d69dbfb))
+- Remove unused import ([64ae66e](https://github.com/noClaps/znak-lang/commit/64ae66e))
+- Remove unused import ([03d0246](https://github.com/noClaps/znak-lang/commit/03d0246))
+- Update dependencies ([e310f17](https://github.com/noClaps/znak-lang/commit/e310f17))
 
 ### 🤖 CI
 
-- Fix deploy job ([f928b56](https://gitlab.com/noClaps/znak-lang/commit/f928b56))
-- Fix deploy job again ([5b7c4d2](https://gitlab.com/noClaps/znak-lang/commit/5b7c4d2))
-- Don't run deploy when publishing ([27b5bb1](https://gitlab.com/noClaps/znak-lang/commit/27b5bb1))
+- Fix deploy job ([f928b56](https://github.com/noClaps/znak-lang/commit/f928b56))
+- Fix deploy job again ([5b7c4d2](https://github.com/noClaps/znak-lang/commit/5b7c4d2))
+- Don't run deploy when publishing ([27b5bb1](https://github.com/noClaps/znak-lang/commit/27b5bb1))
 
 ### ❤️ Contributors
 
@@ -156,19 +156,19 @@
 
 ## v0.12.3
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.2...v0.12.3)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.2...v0.12.3)
 
 ### 🚀 Enhancements
 
-- Publish to self-hosted registry ([39446a8](https://gitlab.com/noClaps/znak-lang/commit/39446a8))
-- Update dependencies ([29b4d0d](https://gitlab.com/noClaps/znak-lang/commit/29b4d0d))
+- Publish to self-hosted registry ([39446a8](https://github.com/noClaps/znak-lang/commit/39446a8))
+- Update dependencies ([29b4d0d](https://github.com/noClaps/znak-lang/commit/29b4d0d))
 
 ### 🤖 CI
 
-- Deploy demo site to Fly.io ([96178d4](https://gitlab.com/noClaps/znak-lang/commit/96178d4))
-- Update CI to deploy to self-hosted registry ([0990329](https://gitlab.com/noClaps/znak-lang/commit/0990329))
-- Use Bun whoami to check if publishing is possible with Bun ([1b953f9](https://gitlab.com/noClaps/znak-lang/commit/1b953f9))
-- Remove -b from bun test ([3de97c6](https://gitlab.com/noClaps/znak-lang/commit/3de97c6))
+- Deploy demo site to Fly.io ([96178d4](https://github.com/noClaps/znak-lang/commit/96178d4))
+- Update CI to deploy to self-hosted registry ([0990329](https://github.com/noClaps/znak-lang/commit/0990329))
+- Use Bun whoami to check if publishing is possible with Bun ([1b953f9](https://github.com/noClaps/znak-lang/commit/1b953f9))
+- Remove -b from bun test ([3de97c6](https://github.com/noClaps/znak-lang/commit/3de97c6))
 
 ### ❤️ Contributors
 
@@ -176,15 +176,15 @@
 
 ## v0.12.2
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.1...v0.12.2)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.1...v0.12.2)
 
 ### 🚀 Enhancements
 
-- **demo:** Switch to Hono for Cloudflare Workers ([29c0ff6](https://gitlab.com/noClaps/znak-lang/commit/29c0ff6))
+- **demo:** Switch to Hono for Cloudflare Workers ([29c0ff6](https://github.com/noClaps/znak-lang/commit/29c0ff6))
 
 ### 🏡 Chore
 
-- Version @noclaps/highlight dependency ([84186c6](https://gitlab.com/noClaps/znak-lang/commit/84186c6))
+- Version @noclaps/highlight dependency ([84186c6](https://github.com/noClaps/znak-lang/commit/84186c6))
 
 ### ❤️ Contributors
 
@@ -192,11 +192,11 @@
 
 ## v0.12.1
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.12.0...v0.12.1)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.12.0...v0.12.1)
 
 ### 🤖 CI
 
-- Use Homebrew image ([0f3985b](https://gitlab.com/noClaps/znak-lang/commit/0f3985b))
+- Use Homebrew image ([0f3985b](https://github.com/noClaps/znak-lang/commit/0f3985b))
 
 ### ❤️ Contributors
 
@@ -204,25 +204,25 @@
 
 ## v0.12.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.2...v0.12.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.11.2...v0.12.0)
 
 ### 🚀 Enhancements
 
-- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://github.com/noClaps/znak-lang/commit/0103b92))
 
 ### 📖 Documentation
 
-- Remove KaTeX from README ([2b4ec49](https://gitlab.com/noClaps/znak-lang/commit/2b4ec49))
+- Remove KaTeX from README ([2b4ec49](https://github.com/noClaps/znak-lang/commit/2b4ec49))
 
 ### 🏡 Chore
 
-- Update dependencies ([3d58e72](https://gitlab.com/noClaps/znak-lang/commit/3d58e72))
-- Move typescript into dev deps ([9015e51](https://gitlab.com/noClaps/znak-lang/commit/9015e51))
-- Update dependencies ([cc881b7](https://gitlab.com/noClaps/znak-lang/commit/cc881b7))
+- Update dependencies ([3d58e72](https://github.com/noClaps/znak-lang/commit/3d58e72))
+- Move typescript into dev deps ([9015e51](https://github.com/noClaps/znak-lang/commit/9015e51))
+- Update dependencies ([cc881b7](https://github.com/noClaps/znak-lang/commit/cc881b7))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://gitlab.com/noClaps/znak-lang/commit/0103b92))
+- ⚠️ Switch to using @noclaps/highlight for syntax highlighting ([0103b92](https://github.com/noClaps/znak-lang/commit/0103b92))
 
 ### ❤️ Contributors
 
@@ -230,25 +230,25 @@
 
 ## v0.11.2
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.1...v0.11.2)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.11.1...v0.11.2)
 
 ### 💅 Refactors
 
-- Inline and simplify image parsing code ([d6213df](https://gitlab.com/noClaps/znak-lang/commit/d6213df))
-- Simplify a lot of inline formatting parsing ([0b1d336](https://gitlab.com/noClaps/znak-lang/commit/0b1d336))
-- Simplify container parsing ([ed2ec26](https://gitlab.com/noClaps/znak-lang/commit/ed2ec26))
-- Further simplify container parsing ([37c6bbf](https://gitlab.com/noClaps/znak-lang/commit/37c6bbf))
-- Use array destructuring and slices in table parsing ([2345684](https://gitlab.com/noClaps/znak-lang/commit/2345684))
+- Inline and simplify image parsing code ([d6213df](https://github.com/noClaps/znak-lang/commit/d6213df))
+- Simplify a lot of inline formatting parsing ([0b1d336](https://github.com/noClaps/znak-lang/commit/0b1d336))
+- Simplify container parsing ([ed2ec26](https://github.com/noClaps/znak-lang/commit/ed2ec26))
+- Further simplify container parsing ([37c6bbf](https://github.com/noClaps/znak-lang/commit/37c6bbf))
+- Use array destructuring and slices in table parsing ([2345684](https://github.com/noClaps/znak-lang/commit/2345684))
 
 ### 📖 Documentation
 
-- Make input param for render and heading functions compulsory ([7529fc3](https://gitlab.com/noClaps/znak-lang/commit/7529fc3))
+- Make input param for render and heading functions compulsory ([7529fc3](https://github.com/noClaps/znak-lang/commit/7529fc3))
 
 ### 🏡 Chore
 
-- **bench:** Remove unneeded import ([4406f7d](https://gitlab.com/noClaps/znak-lang/commit/4406f7d))
-- Update dependencies ([cf02cef](https://gitlab.com/noClaps/znak-lang/commit/cf02cef))
-- Update dependencies ([f62cb91](https://gitlab.com/noClaps/znak-lang/commit/f62cb91))
+- **bench:** Remove unneeded import ([4406f7d](https://github.com/noClaps/znak-lang/commit/4406f7d))
+- Update dependencies ([cf02cef](https://github.com/noClaps/znak-lang/commit/cf02cef))
+- Update dependencies ([f62cb91](https://github.com/noClaps/znak-lang/commit/f62cb91))
 
 ### ❤️ Contributors
 
@@ -256,40 +256,40 @@
 
 ## v0.11.1
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.11.0...v0.11.1)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.11.0...v0.11.1)
 
 ### 🚀 Enhancements
 
-- Switch KaTeX for Temml ([b3ea42f](https://gitlab.com/noClaps/znak-lang/commit/b3ea42f))
-- **demo:** Use build and dev scripts instead of Makefile ([fe3a198](https://gitlab.com/noClaps/znak-lang/commit/fe3a198))
+- Switch KaTeX for Temml ([b3ea42f](https://github.com/noClaps/znak-lang/commit/b3ea42f))
+- **demo:** Use build and dev scripts instead of Makefile ([fe3a198](https://github.com/noClaps/znak-lang/commit/fe3a198))
 
 ### 🔥 Performance
 
-- Use Shiki's codeToHtml instead of making new highlighter ([d3daadf](https://gitlab.com/noClaps/znak-lang/commit/d3daadf))
+- Use Shiki's codeToHtml instead of making new highlighter ([d3daadf](https://github.com/noClaps/znak-lang/commit/d3daadf))
 
 ### 🩹 Fixes
 
-- Fix errors when HTML element wasn't closed and trim HTML parsed output ([4372d02](https://gitlab.com/noClaps/znak-lang/commit/4372d02))
+- Fix errors when HTML element wasn't closed and trim HTML parsed output ([4372d02](https://github.com/noClaps/znak-lang/commit/4372d02))
 
 ### 💅 Refactors
 
-- Inline blockquotes and headings functions ([8dc257d](https://gitlab.com/noClaps/znak-lang/commit/8dc257d))
-- Replace Records with Maps ([9d099c0](https://gitlab.com/noClaps/znak-lang/commit/9d099c0))
-- Inline code blocks parsing ([3807564](https://gitlab.com/noClaps/znak-lang/commit/3807564))
-- **demo:** Use non-null assertion for query selectors ([927b053](https://gitlab.com/noClaps/znak-lang/commit/927b053))
+- Inline blockquotes and headings functions ([8dc257d](https://github.com/noClaps/znak-lang/commit/8dc257d))
+- Replace Records with Maps ([9d099c0](https://github.com/noClaps/znak-lang/commit/9d099c0))
+- Inline code blocks parsing ([3807564](https://github.com/noClaps/znak-lang/commit/3807564))
+- **demo:** Use non-null assertion for query selectors ([927b053](https://github.com/noClaps/znak-lang/commit/927b053))
 
 ### 📖 Documentation
 
-- Add a short description to exported functions ([7e5af95](https://gitlab.com/noClaps/znak-lang/commit/7e5af95))
+- Add a short description to exported functions ([7e5af95](https://github.com/noClaps/znak-lang/commit/7e5af95))
 
 ### 🏡 Chore
 
-- Remove unneeded @types/katex package from dev deps ([c06d6a8](https://gitlab.com/noClaps/znak-lang/commit/c06d6a8))
-- Update dependencies ([d57bc99](https://gitlab.com/noClaps/znak-lang/commit/d57bc99))
+- Remove unneeded @types/katex package from dev deps ([c06d6a8](https://github.com/noClaps/znak-lang/commit/c06d6a8))
+- Update dependencies ([d57bc99](https://github.com/noClaps/znak-lang/commit/d57bc99))
 
 ### ✅ Tests
 
-- Add benchmarking tests ([8c9d803](https://gitlab.com/noClaps/znak-lang/commit/8c9d803))
+- Add benchmarking tests ([8c9d803](https://github.com/noClaps/znak-lang/commit/8c9d803))
 
 ### ❤️ Contributors
 
@@ -297,29 +297,29 @@
 
 ## v0.11.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.2...v0.11.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.10.2...v0.11.0)
 
 ### 🚀 Enhancements
 
-- Create new CodeTheme type and export it ([d313fee](https://gitlab.com/noClaps/znak-lang/commit/d313fee))
-- Export Heading type ([3ff7d2f](https://gitlab.com/noClaps/znak-lang/commit/3ff7d2f))
-- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+- Create new CodeTheme type and export it ([d313fee](https://github.com/noClaps/znak-lang/commit/d313fee))
+- Export Heading type ([3ff7d2f](https://github.com/noClaps/znak-lang/commit/3ff7d2f))
+- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://github.com/noClaps/znak-lang/commit/4cf7709))
 
 ### 🩹 Fixes
 
-- Load all languages beforehand ([a5e59f9](https://gitlab.com/noClaps/znak-lang/commit/a5e59f9))
+- Load all languages beforehand ([a5e59f9](https://github.com/noClaps/znak-lang/commit/a5e59f9))
 
 ### 📖 Documentation
 
-- Update documentation to reflect new names and types ([34c1b75](https://gitlab.com/noClaps/znak-lang/commit/34c1b75))
+- Update documentation to reflect new names and types ([34c1b75](https://github.com/noClaps/znak-lang/commit/34c1b75))
 
 ### 🏡 Chore
 
-- Update dependencies ([2d03eec](https://gitlab.com/noClaps/znak-lang/commit/2d03eec))
+- Update dependencies ([2d03eec](https://github.com/noClaps/znak-lang/commit/2d03eec))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://gitlab.com/noClaps/znak-lang/commit/4cf7709))
+- ⚠️ Don't bundle any syntax highlighting themes ([4cf7709](https://github.com/noClaps/znak-lang/commit/4cf7709))
 
 ### ❤️ Contributors
 
@@ -327,11 +327,11 @@
 
 ## v0.10.2
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.1...v0.10.2)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.10.1...v0.10.2)
 
 ### 🏡 Chore
 
-- Add return type for render function ([3532e5c](https://gitlab.com/noClaps/znak-lang/commit/3532e5c))
+- Add return type for render function ([3532e5c](https://github.com/noClaps/znak-lang/commit/3532e5c))
 
 ### ❤️ Contributors
 
@@ -339,11 +339,11 @@
 
 ## v0.10.1
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.10.0...v0.10.1)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.10.0...v0.10.1)
 
 ### ✅ Tests
 
-- Update tests to match new MathML output ([d3f3c30](https://gitlab.com/noClaps/znak-lang/commit/d3f3c30))
+- Update tests to match new MathML output ([d3f3c30](https://github.com/noClaps/znak-lang/commit/d3f3c30))
 
 ### ❤️ Contributors
 
@@ -351,39 +351,39 @@
 
 ## v0.10.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.1...v0.10.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.9.1...v0.10.0)
 
 ### 🚀 Enhancements
 
-- Change to using codeToHtml for syntax highlighting ([7874520](https://gitlab.com/noClaps/znak-lang/commit/7874520))
-- Add demo site ([696a727](https://gitlab.com/noClaps/znak-lang/commit/696a727))
-- Create a faster function to parse headings, and use named exports ([fdea29b](https://gitlab.com/noClaps/znak-lang/commit/fdea29b))
-- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
-- ⚠️ Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
-- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+- Change to using codeToHtml for syntax highlighting ([7874520](https://github.com/noClaps/znak-lang/commit/7874520))
+- Add demo site ([696a727](https://github.com/noClaps/znak-lang/commit/696a727))
+- Create a faster function to parse headings, and use named exports ([fdea29b](https://github.com/noClaps/znak-lang/commit/fdea29b))
+- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://github.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️ Make render async ([d97de00](https://github.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://github.com/noClaps/znak-lang/commit/54241a6))
 
 ### 📖 Documentation
 
-- Remove await from README example ([2ff0dba](https://gitlab.com/noClaps/znak-lang/commit/2ff0dba))
+- Remove await from README example ([2ff0dba](https://github.com/noClaps/znak-lang/commit/2ff0dba))
 
 ### 🏡 Chore
 
-- Change attrObject variable in container parser to const ([a494aed](https://gitlab.com/noClaps/znak-lang/commit/a494aed))
+- Change attrObject variable in container parser to const ([a494aed](https://github.com/noClaps/znak-lang/commit/a494aed))
 
 ### 🎨 Styles
 
-- **demo:** Switch to using tabs for indentation ([1ad4822](https://gitlab.com/noClaps/znak-lang/commit/1ad4822))
+- **demo:** Switch to using tabs for indentation ([1ad4822](https://github.com/noClaps/znak-lang/commit/1ad4822))
 
 ### 🤖 CI
 
-- Don't publish to GitLab Releases ([e6db68d](https://gitlab.com/noClaps/znak-lang/commit/e6db68d))
-- Remove GitLab Releases publishing stages from `stages` list ([5a133e3](https://gitlab.com/noClaps/znak-lang/commit/5a133e3))
+- Don't publish to github Releases ([e6db68d](https://github.com/noClaps/znak-lang/commit/e6db68d))
+- Remove github Releases publishing stages from `stages` list ([5a133e3](https://github.com/noClaps/znak-lang/commit/5a133e3))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://gitlab.com/noClaps/znak-lang/commit/28074e4))
-- ⚠️ Make render async ([d97de00](https://gitlab.com/noClaps/znak-lang/commit/d97de00))
-- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://gitlab.com/noClaps/znak-lang/commit/54241a6))
+- ⚠️ Separate render and headings methods into their own functions ([28074e4](https://github.com/noClaps/znak-lang/commit/28074e4))
+- ⚠️ Make render async ([d97de00](https://github.com/noClaps/znak-lang/commit/d97de00))
+- ⚠️ Set KaTeX rendering mode to MathML ([54241a6](https://github.com/noClaps/znak-lang/commit/54241a6))
 
 ### ❤️ Contributors
 
@@ -391,11 +391,11 @@
 
 ## v0.9.1
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.9.0...v0.9.1)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.9.0...v0.9.1)
 
 ### 💅 Refactors
 
-- Simplify syntax highlighter code ([a157637](https://gitlab.com/noClaps/znak-lang/commit/a157637))
+- Simplify syntax highlighter code ([a157637](https://github.com/noClaps/znak-lang/commit/a157637))
 
 ### ❤️ Contributors
 
@@ -403,40 +403,40 @@
 
 ## v0.9.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.3...v0.9.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.8.3...v0.9.0)
 
 ### 🚀 Enhancements
 
-- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
-- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://github.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://github.com/noClaps/znak-lang/commit/17201e3))
 
 ### 🩹 Fixes
 
-- Fix invalid container openers not being parsed correctly ([87a9aac](https://gitlab.com/noClaps/znak-lang/commit/87a9aac))
-- Fix invalid code block openers not being parsed correctly ([43995d5](https://gitlab.com/noClaps/znak-lang/commit/43995d5))
+- Fix invalid container openers not being parsed correctly ([87a9aac](https://github.com/noClaps/znak-lang/commit/87a9aac))
+- Fix invalid code block openers not being parsed correctly ([43995d5](https://github.com/noClaps/znak-lang/commit/43995d5))
 
 ### 📖 Documentation
 
-- Remove extra version from changelog ([8a9a1ea](https://gitlab.com/noClaps/znak-lang/commit/8a9a1ea))
+- Remove extra version from changelog ([8a9a1ea](https://github.com/noClaps/znak-lang/commit/8a9a1ea))
 
 ### 🏡 Chore
 
-- Update dependencies ([77d1f51](https://gitlab.com/noClaps/znak-lang/commit/77d1f51))
-- Update syntax highlighting engine creation code ([5c054ce](https://gitlab.com/noClaps/znak-lang/commit/5c054ce))
-- Remove unneeded code ([2e09da3](https://gitlab.com/noClaps/znak-lang/commit/2e09da3))
+- Update dependencies ([77d1f51](https://github.com/noClaps/znak-lang/commit/77d1f51))
+- Update syntax highlighting engine creation code ([5c054ce](https://github.com/noClaps/znak-lang/commit/5c054ce))
+- Remove unneeded code ([2e09da3](https://github.com/noClaps/znak-lang/commit/2e09da3))
 
 ### ✅ Tests
 
-- Add missing tests for syntax and use proper testing features ([689b442](https://gitlab.com/noClaps/znak-lang/commit/689b442))
+- Add missing tests for syntax and use proper testing features ([689b442](https://github.com/noClaps/znak-lang/commit/689b442))
 
 ### 🎨 Styles
 
-- Switch to using tabs for indentation ([6a69923](https://gitlab.com/noClaps/znak-lang/commit/6a69923))
+- Switch to using tabs for indentation ([6a69923](https://github.com/noClaps/znak-lang/commit/6a69923))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://gitlab.com/noClaps/znak-lang/commit/6374e1e))
-- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://gitlab.com/noClaps/znak-lang/commit/17201e3))
+- ⚠️ Match `Bun.escapeHTML()` for `escapeHTML` function ([6374e1e](https://github.com/noClaps/znak-lang/commit/6374e1e))
+- ⚠️ Don't throw when an unsupported language is used ([17201e3](https://github.com/noClaps/znak-lang/commit/17201e3))
 
 ### ❤️ Contributors
 
@@ -444,11 +444,11 @@
 
 ## v0.8.3
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.2...v0.8.3)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.8.2...v0.8.3)
 
 ### 🩹 Fixes
 
-- Escape HTML in code blocks when appropriate ([8a64b2d](https://gitlab.com/noClaps/znak-lang/commit/8a64b2d))
+- Escape HTML in code blocks when appropriate ([8a64b2d](https://github.com/noClaps/znak-lang/commit/8a64b2d))
 
 ### ❤️ Contributors
 
@@ -456,11 +456,11 @@
 
 ## v0.8.2
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.1...v0.8.2)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.8.1...v0.8.2)
 
 ### 🩹 Fixes
 
-- Initialise slugger occurrences properly ([3e28e25](https://gitlab.com/noClaps/znak-lang/commit/3e28e25))
+- Initialise slugger occurrences properly ([3e28e25](https://github.com/noClaps/znak-lang/commit/3e28e25))
 
 ### ❤️ Contributors
 
@@ -468,15 +468,15 @@
 
 ## v0.8.1
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.8.0...v0.8.1)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.8.0...v0.8.1)
 
 ### 🩹 Fixes
 
-- Check whether a language is provided in code block ([5b83415](https://gitlab.com/noClaps/znak-lang/commit/5b83415))
+- Check whether a language is provided in code block ([5b83415](https://github.com/noClaps/znak-lang/commit/5b83415))
 
 ### 📖 Documentation
 
-- Update usage example to be synchronous ([6192188](https://gitlab.com/noClaps/znak-lang/commit/6192188))
+- Update usage example to be synchronous ([6192188](https://github.com/noClaps/znak-lang/commit/6192188))
 
 ### ❤️ Contributors
 
@@ -484,29 +484,29 @@
 
 ## v0.8.0
 
-[compare changes](https://gitlab.com/noClaps/znak-lang/compare/v0.7.3...v0.8.0)
+[compare changes](https://github.com/noClaps/znak-lang/compare/v0.7.3...v0.8.0)
 
 ### 🩹 Fixes
 
-- Fix bug with slugger and add tests ([14b237c](https://gitlab.com/noClaps/znak-lang/commit/14b237c))
+- Fix bug with slugger and add tests ([14b237c](https://github.com/noClaps/znak-lang/commit/14b237c))
 
 ### 💅 Refactors
 
-- Use hast-like structure to create syntax tree ([a7e1387](https://gitlab.com/noClaps/znak-lang/commit/a7e1387))
-- Inline container generation into the parser ([105bbcc](https://gitlab.com/noClaps/znak-lang/commit/105bbcc))
-- Do math rendering during parsing and add it as a HastText node ([525242d](https://gitlab.com/noClaps/znak-lang/commit/525242d))
-- Use Shiki's codeToHast function for code blocks ([b8443a3](https://gitlab.com/noClaps/znak-lang/commit/b8443a3))
-- Replace github-slugger with self-made slugger ([c159223](https://gitlab.com/noClaps/znak-lang/commit/c159223))
-- ⚠️ Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+- Use hast-like structure to create syntax tree ([a7e1387](https://github.com/noClaps/znak-lang/commit/a7e1387))
+- Inline container generation into the parser ([105bbcc](https://github.com/noClaps/znak-lang/commit/105bbcc))
+- Do math rendering during parsing and add it as a HastText node ([525242d](https://github.com/noClaps/znak-lang/commit/525242d))
+- Use Shiki's codeToHast function for code blocks ([b8443a3](https://github.com/noClaps/znak-lang/commit/b8443a3))
+- Replace github-slugger with self-made slugger ([c159223](https://github.com/noClaps/znak-lang/commit/c159223))
+- ⚠️ Make parser synchronous ([bfa4818](https://github.com/noClaps/znak-lang/commit/bfa4818))
 
 ### 🤖 CI
 
-- Don't publish to JSR using pipelines ([85bd19f](https://gitlab.com/noClaps/znak-lang/commit/85bd19f))
-- Don't publish to JSR using pipelines" ([c2dbd15](https://gitlab.com/noClaps/znak-lang/commit/c2dbd15))
+- Don't publish to JSR using pipelines ([85bd19f](https://github.com/noClaps/znak-lang/commit/85bd19f))
+- Don't publish to JSR using pipelines" ([c2dbd15](https://github.com/noClaps/znak-lang/commit/c2dbd15))
 
 #### ⚠️ Breaking Changes
 
-- ⚠️ Make parser synchronous ([bfa4818](https://gitlab.com/noClaps/znak-lang/commit/bfa4818))
+- ⚠️ Make parser synchronous ([bfa4818](https://github.com/noClaps/znak-lang/commit/bfa4818))
 
 ### ❤️ Contributors
 

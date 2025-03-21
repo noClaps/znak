@@ -15,7 +15,7 @@ brew install noclaps/tap/znak
 or you can build from source:
 
 ```sh
-cargo install --git https://gitlab.com/noClaps/znak-lang
+cargo install --git https://github.com/noClaps/znak-lang
 ```
 
 ## Usage

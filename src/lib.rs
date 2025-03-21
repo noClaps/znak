@@ -31,7 +31,7 @@ mod test;
 ///   ```
 ///   An example of the GitHub Dark theme can be found in [`theme.toml`].
 ///
-/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
+/// [documentation]: https://github.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn render(input: String, code_theme: Theme) -> String {
     // Strip out frontmatter
     let lines = input.trim().lines().collect::<Vec<&str>>();
@@ -60,7 +60,7 @@ pub fn render(input: String, code_theme: Theme) -> String {
 /// Markdown file as long as the syntax is supported by Znak. See the [documentation]
 /// for the supported syntax.
 ///
-/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
+/// [documentation]: https://github.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn headings(input: String) -> Vec<Heading> {
     parse_headings(input)
 }
@@ -73,7 +73,7 @@ pub fn headings(input: String) -> Vec<Heading> {
 /// a Markdown file as long as the syntax is supported by Znak. See the [documentation]
 /// for the supported syntax.
 ///
-/// [documentation]: https://gitlab.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
+/// [documentation]: https://github.com/noClaps/znak-lang/-/blob/main/docs/syntax.md
 pub fn frontmatter(input: String) -> Option<HashMap<String, String>> {
     parse_frontmatter(input)
 }
