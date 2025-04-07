@@ -1,4 +1,10 @@
-# @noclaps/znak
+# Znak
+
+## v0.16.0
+
+### Breaking changes
+
+- Rewrite in Go
 
 ## v0.15.1
 
