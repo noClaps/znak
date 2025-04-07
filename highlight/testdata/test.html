@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="icon" href="/favicon.ico" />
+        <title>The Blog of Random</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="A blog about the most random things you can think of."
+        />
+        <link rel="alternate" href="/feed.json" type="application/json" />
+        <link rel="alternate" href="/feed.atom" type="application/atom+xml" />
+        <link rel="alternate" href="/feed.rss" type="application/rss+xml" />
+        <script>
+            console.log("Hello World");
+        </script>
+        <style>
+            @view-transition {
+                navigation: auto;
+            }
+            @font-face {
+                font-family: InterVariable;
+                font-style: normal;
+                font-weight: 100 900;
+                font-display: swap;
+                src: url(https://rsms.me/inter/font-files/InterVariable.woff2?v=4.0)
+                    format(woff2);
+            }
+            :root {
+                --code-bg: #24292e;
+                --code-text: #e1e4e8;
+                --sans: InterVariable, system-ui;
+                --serif: ui-serif, serif;
+                --mono: ui-monospace, monospace;
+                --text: oklch(90% 0 none);
+                --background: oklch(20% 0 none);
+                --light: oklch(from var(--text) l c h/70%);
+                --primary: oklch(70% 0.225 256);
+                color-scheme: dark;
+                scroll-behavior: smooth;
+                font-family: var(--sans);
+                font-feature-settings:
+                    "liga" 1,
+                    "calt" 1,
+                    "case" 1,
+                    "ss04" 1,
+                    "cv10" 1;
+                font-weight: 450;
+            }
+            body {
+                background-color: var(--background);
+                color: var(--text);
+                width: 88dvw;
+                max-width: 48rem;
+                margin: auto auto 2rem;
+            }
+            p {
+                line-height: 1.5;
+                margin: 1rem 0;
+            }
+            header {
+                display: flex;
+                background-color: var(--background);
+                justify-content: space-between;
+                align-items: center;
+                padding: 2dvh 0;
+                & a {
+                    color: var(--text);
+                    text-decoration: none;
+                    display: inline-flex;
+                    justify-content: center;
+                    align-content: center;
+                    transition: color 0.25s;
+                    &:hover {
+                        color: var(--primary);
+                    }
+                }
+                & svg {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                }
+                & h1 {
+                    font-size: 1.25rem;
+                    margin: 0;
+                }
+            }
+            time {
+                color: var(--light);
+                font-family: var(--mono);
+                margin: 0.25rem 0;
+            }
+            h2 {
+                margin-top: 2.5rem;
+            }
+            section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            .link {
+                color: var(--text);
+                display: grid;
+                grid-template-columns: 14ch 1fr;
+                align-items: center;
+                text-decoration: none;
+                width: 100%;
+                &:hover h3 {
+                    color: var(--primary);
+                }
+                @media (width<=800px) {
+                    & {
+                        grid-template-columns: none;
+                        grid-template-rows: auto;
+                    }
+                }
+                & h3 {
+                    transition: color 0.25s;
+                    margin: 0.25rem 0;
+                }
+            }
+            .title {
+                & h1 {
+                    font-size: 2.25rem;
+                    margin: 0;
+                }
+                & p {
+                    font-size: 1.25rem;
+                    color: var(--light);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div></div>
+            <a class="feed" href="/feed" title="Feed"
+                ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-rss"
+                >
+                    <path d="M4 11a9 9 0 0 1 9 9" />
+                    <path d="M4 4a16 16 0 0 1 16 16" />
+                    <circle cx="5" cy="19" r="1" /></svg
+            ></a>
+        </header>
+        <main>
+            <div class="title">
+                <h1>The Blog of Random</h1>
+                <p>A blog about the most random things you can think of.</p>
+            </div>
+            <h2>Posts</h2>
+            <section id="posts">
+                <a class="link" href="/posts/sarajevo">
+                    <time datetime="2024-02-15T00:00:00.000Z">2024-02-15</time>
+                    <h3>Love and War</h3></a
+                >
+                <a class="link" href="/posts/browsers">
+                    <time datetime="2024-01-22T00:00:00.000Z">2024-01-22</time>
+                    <h3>Battle of the Browsers</h3></a
+                >
+                <a class="link" href="/posts/duty-of-care">
+                    <time datetime="2023-09-15T00:00:00.000Z">2023-09-15</time>
+                    <h3>Duty of Care</h3></a
+                >
+                <a class="link" href="/posts/split-brain">
+                    <time datetime="2023-07-13T00:00:00.000Z">2023-07-13</time>
+                    <h3>The Split-Brain Experiment</h3></a
+                >
+                <a class="link" href="/posts/intro">
+                    <time datetime="2023-03-09T00:00:00.000Z">2023-03-09</time>
+                    <h3>Intro to Privacy, Security and Anonymity</h3></a
+                >
+                <a class="link" href="/posts/operating-systems">
+                    <time datetime="2023-02-05T00:00:00.000Z">2023-02-05</time>
+                    <h3>How to Make an OS</h3></a
+                >
+                <a class="link" href="/posts/be-social">
+                    <time datetime="2023-01-31T00:00:00.000Z">2023-01-31</time>
+                    <h3>Be Social</h3></a
+                >
+                <a class="link" href="/posts/messengers">
+                    <time datetime="2023-01-18T00:00:00.000Z">2023-01-18</time>
+                    <h3>Messengers</h3></a
+                >
+                <a class="link" href="/posts/threat-modelling">
+                    <time datetime="2023-01-18T00:00:00.000Z">2023-01-18</time>
+                    <h3>Threat Modelling</h3></a
+                >
+                <a class="link" href="/posts/google">
+                    <time datetime="2022-11-26T00:00:00.000Z">2022-11-26</time>
+                    <h3>Google: A Misrepresented Evil</h3></a
+                >
+                <a class="link" href="/posts/collatz-conjecture">
+                    <time datetime="2022-11-08T00:00:00.000Z">2022-11-08</time>
+                    <h3>Collatz Conjecture</h3></a
+                >
+                <a class="link" href="/posts/the-phalanx-formation">
+                    <time datetime="2022-07-31T00:00:00.000Z">2022-07-31</time>
+                    <h3>The Phalanx Formation</h3></a
+                >
+                <a class="link" href="/posts/history-of-toilet-paper">
+                    <time datetime="2021-12-26T00:00:00.000Z">2021-12-26</time>
+                    <h3>History of Toilet Paper</h3></a
+                >
+                <a class="link" href="/posts/chaos-theory">
+                    <time datetime="2021-12-02T00:00:00.000Z">2021-12-02</time>
+                    <h3>Chaos Theory</h3></a
+                >
+            </section>
+            <h2>Notes</h2>
+            <section id="notes">
+                <a class="link" href="/notes/tech-stack-2024">
+                    <time datetime="2024-12-16T00:00:00.000Z">2024-12-16</time>
+                    <h3>Textack - 2024</h3></a
+                >
+                <a class="link" href="/notes/simplicity-in-software">
+                    <time datetime="2024-12-05T00:00:00.000Z">2024-12-05</time>
+                    <h3>Simplicity in Software</h3></a
+                >
+                <a class="link" href="/notes/minimalism">
+                    <time datetime="2024-06-03T00:00:00.000Z">2024-06-03</time>
+                    <h3>Minimalism</h3></a
+                >
+                <a class="link" href="/notes/quantum-and-particle">
+                    <time datetime="2024-02-21T00:00:00.000Z">2024-02-21</time>
+                    <h3>
+                        A beginner's guide to Quantum and Particle Physics
+                    </h3></a
+                >
+                <a class="link" href="/notes/mozilla">
+                    <time datetime="2024-01-20T00:00:00.000Z">2024-01-20</time>
+                    <h3>Mozilla</h3></a
+                >
+                <a class="link" href="/notes/tech-stack-2023">
+                    <time datetime="2023-12-06T00:00:00.000Z">2023-12-06</time>
+                    <h3>Textack - 2023</h3></a
+                >
+                <a class="link" href="/notes/about-notes">
+                    <time datetime="2023-11-24T00:00:00.000Z">2023-11-24</time>
+                    <h3>What is this notes thing?</h3></a
+                >
+            </section>
+            <h2>Stories</h2>
+            <section id="stories">
+                <a class="link" href="/stories/what-happens-when-we-die">
+                    <time datetime="2024-10-04T00:00:00.000Z">2024-10-04</time>
+                    <h3>What Happens When We Die?</h3></a
+                >
+            </section>
+        </main>
+    </body>
+</html>

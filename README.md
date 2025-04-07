@@ -9,24 +9,28 @@ You can read the syntax [here](./docs/syntax.md).
 Add it as a dependency to your project:
 
 ```sh
-cargo add --git https://github.com/noClaps/znak.git
+go get github.com/noClaps/znak
 ```
 
 Then you can use it in your code:
 
-```rs
-use znak::{render, headings, Theme, Heading};
-use std::collections::HashMap;
+```go
+package main
 
-fn main() {
-    let theme = match Theme::new(include_str!("path/to/theme.toml").to_string()) {
-        Ok(theme) => theme,
-        Err(err) => panic!("Handle error here: {err}")
-    };
+import (
+	"github.com/noClaps/znak"
+	"github.com/noClaps/znak/highlight"
+)
 
-    let input = include_str!("path/to/file.md").to_string();
-    let rendered_html: String = render(input, theme);
-    let headings: Vec<Heading> = headings(input);
-    let frontmatter: Option<HashMap<String, String>> = frontmatter(input);
+func main() {
+	themeFile, err := os.ReadFile("path/to/theme.json")
+	codeTheme, err := highlight.NewTheme(string(themeFile))
+
+	inputFile, err := os.ReadFile("path/to/file.md")
+	input := string(inputFile)
+
+	renderedHtml, err := znak.Render(input, codeTheme)
+	headings := znak.Headings(input)
+	frontmatter, err := znak.Frontmatter(input)
 }
 ```

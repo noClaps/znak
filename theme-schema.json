@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Highlight theme",
+  "description": "A theme for the Highlight syntax highlighter",
+  "type": "object",
+  "definitions": {
+    "HighlightStyle": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "The text color of the syntax type"
+        },
+        "fontWeight": {
+          "type": "integer",
+          "minimum": 1,
+          "exclusiveMaximum": 1000,
+          "description": "The font weight for the syntax type. This should be a number between 1 and 1000"
+        },
+        "fontStyle": {
+          "type": "string",
+          "enum": ["italic", "normal", "oblique"],
+          "default": "normal",
+          "description": "The font style for the syntax type"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "The background color for the syntax type"
+        }
+      }
+    }
+  },
+  "properties": {
+    "backgroundColor": {
+      "type": "string",
+      "description": "The default background color. This is the background color of the code block"
+    },
+    "color": {
+      "type": "string",
+      "description": "The default text color. This is set on the parent `<pre>` element and is used if no valid highlight is present, or no highlight color is provided for that syntax."
+    },
+    "lineNumbers": {
+      "type": "object",
+      "description": "An object to configure line numbers. If this is left out, no line numbers will be present",
+      "required": ["color"],
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "The color of the line numbers"
+        },
+        "rightSpace": {
+          "type": "number",
+          "description": "The number of spaces between the line numbers and the code, in units of `ch`",
+          "default": 1
+        }
+      }
+    },
+    "highlights": {
+      "type": "object",
+      "description": "An object to configure highlights. This is a map, with the keys being the syntax types, and the values being the configuration object. If you don't want to have inline styles, you can have the keys be the syntax types you want to select, and the configuration object empty for each one.",
+      "default": {},
+      "additionalProperties": {
+        "$ref": "#/definitions/HighlightStyle"
+      }
+    }
+  }
+}

@@ -179,7 +179,7 @@ $$
 1. list item 1
 2. list item 2
 3. list item 3
-   1. nested list item 1 (3 space or 1 tab indentation allowed)
+   1. nested list item 1 (3 space indentation)
    2. nested list item 2
       1. You can nest as far as you want
 ```
@@ -198,7 +198,7 @@ $$
 - list item 1 (only - allowed for list)
 - list item 2
 - list item 3
-  - nested list item 1 (2 space or 1 tab indentation allowed)
+  - nested list item 1 (2 space indentation)
   - nested list item 2
     - You can nest as far as you want
 ```
