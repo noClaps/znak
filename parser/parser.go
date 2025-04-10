@@ -149,7 +149,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		// Tables
 		if len(line) > 2 && line[0:2] == "| " {
 			buffer := ""
-			for lineCursor < len(lines) && lines[lineCursor][0:2] == "| " {
+			for lineCursor < len(lines) && len(lines[lineCursor]) > 2 && lines[lineCursor][0:2] == "| " {
 				buffer += fmt.Sprintln(lines[lineCursor])
 				lineCursor++
 			}
