@@ -1,5 +1,10 @@
 # Znak
 
+## V0.16.1
+
+- Check line length in tables
+- Fix minifying and formatting math. This broke after updating to [Treeblood](https://github.com/wyatt915/treeblood) v0.1.7, but I fixed it and added minification. Hopefully it won't break again in future updates.
+
 ## v0.16.0
 
 ### Breaking changes
