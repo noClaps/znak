@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/noClaps/znak/highlight"
-	"github.com/noClaps/znak/parser"
+	"github.com/noClaps/znak/internal/parser"
 	"github.com/noClaps/znak/types"
 )
 
@@ -72,7 +72,7 @@ func Render(input string, codeTheme highlight.Theme) (string, error) {
 //
 // [documentation]: https://github.com/noClaps/znak/blob/main/docs/syntax.md
 func ParseHeadings(input string) []types.Heading {
-	slugger := types.NewSlugger()
+	slugger := parser.NewSlugger()
 	re := regexp.MustCompile("(?m)^(#{1,6}) (.+)")
 
 	for _, match := range re.FindAllStringSubmatch(input, -1) {

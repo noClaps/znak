@@ -8,11 +8,10 @@ import (
 	"strings"
 
 	"github.com/noClaps/znak/highlight"
-	"github.com/noClaps/znak/types"
 )
 
 func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
-	slugger := types.NewSlugger()
+	slugger := NewSlugger()
 	lines := strings.Split(input, "\n")
 	tokens := []node{}
 

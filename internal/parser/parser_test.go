@@ -10,7 +10,7 @@ import (
 )
 
 func testRender(input string, test string, t *testing.T) {
-	themeFile, err := os.ReadFile("../theme.json")
+	themeFile, err := os.ReadFile("../../theme.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,7 +28,7 @@ func testRender(input string, test string, t *testing.T) {
 }
 
 func testRenderNe(input string, test string, t *testing.T) {
-	themeFile, err := os.ReadFile("../theme.json")
+	themeFile, err := os.ReadFile("../../theme.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +46,7 @@ func testRenderNe(input string, test string, t *testing.T) {
 }
 
 func testRenderOneOf(input string, tests []string, t *testing.T) {
-	themeFile, err := os.ReadFile("../theme.json")
+	themeFile, err := os.ReadFile("../../theme.json")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,7 +211,7 @@ func TestImages(t *testing.T) {
 }
 
 func TestCodeBlocks(t *testing.T) {
-	themeFile, err := os.ReadFile("../theme.json")
+	themeFile, err := os.ReadFile("../../theme.json")
 	if err != nil {
 		t.Fatal(err)
 	}

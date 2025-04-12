@@ -1,20 +1,22 @@
-package types
+package parser
 
 import (
 	"fmt"
 	"regexp"
 	"strings"
+
+	"github.com/noClaps/znak/types"
 )
 
 type slugger struct {
 	occurrences map[string]uint
-	Headings    []Heading
+	Headings    []types.Heading
 }
 
 func NewSlugger() slugger {
 	return slugger{
 		occurrences: make(map[string]uint),
-		Headings:    []Heading{},
+		Headings:    []types.Heading{},
 	}
 }
 
@@ -32,7 +34,7 @@ func (s *slugger) Slug(heading string, depth uint) string {
 		s.occurrences[cleanHeading] = 1
 	}
 
-	s.Headings = append(s.Headings, Heading{
+	s.Headings = append(s.Headings, types.Heading{
 		Depth: depth,
 		Slug:  slug,
 		Title: heading,
