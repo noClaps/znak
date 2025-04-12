@@ -3,32 +3,30 @@ package parser
 import (
 	"fmt"
 	"html"
-	"slices"
 	"strings"
 )
 
-func inlineFormatting(input string) ([]node, error) {
+func inlineFormatting(line string) ([]node, error) {
 	contents := []node{}
 	buffer := ""
 	cursor := 0
-	line := []rune(input)
 
 	for cursor < len(line) {
 		if line[cursor] == '\\' {
 			cursor++
-			buffer += string(line[cursor])
+			buffer += line[cursor : cursor+1]
 			cursor++
 			continue
 		}
 
 		// Bold (**)
-		if cursor+2 < len(line) && string(line[cursor:cursor+2]) == "**" && strings.Contains(string(line[cursor+2:]), "**") {
+		if cursor+2 < len(line) && line[cursor:cursor+2] == "**" && strings.Contains(line[cursor+2:], "**") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 2 + strings.Index(string(line[cursor+2:]), "**")
-			tempBuf := string(line[cursor+2 : nextIndex])
+			nextIndex := cursor + 2 + strings.Index(line[cursor+2:], "**")
+			tempBuf := line[cursor+2 : nextIndex]
 
 			if tempBuf == "" {
 				contents = append(contents, text{"****"})
@@ -44,13 +42,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Underline (__)
-		if cursor+2 < len(line) && string(line[cursor:cursor+2]) == "__" && strings.Contains(string(line[cursor+2:]), "__") {
+		if cursor+2 < len(line) && line[cursor:cursor+2] == "__" && strings.Contains(line[cursor+2:], "__") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 2 + strings.Index(string(line[cursor+2:]), "__")
-			tempBuf := string(line[cursor+2 : nextIndex])
+			nextIndex := cursor + 2 + strings.Index(line[cursor+2:], "__")
+			tempBuf := line[cursor+2 : nextIndex]
 
 			if tempBuf == "" {
 				contents = append(contents, text{"____"})
@@ -66,13 +64,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Strikethrough (~~)
-		if cursor+2 < len(line) && string(line[cursor:cursor+2]) == "~~" && strings.Contains(string(line[cursor+2:]), "~~") {
+		if cursor+2 < len(line) && line[cursor:cursor+2] == "~~" && strings.Contains(line[cursor+2:], "~~") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 2 + strings.Index(string(line[cursor+2:]), "~~")
-			tempBuf := string(line[cursor+2 : nextIndex])
+			nextIndex := cursor + 2 + strings.Index(line[cursor+2:], "~~")
+			tempBuf := line[cursor+2 : nextIndex]
 
 			if tempBuf == "" {
 				contents = append(contents, text{"~~~~"})
@@ -88,13 +86,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Highlight (==)
-		if cursor+2 < len(line) && string(line[cursor:cursor+2]) == "==" && strings.Contains(string(line[cursor+2:]), "==") {
+		if cursor+2 < len(line) && line[cursor:cursor+2] == "==" && strings.Contains(line[cursor+2:], "==") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 2 + strings.Index(string(line[cursor+2:]), "==")
-			tempBuf := string(line[cursor+2 : nextIndex])
+			nextIndex := cursor + 2 + strings.Index(line[cursor+2:], "==")
+			tempBuf := line[cursor+2 : nextIndex]
 
 			if tempBuf == "" {
 				contents = append(contents, text{"===="})
@@ -110,13 +108,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Inline math ($$)
-		if cursor+2 < len(line) && string(line[cursor:cursor+2]) == "$$" && strings.Contains(string(line[cursor+2:]), "$$") {
+		if cursor+2 < len(line) && line[cursor:cursor+2] == "$$" && strings.Contains(line[cursor+2:], "$$") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 2 + strings.Index(string(line[cursor+2:]), "$$")
-			tempBuf := string(line[cursor+2 : nextIndex])
+			nextIndex := cursor + 2 + strings.Index(line[cursor+2:], "$$")
+			tempBuf := line[cursor+2 : nextIndex]
 			if tempBuf == "" {
 				contents = append(contents, text{"$$$$"})
 			} else {
@@ -131,13 +129,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Italics (_)
-		if line[cursor] == '_' && slices.Contains(line[cursor+1:], '_') {
+		if line[cursor] == '_' && strings.Contains(line[cursor+1:], "_") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 1 + slices.Index(line[cursor+1:], '_')
-			tempBuf := string(line[cursor+1 : nextIndex])
+			nextIndex := cursor + 1 + strings.Index(line[cursor+1:], "_")
+			tempBuf := line[cursor+1 : nextIndex]
 			if tempBuf == "" {
 				contents = append(contents, text{"__"})
 			} else {
@@ -152,13 +150,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Code (`)
-		if cursor+1 < len(line) && line[cursor] == '`' && slices.Contains(line[cursor+1:], '`') {
+		if cursor+1 < len(line) && line[cursor] == '`' && strings.Contains(line[cursor+1:], "`") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 1 + slices.Index(line[cursor+1:], '`')
-			tempBuf := string(line[cursor+1 : nextIndex])
+			nextIndex := cursor + 1 + strings.Index(line[cursor+1:], "`")
+			tempBuf := line[cursor+1 : nextIndex]
 			if tempBuf == "" {
 				contents = append(contents, text{"``"})
 			} else {
@@ -172,13 +170,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Subscript (~)
-		if line[cursor] == '~' && slices.Contains(line[cursor+1:], '~') {
+		if line[cursor] == '~' && strings.Contains(line[cursor+1:], "~") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 1 + slices.Index(line[cursor+1:], '~')
-			tempBuf := string(line[cursor+1 : nextIndex])
+			nextIndex := cursor + 1 + strings.Index(line[cursor+1:], "~")
+			tempBuf := line[cursor+1 : nextIndex]
 			if tempBuf == "" {
 				contents = append(contents, text{"~~"})
 			} else {
@@ -193,13 +191,13 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Superscript (^)
-		if line[cursor] == '^' && slices.Contains(line[cursor+1:], '^') {
+		if line[cursor] == '^' && strings.Contains(line[cursor+1:], "^") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
 			}
-			nextIndex := cursor + 1 + slices.Index(line[cursor+1:], '^')
-			tempBuf := string(line[cursor+1 : nextIndex])
+			nextIndex := cursor + 1 + strings.Index(line[cursor+1:], "^")
+			tempBuf := line[cursor+1 : nextIndex]
 			if tempBuf == "" {
 				contents = append(contents, text{"^^"})
 			} else {
@@ -214,7 +212,7 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Links
-		if line[cursor] == '[' && strings.Contains(string(line[cursor+1:]), "](") && slices.Contains(line[cursor+1:], ')') {
+		if line[cursor] == '[' && strings.Contains(line[cursor+1:], "](") && strings.Contains(line[cursor+1:], ")") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
@@ -229,7 +227,7 @@ func inlineFormatting(input string) ([]node, error) {
 				if line[cursor] == ']' {
 					isInsideNested = false
 				}
-				linkTitle += string(line[cursor])
+				linkTitle += line[cursor : cursor+1]
 				cursor++
 			}
 
@@ -247,7 +245,7 @@ func inlineFormatting(input string) ([]node, error) {
 					cursor++
 					continue
 				}
-				linkUrl += string(line[cursor])
+				linkUrl += line[cursor : cursor+1]
 				cursor++
 			}
 
@@ -266,7 +264,7 @@ func inlineFormatting(input string) ([]node, error) {
 		}
 
 		// Default
-		buffer += string(line[cursor])
+		buffer += line[cursor : cursor+1]
 		cursor++
 	}
 
