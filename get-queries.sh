@@ -8,7 +8,7 @@ getquery() {
 }
 
 # Agda
-getquery 'https://raw.githubusercontent.com/haohanyang/agda-zed/refs/heads/master/languages/agda/highlights.scm'
+getquery 'https://github.com/haohanyang/agda-zed/raw/refs/heads/master/languages/agda/highlights.scm'
 
 # Bash
 getquery 'https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/bash/highlights.scm'
