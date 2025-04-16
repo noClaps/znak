@@ -54,6 +54,8 @@ github.com/wyatt915/treeblood v0.1.6 h1:RvbsSo1agr5APKf3XkxfFgcmbTkjJ/72q0bl/oIp
 github.com/wyatt915/treeblood v0.1.6/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
 github.com/wyatt915/treeblood v0.1.7 h1:DyuDkvcU1dkxHbMtBJdsrGAY6SU66/i8keEEO4iM5Rk=
 github.com/wyatt915/treeblood v0.1.7/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
+github.com/wyatt915/treeblood v0.1.8 h1:LU5vaGaQ1jqNRxAFizlpnJ0lv8MKALXk5j+QI6RQmPo=
+github.com/wyatt915/treeblood v0.1.8/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
 go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650 h1:EC4MD0mMOYGK//R6+FPApJU8/4qDllfcbQ/T9X1RDYA=
 go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650/go.mod h1:6AlBoTHE0mpau8lRs2Xn45LZdJEj22Fw2sf5AXKxZP0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
