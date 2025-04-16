@@ -1,5 +1,6 @@
 getquery() {
     local url="$1"
+    echo "Fetching $url"
     local path=$(echo "$url" | sed 's|https\?://[^/]*||')
     local filename=$(basename "$path")
     local parent=$(dirname "$path")
