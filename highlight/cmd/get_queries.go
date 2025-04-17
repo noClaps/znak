@@ -91,7 +91,7 @@ func main() {
 	done := make(chan bool)
 
 	for _, url := range urls {
-		go func(url string) {
+		go func() {
 			log.Println("Fetching", url)
 			res, err := http.Get(url)
 			if err != nil {
@@ -112,7 +112,7 @@ func main() {
 			}
 
 			done <- true
-		}(url)
+		}()
 	}
 
 	for _ = range urls {
