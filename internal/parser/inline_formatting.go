@@ -9,13 +9,11 @@ import (
 func inlineFormatting(line string) ([]node, error) {
 	contents := []node{}
 	buffer := ""
-	cursor := 0
 
-	for cursor < len(line) {
+	for cursor := 0; cursor < len(line); cursor++ {
 		if line[cursor] == '\\' {
 			cursor++
 			buffer += line[cursor : cursor+1]
-			cursor++
 			continue
 		}
 
@@ -37,7 +35,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "strong", Children: children})
 			}
-			cursor = nextIndex + 2
+			cursor = nextIndex + 1
 			continue
 		}
 
@@ -59,7 +57,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "u", Children: children})
 			}
-			cursor = nextIndex + 2
+			cursor = nextIndex + 1
 			continue
 		}
 
@@ -81,7 +79,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "s", Children: children})
 			}
-			cursor = nextIndex + 2
+			cursor = nextIndex + 1
 			continue
 		}
 
@@ -103,7 +101,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "mark", Children: children})
 			}
-			cursor = nextIndex + 2
+			cursor = nextIndex + 1
 			continue
 		}
 
@@ -124,7 +122,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, math)
 			}
-			cursor = nextIndex + 2
+			cursor = nextIndex + 1
 			continue
 		}
 
@@ -145,7 +143,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "em", Children: children})
 			}
-			cursor = nextIndex + 1
+			cursor = nextIndex
 			continue
 		}
 
@@ -165,7 +163,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}})
 			}
 
-			cursor = nextIndex + 1
+			cursor = nextIndex
 			continue
 		}
 
@@ -186,7 +184,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "sub", Children: children})
 			}
-			cursor = nextIndex + 1
+			cursor = nextIndex
 			continue
 		}
 
@@ -207,7 +205,7 @@ func inlineFormatting(line string) ([]node, error) {
 				}
 				contents = append(contents, element{TagName: "sup", Children: children})
 			}
-			cursor = nextIndex + 1
+			cursor = nextIndex
 			continue
 		}
 
@@ -259,13 +257,11 @@ func inlineFormatting(line string) ([]node, error) {
 				contents = append(contents, element{"a", map[string]string{"href": linkUrl}, children})
 			}
 
-			cursor++
 			continue
 		}
 
 		// Default
 		buffer += line[cursor : cursor+1]
-		cursor++
 	}
 
 	if buffer != "" {
