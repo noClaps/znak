@@ -323,34 +323,20 @@ This is some text in a note.
 		`<div class="znak-container note"><p class="note-heading"><b>A NOTE</b></p><p>This is some text in a note.</p></div>`,
 		t,
 	)
-	testRenderOneOf(`
+	testRender(`
 ::: quote A QUOTE {href="https://zerolimits.dev"}
 This is some text in a quote.
 :::
 `,
-		[]string{
-			`<div class="znak-container quote"><p class="quote-heading"><b><a href="https://zerolimits.dev" rel="noopener noreferrer" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote"><p class="quote-heading"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote"><p class="quote-heading"><b><a rel="noopener noreferrer" href="https://zerolimits.dev" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote"><p class="quote-heading"><b><a rel="noopener noreferrer" target="_blank" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote"><p class="quote-heading"><b><a target="_blank" rel="noopener noreferrer" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote"><p class="quote-heading"><b><a target="_blank" href="https://zerolimits.dev" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-		},
+		`<div class="znak-container quote"><p class="quote-heading"><b><a href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
 		t,
 	)
-	testRenderOneOf(`
+	testRender(`
 ::: quote A QUOTE {href="https://zerolimits.dev" class="bold"}
 This is some text in a quote.
 :::
 `,
-		[]string{
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a href="https://zerolimits.dev" target="_blank" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a href="https://zerolimits.dev" rel="noopener noreferrer" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a rel="noopener noreferrer" href="https://zerolimits.dev" target="_blank">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a rel="noopener noreferrer" target="_blank" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a target="_blank" href="https://zerolimits.dev" rel="noopener noreferrer">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-			`<div class="znak-container quote bold"><p class="quote-heading"><b><a target="_blank" rel="noopener noreferrer" href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
-		},
+		`<div class="znak-container quote bold"><p class="quote-heading"><b><a href="https://zerolimits.dev">A QUOTE</a></b></p><p>This is some text in a quote.</p></div>`,
 		t,
 	)
 	testRender(`

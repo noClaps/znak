@@ -64,11 +64,7 @@ func containers(input string, codeTheme highlight.Theme) (node, error) {
 					if href == "" {
 						return text{title}
 					}
-					return element{"a", map[string]string{
-						"href":   href,
-						"target": "_blank",
-						"rel":    "noopener noreferrer",
-					}, []node{text{title}}}
+					return element{"a", map[string]string{"href": href}, []node{text{title}}}
 				}(),
 			}},
 		}},
