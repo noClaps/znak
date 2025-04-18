@@ -115,7 +115,7 @@ func main() {
 		}()
 	}
 
-	for _ = range urls {
+	for range urls {
 		<-done
 	}
 }
