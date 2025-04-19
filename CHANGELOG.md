@@ -1,6 +1,17 @@
 # Znak
 
-## V0.16.1
+## v0.17.0
+
+### Breaking changes
+
+- Remove `target` and `rel` attributes from container title link. This shouldn't be something that Znak is opinionated about, and you can add and remove attributes with whatever HTML parsing library you prefer.
+
+### Other changes
+
+- Update highlight queries for Bash, HTML, JavaScript, Regex, TSX, and TypeScript.
+- Update dependencies.
+
+## v0.16.1
 
 - Check line length in tables
 - Fix minifying and formatting math. This broke after updating to [Treeblood](https://github.com/wyatt915/treeblood) v0.1.7, but I fixed it and added minification. Hopefully it won't break again in future updates.
