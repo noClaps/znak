@@ -19,9 +19,9 @@ type Theme struct {
 	} `json:"highlights,omitempty"`
 }
 
-func NewTheme(theme string) (Theme, error) {
+func NewTheme(theme []byte) (Theme, error) {
 	t := Theme{}
-	err := json.Unmarshal([]byte(theme), &t)
+	err := json.Unmarshal(theme, &t)
 	if err != nil {
 		return Theme{}, err
 	}

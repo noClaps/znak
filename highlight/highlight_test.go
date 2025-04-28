@@ -14,7 +14,7 @@ func TestHighlight(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	theme, err := highlight.NewTheme(string(themeFile))
+	theme, err := highlight.NewTheme(themeFile)
 	if err != nil {
 		t.Fatal(err)
 	}

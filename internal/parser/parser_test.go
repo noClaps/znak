@@ -14,7 +14,7 @@ func testRender(input string, test string, t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	theme, err := highlight.NewTheme(string(themeFile))
+	theme, err := highlight.NewTheme(themeFile)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -32,7 +32,7 @@ func testRenderNe(input string, test string, t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	theme, err := highlight.NewTheme(string(themeFile))
+	theme, err := highlight.NewTheme(themeFile)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -50,7 +50,7 @@ func testRenderOneOf(input string, tests []string, t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	theme, err := highlight.NewTheme(string(themeFile))
+	theme, err := highlight.NewTheme(themeFile)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -215,7 +215,7 @@ func TestCodeBlocks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	theme, err := highlight.NewTheme(string(themeFile))
+	theme, err := highlight.NewTheme(themeFile)
 	if err != nil {
 		t.Fatal(err)
 	}
