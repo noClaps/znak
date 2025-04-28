@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
 )
 
 func main() {
@@ -88,10 +89,13 @@ func main() {
 		"https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/typescript/injections.scm",
 	}
 
-	done := make(chan bool)
+	var wg sync.WaitGroup
 
 	for _, url := range urls {
+		wg.Add(1)
 		go func() {
+			defer wg.Done()
+
 			log.Println("Fetching", url)
 			res, err := http.Get(url)
 			if err != nil {
@@ -110,12 +114,8 @@ func main() {
 			if err != nil {
 				log.Fatalln(err)
 			}
-
-			done <- true
 		}()
 	}
 
-	for range urls {
-		<-done
-	}
+	wg.Wait()
 }
