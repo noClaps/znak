@@ -9,23 +9,23 @@
       "properties": {
         "color": {
           "type": "string",
-          "description": "The text color of the syntax type"
+          "description": "The text color of the syntax type."
         },
         "fontWeight": {
           "type": "integer",
           "minimum": 1,
           "exclusiveMaximum": 1000,
-          "description": "The font weight for the syntax type. This should be a number between 1 and 1000"
+          "description": "The font weight for the syntax type. This should be a number between 1 and 1000."
         },
         "fontStyle": {
           "type": "string",
           "enum": ["italic", "normal", "oblique"],
           "default": "normal",
-          "description": "The font style for the syntax type"
+          "description": "The font style for the syntax type."
         },
         "backgroundColor": {
           "type": "string",
-          "description": "The background color for the syntax type"
+          "description": "The background color for the syntax type."
         }
       }
     }
@@ -33,7 +33,7 @@
   "properties": {
     "backgroundColor": {
       "type": "string",
-      "description": "The default background color. This is the background color of the code block"
+      "description": "The default background color. This is the background color of the code block."
     },
     "color": {
       "type": "string",
@@ -41,16 +41,16 @@
     },
     "lineNumbers": {
       "type": "object",
-      "description": "An object to configure line numbers. If this is left out, no line numbers will be present",
+      "description": "An object to configure line numbers. If this is left out, no line numbers will be present.",
       "required": ["color"],
       "properties": {
         "color": {
           "type": "string",
-          "description": "The color of the line numbers"
+          "description": "The text color of the line numbers."
         },
         "rightSpace": {
           "type": "number",
-          "description": "The number of spaces between the line numbers and the code, in units of `ch`",
+          "description": "The number of spaces between the line numbers and the code, in units of `ch`.",
           "default": 1
         }
       }
