@@ -37,6 +37,8 @@ func main() {
 
 ## Acknowledgements
 
-LaTeX is rendered to MathML using [TreeBlood](https://github.com/Wyatt915/treeblood).
+LaTeX is rendered to MathML using [Wyatt915/TreeBlood](https://github.com/Wyatt915/treeblood).
 
-The Tree-sitter bindings for syntax highlighting are provided by [go-tree-sitter-highlight](https://github.com/gopad-dev/go-tree-sitter-highlight).
+The Tree-sitter bindings for syntax highlighting are provided by [gopad-dev/go-tree-sitter-highlight](https://github.com/gopad-dev/go-tree-sitter-highlight).
+
+The example code theme in `theme.json` is taken from [PyaeSoneAungRgn/github-zed-theme](https://github.com/PyaeSoneAungRgn/github-zed-theme).
