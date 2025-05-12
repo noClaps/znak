@@ -1,6 +1,6 @@
 module github.com/noClaps/znak
 
-go 1.24.2
+go 1.24.3
 
 require (
 	github.com/tree-sitter/go-tree-sitter v0.25.0
