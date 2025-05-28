@@ -1,2 +1,1 @@
-highlight/testdata/* -linguist-detectable
 highlight/queries/** linguist-vendored
