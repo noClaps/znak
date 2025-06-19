@@ -19,7 +19,7 @@ require (
 	github.com/tree-sitter/tree-sitter-ocaml v0.24.2
 	github.com/tree-sitter/tree-sitter-php v0.23.12
 	github.com/tree-sitter/tree-sitter-python v0.23.6
-	github.com/tree-sitter/tree-sitter-regex v0.24.3
+	github.com/tree-sitter/tree-sitter-regex v1.0.0
 	github.com/tree-sitter/tree-sitter-ruby v0.23.1
 	github.com/tree-sitter/tree-sitter-rust v0.24.0
 	github.com/tree-sitter/tree-sitter-scala v0.24.0
