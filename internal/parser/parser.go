@@ -185,7 +185,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 			buffer := ""
 			lineCursor++
 			for lineCursor < len(lines) && lines[lineCursor] != "$$" {
-				buffer += lines[lineCursor]
+				buffer += fmt.Sprintln(lines[lineCursor])
 				lineCursor++
 			}
 
