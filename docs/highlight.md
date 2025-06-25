@@ -125,7 +125,7 @@ You can look at [`theme.json`](https://github.com/noClaps/znak/blob/main/theme.j
 
 ```json
 {
-  "$schema": "https://noclaps.github.io/znak/theme-schema.json"
+  "$schema": "https://noclaps.github.io/znak/public/theme-schema.json"
 }
 ```
 
