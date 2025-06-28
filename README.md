@@ -24,7 +24,7 @@ import (
 
 func main() {
 	themeFile, err := os.ReadFile("path/to/theme.json")
-	codeTheme, err := highlight.NewTheme(string(themeFile))
+	codeTheme, err := highlight.NewTheme(themeFile)
 
 	inputFile, err := os.ReadFile("path/to/file.md")
 	input := string(inputFile)
