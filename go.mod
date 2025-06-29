@@ -24,7 +24,7 @@ require (
 	github.com/tree-sitter/tree-sitter-rust v0.24.0
 	github.com/tree-sitter/tree-sitter-scala v0.24.0
 	github.com/tree-sitter/tree-sitter-typescript v0.23.2
-	github.com/wyatt915/treeblood v0.1.11
+	github.com/wyatt915/treeblood v0.1.12
 	go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650
 )
 
