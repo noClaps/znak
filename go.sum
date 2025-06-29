@@ -52,6 +52,8 @@ github.com/tree-sitter/tree-sitter-typescript v0.23.2 h1:/Odvphn18PniVixb9e97X0D
 github.com/tree-sitter/tree-sitter-typescript v0.23.2/go.mod h1:zjzMXT/Ulffel2xfOcAkQQkiAkmgnbtPGlFQw/5X4xA=
 github.com/wyatt915/treeblood v0.1.11 h1:T3N7EzqPuLe8HpH3ywlSnGaAf/OlU0JEBQy2t6wQ6rQ=
 github.com/wyatt915/treeblood v0.1.11/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
+github.com/wyatt915/treeblood v0.1.12 h1:AEsJuvss3r+SKwOYaolKPUz8wKjKH9ZQZoS9ivNSqMs=
+github.com/wyatt915/treeblood v0.1.12/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
 go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650 h1:EC4MD0mMOYGK//R6+FPApJU8/4qDllfcbQ/T9X1RDYA=
 go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650/go.mod h1:6AlBoTHE0mpau8lRs2Xn45LZdJEj22Fw2sf5AXKxZP0=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
