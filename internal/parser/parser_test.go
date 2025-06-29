@@ -298,12 +298,15 @@ Content here
 }
 
 func TestMathBlocks(t *testing.T) {
-	testRender(`
+	testRenderOneOf(`
 $$
 a^2 + b^2 = c^2
 $$
 `,
-		`<math display="block" displaystyle="true"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^2 + b^2 = c^2 </annotation></semantics></math>`,
+		[]string{
+			`<math display="block" displaystyle="true"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^2 + b^2 = c^2 </annotation></semantics></math>`,
+			`<math displaystyle="true" display="block"><semantics><mrow><msup><mi>a</mi><mn>2</mn></msup><mo>+</mo><msup><mi>b</mi><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a^2 + b^2 = c^2 </annotation></semantics></math>`,
+		},
 		t,
 	)
 	testRender("$$", "<p>$$</p>", t)
