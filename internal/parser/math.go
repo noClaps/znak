@@ -22,23 +22,20 @@ func minifyMath(input string) string {
 
 // displayMode is `true` for display="block" and `false` for display="inline"
 func renderMath(input string, displayMode bool) (node, error) {
-	pitz := treeblood.NewDocument(nil, false)
 	if displayMode {
-		val, err := pitz.DisplayStyle(input)
+		val, err := treeblood.DisplayStyle(input, nil)
 		if err != nil {
 			return nil, err
 		}
-		val = strings.ReplaceAll(val, ` class="math-displaystyle"`, "")
 		val = minifyMath(val)
 		return text{val}, nil
 	}
 
-	val, err := pitz.TextStyle(input)
+	val, err := treeblood.InlineStyle(input, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	val = strings.ReplaceAll(val, ` class="math-textstyle"`, "")
 	val = minifyMath(val)
 	return text{val}, nil
 }
