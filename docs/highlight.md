@@ -130,7 +130,3 @@ You can look at [`theme.json`](https://github.com/noClaps/znak/blob/main/theme.j
 ```
 
 to the top of your theme file for completions and descriptions of the different properties.
-
-## Acknowledgements
-
-The Tree-sitter bindings are provided by [gopad-dev/go-tree-sitter-highlight](https://github.com/gopad-dev/go-tree-sitter-highlight).
