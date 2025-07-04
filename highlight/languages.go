@@ -4,7 +4,7 @@ import (
 	"embed"
 	"fmt"
 
-	tree_sitter "github.com/tree-sitter/go-tree-sitter"
+	"github.com/noclaps/go-tree-sitter-highlight/language"
 	tree_sitter_agda "github.com/tree-sitter/tree-sitter-agda/bindings/go"
 	tree_sitter_bash "github.com/tree-sitter/tree-sitter-bash/bindings/go"
 	tree_sitter_c "github.com/tree-sitter/tree-sitter-c/bindings/go"
@@ -27,330 +27,212 @@ import (
 	tree_sitter_typescript "github.com/tree-sitter/tree-sitter-typescript/bindings/go"
 )
 
-type language struct {
-	name            string
-	highlightsQuery []byte
-	injectionQuery  []byte
-	localsQuery     []byte
-	lang            *tree_sitter.Language
-}
-
 //go:embed queries
 var queries embed.FS
 
-func parseLanguage(lang string) (language, error) {
+func parseLanguage(lang string) (language.Language, error) {
 	switch lang {
 	case "agda":
 		highlights, err := queries.ReadFile("queries/agda/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "agda",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_agda.Language()),
-		}, nil
+		return language.NewLanguage("agda", tree_sitter_agda.Language(), highlights, nil, nil), nil
 	case "bash", "shellscript", "shell", "zsh", "sh":
 		highlights, err := queries.ReadFile("queries/bash/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "bash",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_bash.Language()),
-		}, nil
+		return language.NewLanguage("bash", tree_sitter_bash.Language(), highlights, nil, nil), nil
 	case "c":
 		highlights, err := queries.ReadFile("queries/c/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/c/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "c",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_c.Language()),
-		}, nil
+		return language.NewLanguage("c", tree_sitter_c.Language(), highlights, injections, nil), nil
 	case "cpp", "c++":
 		highlights, err := queries.ReadFile("queries/cpp/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/cpp/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "cpp",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_cpp.Language()),
-		}, nil
+		return language.NewLanguage("cpp", tree_sitter_cpp.Language(), highlights, injections, nil), nil
 	case "css":
 		highlights, err := queries.ReadFile("queries/css/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "css",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_css.Language()),
-		}, nil
+		return language.NewLanguage("css", tree_sitter_css.Language(), highlights, nil, nil), nil
 	case "go":
 		highlights, err := queries.ReadFile("queries/go/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/go/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "go",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_go.Language()),
-		}, nil
+		return language.NewLanguage("go", tree_sitter_go.Language(), highlights, injections, nil), nil
 	case "haskell", "hs":
 		highlights, err := queries.ReadFile("queries/haskell/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "haskell",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_haskell.Language()),
-		}, nil
+		return language.NewLanguage("haskell", tree_sitter_haskell.Language(), highlights, nil, nil), nil
 	case "html":
 		highlights, err := queries.ReadFile("queries/html/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/html/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "html",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_html.Language()),
-		}, nil
+		return language.NewLanguage("html", tree_sitter_html.Language(), highlights, injections, nil), nil
 	case "java":
 		highlights, err := queries.ReadFile("queries/java/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/java/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		locals, err := queries.ReadFile("queries/java/locals.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "java",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			localsQuery:     locals,
-			lang:            tree_sitter.NewLanguage(tree_sitter_java.Language()),
-		}, nil
+		return language.NewLanguage("java", tree_sitter_java.Language(), highlights, injections, locals), nil
 	case "javascript", "js", "jsx":
 		highlights, err := queries.ReadFile("queries/javascript/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/javascript/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "javascript",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_javascript.Language()),
-		}, nil
+		return language.NewLanguage("javascript", tree_sitter_javascript.Language(), highlights, injections, nil), nil
 	case "jsdoc":
 		highlights, err := queries.ReadFile("queries/jsdoc/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "jsdoc",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_jsdoc.Language()),
-		}, nil
+		return language.NewLanguage("jsdoc", tree_sitter_jsdoc.Language(), highlights, nil, nil), nil
 	case "json":
 		highlights, err := queries.ReadFile("queries/json/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "json",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_json.Language()),
-		}, nil
+		return language.NewLanguage("json", tree_sitter_json.Language(), highlights, nil, nil), nil
 	case "ocaml":
 		highlights, err := queries.ReadFile("queries/ocaml/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "ocaml",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_ocaml.LanguageOCaml()),
-		}, nil
+		return language.NewLanguage("ocaml", tree_sitter_ocaml.LanguageOCaml(), highlights, nil, nil), nil
 	case "ocaml_interface":
 		highlights, err := queries.ReadFile("queries/ocaml/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "ocaml_interface",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_ocaml.LanguageOCamlInterface()),
-		}, nil
+		return language.NewLanguage("ocaml_interface", tree_sitter_ocaml.LanguageOCamlInterface(), highlights, nil, nil), nil
 	case "ocaml_type":
 		highlights, err := queries.ReadFile("queries/ocaml/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "ocaml_type",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_ocaml.LanguageOCamlType()),
-		}, nil
+		return language.NewLanguage("ocaml_type", tree_sitter_ocaml.LanguageOCamlType(), highlights, nil, nil), nil
 	case "php":
 		highlights, err := queries.ReadFile("queries/php/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/php/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "php",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_php.LanguagePHP()),
-		}, nil
+		return language.NewLanguage("php", tree_sitter_php.LanguagePHP(), highlights, injections, nil), nil
 	case "php_only":
 		highlights, err := queries.ReadFile("queries/php/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/php/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "php_only",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_php.LanguagePHPOnly()),
-		}, nil
+		return language.NewLanguage("php_only", tree_sitter_php.LanguagePHPOnly(), highlights, injections, nil), nil
 	case "python", "py":
 		highlights, err := queries.ReadFile("queries/python/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "python",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_python.Language()),
-		}, nil
+		return language.NewLanguage("python", tree_sitter_python.Language(), highlights, nil, nil), nil
 	case "regexp", "regex":
 		highlights, err := queries.ReadFile("queries/regex/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "regex",
-			highlightsQuery: highlights,
-			lang:            tree_sitter.NewLanguage(tree_sitter_regex.Language()),
-		}, nil
+		return language.NewLanguage("regex", tree_sitter_regex.Language(), highlights, nil, nil), nil
 	case "ruby", "rb":
 		highlights, err := queries.ReadFile("queries/ruby/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/ruby/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "ruby",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_ruby.Language()),
-		}, nil
+		return language.NewLanguage("ruby", tree_sitter_ruby.Language(), highlights, injections, nil), nil
 	case "rust", "rs":
 		highlights, err := queries.ReadFile("queries/rust/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/rust/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "rust",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_rust.Language()),
-		}, nil
+		return language.NewLanguage("rust", tree_sitter_rust.Language(), highlights, injections, nil), nil
 	case "scala":
 		highlights, err := queries.ReadFile("queries/scala/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/scala/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "scala",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_scala.Language()),
-		}, nil
+		return language.NewLanguage("scala", tree_sitter_scala.Language(), highlights, injections, nil), nil
 	case "typescript", "ts":
 		highlights, err := queries.ReadFile("queries/typescript/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/typescript/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "typescript",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_typescript.LanguageTypescript()),
-		}, nil
+		return language.NewLanguage("typescript", tree_sitter_typescript.LanguageTypescript(), highlights, injections, nil), nil
 	case "tsx":
 		highlights, err := queries.ReadFile("queries/tsx/highlights.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
 		injections, err := queries.ReadFile("queries/tsx/injections.scm")
 		if err != nil {
-			return language{}, err
+			return language.Language{}, err
 		}
-		return language{
-			name:            "tsx",
-			highlightsQuery: highlights,
-			injectionQuery:  injections,
-			lang:            tree_sitter.NewLanguage(tree_sitter_typescript.LanguageTSX()),
-		}, nil
+		return language.NewLanguage("tsx", tree_sitter_typescript.LanguageTSX(), highlights, injections, nil), nil
 	}
 
-	return language{}, fmt.Errorf("Language not found: %s", lang)
+	return language.Language{}, fmt.Errorf("Language not found: %s", lang)
 }

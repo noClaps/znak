@@ -1,8 +1,6 @@
 package highlight
 
 import (
-	"bytes"
-	"context"
 	"fmt"
 	"html"
 	"log"
@@ -10,51 +8,9 @@ import (
 	"slices"
 	"strings"
 
-	tsHighlight "go.gopad.dev/go-tree-sitter-highlight"
+	tsh "github.com/noclaps/go-tree-sitter-highlight"
+	tsh_types "github.com/noclaps/go-tree-sitter-highlight/types"
 )
-
-func highlightCode(highlightNames []string, language string, code string) (string, error) {
-	highlighter := tsHighlight.New()
-
-	lang, err := parseLanguage(language)
-	if err != nil {
-		return "", err
-	}
-
-	config, err := tsHighlight.NewConfiguration(lang.lang, lang.name, lang.highlightsQuery, lang.injectionQuery, lang.localsQuery)
-	if err != nil {
-		return "", err
-	}
-	config.Configure(highlightNames)
-
-	highlightClasses := []string{}
-	for _, name := range highlightNames {
-		highlightClasses = append(highlightClasses, fmt.Sprintf(`class="%s"`, name))
-	}
-
-	highlights := highlighter.Highlight(context.Background(), *config, []byte(code), func(languageName string) *tsHighlight.Configuration {
-		captureLang, err := parseLanguage(languageName)
-		if err != nil {
-			log.Println(err) // This error shouldn't crash the program, only skip injection highlighting
-			return nil
-		}
-		nestedConfig, err := tsHighlight.NewConfiguration(captureLang.lang, captureLang.name, captureLang.highlightsQuery, captureLang.injectionQuery, captureLang.localsQuery)
-		if err != nil {
-			log.Println(err)
-			return nil
-		}
-		nestedConfig.Configure(highlightNames)
-		return nestedConfig
-	})
-
-	buf := new(bytes.Buffer)
-	htmlRenderer := tsHighlight.NewHTMLRender()
-	htmlRenderer.Render(buf, highlights, []byte(code), func(h tsHighlight.Highlight, languageName string) []byte {
-		return []byte(highlightClasses[h])
-	})
-
-	return buf.String(), nil
-}
 
 func Highlight(code string, language string, theme Theme) (string, error) {
 	globalStyle := ""
@@ -76,13 +32,23 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 	if theme.Highlights != nil {
 		highlightNames = slices.Collect(maps.Keys(*theme.Highlights))
 	}
-	highlightedText, err := highlightCode(highlightNames, language, code)
+
+	lang, err := parseLanguage(language)
 	if err != nil {
 		return "", err
 	}
 
-	if theme.Highlights != nil {
-		for key, val := range *theme.Highlights {
+	config, err := tsh.NewConfiguration(lang, highlightNames)
+	if err != nil {
+		return "", err
+	}
+
+	attributes := []string{}
+	for _, key := range highlightNames {
+		attribute := fmt.Sprintf(`class="%s"`, key)
+
+		if theme.Highlights != nil {
+			val := (*theme.Highlights)[key]
 			style := ""
 			if val.Color != nil {
 				style += fmt.Sprintf(`color:%s;`, *val.Color)
@@ -96,13 +62,33 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 			if val.BackgroundColor != nil {
 				style += fmt.Sprintf(`background-color:%s;`, *val.BackgroundColor)
 			}
-
-			highlightedText = strings.ReplaceAll(
-				highlightedText,
-				fmt.Sprintf(`<span class="%s"`, key),
-				fmt.Sprintf(`<span class="%s" style="%s"`, key, style),
-			)
+			if style != "" {
+				attribute += fmt.Sprintf(` style="%s"`, style)
+			}
 		}
+
+		attributes = append(attributes, attribute)
+	}
+
+	var injectionCallback tsh_types.InjectionCallback = func(languageName string) *tsh_types.Configuration {
+		lang, err := parseLanguage(languageName)
+		if err != nil {
+			log.Println(err) // This error shouldn't crash the program, only skip injection highlighting
+			return nil
+		}
+		config, err := tsh.NewConfiguration(lang, highlightNames)
+		if err != nil {
+			log.Println(err)
+			return nil
+		}
+		return config
+	}
+	var attributeCallback tsh_types.AttributeCallback = func(h tsh_types.CaptureIndex, languageName string) string {
+		return attributes[h]
+	}
+	highlightedText, err := tsh.Highlight(*config, code, injectionCallback, attributeCallback)
+	if err != nil {
+		return "", err
 	}
 
 	if theme.LineNumbers != nil {

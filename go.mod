@@ -3,7 +3,7 @@ module github.com/noClaps/znak
 go 1.24.4
 
 require (
-	github.com/tree-sitter/go-tree-sitter v0.25.0
+	github.com/noclaps/go-tree-sitter-highlight v0.1.0
 	github.com/tree-sitter/tree-sitter-agda v1.3.3
 	github.com/tree-sitter/tree-sitter-bash v0.25.0
 	github.com/tree-sitter/tree-sitter-c v0.24.1
@@ -25,8 +25,10 @@ require (
 	github.com/tree-sitter/tree-sitter-scala v0.24.0
 	github.com/tree-sitter/tree-sitter-typescript v0.23.2
 	github.com/wyatt915/treeblood v0.1.13
-	go.gopad.dev/go-tree-sitter-highlight v0.0.0-20241203223050-3ffb64c3a650
 	golang.org/x/net v0.41.0
 )
 
-require github.com/mattn/go-pointer v0.0.1 // indirect
+require (
+	github.com/mattn/go-pointer v0.0.1 // indirect
+	github.com/tree-sitter/go-tree-sitter v0.25.0 // indirect
+)
