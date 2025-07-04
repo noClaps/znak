@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak/highlight"
 )
 
 func containers(input string, codeTheme highlight.Theme) (node, error) {

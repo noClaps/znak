@@ -6,9 +6,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/noClaps/znak/highlight"
-	"github.com/noClaps/znak/internal/parser"
-	"github.com/noClaps/znak/types"
+	"github.com/noclaps/znak/highlight"
+	"github.com/noclaps/znak/internal/parser"
+	"github.com/noclaps/znak/types"
 )
 
 // A function that renders the input text to HTML.
@@ -26,7 +26,7 @@ import (
 // highlighting using:
 //
 //	```go
-//	import "github.com/noClaps/znak/highlight"
+//	import "github.com/noclaps/znak/highlight"
 //
 //	highlight.Theme{}
 //	```
@@ -68,7 +68,7 @@ func Render(input string, codeTheme highlight.Theme) (string, error) {
 // # Returns
 //
 // Returns a list of `Heading` structs. You can import the `Heading` type from
-// `github.com/noClaps/znak/types` and use it as `types.Heading`.
+// `github.com/noclaps/znak/types` and use it as `types.Heading`.
 //
 // [documentation]: https://github.com/noClaps/znak/blob/main/docs/syntax.md
 func ParseHeadings(input string) []types.Heading {

@@ -4,7 +4,7 @@ A syntax highlighting library that uses [Tree-sitter](https://tree-sitter.github
 
 ## Usage
 
-You can use the `highlight` module from the `github.com/noClaps/znak` package:
+You can use the `highlight` module from the `github.com/noclaps/znak` package:
 
 ```go
 import (

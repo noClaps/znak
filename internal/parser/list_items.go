@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak/highlight"
 )
 
 type listType int

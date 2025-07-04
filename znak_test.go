@@ -5,8 +5,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/noClaps/znak"
-	"github.com/noClaps/znak/types"
+	"github.com/noclaps/znak"
+	"github.com/noclaps/znak/types"
 )
 
 func TestHeadings(t *testing.T) {

@@ -4,8 +4,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/noClaps/znak/highlight"
-	"github.com/noClaps/znak/internal/testutils"
+	"github.com/noclaps/znak/highlight"
+	"github.com/noclaps/znak/internal/testutils"
 )
 
 func TestHeadings(t *testing.T) {

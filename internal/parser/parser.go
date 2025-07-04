@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak/highlight"
 )
 
 func Parse(input string, codeTheme highlight.Theme) ([]node, error) {

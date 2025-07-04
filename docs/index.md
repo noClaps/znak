@@ -9,7 +9,7 @@ You can read the syntax [here](./syntax.md). You can also read the documentation
 Add it as a dependency to your project:
 
 ```sh
-go get github.com/noClaps/znak
+go get -u github.com/noclaps/znak
 ```
 
 Then you can use it in your code:
@@ -18,8 +18,8 @@ Then you can use it in your code:
 package main
 
 import (
-	"github.com/noClaps/znak"
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak"
+	"github.com/noclaps/znak/highlight"
 )
 
 func main() {

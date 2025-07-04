@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/noClaps/znak/types"
+	"github.com/noclaps/znak/types"
 )
 
 type slugger struct {

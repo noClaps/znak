@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak/highlight"
 )
 
 func highlightSyntax(code string, language string, theme highlight.Theme) (node, error) {

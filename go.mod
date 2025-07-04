@@ -1,4 +1,4 @@
-module github.com/noClaps/znak
+module github.com/noclaps/znak
 
 go 1.24.4
 

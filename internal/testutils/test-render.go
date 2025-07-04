@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/noClaps/znak"
-	"github.com/noClaps/znak/highlight"
+	"github.com/noclaps/znak"
+	"github.com/noclaps/znak/highlight"
 	"golang.org/x/net/html"
 )
 
