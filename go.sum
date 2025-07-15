@@ -52,8 +52,8 @@ github.com/tree-sitter/tree-sitter-scala v0.24.0 h1:F8UcZQdNQSkOGtkW8tUsFrqifOVX
 github.com/tree-sitter/tree-sitter-scala v0.24.0/go.mod h1:BmDV0f9rgsnGuG9QtKXQZnqJvECyR9fM8wVg984ulBo=
 github.com/tree-sitter/tree-sitter-typescript v0.23.2 h1:/Odvphn18PniVixb9e97X0DbNVsU6Qocv9mfkyzdXwU=
 github.com/tree-sitter/tree-sitter-typescript v0.23.2/go.mod h1:zjzMXT/Ulffel2xfOcAkQQkiAkmgnbtPGlFQw/5X4xA=
-github.com/wyatt915/treeblood v0.1.13 h1:uZu36eXIlmuj8YL5gwgMdQVxblF4dtjuOzpyjpE1waI=
-github.com/wyatt915/treeblood v0.1.13/go.mod h1:wQmihhy7SYtGTnq5MxgNfxoaNW+ULr8oWPJJMreH4p8=
+github.com/wyatt915/treeblood v0.1.14 h1:3+/lRcUG1u2RldmI1hdnzO6BCHhtnmk8+G68oaEf7u0=
+github.com/wyatt915/treeblood v0.1.14/go.mod h1:i7+yhhmzdDP17/97pIsOSffw74EK/xk+qJ0029cSXUY=
 golang.org/x/net v0.42.0 h1:jzkYrhi3YQWD6MLBJcsklgQsoAcw89EcZbJw8Z614hs=
 golang.org/x/net v0.42.0/go.mod h1:FF1RA5d3u7nAYA4z2TkclSCKh68eSXtiFwcWQpPXdt8=
 gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
