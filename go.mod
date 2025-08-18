@@ -1,6 +1,6 @@
 module github.com/noclaps/znak
 
-go 1.24.5
+go 1.25.0
 
 require (
 	github.com/noclaps/go-tree-sitter-highlight v0.1.0
@@ -17,7 +17,7 @@ require (
 	github.com/tree-sitter/tree-sitter-jsdoc v0.23.2
 	github.com/tree-sitter/tree-sitter-json v0.24.8
 	github.com/tree-sitter/tree-sitter-ocaml v0.24.2
-	github.com/tree-sitter/tree-sitter-php v0.23.12
+	github.com/tree-sitter/tree-sitter-php v0.24.2
 	github.com/tree-sitter/tree-sitter-python v0.23.6
 	github.com/tree-sitter/tree-sitter-regex v0.24.3
 	github.com/tree-sitter/tree-sitter-ruby v0.23.1
