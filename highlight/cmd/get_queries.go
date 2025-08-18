@@ -92,10 +92,7 @@ func main() {
 	var wg sync.WaitGroup
 
 	for _, url := range urls {
-		wg.Add(1)
-		go func() {
-			defer wg.Done()
-
+		wg.Go(func() {
 			log.Println("Fetching", url)
 			res, err := http.Get(url)
 			if err != nil {
@@ -114,7 +111,7 @@ func main() {
 			if err != nil {
 				log.Fatalln(err)
 			}
-		}()
+		})
 	}
 
 	wg.Wait()
