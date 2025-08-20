@@ -13,26 +13,20 @@ import (
 
 // A function that renders the input text to HTML.
 //
-// # Arguments
+// `input`: The input text to be converted to HTML. This can be from a Markdown
+// file as long as the syntax is supported by Znak. See the [documentation] for
+// the supported syntax.
 //
-// - `input`: The input text to be converted to HTML. This can be from a
-// Markdown file as long as the syntax is supported by Znak. See the
-// [documentation] for the supported
-// syntax.
-//
-// - `code_theme`: The theme for code blocks. There is no theme set by default,
+// `codeTheme`: The theme for code blocks. There is no theme set by default,
 // and you must bring your own theme. An example theme can be found in
 // [theme.json]. You can create a theme without any syntax
 // highlighting using:
 //
-//	```go
 //	import "github.com/noclaps/znak/highlight"
-//
 //	highlight.Theme{}
-//	```
 //
 // [documentation]: https://github.com/noClaps/znak/blob/main/docs/syntax.md
-// [theme.json]: ./theme.json
+// [theme.json]: https://github.com/noClaps/znak/blob/main/theme.json
 func Render(input string, codeTheme highlight.Theme) (string, error) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 	cur := 0
@@ -61,14 +55,13 @@ func Render(input string, codeTheme highlight.Theme) (string, error) {
 //
 // # Arguments
 //
-// - `input`: The input text to extract the headings from. This can be from a
+// `input`: The input text to extract the headings from. This can be from a
 // Markdown file as long as the syntax is supported by Znak. See the
 // [documentation] for the supported syntax.
 //
 // # Returns
 //
-// Returns a list of `Heading` structs. You can import the `Heading` type from
-// `github.com/noclaps/znak/types` and use it as `types.Heading`.
+// Returns a list of [types.Heading] structs.
 //
 // [documentation]: https://github.com/noClaps/znak/blob/main/docs/syntax.md
 func ParseHeadings(input string) []types.Heading {
@@ -88,7 +81,7 @@ func ParseHeadings(input string) []types.Heading {
 //
 // # Arguments
 //
-// - `input`: The input text to extract the frontmatter from. This can be from
+// `input`: The input text to extract the frontmatter from. This can be from
 // a Markdown file as long as the syntax is supported by Znak. See the
 // [documentation] for the supported syntax.
 //
