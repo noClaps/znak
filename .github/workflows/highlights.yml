@@ -1,0 +1,32 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * *
+
+jobs:
+  highlights:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: go run ./highlight/cmd/get_queries.go
+      - run: |
+          if [[ `git status --porcelain` ]]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+            git checkout -B ci/queries
+            git add ./highlight/queries
+
+            git commit -m "ci: Update highlight queries"
+            git push origin ci/queries --force
+
+            open_pr=$(gh pr list --head ci/queries --state open --json number --jq '.[0].number')
+            if [[ -z "$open_pr" ]]; then
+              gh pr create --base main --head ci/queries --title 'ci: Update highlight queries' --body ''
+            fi
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
