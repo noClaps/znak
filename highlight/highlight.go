@@ -14,11 +14,11 @@ import (
 
 func Highlight(code string, language string, theme Theme) (string, error) {
 	globalStyle := ""
-	if theme.BackgroundColor != nil {
-		globalStyle += fmt.Sprintf(`background-color:%s;`, *theme.BackgroundColor)
+	if theme.BackgroundColor != "" {
+		globalStyle += fmt.Sprintf(`background-color:%s;`, theme.BackgroundColor)
 	}
-	if theme.Color != nil {
-		globalStyle += fmt.Sprintf(`color:%s;`, *theme.Color)
+	if theme.Color != "" {
+		globalStyle += fmt.Sprintf(`color:%s;`, theme.Color)
 	}
 
 	if language == "plaintext" || language == "plain" || language == "text" || language == "txt" {
@@ -30,7 +30,7 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 
 	highlightNames := []string{}
 	if theme.Highlights != nil {
-		highlightNames = slices.Collect(maps.Keys(*theme.Highlights))
+		highlightNames = slices.Collect(maps.Keys(theme.Highlights))
 	}
 
 	lang, err := parseLanguage(language)
@@ -48,19 +48,19 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		attribute := fmt.Sprintf(`class="%s"`, key)
 
 		if theme.Highlights != nil {
-			val := (*theme.Highlights)[key]
+			val := theme.Highlights[key]
 			style := ""
-			if val.Color != nil {
-				style += fmt.Sprintf(`color:%s;`, *val.Color)
+			if val.Color != "" {
+				style += fmt.Sprintf(`color:%s;`, val.Color)
 			}
-			if val.FontWeight != nil {
-				style += fmt.Sprintf(`font-weight:%d;`, *val.FontWeight)
+			if val.FontWeight != 0 {
+				style += fmt.Sprintf(`font-weight:%d;`, val.FontWeight)
 			}
-			if val.FontStyle != nil {
-				style += fmt.Sprintf(`font-style:%s;`, *val.FontStyle)
+			if val.FontStyle != "" {
+				style += fmt.Sprintf(`font-style:%s;`, val.FontStyle)
 			}
-			if val.BackgroundColor != nil {
-				style += fmt.Sprintf(`background-color:%s;`, *val.BackgroundColor)
+			if val.BackgroundColor != "" {
+				style += fmt.Sprintf(`background-color:%s;`, val.BackgroundColor)
 			}
 			if style != "" {
 				attribute += fmt.Sprintf(` style="%s"`, style)
@@ -91,12 +91,15 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		return "", err
 	}
 
-	if theme.LineNumbers != nil {
+	if theme.LineNumbers != struct {
+		Color      string
+		RightSpace uint
+	}{} {
 		lines := slices.Collect(strings.Lines(highlightedText))
 		maxLineNum := len(fmt.Sprint(len(lines) + 1))
 		var rightSpace uint = 1
-		if theme.LineNumbers.RightSpace != nil {
-			rightSpace = *theme.LineNumbers.RightSpace
+		if theme.LineNumbers.RightSpace != 0 {
+			rightSpace = theme.LineNumbers.RightSpace
 		}
 
 		linesWithLineNos := []string{}

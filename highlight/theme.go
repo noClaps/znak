@@ -5,18 +5,18 @@ import (
 )
 
 type Theme struct {
-	Color           *string `json:"color,omitempty"`
-	BackgroundColor *string `json:"backgroundColor,omitempty"`
-	LineNumbers     *struct {
-		Color      string `json:"color"`
-		RightSpace *uint  `json:"rightSpace,omitempty"`
-	} `json:"lineNumbers,omitempty"`
-	Highlights *map[string]struct {
-		Color           *string `json:"color,omitempty"`
-		FontWeight      *uint   `json:"fontWeight,omitempty"`
-		FontStyle       *string `json:"fontStyle,omitempty"`
-		BackgroundColor *string `json:"backgroundColor,omitempty"`
-	} `json:"highlights,omitempty"`
+	Color           string
+	BackgroundColor string
+	LineNumbers     struct {
+		Color      string
+		RightSpace uint
+	}
+	Highlights map[string]struct {
+		Color           string
+		FontWeight      uint
+		FontStyle       string
+		BackgroundColor string
+	}
 }
 
 func NewTheme(theme []byte) (Theme, error) {
