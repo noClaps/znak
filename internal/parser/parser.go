@@ -38,15 +38,11 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Blockquotes
-		if len(line) > 0 && line[0] == '>' {
-			buffer := []string{}
-			for lineCursor < len(lines) && lines[lineCursor][0] == '>' {
-				buffer = append(buffer, lines[lineCursor])
-				lineCursor++
-			}
+		if strings.HasPrefix(line, ">") {
 			blockquoteLines := ""
-			for _, line := range buffer {
-				blockquoteLines += fmt.Sprintln(strings.TrimSpace(line[1:]))
+			for lineCursor < len(lines) && strings.HasPrefix(lines[lineCursor], ">") {
+				blockquoteLines += strings.TrimSpace(strings.TrimPrefix(lines[lineCursor], ">")) + "\n"
+				lineCursor++
 			}
 			children, err := Parse(blockquoteLines, codeTheme)
 			if err != nil {
@@ -63,7 +59,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Images
-		if len(line) > 2 && line[0:2] == "![" && strings.Contains(line[2:len(line)-2], "](") && line[len(line)-1] == ')' {
+		if strings.HasPrefix(line, "![") && strings.Contains(line, "](") && strings.HasSuffix(line, ")") {
 			imageSplit := strings.LastIndex(line, "](")
 			imageTitle := line[2:imageSplit]
 			imageUrl := line[imageSplit+2 : len(line)-1]
@@ -80,7 +76,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Code blocks
-		if len(line) >= 3 && line[0:3] == "```" && slices.Contains(lines[lineCursor+1:], strings.Repeat("`", strings.Count(line, "`"))) {
+		if strings.HasPrefix(line, "```") && slices.Contains(lines[lineCursor+1:], strings.Repeat("`", strings.Count(line, "`"))) {
 			backtickCount := strings.Count(line, "`")
 			language := line[backtickCount:]
 
@@ -129,9 +125,9 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Unordered list (-, 2 space indentation)
-		if len(line) > 2 && line[0:2] == "- " {
+		if strings.HasPrefix(line, "- ") {
 			buffer := ""
-			for lineCursor < len(lines) && (regexp.MustCompile(`^(- |  )`).Match([]byte(lines[lineCursor])) || lines[lineCursor] == "") {
+			for lineCursor < len(lines) && (strings.HasPrefix(lines[lineCursor], "- ") || strings.HasPrefix(lines[lineCursor], "  ") || lines[lineCursor] == "") {
 				buffer += fmt.Sprintln(lines[lineCursor])
 				lineCursor++
 			}
@@ -146,10 +142,10 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Tables
-		if len(line) > 2 && line[0:2] == "| " {
+		if strings.HasPrefix(line, "| ") {
 			buffer := ""
-			for lineCursor < len(lines) && len(lines[lineCursor]) > 2 && lines[lineCursor][0:2] == "| " {
-				buffer += fmt.Sprintln(lines[lineCursor])
+			for lineCursor < len(lines) && strings.HasPrefix(lines[lineCursor], "| ") {
+				buffer += lines[lineCursor] + "\n"
 				lineCursor++
 			}
 
@@ -162,7 +158,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// HTML elements
-		if len(line) > 0 && line[0] == '<' {
+		if strings.HasPrefix(line, "<") {
 			buffer := fmt.Sprintln(line)
 
 			if slices.IndexFunc(lines[lineCursor:], func(line string) bool {
@@ -198,7 +194,7 @@ func Parse(input string, codeTheme highlight.Theme) ([]node, error) {
 		}
 
 		// Container
-		if len(line) >= 3 && line[0:3] == ":::" && len(strings.SplitN(line, " ", 2)) > 1 && strings.SplitN(line, " ", 2)[1] != "" && slices.IndexFunc(lines[lineCursor+1:], func(futureLine string) bool {
+		if strings.HasPrefix(line, ":::") && len(strings.SplitN(line, " ", 2)) > 1 && strings.SplitN(line, " ", 2)[1] != "" && slices.IndexFunc(lines[lineCursor+1:], func(futureLine string) bool {
 			return futureLine == strings.Repeat(":", strings.Count(strings.Split(line, " ")[0], ":"))
 		}) != -1 {
 			colonCount := strings.Count(strings.SplitN(line, " ", 2)[0], ":")

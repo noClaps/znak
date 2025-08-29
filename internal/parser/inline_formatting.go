@@ -18,7 +18,7 @@ func inlineFormatting(line string) ([]node, error) {
 		}
 
 		// Bold (**)
-		if cursor+2 < len(line) && line[cursor:cursor+2] == "**" && strings.Contains(line[cursor+2:], "**") {
+		if strings.HasPrefix(line[cursor:], "**") && strings.Contains(line[cursor+2:], "**") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
@@ -40,7 +40,7 @@ func inlineFormatting(line string) ([]node, error) {
 		}
 
 		// Underline (__)
-		if cursor+2 < len(line) && line[cursor:cursor+2] == "__" && strings.Contains(line[cursor+2:], "__") {
+		if strings.HasPrefix(line[cursor:], "__") && strings.Contains(line[cursor+2:], "__") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
@@ -62,7 +62,7 @@ func inlineFormatting(line string) ([]node, error) {
 		}
 
 		// Strikethrough (~~)
-		if cursor+2 < len(line) && line[cursor:cursor+2] == "~~" && strings.Contains(line[cursor+2:], "~~") {
+		if strings.HasPrefix(line[cursor:], "~~") && strings.Contains(line[cursor+2:], "~~") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
@@ -84,7 +84,7 @@ func inlineFormatting(line string) ([]node, error) {
 		}
 
 		// Highlight (==)
-		if cursor+2 < len(line) && line[cursor:cursor+2] == "==" && strings.Contains(line[cursor+2:], "==") {
+		if strings.HasPrefix(line[cursor:], "==") && strings.Contains(line[cursor+2:], "==") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
@@ -106,7 +106,7 @@ func inlineFormatting(line string) ([]node, error) {
 		}
 
 		// Inline math ($$)
-		if cursor+2 < len(line) && line[cursor:cursor+2] == "$$" && strings.Contains(line[cursor+2:], "$$") {
+		if strings.HasPrefix(line[cursor:], "$$") && strings.Contains(line[cursor+2:], "$$") {
 			if buffer != "" {
 				contents = append(contents, text{buffer})
 				buffer = ""
