@@ -1,0 +1,93 @@
+:root {
+    background-color: #161616;
+    color: #fff;
+}
+
+:line-numbers {
+    margin-right: 4;
+    color: #444;
+}
+
+boolean,
+constant,
+constructor,
+label,
+link_uri,
+number,
+property,
+string.special,
+string.special.symbol,
+text.literal {
+    color: #79c0ffff;
+}
+
+comment,
+comment.doc {
+    color: #9198a1ff;
+}
+
+embedded,
+keyword,
+preproc,
+punctuation.special,
+variable.special {
+    color: #ff7b72ff;
+}
+
+enum,
+punctuation.list_marker,
+type,
+variant {
+    color: #ffa657ff;
+}
+
+function,
+function.method,
+function.special.definition {
+    color: #d2a8ffff;
+}
+
+operator,
+primary,
+punctuation,
+punctuation.bracket,
+punctuation.delimiter,
+variable {
+    color: #f0f6fcff;
+}
+
+string,
+string.regex {
+    color: #a5d6ffff;
+}
+
+emphasis {
+    font-style: italic;
+}
+emphasis.strong {
+    font-weight: 700;
+}
+hint {
+    color: #9198a1ff;
+    font-weight: 700;
+}
+link_text {
+    color: #a5d6ffff;
+    font-style: italic;
+}
+
+predictive {
+    color: #9198a1ff;
+    font-style: italic;
+}
+string.escape {
+    color: #7ee787ff;
+    font-weight: 700;
+}
+tag {
+    color: #7ee787ff;
+}
+title {
+    color: #79c0ffff;
+    font-weight: 700;
+}

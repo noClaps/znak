@@ -11,7 +11,7 @@ import (
 )
 
 func TestRender(input string, test string, t *testing.T) {
-	themeFile, err := os.ReadFile("../../theme.json")
+	themeFile, err := os.ReadFile("../../theme.css")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -149,7 +149,7 @@ func TestImages(t *testing.T) {
 }
 
 func TestCodeBlocks(t *testing.T) {
-	themeFile, err := os.ReadFile("../../theme.json")
+	themeFile, err := os.ReadFile("../../theme.css")
 	if err != nil {
 		t.Fatal(err)
 	}

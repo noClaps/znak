@@ -19,14 +19,14 @@ import (
 //
 // `codeTheme`: The theme for code blocks. There is no theme set by default,
 // and you must bring your own theme. An example theme can be found in
-// [theme.json]. You can create a theme without any syntax
+// [theme.css]. You can create a theme without any syntax
 // highlighting using:
 //
 //	import "github.com/noclaps/znak/highlight"
 //	highlight.Theme{}
 //
 // [documentation]: https://github.com/noClaps/znak/blob/main/docs/syntax.md
-// [theme.json]: https://github.com/noClaps/znak/blob/main/theme.json
+// [theme.css]: https://github.com/noClaps/znak/blob/main/theme.css
 func Render(input string, codeTheme highlight.Theme) (string, error) {
 	lines := strings.Split(strings.TrimSpace(input), "\n")
 	cur := 0

@@ -6,6 +6,7 @@ import (
 	"log"
 	"maps"
 	"slices"
+	"strconv"
 	"strings"
 
 	tsh "github.com/noclaps/go-tree-sitter-highlight"
@@ -13,13 +14,7 @@ import (
 )
 
 func Highlight(code string, language string, theme Theme) (string, error) {
-	globalStyle := ""
-	if theme.BackgroundColor != "" {
-		globalStyle += fmt.Sprintf(`background-color:%s;`, theme.BackgroundColor)
-	}
-	if theme.Color != "" {
-		globalStyle += fmt.Sprintf(`color:%s;`, theme.Color)
-	}
+	globalStyle := theme.Root
 
 	if language == "plaintext" || language == "plain" || language == "text" || language == "txt" {
 		return fmt.Sprintf(
@@ -48,21 +43,8 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		attribute := fmt.Sprintf(`class="%s"`, key)
 
 		if theme.Highlights != nil {
-			val := theme.Highlights[key]
-			style := ""
-			if val.Color != "" {
-				style += fmt.Sprintf(`color:%s;`, val.Color)
-			}
-			if val.FontWeight != 0 {
-				style += fmt.Sprintf(`font-weight:%d;`, val.FontWeight)
-			}
-			if val.FontStyle != "" {
-				style += fmt.Sprintf(`font-style:%s;`, val.FontStyle)
-			}
-			if val.BackgroundColor != "" {
-				style += fmt.Sprintf(`background-color:%s;`, val.BackgroundColor)
-			}
-			if style != "" {
+			style, ok := theme.Highlights[key]
+			if ok {
 				attribute += fmt.Sprintf(` style="%s"`, style)
 			}
 		}
@@ -92,22 +74,28 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 	}
 
 	if theme.LineNumbers != struct {
-		Color      string
-		RightSpace uint
+		MarginRight string
+		Styles      string
 	}{} {
 		lines := slices.Collect(strings.Lines(highlightedText))
 		maxLineNum := len(fmt.Sprint(len(lines) + 1))
-		var rightSpace uint = 1
-		if theme.LineNumbers.RightSpace != 0 {
-			rightSpace = theme.LineNumbers.RightSpace
+		rightSpace := 1
+
+		if theme.LineNumbers.MarginRight != "" {
+			rsVal, err := strconv.ParseInt(theme.LineNumbers.MarginRight, 10, 64)
+			if err != nil {
+				log.Println(err)
+			}
+			rightSpace = int(rsVal)
 		}
+		style := theme.LineNumbers.Styles
 
 		linesWithLineNos := []string{}
 		for i, line := range lines {
 			linesWithLineNos = append(linesWithLineNos, fmt.Sprintf(
-				`<span class="line-number" style="color:%s;margin-right:%dch\">%d</span>%s`,
-				theme.LineNumbers.Color,
-				maxLineNum+int(rightSpace)-len(fmt.Sprint(i+1)),
+				`<span class="line-number" style="%s;margin-right:%dch\">%d</span>%s`,
+				style,
+				maxLineNum+rightSpace-len(fmt.Sprint(i+1)),
 				i+1,
 				line,
 			))

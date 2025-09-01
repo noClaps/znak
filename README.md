@@ -23,7 +23,7 @@ import (
 )
 
 func main() {
-	themeFile, err := os.ReadFile("path/to/theme.json")
+	themeFile, err := os.ReadFile("path/to/theme.css")
 	codeTheme, err := highlight.NewTheme(themeFile)
 
 	inputFile, err := os.ReadFile("path/to/file.md")
@@ -39,4 +39,4 @@ func main() {
 
 $\LaTeX$ is rendered to MathML using [Wyatt915/TreeBlood](https://github.com/Wyatt915/treeblood).
 
-The example code theme in `theme.json` is taken from [PyaeSoneAungRgn/github-zed-theme](https://github.com/PyaeSoneAungRgn/github-zed-theme).
+The example code theme in `theme.css` is taken from [PyaeSoneAungRgn/github-zed-theme](https://github.com/PyaeSoneAungRgn/github-zed-theme).

@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	themeFile, err := os.ReadFile("path/to/theme.json")
+	themeFile, err := os.ReadFile("path/to/theme.css")
 	theme, err := highlight.NewTheme(themeFile)
 
 	code = `fmt.Println("Hello world")`
@@ -25,108 +25,48 @@ func main() {
 }
 ```
 
-You can use `highlight.NewTheme()` to create a new theme from a JSON string, or create a theme using `highlight.Theme{}`.
+You can use `highlight.NewTheme()` to create a new theme from a CSS string, or create a theme using `highlight.Theme{}`.
 
 ## Themes
 
-A theme is a JSON file with the following properties:
+A theme is a CSS file, supporting a very basic CSS syntax.
 
-- `color`: The default text color. This is set on the parent `<pre>` element and is used if no valid highlight is present, or no highlight color is provided for that syntax.
+- You can define global styles on the `:root` pseudo-element. These will be applied to the parent `<pre>` element, and used by the content inside if no styles are present for that syntax.
 
-  ```json
-  {
-    "color": "#fff"
-    // "color": <CSS color>
+  ```css
+  :root {
+      color: #fff;
+      background-color: #111;
+      /* any other css property */
   }
   ```
 
-- `backgroundColor`: The default background color. This is the background color of the code block.
+- You can configure line numbers by using the `:line-numbers` pseudo-element. If you want to set the number of spaces between the line numbers and the code, you can use `margin-right` with **only a number without any units**. Other than that special case, all other CSS properties are allowed.
 
-  ```json
-  {
-    "backgroundColor": "#111"
-    // "backgroundColor": <CSS color>
+  ```css
+  :line-numbers {
+      margin-right: 2; /* no units allowed here */
+      color: #888;
   }
   ```
 
-- `lineNumbers`: An object to configure line numbers. If this is left out, no line numbers will be present. It has the following properties:
+- You can configure highlights by defining your syntax type as the selector, and apply styles to that selector. Syntax types with dots in them are allowed, as well as using multiple selectors for the same styles, are allowed.
 
-  - `color`: The text color of the line numbers. Required.
+  ```css
+  type {
+      color: #5ac8f5;
+      font-weight: 500;
+      font-style: normal;
+      background-color: #111;
+  }
 
-    ```json
-    {
-      "lineNumbers": {
-        "color": "#888"
-        // "color": <CSS color>
-      }
-    }
-    ```
+  /* an example of using multiple selectors and types with dots */
+  comment,
+  comment.doc {
+      color: #9198a1;
+  }
+  ```
 
-  - `rightSpace`: The number of spaces between the line numbers and the code, in units of `ch`. Default is 1.
+Note that advanced CSS features, like nesting, combinators, other pseudo-elements, media queries, etc., are not supported. Everything inside the `{}` braces will be used as-is for the inline style, so only properties will work inside.
 
-    ```json
-    {
-      "lineNumbers": {
-        "rightSpace": 2
-        // "rightSpace": <number>
-      }
-    }
-    ```
-
-- `highlights`: An object to configure highlights. This is a map, with the keys being the syntax types, and the values being the configuration object. If you don't want to have inline styles, you can have the keys be the syntax types you want to select, and the configuration object empty for each one. Each configuration object has the following properties:
-
-  - `color`: The text color of the syntax type.
-
-    ```json
-    {
-      "highlights": {
-        "type": { "color": "#5ac8f5" }
-        // <syntax name>: { "color": <CSS color> }
-      }
-    }
-    ```
-
-  - `fontWeight`: The font weight for the syntax type. This should be a number between 1 and 1000.
-
-    ```json
-    {
-      "highlights": {
-        "type": { "fontWeight": 500 }
-        // <syntax name>: { "fontWeight": <number> }
-      }
-    }
-    ```
-
-  - `fontStyle`: The font style for the syntax type. One of `italic`, `normal`, and `oblique`. Default is `normal`.
-
-    ```json
-    {
-      "highlights": {
-        "type": { "fontStyle": "normal" }
-        // <syntax name>: { "fontStyle": <"italic" | "normal" | "oblique"> }
-      }
-    }
-    ```
-
-  - `backgroundColor`: The background color for the syntax type.
-
-    ```json
-    {
-      "highlights": {
-        "type": { "backgroundColor": "#111" }
-        // <syntax name>: { "backgroundColor": <CSS color> }
-      }
-    }
-    ```
-
-All of the color values are CSS colors, so you can use hex (`#rrggbbaa`), OKLCH (`oklch(lightness# chroma hue / alpha)`), etc.
-
-You can look at [`theme.json`](https://github.com/noClaps/znak/blob/main/theme.json) for an example theme. You can also add:
-
-```json
-{
-  "$schema": "https://github.com/noClaps/znak/raw/refs/heads/main/theme-schema.json"
-}
-```
-
-to the top of your theme file for completions and descriptions of the different properties.
+You can look at [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an example theme.
