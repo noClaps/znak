@@ -1,9 +1,8 @@
 module github.com/noclaps/znak
 
-go 1.25.0
+go 1.25.1
 
 require (
-	github.com/noclaps/go-tree-sitter-highlight v0.1.0
 	github.com/tree-sitter/tree-sitter-agda v1.3.3
 	github.com/tree-sitter/tree-sitter-bash v0.25.0
 	github.com/tree-sitter/tree-sitter-c v0.24.1
@@ -26,6 +25,7 @@ require (
 	github.com/tree-sitter/tree-sitter-typescript v0.23.2
 	github.com/wyatt915/treeblood v0.1.15
 	golang.org/x/net v0.42.0
+	tangled.sh/zerolimits.dev/go-tree-sitter-highlight v0.2.0
 )
 
 require (

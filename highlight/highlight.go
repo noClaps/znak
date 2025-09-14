@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	tsh "github.com/noclaps/go-tree-sitter-highlight"
-	tsh_types "github.com/noclaps/go-tree-sitter-highlight/types"
+	tsh "tangled.sh/zerolimits.dev/go-tree-sitter-highlight"
+	tsh_types "tangled.sh/zerolimits.dev/go-tree-sitter-highlight/types"
 )
 
 func Highlight(code string, language string, theme Theme) (string, error) {
@@ -65,7 +65,7 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		}
 		return config
 	}
-	var attributeCallback tsh_types.AttributeCallback = func(h tsh_types.CaptureIndex, languageName string) string {
+	var attributeCallback tsh_types.AttributeCallback = func(h uint, languageName string) string {
 		return attributes[h]
 	}
 	highlightedText, err := tsh.Highlight(*config, code, injectionCallback, attributeCallback)
