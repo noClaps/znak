@@ -93,9 +93,9 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		linesWithLineNos := []string{}
 		for i, line := range lines {
 			linesWithLineNos = append(linesWithLineNos, fmt.Sprintf(
-				`<span class="line-number" style="%s;margin-right:%dch\">%d</span>%s`,
-				style,
+				`<span class="line-number" style="margin-right:%dch;%s">%d</span>%s`,
 				maxLineNum+rightSpace-len(fmt.Sprint(i+1)),
+				style,
 				i+1,
 				line,
 			))
