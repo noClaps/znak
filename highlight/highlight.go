@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	tsh "tangled.sh/zerolimits.dev/go-tree-sitter-highlight"
+	tsh_languages "tangled.sh/zerolimits.dev/go-tree-sitter-highlight/languages"
 	tsh_types "tangled.sh/zerolimits.dev/go-tree-sitter-highlight/types"
 )
 
@@ -28,9 +29,9 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 		highlightNames = slices.Collect(maps.Keys(theme.Highlights))
 	}
 
-	lang, err := parseLanguage(language)
-	if err != nil {
-		return "", err
+	lang, ok := tsh_languages.Get(language)
+	if !ok {
+		return "", fmt.Errorf("Language not supported: %s", language)
 	}
 
 	config, err := tsh.NewConfiguration(lang, highlightNames)
@@ -53,9 +54,8 @@ func Highlight(code string, language string, theme Theme) (string, error) {
 	}
 
 	var injectionCallback tsh_types.InjectionCallback = func(languageName string) *tsh_types.Configuration {
-		lang, err := parseLanguage(languageName)
-		if err != nil {
-			log.Println(err) // This error shouldn't crash the program, only skip injection highlighting
+		lang, ok := tsh_languages.Get(languageName)
+		if !ok {
 			return nil
 		}
 		config, err := tsh.NewConfiguration(lang, highlightNames)
