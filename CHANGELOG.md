@@ -1,5 +1,118 @@
 # Znak
 
+## v0.20.0
+
+### Breaking changes
+
+- Use CSS for highlight theme
+
+  Instead of using JSON for defining your theme, you now use CSS. You can define global styles with `:root`, line numbers with `:line-numbers`, and your syntax types with `type`. For example:
+
+  ```css
+  :root {
+    color: #eee;
+    background-color: #111;
+  }
+
+  :line-numbers {
+    margin-right: 2;
+    color: #888;
+  }
+
+  /* combine styles for different syntax types */
+  type,
+  class
+  constructor {
+    color: #00ffff;
+  }
+
+  /* syntax types with dots are supported */
+  comment,
+  comment.doc {
+    color: #888;
+  }
+  ```
+
+  You can read the docs to learn more about [how to define themes](https://noclaps.github.io/znak/highlight.html#themes), and other limitations with the syntax.
+
+### Other changes
+
+- Update highlight queries for:
+  - C++
+  - Rust
+  - Go
+
+## v0.19.1
+
+### Other changes
+
+- Update Go version in `go.mod`
+- Update dependencies
+- Update highlight queries for:
+  - PHP
+  - JavaScript
+  - TSX
+  - TypeScript
+  - Ruby
+
+
+## v0.19.0
+
+This release had a lot of under-the-hood changes, such as updating to Treeblood v0.1.13 which fixed a bug with some of its functions, and switching to my [own fork of go-tree-sitter-highlight](https://github.com/noClaps/go-tree-sitter-highlight). There were also updates to tests and documentation.
+
+### Breaking changes
+
+- Change module name to `github.com/noclaps/znak`. Previously it was `github.com/noClaps/znak` (note the capital C).
+
+### Other changes
+
+- Update highlight queries for:
+  - Python
+
+## v0.18.1
+
+### Bug fixes
+
+- Preserve newlines in math blocks. Previously, a math block like:
+
+  ```md
+  $$
+  \begin{align}
+  c & = r_1 r_2 \\
+  & = \left( -\frac{b}{2} + u \right) \left( -\frac{b}{2} - u \right) \\
+  & = \frac{b^2}{4} - u^2
+  \end{align}
+  $$
+  ```
+
+  would not have its newlines preserved while parsing, which caused the output MathML to be incorrect. Now, the newlines are preserved, and the output is correct again.
+
+### Other changes
+
+- Update highlight queries for:
+  - Java
+
+## v0.18.0
+
+### Breaking changes
+
+- Change theme input to be `[]byte` instead of `string`. The main change here is that `highlight.NewTheme()` now takes a `[]byte` instead of a `string`. This makes it easier to directly pass in a theme file that was read using `os.ReadFile()`, for example.
+
+### Other changes
+
+- Add punctuation to descriptions in `theme-schema.json`.
+- Update highlight queries for:
+  - CSS
+  - JavaScript
+  - JSDoc
+  - Python
+  - Ruby
+  - Rust
+  - Scala
+  - TSX
+  - TypeScript
+Update Go version in `go.mod`.
+
 ## v0.17.0
 
 ### Breaking changes
