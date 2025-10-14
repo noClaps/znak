@@ -4,7 +4,7 @@ go 1.25.1
 
 require (
 	github.com/wyatt915/treeblood v0.1.16
-	golang.org/x/net v0.42.0
+	golang.org/x/net v0.46.0
 	tangled.sh/zerolimits.dev/go-tree-sitter-highlight v0.2.2
 )
 
