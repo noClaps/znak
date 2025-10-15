@@ -9,9 +9,9 @@ import (
 	"strconv"
 	"strings"
 
-	tsh "tangled.sh/zerolimits.dev/go-tree-sitter-highlight"
-	tsh_languages "tangled.sh/zerolimits.dev/go-tree-sitter-highlight/languages"
-	tsh_types "tangled.sh/zerolimits.dev/go-tree-sitter-highlight/types"
+	tsh "github.com/noclaps/go-tree-sitter-highlight"
+	tsh_languages "github.com/noclaps/go-tree-sitter-highlight/languages"
+	tsh_types "github.com/noclaps/go-tree-sitter-highlight/types"
 )
 
 func Highlight(code string, language string, theme Theme) (string, error) {
