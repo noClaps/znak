@@ -4,28 +4,53 @@ A syntax highlighting library that uses [Tree-sitter](https://tree-sitter.github
 
 ## Usage
 
-You can use the `highlight` module from the `github.com/noclaps/znak` package:
+You can use the `highlight` crate in this repository by adding it to your project:
 
-```go
-import (
-	"os"
+```sh
+cargo add --git https://github.com/noClaps/znak highlight
+```
 
-	"github.com/noClaps/znak/highlight"
-)
+and then using it in your code:
 
-func main() {
-	themeFile, err := os.ReadFile("path/to/theme.css")
-	theme, err := highlight.NewTheme(themeFile)
+```rust
+use highlight::{Theme, highlight};
 
-	code = `fmt.Println("Hello world")`
-	language = "go" // You can use any language supported by Highlight
-	highlightedHtml, err := highlight.Highlight(code, language, theme)
+fn main() {
+    let css = include_str!("path/to/theme.css");
+    let theme: Theme = Theme::new(css).unwrap()
 
-	fmt.Println(highlightedHtml) // <pre class="ts-highlight" ... </pre>
+    let code = "Your code here".to_string();
+    let lang = "plaintext".to_string();
+    let highlighted_text: String = highlight(code, lang, theme);
 }
 ```
 
-You can use `highlight.NewTheme()` to create a new theme from a CSS string, or create a theme using `highlight.Theme{}`.
+You can use `Theme::new()` to create a new theme from a CSS string. If you'd like to make a blank theme, use `Theme::new("")`.
+
+## Languages
+
+Highlight has a number of languages built in, but none are enabled by default to keep the bundle size small. You can enable the languages you'd like by enabling the respective features on the crate:
+
+```toml
+# Cargo.toml
+
+[dependencies]
+highlight = { git = "https://github.com/noClaps/znak", version = "0.21.0", features = [
+  "bash",
+  "c",
+  "python",
+  "typescript"
+] }
+```
+
+If you'd like to enable all languages, you can do so by enabling the `all` feature:
+
+```toml
+# Cargo.toml
+
+[dependencies]
+highlight = { git = "https://github.com/noClaps/znak", version = "0.21.0", features = ["all"] }
+```
 
 ## Themes
 

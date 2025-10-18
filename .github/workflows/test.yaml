@@ -4,12 +4,7 @@ on: push
 
 jobs:
   test:
-    permissions:
-      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - uses: actions/setup-go@v6
-        with:
-          go-version-file: go.mod
-      - run: go test -count=1 -timeout=1s ./...
+      - run: cargo test

@@ -9,34 +9,28 @@ You can read the syntax [here](./docs/syntax.md). You can also read the document
 Add it as a dependency to your project:
 
 ```sh
-go get -u github.com/noclaps/znak
+cargo add --git https://github.com/noClaps/znak -p crates/znak
 ```
 
 Then you can use it in your code:
 
-```go
-package main
+```rust
+use znak::{Theme, Heading, render, parse_headings, parse_frontmatter};
 
-import (
-	"github.com/noclaps/znak"
-	"github.com/noclaps/znak/highlight"
-)
+fn main() {
+    let css = include_str!("path/to/theme.css");
+    let theme: Theme = Theme::new(css).unwrap();
 
-func main() {
-	themeFile, err := os.ReadFile("path/to/theme.css")
-	codeTheme, err := highlight.NewTheme(themeFile)
+    let input_files = include_str!("path/to/file.md");
+    let rendered_html: String = render(input, theme);
 
-	inputFile, err := os.ReadFile("path/to/file.md")
-	input := string(inputFile)
-
-	renderedHtml, err := znak.Render(input, codeTheme)
-	headings := znak.Headings(input)
-	frontmatter, err := znak.Frontmatter(input)
+    let headings: Vec<Heading> = parse_headings(input);
+    let frontmatter: HashMap<String, String> = parse_frontmatter(input).unwrap();
 }
 ```
 
 ## Acknowledgements
 
-$\LaTeX$ is rendered to MathML using [Wyatt915/TreeBlood](https://github.com/Wyatt915/treeblood).
+$\LaTeX$ is rendered to MathML using [tmke8/math-core](https://github.com/tmke8/math-core).
 
 The example code theme in `theme.css` is taken from [PyaeSoneAungRgn/github-zed-theme](https://github.com/PyaeSoneAungRgn/github-zed-theme).

@@ -1,0 +1,13 @@
+[package]
+name = "znak"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+highlight = { path = "../highlight" }
+math = { path = "../math" }
+regex = "1.12.2"
+
+[dev-dependencies]
+html-compare-rs = "0.3.0"
