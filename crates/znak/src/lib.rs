@@ -37,7 +37,6 @@ pub fn render<S: Into<String>>(input: S, code_theme: Theme) -> String {
     }
 
     let input = lines[cur..].join("\n");
-    eprintln!("{}", input);
     let parser_output = parse(input, code_theme);
 
     let mut output = String::new();
