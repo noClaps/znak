@@ -9,7 +9,7 @@ You can read the syntax [here](./docs/syntax.md). You can also read the document
 Add it as a dependency to your project:
 
 ```sh
-cargo add --git https://github.com/noClaps/znak -p crates/znak
+cargo add --git https://github.com/noClaps/znak znak
 ```
 
 Then you can use it in your code:
