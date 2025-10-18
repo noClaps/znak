@@ -245,6 +245,10 @@ fn inline_formatting() {
         "Special characters: “_voilà_!”",
         "<p>Special characters: “<em>voilà</em>!”</p>",
     );
+    test_render(
+        "This website is a memorial to him, and hosts [his story on Boško Brkić and Admira Ismić](http://www.ksmemorial.com/romeo.htm)",
+        "<p>This website is a memorial to him, and hosts <a href=\"http://www.ksmemorial.com/romeo.htm\">his story on Boško Brkić and Admira Ismić</a></p>",
+    );
 }
 
 #[test]

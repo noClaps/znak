@@ -1,29 +1,19 @@
 use highlight::escape_html;
 use math::{MathDisplay, render_math};
 
-use crate::parser::types::Node;
+use crate::parser::{types::Node, utils::char_string::CharString};
 
 pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
     let mut contents = vec![];
     let mut buffer = String::new();
+    let line = CharString::from(line);
 
     let mut cursor = 0;
     while cursor < line.len() {
-        // Check for char boundaries
-        if !line.is_char_boundary(cursor + 1) {
-            let start = cursor;
-            while !line.is_char_boundary(cursor + 1) {
-                cursor += 1;
-            }
-            cursor += 1;
-            buffer += &line[start..cursor];
-            continue;
-        }
-
         // Escape characters
-        if &line[cursor..cursor + 1] == "\\" {
+        if line[cursor] == '\\' {
             cursor += 1;
-            buffer += &line[cursor..cursor + 1];
+            buffer.push(line[cursor]);
             cursor += 1;
             continue;
         }
@@ -36,7 +26,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 2 + line[cursor + 2..].find("**").unwrap();
-            let temp_buf = &line[cursor + 2..next_index];
+            let temp_buf = line[cursor + 2..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("****"));
@@ -56,7 +46,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 2 + line[cursor + 2..].find("__").unwrap();
-            let temp_buf = &line[cursor + 2..next_index];
+            let temp_buf = line[cursor + 2..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("____"));
@@ -76,7 +66,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 2 + line[cursor + 2..].find("~~").unwrap();
-            let temp_buf = &line[cursor + 2..next_index];
+            let temp_buf = line[cursor + 2..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("~~~~"));
@@ -96,7 +86,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 2 + line[cursor + 2..].find("==").unwrap();
-            let temp_buf = &line[cursor + 2..next_index];
+            let temp_buf = line[cursor + 2..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("===="));
@@ -116,7 +106,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 2 + line[cursor + 2..].find("$$").unwrap();
-            let temp_buf = &line[cursor + 2..next_index];
+            let temp_buf = line[cursor + 2..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("$$$$"));
@@ -136,7 +126,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 1 + line[cursor + 1..].find("_").unwrap();
-            let temp_buf = &line[cursor + 1..next_index];
+            let temp_buf = line[cursor + 1..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("__"));
@@ -156,7 +146,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 1 + line[cursor + 1..].find("`").unwrap();
-            let temp_buf = &line[cursor + 1..next_index];
+            let temp_buf = line[cursor + 1..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("``"));
@@ -176,7 +166,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 1 + line[cursor + 1..].find("~").unwrap();
-            let temp_buf = &line[cursor + 1..next_index];
+            let temp_buf = line[cursor + 1..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("~~"));
@@ -196,7 +186,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             }
             // safe to unwrap as checked in if condition
             let next_index = cursor + 1 + line[cursor + 1..].find("^").unwrap();
-            let temp_buf = &line[cursor + 1..next_index];
+            let temp_buf = line[cursor + 1..next_index].clone();
 
             if temp_buf == "" {
                 contents.push(Node::text("^^"));
@@ -209,7 +199,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Links
-        if &line[cursor..cursor + 1] == "["
+        if line[cursor] == '['
             && line[cursor + 1..].contains("](")
             && line[cursor + 1..].contains(")")
         {
@@ -221,32 +211,32 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             let mut link_title = String::new();
             let mut nest_level = 0;
             cursor += 1; // Move inside link title
-            while &line[cursor..cursor + 1] != "]" || nest_level != 0 {
-                if &line[cursor..cursor + 1] == "[" {
+            while line[cursor] != ']' || nest_level != 0 {
+                if line[cursor] == '[' {
                     nest_level += 1;
                 }
-                if &line[cursor..cursor + 1] == "]" {
+                if line[cursor] == ']' {
                     nest_level -= 1;
                 }
-                link_title += &line[cursor..cursor + 1];
+                link_title.push(line[cursor]);
                 cursor += 1;
             }
 
             let mut link_url = String::new();
             let mut is_inside_link = false;
             cursor += 2; // Move inside link URL
-            while &line[cursor..cursor + 1] != ")" || is_inside_link {
-                if &line[cursor..cursor + 1] == "<" {
+            while line[cursor] != ')' || is_inside_link {
+                if line[cursor] == '<' {
                     is_inside_link = true;
                     cursor += 1;
                     continue;
                 }
-                if &line[cursor..cursor + 1] == ">" {
+                if line[cursor] == '>' {
                     is_inside_link = false;
                     cursor += 1;
                     continue;
                 }
-                link_url += &line[cursor..cursor + 1];
+                link_url.push(line[cursor]);
                 cursor += 1;
             }
 
@@ -266,7 +256,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Default
-        buffer += &line[cursor..cursor + 1];
+        buffer.push(line[cursor]);
         cursor += 1;
     }
 
