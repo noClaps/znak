@@ -6,7 +6,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "agda" => HighlightConfiguration::new(
             tree_sitter_agda::LANGUAGE.into(),
             "agda",
-            include_str!("../queries/agda/highlights.scm"),
+            tree_sitter_agda::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -15,7 +15,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "bash" | "shellscript" | "shell" | "zsh" | "sh" => HighlightConfiguration::new(
             tree_sitter_bash::LANGUAGE.into(),
             "bash",
-            include_str!("../queries/bash/highlights.scm"),
+            tree_sitter_bash::HIGHLIGHT_QUERY,
             "",
             "",
         )
@@ -24,8 +24,8 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "c" => HighlightConfiguration::new(
             tree_sitter_c::LANGUAGE.into(),
             "c",
-            include_str!("../queries/c/highlights.scm"),
-            include_str!("../queries/c/injections.scm"),
+            tree_sitter_c::HIGHLIGHT_QUERY,
+            "",
             "",
         )
         .ok(),
@@ -33,7 +33,11 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "cpp" | "c++" => HighlightConfiguration::new(
             tree_sitter_cpp::LANGUAGE.into(),
             "cpp",
-            include_str!("../queries/cpp/highlights.scm"),
+            &[
+                tree_sitter_c::HIGHLIGHT_QUERY,
+                tree_sitter_cpp::HIGHLIGHT_QUERY,
+            ]
+            .join("\n"),
             include_str!("../queries/cpp/injections.scm"),
             "",
         )
@@ -42,7 +46,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "css" => HighlightConfiguration::new(
             tree_sitter_css::LANGUAGE.into(),
             "css",
-            include_str!("../queries/css/highlights.scm"),
+            tree_sitter_css::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -51,8 +55,8 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "go" => HighlightConfiguration::new(
             tree_sitter_go::LANGUAGE.into(),
             "go",
-            include_str!("../queries/go/highlights.scm"),
-            include_str!("../queries/go/injections.scm"),
+            tree_sitter_go::HIGHLIGHTS_QUERY,
+            "",
             "",
         )
         .ok(),
@@ -60,17 +64,17 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "haskell" | "hs" => HighlightConfiguration::new(
             tree_sitter_haskell::LANGUAGE.into(),
             "haskell",
-            include_str!("../queries/haskell/highlights.scm"),
-            "",
-            "",
+            tree_sitter_haskell::HIGHLIGHTS_QUERY,
+            tree_sitter_haskell::INJECTIONS_QUERY,
+            tree_sitter_haskell::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "html")]
         "html" => HighlightConfiguration::new(
             tree_sitter_html::LANGUAGE.into(),
             "html",
-            include_str!("../queries/html/highlights.scm"),
-            include_str!("../queries/html/injections.scm"),
+            tree_sitter_html::HIGHLIGHTS_QUERY,
+            tree_sitter_html::INJECTIONS_QUERY,
             "",
         )
         .ok(),
@@ -78,34 +82,30 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "java" => HighlightConfiguration::new(
             tree_sitter_java::LANGUAGE.into(),
             "java",
-            include_str!("../queries/java/highlights.scm"),
-            include_str!("../queries/java/injections.scm"),
-            include_str!("../queries/java/locals.scm"),
+            tree_sitter_java::HIGHLIGHTS_QUERY,
+            "",
+            "",
         )
         .ok(),
         #[cfg(feature = "javascript")]
-        "javascript" | "js" => HighlightConfiguration::new(
+        "javascript" | "js" | "jsx" => HighlightConfiguration::new(
             tree_sitter_javascript::LANGUAGE.into(),
             "javascript",
-            include_str!("../queries/javascript/highlights.scm"),
-            include_str!("../queries/javascript/highlights.scm"),
-            "",
-        )
-        .ok(),
-        #[cfg(feature = "javascript")]
-        "jsx" => HighlightConfiguration::new(
-            tree_sitter_javascript::LANGUAGE.into(),
-            "jsx",
-            include_str!("../queries/javascript/highlights.scm"),
-            include_str!("../queries/javascript/highlights.scm"),
-            "",
+            &[
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
+                include_str!("../queries/javascript/highlights-params.scm"),
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            tree_sitter_javascript::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "jsdoc")]
         "jsdoc" => HighlightConfiguration::new(
             tree_sitter_jsdoc::LANGUAGE.into(),
             "jsdoc",
-            include_str!("../queries/jsdoc/highlights.scm"),
+            tree_sitter_jsdoc::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -114,7 +114,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "json" => HighlightConfiguration::new(
             tree_sitter_json::LANGUAGE.into(),
             "json",
-            include_str!("../queries/json/highlights.scm"),
+            tree_sitter_json::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -123,35 +123,39 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "ocaml" => HighlightConfiguration::new(
             tree_sitter_ocaml::LANGUAGE_OCAML.into(),
             "ocaml",
-            include_str!("../queries/ocaml/highlights.scm"),
+            tree_sitter_ocaml::HIGHLIGHTS_QUERY,
             "",
-            "",
+            tree_sitter_ocaml::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "ocaml")]
         "ocaml_interface" => HighlightConfiguration::new(
             tree_sitter_ocaml::LANGUAGE_OCAML_INTERFACE.into(),
             "ocaml_interface",
-            include_str!("../queries/ocaml/highlights.scm"),
+            tree_sitter_ocaml::HIGHLIGHTS_QUERY,
             "",
-            "",
+            tree_sitter_ocaml::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "ocaml")]
         "ocaml_type" => HighlightConfiguration::new(
             tree_sitter_ocaml::LANGUAGE_OCAML_TYPE.into(),
             "ocaml_type",
-            include_str!("../queries/ocaml/highlights.scm"),
+            tree_sitter_ocaml::HIGHLIGHTS_QUERY,
             "",
-            "",
+            tree_sitter_ocaml::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "php")]
         "php" => HighlightConfiguration::new(
             tree_sitter_php::LANGUAGE_PHP.into(),
             "php",
-            include_str!("../queries/php/highlights.scm"),
-            include_str!("../queries/php/injections.scm"),
+            tree_sitter_php::HIGHLIGHTS_QUERY,
+            &[
+                tree_sitter_php::INJECTIONS_QUERY,
+                include_str!("../queries/php/injections-text.scm"),
+            ]
+            .join("\n"),
             "",
         )
         .ok(),
@@ -159,8 +163,8 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "php_only" => HighlightConfiguration::new(
             tree_sitter_php::LANGUAGE_PHP_ONLY.into(),
             "php_only",
-            include_str!("../queries/php/highlights.scm"),
-            include_str!("../queries/php/injections.scm"),
+            tree_sitter_php::HIGHLIGHTS_QUERY,
+            tree_sitter_php::INJECTIONS_QUERY,
             "",
         )
         .ok(),
@@ -168,7 +172,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "python" | "py" => HighlightConfiguration::new(
             tree_sitter_python::LANGUAGE.into(),
             "python",
-            include_str!("../queries/python/highlights.scm"),
+            tree_sitter_python::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -177,7 +181,7 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "regexp" | "regex" => HighlightConfiguration::new(
             tree_sitter_regex::LANGUAGE.into(),
             "regex",
-            include_str!("../queries/regex/highlights.scm"),
+            tree_sitter_regex::HIGHLIGHTS_QUERY,
             "",
             "",
         )
@@ -186,17 +190,17 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "ruby" | "rb" => HighlightConfiguration::new(
             tree_sitter_ruby::LANGUAGE.into(),
             "ruby",
-            include_str!("../queries/ruby/highlights.scm"),
-            include_str!("../queries/ruby/injections.scm"),
+            tree_sitter_ruby::HIGHLIGHTS_QUERY,
             "",
+            tree_sitter_ruby::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "rust")]
         "rust" | "rs" => HighlightConfiguration::new(
             tree_sitter_rust::LANGUAGE.into(),
             "rust",
-            include_str!("../queries/rust/highlights.scm"),
-            include_str!("../queries/rust/injections.scm"),
+            tree_sitter_rust::HIGHLIGHTS_QUERY,
+            tree_sitter_rust::INJECTIONS_QUERY,
             "",
         )
         .ok(),
@@ -204,27 +208,44 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
         "scala" => HighlightConfiguration::new(
             tree_sitter_scala::LANGUAGE.into(),
             "scala",
-            include_str!("../queries/scala/highlights.scm"),
-            include_str!("../queries/scala/injections.scm"),
-            include_str!("../queries/scala/locals.scm"),
+            tree_sitter_scala::HIGHLIGHTS_QUERY,
+            "",
+            tree_sitter_scala::LOCALS_QUERY,
         )
         .ok(),
         #[cfg(feature = "typescript")]
         "typescript" | "ts" => HighlightConfiguration::new(
             tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
             "typescript",
-            include_str!("../queries/typescript/highlights.scm"),
-            include_str!("../queries/typescript/injections.scm"),
-            "",
+            &[
+                tree_sitter_typescript::HIGHLIGHTS_QUERY,
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            &[
+                tree_sitter_typescript::LOCALS_QUERY,
+                tree_sitter_javascript::LOCALS_QUERY,
+            ]
+            .join("\n"),
         )
         .ok(),
         #[cfg(feature = "typescript")]
         "tsx" => HighlightConfiguration::new(
             tree_sitter_typescript::LANGUAGE_TSX.into(),
             "tsx",
-            include_str!("../queries/typescript/highlights.scm"),
-            include_str!("../queries/typescript/injections.scm"),
-            "",
+            &[
+                tree_sitter_typescript::HIGHLIGHTS_QUERY,
+                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            &[
+                tree_sitter_typescript::LOCALS_QUERY,
+                tree_sitter_javascript::LOCALS_QUERY,
+            ]
+            .join("\n"),
         )
         .ok(),
         _ => None,
