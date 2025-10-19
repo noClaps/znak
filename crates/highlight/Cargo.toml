@@ -18,6 +18,7 @@ tree-sitter-java = { version = "0.23.5", optional = true }
 tree-sitter-javascript = { version = "0.25.0", optional = true }
 tree-sitter-jsdoc = { version = "0.25.0", optional = true }
 tree-sitter-json = { version = "0.24.8", optional = true }
+tree-sitter-julia = { version = "0.23.1", optional = true }
 tree-sitter-ocaml = { version = "0.24.2", optional = true }
 tree-sitter-php = { version = "0.24.2", optional = true }
 tree-sitter-python = { version = "0.25.0", optional = true }
@@ -42,6 +43,7 @@ all = [
   "javascript",
   "jsdoc",
   "json",
+  "julia",
   "ocaml",
   "php",
   "python",
@@ -62,6 +64,7 @@ java = ["dep:tree-sitter-java"]
 javascript = ["dep:tree-sitter-javascript"]
 jsdoc = ["dep:tree-sitter-jsdoc"]
 json = ["dep:tree-sitter-json"]
+julia = ["dep:tree-sitter-julia"]
 ocaml = ["dep:tree-sitter-ocaml"]
 php = ["dep:tree-sitter-php"]
 python = ["dep:tree-sitter-python"]

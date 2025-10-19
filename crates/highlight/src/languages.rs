@@ -119,6 +119,15 @@ pub(crate) fn new(lang: &String) -> Option<HighlightConfiguration> {
             "",
         )
         .ok(),
+        #[cfg(feature = "julia")]
+        "julia" | "jl" => HighlightConfiguration::new(
+            tree_sitter_julia::LANGUAGE.into(),
+            "julia",
+            include_str!("../queries/julia/highlights.scm"),
+            "",
+            include_str!("../queries/julia/locals.scm"),
+        )
+        .ok(),
         #[cfg(feature = "ocaml")]
         "ocaml" => HighlightConfiguration::new(
             tree_sitter_ocaml::LANGUAGE_OCAML.into(),
