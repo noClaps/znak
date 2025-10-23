@@ -20,9 +20,6 @@ mod list_items;
 mod renderer;
 mod tables;
 mod types;
-mod utils {
-    pub mod char_string;
-}
 
 #[cfg(test)]
 mod tests;
