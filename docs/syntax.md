@@ -14,7 +14,7 @@ Most of the syntax is similar to what you may expect from Markdown.
 
 ## Code block
 
-Code blocks are highlighted using [Highlight](./highlight.md). To get syntax highlighting, you'll need to create a TOML file with your theme. See [Highlight#Themes](./highlight.md#themes) for details on how to do this.
+Code blocks are highlighted using [Highlight](./highlight.md). To get syntax highlighting, you'll need to create a CSS file with your theme. See [Highlight#Themes](./highlight.md#themes) for details on how to do this.
 
 ````md
 ```py
