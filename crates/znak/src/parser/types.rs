@@ -1,7 +1,11 @@
 use std::collections::HashMap;
 
 pub(crate) enum Node {
-    Element(Element),
+    Element {
+        tag_name: String,
+        properties: HashMap<String, String>,
+        children: Vec<Node>,
+    },
     Text(String),
 }
 
@@ -15,11 +19,11 @@ impl Node {
         for (k, v) in properties {
             props.insert(k.into(), v.into());
         }
-        Node::Element(Element {
+        Node::Element {
             tag_name: tag_name.into(),
             properties: props,
             children: children,
-        })
+        }
     }
 
     pub(crate) fn element_map<S: Into<String>>(
@@ -27,20 +31,14 @@ impl Node {
         properties: HashMap<String, String>,
         children: Vec<Node>,
     ) -> Node {
-        Node::Element(Element {
+        Node::Element {
             tag_name: tag_name.into(),
             properties: properties,
             children: children,
-        })
+        }
     }
 
     pub(crate) fn text<S: Into<String>>(text: S) -> Self {
         Node::Text(text.into())
     }
-}
-
-pub(crate) struct Element {
-    pub(crate) tag_name: String,
-    pub(crate) properties: HashMap<String, String>,
-    pub(crate) children: Vec<Node>,
 }
