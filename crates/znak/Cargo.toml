@@ -1,8 +1,6 @@
 [package]
 name = "znak"
-version.workspace = true
 edition.workspace = true
-license.workspace = true
 
 [dependencies]
 highlight = { path = "../highlight" }
