@@ -1,13 +1,14 @@
-use highlight::{Theme, highlight};
+use highlight::{Highlight, Theme};
 use html_compare_rs::assert_html_eq;
 
 use crate::render;
 
 pub(crate) fn test_render<S: Into<String>>(input: S, test: S) {
     let css = include_str!("../../../../theme.css");
-    let theme = crate::Theme::new(css).unwrap();
+    let theme = Theme::new(css).unwrap();
+    let hl = Highlight::new(theme);
 
-    let output = render(input.into(), theme);
+    let output = render(input.into(), &hl);
     assert_html_eq!(output, test.into())
 }
 
@@ -84,11 +85,8 @@ fn code_blocks() {
     test_render("```", "<p>```</p>");
     let css = include_str!("../../../../theme.css");
     let theme = Theme::new(css).unwrap();
-    let highlighted = highlight(
-        "print(\"Your code here\")".to_string(),
-        "py".to_string(),
-        theme.clone(),
-    );
+    let hl = Highlight::new(theme);
+    let highlighted = hl.highlight("print(\"Your code here\")".to_string(), "py".to_string());
     test_render(
         r#"
 ```py
@@ -99,10 +97,9 @@ print("Your code here")
         highlighted,
     );
 
-    let highlighted = highlight(
+    let highlighted = hl.highlight(
         "This is some text in a code block".to_string(),
         "plaintext".to_string(),
-        theme.clone(),
     );
     test_render(
         r#"
@@ -114,10 +111,9 @@ This is some text in a code block
         highlighted,
     );
 
-    let highlighted = highlight(
+    let highlighted = hl.highlight(
         "This is for a language that doesn't exist".to_string(),
         "plaintext".to_string(),
-        theme,
     );
     test_render(
         r#"

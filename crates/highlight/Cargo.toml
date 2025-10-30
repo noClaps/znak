@@ -27,7 +27,6 @@ tree-sitter-scala = { version = "0.24.0", optional = true }
 tree-sitter-typescript = { version = "0.23.2", optional = true }
 
 [features]
-agda = ["dep:tree-sitter-agda"]
 all = [
   "agda",
   "bash",
@@ -51,6 +50,7 @@ all = [
   "scala",
   "typescript"
 ]
+agda = ["dep:tree-sitter-agda"]
 bash = ["dep:tree-sitter-bash"]
 c = ["dep:tree-sitter-c"]
 cpp = ["c", "dep:tree-sitter-cpp"]

@@ -1,4 +1,4 @@
-use highlight::{Theme, highlight};
+use highlight::Highlight;
 use math::{MathDisplay, render_math};
 use regex::Regex;
 
@@ -28,7 +28,7 @@ fn count_chars<S: Into<String>>(input: S, char: char) -> usize {
     input.into().chars().filter(|&c| c == char).count()
 }
 
-pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
+pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
     let mut slugger = Slugger::new();
     let lines = input.lines().collect::<Vec<&str>>();
     let mut tokens = vec![];
@@ -65,7 +65,7 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
                     format!("{}\n", lines[line_cursor].trim_start_matches(">").trim()).as_str();
                 line_cursor += 1;
             }
-            let children = parse(blockquote_lines, code_theme.clone());
+            let children = parse(blockquote_lines, hl);
             tokens.push(Node::element("blockquote", vec![], children));
             line_cursor += 1;
             continue;
@@ -117,8 +117,8 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
             }
 
             let highlighted_text = match language {
-                "" => highlight(code_buffer, "plaintext".to_string(), code_theme.clone()),
-                _ => highlight(code_buffer, language.to_string(), code_theme.clone()),
+                "" => hl.highlight(code_buffer, "plaintext".to_string()),
+                _ => hl.highlight(code_buffer, language.to_string()),
             };
             tokens.push(Node::text(highlighted_text));
             line_cursor += 1;
@@ -139,7 +139,7 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let children = list_items(buffer, code_theme.clone(), ListType::Ordered);
+            let children = list_items(buffer, hl, ListType::Ordered);
             tokens.push(Node::element("ol", vec![], children));
             continue;
         }
@@ -156,7 +156,7 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let children = list_items(buffer, code_theme.clone(), ListType::Unordered);
+            let children = list_items(buffer, hl, ListType::Unordered);
             tokens.push(Node::element("ul", vec![], children));
             continue;
         }
@@ -230,7 +230,7 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let container = containers(buffer, code_theme.clone());
+            let container = containers(buffer, hl);
             tokens.push(container);
             line_cursor += 1;
             continue;

@@ -4,7 +4,7 @@ mod parser;
 
 pub use frontmatter::parse_frontmatter;
 pub use headings::{Heading, parse_headings};
-pub use highlight::Theme;
+pub use highlight::{Highlight, Theme};
 
 use crate::parser::{parse, renderer};
 
@@ -24,7 +24,7 @@ use crate::parser::{parse, renderer};
 ///	use znak::Theme;
 ///	Theme::new("").unwrap();
 /// ```
-pub fn render<S: Into<String>>(input: S, code_theme: Theme) -> String {
+pub fn render<S: Into<String>>(input: S, hl: &Highlight) -> String {
     let input = input.into();
     let lines = input.trim().lines().collect::<Vec<&str>>();
     let mut cur = 0;
@@ -37,7 +37,7 @@ pub fn render<S: Into<String>>(input: S, code_theme: Theme) -> String {
     }
 
     let input = lines[cur..].join("\n");
-    let parser_output = parse(input, code_theme);
+    let parser_output = parse(input, hl);
 
     let mut output = String::new();
     for node in parser_output {
