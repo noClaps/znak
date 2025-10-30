@@ -10,7 +10,7 @@ use crate::{
         inline_formatting::inline_formatting,
         list_items::{ListType, list_items},
         tables::tables,
-        types::Node,
+        types::{Node, element, text},
     },
 };
 
@@ -24,7 +24,7 @@ mod types;
 #[cfg(test)]
 mod tests;
 
-fn count_chars<S: Into<String>>(input: S, char: char) -> usize {
+fn count_chars(input: impl Into<String>, char: char) -> usize {
     input.into().chars().filter(|&c| c == char).count()
 }
 
@@ -48,11 +48,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
 
             let slug = slugger.slug(heading.to_string(), level);
             let children = inline_formatting(heading.to_string());
-            tokens.push(Node::element(
-                format!("h{level}"),
-                vec![("id".to_string(), slug)],
-                children,
-            ));
+            tokens.push(element!(format!("h{level}"), [id = slug], children));
             line_cursor += 1;
             continue;
         }
@@ -66,14 +62,14 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
             let children = parse(blockquote_lines, hl);
-            tokens.push(Node::element("blockquote", vec![], children));
+            tokens.push(element!("blockquote", children));
             line_cursor += 1;
             continue;
         }
 
         // Horizontal rule
         if count_chars(line, '-') == line.len() && line.len() >= 3 {
-            tokens.push(Node::element("hr", vec![], vec![]));
+            tokens.push(element!("hr"));
             line_cursor += 1;
             continue;
         }
@@ -86,17 +82,12 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             let image_url = &line[image_split + 2..line.len() - 1];
 
             let children = inline_formatting(image_title.to_string());
-            tokens.push(Node::element(
+            tokens.push(element!(
                 "figure",
-                vec![],
                 vec![
-                    Node::element(
-                        "img",
-                        vec![("src", image_url), ("alt", image_title)],
-                        vec![],
-                    ),
-                    Node::element("figcaption", vec![], children),
-                ],
+                    element!("img", [src = image_url, alt = image_title]),
+                    element!("figcaption", children),
+                ]
             ));
             line_cursor += 1;
             continue;
@@ -120,7 +111,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 "" => hl.highlight(code_buffer, "plaintext".to_string()),
                 _ => hl.highlight(code_buffer, language.to_string()),
             };
-            tokens.push(Node::text(highlighted_text));
+            tokens.push(text!(highlighted_text));
             line_cursor += 1;
             continue;
         }
@@ -140,7 +131,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             }
 
             let children = list_items(buffer, hl, ListType::Ordered);
-            tokens.push(Node::element("ol", vec![], children));
+            tokens.push(element!("ol", children));
             continue;
         }
 
@@ -157,7 +148,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             }
 
             let children = list_items(buffer, hl, ListType::Unordered);
-            tokens.push(Node::element("ul", vec![], children));
+            tokens.push(element!("ul", children));
             continue;
         }
 
@@ -193,7 +184,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 buffer += &format!("{}\n", lines[line_cursor]);
                 line_cursor += 1;
             }
-            tokens.push(Node::text(buffer.trim()));
+            tokens.push(text!(buffer.trim()));
         }
 
         // Math block
@@ -206,7 +197,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             }
 
             let math = render_math(buffer, MathDisplay::Block);
-            tokens.push(Node::text(math));
+            tokens.push(text!(math));
             line_cursor += 1;
             continue;
         }
@@ -243,7 +234,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
         }
         if buffer != "" {
             let children = inline_formatting(buffer);
-            tokens.push(Node::element("p", vec![], children));
+            tokens.push(element!("p", children));
         }
         line_cursor += 1;
     }

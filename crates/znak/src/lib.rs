@@ -24,7 +24,7 @@ use crate::parser::{parse, renderer};
 ///	use znak::Theme;
 ///	Theme::new("").unwrap();
 /// ```
-pub fn render<S: Into<String>>(input: S, hl: &Highlight) -> String {
+pub fn render(input: impl Into<String>, hl: &Highlight) -> String {
     let input = input.into();
     let lines = input.trim().lines().collect::<Vec<&str>>();
     let mut cur = 0;

@@ -27,7 +27,7 @@ pub struct Heading {
 /// # Returns
 ///
 /// Returns a list of [Heading](struct@Heading) structs.
-pub fn parse_headings<S: Into<String>>(input: S) -> Vec<Heading> {
+pub fn parse_headings(input: impl Into<String>) -> Vec<Heading> {
     let input = input.into();
     let mut slugger = Slugger::new();
     let re = Regex::new("(?m)^(#{1,6}) (.+)").unwrap(); // can unwrap as known safe regex

@@ -9,36 +9,46 @@ pub(crate) enum Node {
     Text(String),
 }
 
-impl Node {
-    pub(crate) fn element<S: Into<String>>(
-        tag_name: S,
-        properties: Vec<(S, S)>,
-        children: Vec<Node>,
-    ) -> Self {
-        let mut props = HashMap::new();
-        for (k, v) in properties {
-            props.insert(k.into(), v.into());
-        }
+macro_rules! element {
+    ($tag:expr) => {
         Node::Element {
-            tag_name: tag_name.into(),
-            properties: props,
-            children: children,
+            tag_name: $tag.to_string(),
+            properties: std::collections::HashMap::new(),
+            children: vec![],
         }
-    }
-
-    pub(crate) fn element_map<S: Into<String>>(
-        tag_name: S,
-        properties: HashMap<String, String>,
-        children: Vec<Node>,
-    ) -> Node {
+    };
+    ($tag:expr, [$($key:ident=$val:expr$(,)?)+]) => {
         Node::Element {
-            tag_name: tag_name.into(),
-            properties: properties,
-            children: children,
+            tag_name: $tag.to_string(),
+            properties: std::collections::HashMap::from([$((stringify!($key).to_string(), $val.to_string()),)+]),
+            children: vec![],
         }
-    }
-
-    pub(crate) fn text<S: Into<String>>(text: S) -> Self {
-        Node::Text(text.into())
-    }
+    };
+    ($tag:expr, $children:expr) => {
+        Node::Element {
+            tag_name: $tag.to_string(),
+            properties: std::collections::HashMap::new(),
+            children: $children,
+        }
+    };
+    ($tag:expr, [$($key:ident=$val:expr$(,)?)+], $children:expr) => {
+        Node::Element {
+            tag_name: $tag.to_string(),
+            properties: std::collections::HashMap::from([$((stringify!($key).to_string(), $val.to_string()),)+]),
+            children: $children,
+        }
+    };
+    ($tag:expr, {$props:expr}, $children:expr) => {
+        Node::Element {
+            tag_name: $tag.to_string(),
+            properties: $props,
+            children: $children,
+        }
+    };
 }
+macro_rules! text {
+    ($text:expr) => {
+        Node::Text($text.to_string())
+    };
+}
+pub(crate) use {element, text};

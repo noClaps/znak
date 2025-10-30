@@ -129,7 +129,7 @@ impl Highlight {
     }
 }
 
-pub fn escape_html<S: Into<String>>(input: S) -> String {
+pub fn escape_html(input: impl Into<String>) -> String {
     input
         .into()
         .replace('&', "&amp")

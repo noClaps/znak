@@ -2,7 +2,10 @@ use std::collections::HashMap;
 
 use highlight::Highlight;
 
-use crate::parser::{parse, types::Node};
+use crate::parser::{
+    parse,
+    types::{Node, element, text},
+};
 
 fn concat_vec<T>(mut vec_a: Vec<T>, mut vec_b: Vec<T>) -> Vec<T> {
     vec_a.append(&mut vec_b);
@@ -52,27 +55,24 @@ pub(crate) fn containers(input: String, hl: &Highlight) -> Node {
 
     let content = parse(body.to_string(), hl);
 
-    Node::element_map(
+    element!(
         "div",
-        attr_map,
+        { attr_map },
         concat_vec(
-            vec![Node::element(
+            vec![element!(
                 "p",
-                vec![("class", format!("{}-heading", container_type).as_str())],
-                vec![Node::element(
+                [class = format!("{}-heading", container_type)],
+                vec![element!(
                     "b",
-                    vec![],
                     vec![match href {
-                        None => Node::text(title),
-                        Some(href) => Node::element(
-                            "a",
-                            vec![("href", href.as_str())],
-                            vec![Node::text(title)],
-                        ),
-                    }],
-                )],
+                        None => text!(title),
+                        Some(href) => {
+                            element!("a", [href = href], vec![text!(title)])
+                        }
+                    }]
+                )]
             )],
             content,
-        ),
+        )
     )
 }

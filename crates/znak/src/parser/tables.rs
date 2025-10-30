@@ -1,4 +1,7 @@
-use crate::parser::{inline_formatting::inline_formatting, types::Node};
+use crate::parser::{
+    inline_formatting::inline_formatting,
+    types::{Node, element},
+};
 
 pub(crate) fn tables(input: String) -> Node {
     let lines = input.trim().lines().collect::<Vec<&str>>();
@@ -26,11 +29,7 @@ pub(crate) fn tables(input: String) -> Node {
     let mut thead_nodes = vec![];
     for (i, th) in thead.enumerate() {
         let children = inline_formatting(th.to_string());
-        thead_nodes.push(Node::element(
-            "th",
-            vec![("align", alignments[i])],
-            children,
-        ));
+        thead_nodes.push(element!("th", [align = alignments[i]], children));
     }
 
     let mut tbody_nodes = vec![];
@@ -38,25 +37,16 @@ pub(crate) fn tables(input: String) -> Node {
         let mut tr_nodes = vec![];
         for (i, col) in line[1..line.len() - 1].split("|").enumerate() {
             let children = inline_formatting(col.trim().to_string());
-            tr_nodes.push(Node::element(
-                "td",
-                vec![("align", alignments[i])],
-                children,
-            ));
+            tr_nodes.push(element!("td", [align = alignments[i]], children));
         }
-        tbody_nodes.push(Node::element("tr", vec![], tr_nodes));
+        tbody_nodes.push(element!("tr", tr_nodes));
     }
 
-    Node::element(
+    element!(
         "table",
-        vec![],
         vec![
-            Node::element(
-                "thead",
-                vec![],
-                vec![Node::element("tr", vec![], thead_nodes)],
-            ),
-            Node::element("tbody", vec![], tbody_nodes),
-        ],
+            element!("thead", vec![element!("tr", thead_nodes)]),
+            element!("tbody", tbody_nodes),
+        ]
     )
 }

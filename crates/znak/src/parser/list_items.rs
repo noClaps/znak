@@ -1,7 +1,10 @@
 use highlight::Highlight;
 use regex::Regex;
 
-use crate::parser::{parse, types::Node};
+use crate::parser::{
+    parse,
+    types::{Node, element},
+};
 
 pub(crate) enum ListType {
     Ordered,
@@ -29,7 +32,7 @@ pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> 
         let segments = line.split("\n").collect::<Vec<&str>>();
         if segments.len() == 1 {
             let children = parse(segments[0].to_string(), hl);
-            tokens.push(Node::element("li", vec![], children));
+            tokens.push(element!("li", children));
         } else {
             let mut remaining_lines = String::new();
             for &line in segments[1..].iter() {
@@ -37,7 +40,7 @@ pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> 
             }
             let input = format!("{}\n\n{}", segments[0], remaining_lines);
             let children = parse(input, hl);
-            tokens.push(Node::element("li", vec![], children));
+            tokens.push(element!("li", children));
         }
     }
 

@@ -5,7 +5,7 @@ pub struct ParseError {
     cause: String,
 }
 impl ParseError {
-    fn new<S: Into<String>>(cause: S) -> Self {
+    fn new(cause: impl Into<String>) -> Self {
         Self {
             cause: cause.into(),
         }
@@ -30,7 +30,7 @@ impl Error for ParseError {}
 /// # Returns
 ///
 /// Returns a map of frontmatter keys and values.
-pub fn parse_frontmatter<S: Into<String>>(input: S) -> Result<HashMap<String, String>, ParseError> {
+pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, String>, ParseError> {
     let input = input.into();
     let mut fm_vals = HashMap::new();
     let mut lines = input.trim().lines();
@@ -66,7 +66,7 @@ pub fn parse_frontmatter<S: Into<String>>(input: S) -> Result<HashMap<String, St
 mod tests {
     use super::*;
 
-    fn make_map<S: Into<String>>(vals: Vec<(S, S)>) -> HashMap<String, String> {
+    fn make_map(vals: Vec<(impl Into<String>, impl Into<String>)>) -> HashMap<String, String> {
         let mut map = HashMap::new();
         for (key, val) in vals {
             map.insert(key.into(), val.into());

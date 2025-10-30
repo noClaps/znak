@@ -5,7 +5,7 @@ pub struct ThemeError {
     cause: String,
 }
 impl ThemeError {
-    fn new<S: Into<String>>(cause: S) -> Self {
+    fn new(cause: impl Into<String>) -> Self {
         Self {
             cause: cause.into(),
         }
@@ -32,7 +32,7 @@ pub struct Theme {
 }
 
 impl Theme {
-    pub fn new<S: Into<String>>(css: S) -> Result<Theme, ThemeError> {
+    pub fn new(css: impl Into<String>) -> Result<Theme, ThemeError> {
         let mut theme = Theme {
             root: String::new(),
             line_numbers: None,

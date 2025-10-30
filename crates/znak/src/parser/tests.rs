@@ -3,7 +3,7 @@ use html_compare_rs::assert_html_eq;
 
 use crate::render;
 
-pub(crate) fn test_render<S: Into<String>>(input: S, test: S) {
+pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
     let css = include_str!("../../../../theme.css");
     let theme = Theme::new(css).unwrap();
     let hl = Highlight::new(theme);

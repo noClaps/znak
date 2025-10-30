@@ -2,7 +2,7 @@ pub use math_core::MathDisplay;
 use math_core::{LatexToMathML, MathCoreConfig};
 
 // TODO: replace with Typst when their MathML export is ready
-pub fn render_math<S: Into<String>>(math: S, display: MathDisplay) -> String {
+pub fn render_math(math: impl Into<String>, display: MathDisplay) -> String {
     let config = MathCoreConfig::default();
     let converter = LatexToMathML::new(&config).unwrap(); // safe to unwrap as no macros
     let mathml = converter
