@@ -177,24 +177,23 @@ pub(crate) fn parse(input: String, code_theme: Theme) -> Vec<Node> {
 
         // HTML elements
         if line.starts_with("<") {
-            let mut buffer = format!("{}\n", line);
-            if lines[line_cursor..]
-                .iter()
-                .find(|line| line.contains("</"))
-                .is_none()
+            let t = line[1..]
+                .split("")
+                .position(|c| c == ">" || c == " ")
+                .expect(&format!("Unterminated HTML element found: {}", line));
+            let tag_name = &line[1..t];
+            let mut depth = 0;
+            let mut buffer = String::new();
+            while line_cursor < lines.len()
+                && (!lines[line_cursor].contains(&format!("</{}>", tag_name)) || depth > 0)
             {
-                tokens.push(Node::text(buffer.trim()));
+                if lines[line_cursor].contains(&format!("<{}", tag_name)) {
+                    depth += 1;
+                }
+                buffer += &format!("{}\n", lines[line_cursor]);
                 line_cursor += 1;
-                continue;
-            }
-
-            while line_cursor < lines.len() && !lines[line_cursor].contains("</") {
-                line_cursor += 1;
-                buffer += format!("{}\n", lines[line_cursor]).as_str();
             }
             tokens.push(Node::text(buffer.trim()));
-            line_cursor += 1;
-            continue;
         }
 
         // Math block

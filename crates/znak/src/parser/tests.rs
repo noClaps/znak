@@ -329,6 +329,20 @@ Content here
         "<u>This element isn't closed",
         "<u>This element isn't closed",
     );
+    test_render(
+        r#"
+<div>
+  <div class="nested">
+   <p>Some content here</p>
+  </div>
+</div>
+"#,
+        r#"<div>
+  <div class="nested">
+    <p>Some content here</p>
+  </div>
+</div>"#,
+    );
 }
 
 #[test]
