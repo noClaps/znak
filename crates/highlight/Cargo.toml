@@ -71,3 +71,6 @@ ruby = ["dep:tree-sitter-ruby"]
 rust = ["dep:tree-sitter-rust"]
 scala = ["dep:tree-sitter-scala"]
 typescript = ["dep:tree-sitter-typescript", "javascript"]
+
+[dev-dependencies]
+tree-sitter-haskell = "0.23.1"
