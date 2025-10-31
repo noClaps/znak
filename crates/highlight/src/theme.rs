@@ -24,6 +24,49 @@ pub(crate) struct LineNumbers {
     pub(crate) styles: String,
 }
 
+/// A theme object used to apply styles for syntax highlighting.
+///
+/// A theme is a CSS file, supporting a very basic CSS syntax.
+///
+/// - You can define global styles on the `:root` pseudo-element. These will be applied to the parent `<pre>` element, and used by the content inside if no styles are present for that syntax.
+///
+///   ```css
+///   :root {
+///       color: #fff;
+///       background-color: #111;
+///       /* any other css property */
+///   }
+///   ```
+///
+/// - You can configure line numbers by using the `:line-numbers` pseudo-element. If you want to set the number of spaces between the line numbers and the code, you can use `margin-right` with **only a number without any units**. Other than that special case, all other CSS properties are allowed.
+///
+///   ```css
+///   :line-numbers {
+///       margin-right: 2; /* no units allowed here */
+///       color: #888;
+///   }
+///   ```
+///
+/// - You can configure highlights by defining your syntax type as the selector, and apply styles to that selector. Syntax types with dots in them are allowed, as well as using multiple selectors for the same styles, are allowed.
+///
+///   ```css
+///   type {
+///       color: #5ac8f5;
+///       font-weight: 500;
+///       font-style: normal;
+///       background-color: #111;
+///   }
+///
+///   /* an example of using multiple selectors and types with dots */
+///   comment,
+///   comment.doc {
+///       color: #9198a1;
+///   }
+///   ```
+///
+/// Note that advanced CSS features, like nesting, combinators, other pseudo-elements, media queries, etc., are not supported. Everything inside the `{}` braces will be used as-is for the inline style, so only properties will work inside.
+///
+/// You can look at [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an example theme.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Theme {
     pub(crate) root: String,
@@ -32,6 +75,20 @@ pub struct Theme {
 }
 
 impl Theme {
+    /// Creates a new [Theme].
+    ///
+    /// # Parameters
+    ///
+    /// - `css`: The CSS text to parse into a theme.
+    ///
+    /// # Usage
+    ///
+    /// ```rust
+    /// use highlight::Theme;
+    ///
+    /// let css = include_str!("../../../theme.css");
+    /// let theme = Theme::new(css).unwrap();
+    /// ```
     pub fn new(css: impl Into<String>) -> Result<Theme, ThemeError> {
         let mut theme = Theme {
             root: String::new(),

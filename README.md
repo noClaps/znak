@@ -2,7 +2,7 @@
 
 A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like syntax highlighting, $\LaTeX$, and heading IDs built-in.
 
-You can read the syntax [here](./docs/syntax.md). You can also read the documentation for Highlight (the syntax highlighter in Znak) [here](./docs/highlight.md).
+You can read the syntax [here](https://noClaps.github.io/znak/znak#syntax). You can also read the documentation for Highlight (the syntax highlighter in Znak) [here](https://noClaps.github.io/znak/highlight/).
 
 ## Usage
 

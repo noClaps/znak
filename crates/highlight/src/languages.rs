@@ -11,6 +11,13 @@ impl Highlight {
 
     /// Add your own language to the highlighter.
     ///
+    /// # Parameters
+    ///
+    /// - `names`: The names of the language.
+    /// - `config`: The [HighlightConfiguration] for the language.
+    ///
+    /// # Usage
+    ///
     /// ```rust
     /// use highlight::{Highlight, HighlightConfiguration, Theme};
     ///
@@ -29,8 +36,8 @@ impl Highlight {
     pub fn add_language(&mut self, names: &[&str], mut config: HighlightConfiguration) {
         config.configure(&self.recognised_names);
         let config = Arc::new(config);
-        for &name in names {
-            self.languages.insert(name.to_string(), config.clone());
+        for &name in names.as_ref() {
+            self.languages.insert(name.into(), config.clone());
         }
     }
 

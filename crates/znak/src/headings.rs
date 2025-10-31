@@ -15,18 +15,13 @@ pub struct Heading {
     pub title: String,
 }
 
-/// A function that returns the headings in the given input text.
+/// A function that returns the [Heading]s in the given input text.
 ///
-/// # Arguments
+/// # Parameters
 ///
-/// `input`: The input text to extract the headings from. This can be from a
-/// Markdown file as long as the syntax is supported by Znak. See the
-/// [documentation](https://github.com/noClaps/znak/blob/main/docs/syntax.md)
-/// for the supported syntax.
-///
-/// # Returns
-///
-/// Returns a list of [Heading](struct@Heading) structs.
+/// - `input`: The input text to extract the headings from. This can be from a
+///   Markdown file as long as the syntax is supported by Znak. See the
+///   [documentation](index.html#syntax) for the supported syntax.
 pub fn parse_headings(input: impl Into<String>) -> Vec<Heading> {
     let input = input.into();
     let mut slugger = Slugger::new();

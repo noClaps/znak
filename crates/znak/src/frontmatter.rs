@@ -18,18 +18,13 @@ impl Display for ParseError {
 }
 impl Error for ParseError {}
 
-/// A function that returns the frontmatter in the given input text.
+/// A function that returns the frontmatter in the given input text as a map.
 ///
-/// # Arguments
+/// # Parameters
 ///
-/// `input`: The input text to extract the frontmatter from. This can be from
-/// a Markdown file as long as the syntax is supported by Znak. See the
-/// [documentation](https://github.com/noClaps/znak/blob/main/docs/syntax.md)
-/// for the supported syntax.
-///
-/// # Returns
-///
-/// Returns a map of frontmatter keys and values.
+/// - `input`: The input text to extract the frontmatter from. This can be from
+///   a Markdown file as long as the syntax is supported by Znak. See the
+///   [documentation](index.html#syntax) for the supported syntax.
 pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, String>, ParseError> {
     let input = input.into();
     let mut fm_vals = HashMap::new();
