@@ -189,33 +189,7 @@ impl Highlight {
                 );
             }
         };
-        let mut highlighted_text = html_renderer.lines().collect::<Vec<&str>>().join("\n");
-
-        match self.theme.line_numbers.clone() {
-            None => (),
-            Some(line_numbers) => {
-                let max_line_num = (highlighted_text.lines().count() + 1).to_string().len();
-                let right_space = match line_numbers.margin_right {
-                    Some(r) => r,
-                    None => 1,
-                };
-
-                highlighted_text = highlighted_text
-                    .lines()
-                    .enumerate()
-                    .map(|(index, line)| {
-                        format!(
-                            "<span class=\"line-number\" style=\"margin-right:{}ch;{}\">{}</span>{}",
-                            max_line_num + right_space - (index + 1).to_string().len(),
-                            line_numbers.styles,
-                            index + 1,
-                            line
-                        )
-                    })
-                    .collect::<Vec<String>>()
-                    .join("\n");
-            }
-        };
+        let highlighted_text = html_renderer.lines().collect::<Vec<&str>>().join("\n");
 
         format!(
             "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",

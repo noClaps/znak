@@ -18,17 +18,13 @@ impl Display for ThemeError {
 }
 impl Error for ThemeError {}
 
-#[derive(Debug, PartialEq, Clone)]
-pub(crate) struct LineNumbers {
-    pub(crate) margin_right: Option<usize>,
-    pub(crate) styles: String,
-}
-
 /// A theme object used to apply styles for syntax highlighting.
 ///
 /// A theme is a CSS file, supporting a very basic CSS syntax.
 ///
-/// - You can define global styles on the `:root` pseudo-element. These will be applied to the parent `<pre>` element, and used by the content inside if no styles are present for that syntax.
+/// - You can define global styles on the `:root` pseudo-element. These will be
+///   applied to the parent `<pre>` element, and used by the content inside if
+///   no styles are present for that syntax.
 ///
 ///   ```css
 ///   :root {
@@ -38,16 +34,10 @@ pub(crate) struct LineNumbers {
 ///   }
 ///   ```
 ///
-/// - You can configure line numbers by using the `:line-numbers` pseudo-element. If you want to set the number of spaces between the line numbers and the code, you can use `margin-right` with **only a number without any units**. Other than that special case, all other CSS properties are allowed.
-///
-///   ```css
-///   :line-numbers {
-///       margin-right: 2; /* no units allowed here */
-///       color: #888;
-///   }
-///   ```
-///
-/// - You can configure highlights by defining your syntax type as the selector, and apply styles to that selector. Syntax types with dots in them are allowed, as well as using multiple selectors for the same styles, are allowed.
+/// - You can configure highlights by defining your syntax type as the
+///   selector, and apply styles to that selector. Syntax types with dots in
+///   them are allowed, as well as using multiple selectors for the same
+///   styles, are allowed.
 ///
 ///   ```css
 ///   type {
@@ -64,13 +54,17 @@ pub(crate) struct LineNumbers {
 ///   }
 ///   ```
 ///
-/// Note that advanced CSS features, like nesting, combinators, other pseudo-elements, media queries, etc., are not supported. Everything inside the `{}` braces will be used as-is for the inline style, so only properties will work inside.
+/// Note that advanced CSS features, like nesting, combinators, other
+/// pseudo-elements, media queries, etc., are not supported. Everything inside
+/// the `{}` braces will be used as-is for the inline style, so only properties
+/// will work inside.
 ///
-/// You can look at [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an example theme.
+/// You can look at
+/// [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an
+/// example theme.
 #[derive(Debug, PartialEq, Clone)]
 pub struct Theme {
     pub(crate) root: String,
-    pub(crate) line_numbers: Option<LineNumbers>,
     pub(crate) highlights: HashMap<String, String>,
 }
 
@@ -92,7 +86,6 @@ impl Theme {
     pub fn new(css: impl Into<String>) -> Result<Theme, ThemeError> {
         let mut theme = Theme {
             root: String::new(),
-            line_numbers: None,
             highlights: HashMap::new(),
         };
 
@@ -147,53 +140,6 @@ impl Theme {
             for selector in selectors {
                 match selector {
                     ":root" => theme.root = styles.to_string(),
-                    ":line-numbers" => {
-                        let mut line_numbers = None;
-                        let mut line_number_styles = String::new();
-
-                        for style in styles.split(';') {
-                            if style == "" {
-                                continue;
-                            }
-                            let (key, value) = match style.split_once(':') {
-                                Some(parts) => parts,
-                                None => {
-                                    return Err(ThemeError::new(format!(
-                                        "Invalid CSS syntax: {}",
-                                        &css[i - 10..i + 10]
-                                    )));
-                                }
-                            };
-                            if key == "margin-right" {
-                                line_numbers = match line_numbers {
-                                    None => Some(LineNumbers {
-                                        margin_right: value.parse().ok(),
-                                        styles: String::new(),
-                                    }),
-                                    Some(mut line_numbers) => {
-                                        line_numbers.margin_right = value.parse().ok();
-                                        Some(line_numbers)
-                                    }
-                                };
-                                continue;
-                            }
-                            line_number_styles += style;
-                        }
-
-                        line_numbers = match line_numbers {
-                            None if line_number_styles != "" => Some(LineNumbers {
-                                margin_right: None,
-                                styles: line_number_styles,
-                            }),
-                            Some(mut line_numbers) if line_number_styles != "" => {
-                                line_numbers.styles = line_number_styles;
-                                Some(line_numbers)
-                            }
-                            _ => line_numbers,
-                        };
-
-                        theme.line_numbers = line_numbers;
-                    }
                     _ => {
                         theme
                             .highlights
@@ -220,7 +166,6 @@ mod tests {
             blank,
             Theme {
                 root: String::new(),
-                line_numbers: None,
                 highlights: HashMap::new()
             }
         )

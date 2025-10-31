@@ -3,11 +3,6 @@
     color: #fff;
 }
 
-:line-numbers {
-    margin-right: 4;
-    color: #444;
-}
-
 boolean,
 constant,
 constructor,
