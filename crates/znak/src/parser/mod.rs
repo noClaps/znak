@@ -107,6 +107,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
+            let code_buffer = code_buffer.trim().to_string();
             let highlighted_text = match language {
                 "" => hl.highlight(code_buffer, "plaintext".to_string()),
                 _ => hl.highlight(code_buffer, language.to_string()),

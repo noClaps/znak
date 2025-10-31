@@ -61,6 +61,7 @@ mod theme;
 
 use std::{collections::HashMap, sync::Arc};
 
+use html::escape_html;
 pub use tree_sitter_highlight::HighlightConfiguration;
 use tree_sitter_highlight::{Highlighter, HtmlRenderer};
 
@@ -135,7 +136,7 @@ impl Highlight {
             return format!(
                 "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
                 global_style,
-                escape_html(code)
+                escape_html!(code)
             );
         }
 
@@ -147,7 +148,7 @@ impl Highlight {
                 return format!(
                     "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
-                    escape_html(code)
+                    escape_html!(code)
                 );
             }
         };
@@ -161,7 +162,7 @@ impl Highlight {
                 return format!(
                     "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
-                    escape_html(code.clone())
+                    escape_html!(code)
                 );
             }
         };
@@ -185,7 +186,7 @@ impl Highlight {
                 return format!(
                     "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
-                    escape_html(code)
+                    escape_html!(code)
                 );
             }
         };
@@ -197,35 +198,4 @@ impl Highlight {
             highlighted_text.trim()
         )
     }
-}
-
-/// Escapes unsafe characters in HTML.
-///
-/// - `&` becomes `&amp;`
-/// - `"` becomes `&quot;`
-/// - `'` becomes `&#x27;`
-/// - `<` becomes `&lt;`
-/// - `>` becomes `&gt;`
-///
-/// # Parameters
-///
-/// - `input`: Text to escape.
-///
-/// # Usage
-///
-/// ```rust
-/// use highlight::escape_html;
-///
-/// let text = "<div>This text has HTML in it</div>";
-/// let escaped = escape_html(text);
-/// assert_eq!(escaped, "&lt;div&gt;This text has HTML in it&lt;/div&gt;")
-/// ```
-pub fn escape_html(input: impl Into<String>) -> String {
-    input
-        .into()
-        .replace('&', "&amp;")
-        .replace('"', "&quot;")
-        .replace("'", "&#x27;")
-        .replace('<', "&lt;")
-        .replace('>', "&gt;")
 }

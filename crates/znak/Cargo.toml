@@ -4,9 +4,9 @@ edition.workspace = true
 
 [dependencies]
 highlight = { path = "../highlight" }
+html = { path = "../html" }
 math = { path = "../math" }
 regex = "1.12.2"
 
 [dev-dependencies]
-html-compare-rs = "0.3.0"
 highlight = { path = "../highlight", features = ["python"] }

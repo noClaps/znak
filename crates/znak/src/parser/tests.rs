@@ -1,5 +1,5 @@
 use highlight::{Highlight, Theme};
-use html_compare_rs::assert_html_eq;
+use html::assert_html_eq;
 
 use crate::render;
 
@@ -9,7 +9,7 @@ pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
     let hl = Highlight::new(theme);
 
     let output = render(input.into(), &hl);
-    assert_html_eq!(output, test.into())
+    assert_html_eq!(output, test.into());
 }
 
 #[test]
@@ -329,7 +329,7 @@ Content here
         r#"
 <div>
   <div class="nested">
-   <p>Some content here</p>
+    <p>Some content here</p>
   </div>
 </div>
 "#,

@@ -1,6 +1,6 @@
 use std::mem;
 
-use highlight::escape_html;
+use html::escape_html;
 use math::{MathDisplay, render_math};
 
 use crate::parser::types::{Node, element, text};
@@ -83,7 +83,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             if temp_buf.is_empty() {
                 contents.push(text!("``"));
             } else {
-                let code = escape_html(temp_buf.to_string());
+                let code = escape_html!(temp_buf);
                 contents.push(element!("code", vec![text!(code)]));
             }
             cursor = next_index + 1;
