@@ -1,15 +1,7 @@
 on: push
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - run: cargo doc --no-deps
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: target/doc/
-  deploy:
+  docs:
     permissions:
       pages: write
       id-token: write
@@ -17,7 +9,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
     steps:
+      - uses: actions/checkout@v5
+      - run: cargo doc --no-deps
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: target/doc/
       - uses: actions/deploy-pages@v4
         id: deployment
