@@ -1,33 +1,12 @@
-//! # Highlight
-//!
 //! A syntax highlighting library that uses
 //! [Tree-sitter](https://tree-sitter.github.io/tree-sitter/) for incredibly
 //! quick parsing and highlighting.
 //!
-//! ## Usage
+//! You can add this library to your project with:
 //!
-//! You can use this crate by adding it to your project:
-//!
-//! ```sh
+//! ```bash
 //! cargo add --git https://github.com/noClaps/znak highlight
 //! ```
-//!
-//! and then using it in your code:
-//!
-//! ```rust
-//! use highlight::{Highlight, Theme};
-//!
-//! let css = include_str!("../../../theme.css");
-//! let theme: Theme = Theme::new(css).unwrap();
-//! let hl = Highlight::new(theme);
-//!
-//! let code = "Your code here".to_string();
-//! let lang = "plaintext".to_string();
-//! let highlighted_text: String = hl.highlight(code, lang);
-//! ```
-//!
-//! You can use [Theme::new] to create a new theme from a CSS string. If
-//! you'd like to make a blank theme, use `Theme::new("")`.
 //!
 //! ## Languages
 //!
