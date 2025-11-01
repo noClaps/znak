@@ -11,17 +11,6 @@
 //! cargo add --git https://github.com/noClaps/znak znak
 //! ```
 //!
-//! Then you can use it in your code:
-//!
-//!
-//! ## Acknowledgements
-//!
-//! LaTeX is rendered to MathML using
-//! [tmke8/math-core](https://github.com/tmke8/math-core).
-//!
-//! The example code theme in `theme.css` is taken from
-//! [PyaeSoneAungRgn/github-zed-theme](https://github.com/PyaeSoneAungRgn/github-zed-theme).
-//!
 //! # Syntax
 //!
 //! Most of the syntax is similar to what you may expect from Markdown.
