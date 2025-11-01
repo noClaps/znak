@@ -36,7 +36,7 @@ all = [
   "css",
   "go",
   "haskell",
-
+  "html",
   "java",
   "javascript",
   "jsdoc",
