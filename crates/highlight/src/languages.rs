@@ -4,6 +4,57 @@ use tree_sitter_highlight::HighlightConfiguration;
 
 use crate::Highlight;
 
+macro_rules! add_lang {
+    ($self:expr, [$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, $inj:expr, $loc:expr) => {
+        $self.add_language(
+            &[$name$(,$alias)*],
+            tree_sitter_highlight::HighlightConfiguration::new(
+                $lang.into(),
+                $name,
+                $hl,
+                $inj,
+                $loc,
+            ).unwrap()
+        )
+    };
+    ($self:expr, [$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, inj=$inj:expr) => {
+        $self.add_language(
+            &[$name$(,$alias)*],
+            tree_sitter_highlight::HighlightConfiguration::new(
+                $lang.into(),
+                $name,
+                $hl,
+                $inj,
+                "",
+            ).unwrap()
+        )
+    };
+    ($self:expr, [$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, loc=$loc:expr) => {
+        $self.add_language(
+            &[$name$(,$alias)*],
+            tree_sitter_highlight::HighlightConfiguration::new(
+                $lang.into(),
+                $name,
+                $hl,
+                "",
+                $loc,
+            ).unwrap()
+        )
+    };
+    ($self:expr, [$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr) => {
+        $self.add_language(
+            &[$name$(,$alias)*],
+            tree_sitter_highlight::HighlightConfiguration::new(
+                $lang.into(),
+                $name,
+                $hl,
+                "",
+                "",
+            ).unwrap()
+        )
+    };
+}
+
 impl Highlight {
     pub(crate) fn get_language(&self, name: &str) -> Option<&HighlightConfiguration> {
         Some(self.languages.get(name)?.as_ref())
@@ -43,181 +94,119 @@ impl Highlight {
 
     pub(crate) fn default_langs(&mut self) {
         #[cfg(feature = "agda")]
-        self.add_language(
-            &["agda"],
-            HighlightConfiguration::new(
-                tree_sitter_agda::LANGUAGE.into(),
-                "agda",
-                tree_sitter_agda::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["agda"],
+            tree_sitter_agda::LANGUAGE,
+            tree_sitter_agda::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "bash")]
-        self.add_language(
-            &["bash", "shellscript", "shell", "zsh", "sh"],
-            HighlightConfiguration::new(
-                tree_sitter_bash::LANGUAGE.into(),
-                "bash",
-                tree_sitter_bash::HIGHLIGHT_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["bash", "shellscript", "shell", "zsh", "sh"],
+            tree_sitter_bash::LANGUAGE,
+            tree_sitter_bash::HIGHLIGHT_QUERY
         );
         #[cfg(feature = "c")]
-        self.add_language(
-            &["c"],
-            HighlightConfiguration::new(
-                tree_sitter_c::LANGUAGE.into(),
-                "c",
-                tree_sitter_c::HIGHLIGHT_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["c"],
+            tree_sitter_c::LANGUAGE,
+            tree_sitter_c::HIGHLIGHT_QUERY
         );
         #[cfg(feature = "cpp")]
-        self.add_language(
-            &["cpp", "c++"],
-            HighlightConfiguration::new(
-                tree_sitter_cpp::LANGUAGE.into(),
-                "cpp",
-                &[
-                    tree_sitter_c::HIGHLIGHT_QUERY,
-                    tree_sitter_cpp::HIGHLIGHT_QUERY,
-                ]
-                .join("\n"),
-                include_str!("../queries/cpp/injections.scm"),
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["cpp", "c++"],
+            tree_sitter_cpp::LANGUAGE,
+            &[
+                tree_sitter_c::HIGHLIGHT_QUERY,
+                tree_sitter_cpp::HIGHLIGHT_QUERY
+            ]
+            .join("\n"),
+            inj = include_str!("../queries/cpp/injections.scm")
         );
         #[cfg(feature = "css")]
-        self.add_language(
-            &["css"],
-            HighlightConfiguration::new(
-                tree_sitter_css::LANGUAGE.into(),
-                "css",
-                tree_sitter_css::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["css"],
+            tree_sitter_css::LANGUAGE,
+            tree_sitter_css::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "go")]
-        self.add_language(
-            &["go"],
-            HighlightConfiguration::new(
-                tree_sitter_go::LANGUAGE.into(),
-                "go",
-                tree_sitter_go::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["go"],
+            tree_sitter_go::LANGUAGE,
+            tree_sitter_go::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "haskell")]
-        self.add_language(
-            &["haskell", "hs"],
-            HighlightConfiguration::new(
-                tree_sitter_haskell::LANGUAGE.into(),
-                "haskell",
-                tree_sitter_haskell::HIGHLIGHTS_QUERY,
-                tree_sitter_haskell::INJECTIONS_QUERY,
-                tree_sitter_haskell::LOCALS_QUERY,
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["haskell", "hs"],
+            tree_sitter_haskell::LANGUAGE,
+            tree_sitter_haskell::HIGHLIGHTS_QUERY,
+            tree_sitter_haskell::INJECTIONS_QUERY,
+            tree_sitter_haskell::LOCALS_QUERY
         );
         #[cfg(feature = "html")]
-        self.add_language(
-            &["html"],
-            HighlightConfiguration::new(
-                tree_sitter_html::LANGUAGE.into(),
-                "html",
-                tree_sitter_html::HIGHLIGHTS_QUERY,
-                tree_sitter_html::INJECTIONS_QUERY,
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["html"],
+            tree_sitter_html::LANGUAGE,
+            tree_sitter_html::HIGHLIGHTS_QUERY,
+            inj = tree_sitter_html::INJECTIONS_QUERY
         );
         #[cfg(feature = "java")]
-        self.add_language(
-            &["java"],
-            HighlightConfiguration::new(
-                tree_sitter_java::LANGUAGE.into(),
-                "java",
-                tree_sitter_java::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["java"],
+            tree_sitter_java::LANGUAGE,
+            tree_sitter_java::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "javascript")]
-        self.add_language(
-            &["javascript", "js", "jsx"],
-            HighlightConfiguration::new(
-                tree_sitter_javascript::LANGUAGE.into(),
-                "javascript",
-                &[
-                    tree_sitter_javascript::HIGHLIGHT_QUERY,
-                    tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
-                    include_str!("../queries/javascript/highlights-params.scm"),
-                ]
-                .join("\n"),
-                tree_sitter_javascript::INJECTIONS_QUERY,
-                tree_sitter_javascript::LOCALS_QUERY,
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["javascript", "js", "jsx"],
+            tree_sitter_javascript::LANGUAGE,
+            &[
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
+                include_str!("../queries/javascript/highlights-params.scm")
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            tree_sitter_javascript::LOCALS_QUERY
         );
         #[cfg(feature = "jsdoc")]
-        self.add_language(
-            &["jsdoc"],
-            HighlightConfiguration::new(
-                tree_sitter_jsdoc::LANGUAGE.into(),
-                "jsdoc",
-                tree_sitter_jsdoc::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["jsdoc"],
+            tree_sitter_jsdoc::LANGUAGE,
+            tree_sitter_jsdoc::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "json")]
-        self.add_language(
-            &["json"],
-            HighlightConfiguration::new(
-                tree_sitter_json::LANGUAGE.into(),
-                "json",
-                tree_sitter_json::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["json"],
+            tree_sitter_json::LANGUAGE,
+            tree_sitter_json::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "julia")]
-        self.add_language(
-            &["julia", "jl"],
-            HighlightConfiguration::new(
-                tree_sitter_julia::LANGUAGE.into(),
-                "julia",
-                include_str!("../queries/julia/highlights.scm"),
-                "",
-                include_str!("../queries/julia/locals.scm"),
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["julia", "jl"],
+            tree_sitter_julia::LANGUAGE,
+            include_str!("../queries/julia/highlights.scm"),
+            loc = include_str!("../queries/julia/locals.scm")
         );
         #[cfg(feature = "ocaml")]
-        self.add_language(
-            &["ocaml"],
-            HighlightConfiguration::new(
-                tree_sitter_ocaml::LANGUAGE_OCAML.into(),
-                "ocaml",
-                tree_sitter_ocaml::HIGHLIGHTS_QUERY,
-                "",
-                tree_sitter_ocaml::LOCALS_QUERY,
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["ocaml"],
+            tree_sitter_ocaml::LANGUAGE_OCAML,
+            tree_sitter_ocaml::HIGHLIGHTS_QUERY,
+            loc = tree_sitter_ocaml::LOCALS_QUERY
         );
         // #[cfg(feature = "ocaml")]
         // self.add_language(
@@ -244,133 +233,97 @@ impl Highlight {
         //     .unwrap(),
         // );
         #[cfg(feature = "php")]
-        self.add_language(
-            &["php"],
-            HighlightConfiguration::new(
-                tree_sitter_php::LANGUAGE_PHP.into(),
-                "php",
-                tree_sitter_php::HIGHLIGHTS_QUERY,
-                &[
-                    tree_sitter_php::INJECTIONS_QUERY,
-                    include_str!("../queries/php/injections-text.scm"),
-                ]
-                .join("\n"),
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["php"],
+            tree_sitter_php::LANGUAGE_PHP,
+            tree_sitter_php::HIGHLIGHTS_QUERY,
+            inj = &[
+                tree_sitter_php::INJECTIONS_QUERY,
+                include_str!("../queries/php/injections-text.scm")
+            ]
+            .join("\n")
         );
         #[cfg(feature = "php")]
-        self.add_language(
-            &["php_only"],
-            HighlightConfiguration::new(
-                tree_sitter_php::LANGUAGE_PHP_ONLY.into(),
-                "php_only",
-                tree_sitter_php::HIGHLIGHTS_QUERY,
-                tree_sitter_php::INJECTIONS_QUERY,
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["php_only"],
+            tree_sitter_php::LANGUAGE_PHP_ONLY,
+            tree_sitter_php::HIGHLIGHTS_QUERY,
+            inj = tree_sitter_php::INJECTIONS_QUERY
         );
         #[cfg(feature = "python")]
-        self.add_language(
-            &["python", "py"],
-            HighlightConfiguration::new(
-                tree_sitter_python::LANGUAGE.into(),
-                "python",
-                tree_sitter_python::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["python", "py"],
+            tree_sitter_python::LANGUAGE,
+            tree_sitter_python::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "regex")]
-        self.add_language(
-            &["regexp", "regex"],
-            HighlightConfiguration::new(
-                tree_sitter_regex::LANGUAGE.into(),
-                "regex",
-                tree_sitter_regex::HIGHLIGHTS_QUERY,
-                "",
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["regex", "regexp"],
+            tree_sitter_regex::LANGUAGE,
+            tree_sitter_regex::HIGHLIGHTS_QUERY
         );
         #[cfg(feature = "ruby")]
-        self.add_language(
-            &["ruby", "rb"],
-            HighlightConfiguration::new(
-                tree_sitter_ruby::LANGUAGE.into(),
-                "ruby",
-                tree_sitter_ruby::HIGHLIGHTS_QUERY,
-                "",
-                tree_sitter_ruby::LOCALS_QUERY,
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["ruby", "rb"],
+            tree_sitter_ruby::LANGUAGE,
+            tree_sitter_ruby::HIGHLIGHTS_QUERY,
+            loc = tree_sitter_ruby::LOCALS_QUERY
         );
         #[cfg(feature = "rust")]
-        self.add_language(
-            &["rust", "rs"],
-            HighlightConfiguration::new(
-                tree_sitter_rust::LANGUAGE.into(),
-                "rust",
-                tree_sitter_rust::HIGHLIGHTS_QUERY,
-                tree_sitter_rust::INJECTIONS_QUERY,
-                "",
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["rust", "rs"],
+            tree_sitter_rust::LANGUAGE,
+            tree_sitter_rust::HIGHLIGHTS_QUERY,
+            inj = tree_sitter_rust::INJECTIONS_QUERY
         );
         #[cfg(feature = "scala")]
-        self.add_language(
-            &["scala"],
-            HighlightConfiguration::new(
-                tree_sitter_scala::LANGUAGE.into(),
-                "scala",
-                tree_sitter_scala::HIGHLIGHTS_QUERY,
-                "",
-                tree_sitter_scala::LOCALS_QUERY,
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["scala"],
+            tree_sitter_scala::LANGUAGE,
+            tree_sitter_scala::HIGHLIGHTS_QUERY,
+            loc = tree_sitter_scala::LOCALS_QUERY
         );
         #[cfg(feature = "typescript")]
-        self.add_language(
-            &["typescript", "ts"],
-            HighlightConfiguration::new(
-                tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
-                "typescript",
-                &[
-                    tree_sitter_typescript::HIGHLIGHTS_QUERY,
-                    tree_sitter_javascript::HIGHLIGHT_QUERY,
-                ]
-                .join("\n"),
-                tree_sitter_javascript::INJECTIONS_QUERY,
-                &[
-                    tree_sitter_typescript::LOCALS_QUERY,
-                    tree_sitter_javascript::LOCALS_QUERY,
-                ]
-                .join("\n"),
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["typescript", "ts"],
+            tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
+            &[
+                tree_sitter_typescript::HIGHLIGHTS_QUERY,
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            &[
+                tree_sitter_typescript::LOCALS_QUERY,
+                tree_sitter_javascript::LOCALS_QUERY,
+            ]
+            .join("\n")
         );
         #[cfg(feature = "typescript")]
-        self.add_language(
-            &["tsx"],
-            HighlightConfiguration::new(
-                tree_sitter_typescript::LANGUAGE_TSX.into(),
-                "tsx",
-                &[
-                    tree_sitter_typescript::HIGHLIGHTS_QUERY,
-                    tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
-                    tree_sitter_javascript::HIGHLIGHT_QUERY,
-                ]
-                .join("\n"),
-                tree_sitter_javascript::INJECTIONS_QUERY,
-                &[
-                    tree_sitter_typescript::LOCALS_QUERY,
-                    tree_sitter_javascript::LOCALS_QUERY,
-                ]
-                .join("\n"),
-            )
-            .unwrap(),
+        add_lang!(
+            self,
+            ["tsx"],
+            tree_sitter_typescript::LANGUAGE_TSX,
+            &[
+                tree_sitter_typescript::HIGHLIGHTS_QUERY,
+                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
+                tree_sitter_javascript::HIGHLIGHT_QUERY,
+            ]
+            .join("\n"),
+            tree_sitter_javascript::INJECTIONS_QUERY,
+            &[
+                tree_sitter_typescript::LOCALS_QUERY,
+                tree_sitter_javascript::LOCALS_QUERY,
+            ]
+            .join("\n")
         );
     }
 }
