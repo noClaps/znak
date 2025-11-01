@@ -1,29 +1,29 @@
 use std::collections::HashMap;
 
-/// An HTML node
-///
-/// A node can be:
-///
-/// - `Root`: The node type that represents the root of an HTML document. It
-///   contains a list of child nodes.
-/// - `DocType`: The node type that represents `<!doctype html>`.
-/// - `Comment`: The node type that represents `<!-- HTML comments -->`. It
-///   contains a string with the comment contents.
-/// - `Element`: The node type that represents an HTML element. It contains the
-///   tag name, a map of key-value pairs for the attributes, and a list of
-///   child nodes.
-/// - `Text`: The node type that represents text. It contains a string with the
-///   text contents.
+/// An HTML node.
 #[derive(Debug, PartialEq, Eq)]
 pub enum Node {
+    /// The node type that represents the root of an HTML document. It contains
+    /// a list of child nodes.
     Root(Vec<Node>),
+    /// The node type that represents `<!doctype html>`. No other doctypes are
+    /// accepted.
     DocType,
+    /// The node type that represents `<!-- HTML comments -->`. It contains a
+    /// string with the comment contents.
     Comment(String),
+    /// The node type that represents an HTML element.
     Element {
+        /// The tag name of the element.
         tag_name: String,
+        /// A key-value map of the attributes of the element.
         properties: HashMap<String, String>,
+        /// The children of the element. This is empty if the element is empty,
+        /// or if it's a self-closing element.
         children: Vec<Node>,
     },
+    /// The node type that represents text. It contains a string with the text
+    /// contents.
     Text(String),
 }
 
