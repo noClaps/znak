@@ -1,5 +1,3 @@
-//! # Znak
-//!
 //! A parser for a Markdown-like markup language that supports a smaller subset
 //! of Markdown syntax, and is stricter and more opinionated. It has features
 //! like syntax highlighting, LaTeX, and heading IDs built-in.
@@ -7,29 +5,14 @@
 //! You can read the syntax below. You can also read the documentation for
 //! Highlight (the syntax highlighter in Znak) [here](highlight).
 //!
-//! ## Usage
+//! You can add this library to your project with:
 //!
-//! Add it as a dependency to your project:
-//!
-//! ```sh
+//! ```bash
 //! cargo add --git https://github.com/noClaps/znak znak
 //! ```
 //!
 //! Then you can use it in your code:
 //!
-//! ```rust
-//! use znak::{Theme, Highlight, Heading, render, parse_headings, parse_frontmatter};
-//!
-//! let css = include_str!("../../../theme.css");
-//! let theme = Theme::new(css).unwrap();
-//! let hl = Highlight::new(theme);
-//!
-//! let input = include_str!("../demo.md");
-//! let rendered_html = render(input, &hl);
-//!
-//! let headings = parse_headings(input);
-//! let frontmatter = parse_frontmatter(input).unwrap();
-//! ```
 //!
 //! ## Acknowledgements
 //!
@@ -275,6 +258,19 @@ use crate::parser::{parse, renderer};
 ///
 /// - `hl`: The highlighter for code blocks. You can read the docs for
 ///   [Highlight] to learn more about how to set this up.
+///
+/// # Usage
+///
+/// ```rust
+/// use znak::{Theme, Highlight, Heading, render};
+///
+/// let css = include_str!("../../../theme.css");
+/// let theme = Theme::new(css).unwrap();
+/// let hl = Highlight::new(theme);
+///
+/// let input = include_str!("../demo.md");
+/// let rendered_html = render(input, &hl);
+/// ```
 pub fn render(input: impl Into<String>, hl: &Highlight) -> String {
     let input = input.into();
     let lines = input.trim().lines().collect::<Vec<&str>>();

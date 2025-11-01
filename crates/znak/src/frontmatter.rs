@@ -25,6 +25,15 @@ impl Error for ParseError {}
 /// - `input`: The input text to extract the frontmatter from. This can be from
 ///   a Markdown file as long as the syntax is supported by Znak. See the
 ///   [documentation](index.html#syntax) for the supported syntax.
+///
+/// # Usage
+///
+/// ```rust
+/// use znak::parse_frontmatter;
+///
+/// let input = include_str!("../demo.md");
+/// let frontmatter = parse_frontmatter(input).unwrap();
+/// ```
 pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, String>, ParseError> {
     let input = input.into();
     let mut fm_vals = HashMap::new();

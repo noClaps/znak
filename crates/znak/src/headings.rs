@@ -22,6 +22,15 @@ pub struct Heading {
 /// - `input`: The input text to extract the headings from. This can be from a
 ///   Markdown file as long as the syntax is supported by Znak. See the
 ///   [documentation](index.html#syntax) for the supported syntax.
+///
+/// # Usage
+///
+/// ```rust
+/// use znak::parse_headings;
+///
+/// let input = include_str!("../demo.md");
+/// let headings = parse_headings(input);
+/// ```
 pub fn parse_headings(input: impl Into<String>) -> Vec<Heading> {
     let input = input.into();
     let mut slugger = Slugger::new();
