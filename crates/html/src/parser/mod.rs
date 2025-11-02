@@ -33,14 +33,6 @@ impl FromStr for Node {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let input = s.to_string();
         let root = parse_impl(input, |c| c.is_whitespace());
-        Node::Root(vec![
-            Node::DocType,
-            Node::Element {
-                tag_name: "html".to_string(),
-                properties: HashMap::new(),
-                children: vec![],
-            },
-        ]);
         Ok(root!(root))
     }
 }
