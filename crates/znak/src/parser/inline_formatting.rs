@@ -19,56 +19,57 @@ macro_rules! cfind {
     };
 }
 
-macro_rules! formatting {
-    ($tag:expr, c=$pat:expr, $line:expr, $cursor:expr, $contents:expr, $buffer:expr) => {
-        if $line[$cursor] == $pat && $line[$cursor + 1..].contains(&$pat) {
-            if !$buffer.is_empty() {
-                $contents.push(text!(mem::take($buffer)));
-            }
-            $cursor += 1;
-            // safe to unwrap as checked in if condition
-            let next_index = $line[$cursor..].iter().position(|&c| c == $pat).unwrap();
-            let temp_buf = c2str!($line[$cursor..$cursor + next_index]);
-
-            if temp_buf.is_empty() {
-                $contents.push(text!(c2str!(vec![$pat, $pat])));
-            } else {
-                let children = inline_formatting(temp_buf);
-                $contents.push(element!($tag, children));
-            }
-            $cursor += next_index + 1;
-            continue;
-        }
-    };
-    ($tag:expr, s=$pat:expr, $line:expr, $cursor:expr, $contents:expr, $buffer:expr) => {
-        if c2str!($line[$cursor..]).starts_with($pat) && c2str!($line[$cursor + 2..]).contains($pat)
-        {
-            if !$buffer.is_empty() {
-                $contents.push(text!(mem::take($buffer)));
-            }
-            $cursor += 2;
-            // safe to unwrap as checked in if condition
-            let next_index = cfind!($line[$cursor..], $pat).unwrap();
-            let temp_buf = c2str!($line[$cursor..$cursor + next_index]);
-
-            if temp_buf.is_empty() {
-                $contents.push(text!($pat.repeat(2)));
-            } else {
-                let children = inline_formatting(temp_buf);
-                $contents.push(element!($tag, children));
-            }
-            $cursor += next_index + 2;
-            continue;
-        }
-    };
-}
-
 pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
     let mut contents = vec![];
     let buffer = &mut String::new();
     let line: Vec<_> = line.chars().collect();
 
     let mut cursor = 0;
+
+    macro_rules! formatting {
+        ($tag:literal, c=$pat:literal) => {
+            if line[cursor] == $pat && line[cursor + 1..].contains(&$pat) {
+                if !buffer.is_empty() {
+                    contents.push(text!(mem::take(buffer)));
+                }
+                cursor += 1;
+                // safe to unwrap as checked in if condition
+                let next_index = line[cursor..].iter().position(|&c| c == $pat).unwrap();
+                let temp_buf = c2str!(line[cursor..cursor + next_index]);
+
+                if temp_buf.is_empty() {
+                    contents.push(text!(c2str!(vec![$pat, $pat])));
+                } else {
+                    let children = inline_formatting(temp_buf);
+                    contents.push(element!($tag, children));
+                }
+                cursor += next_index + 1;
+                continue;
+            }
+        };
+        ($tag:literal, s=$pat:literal) => {
+            if c2str!(line[cursor..]).starts_with($pat) && c2str!(line[cursor + 2..]).contains($pat)
+            {
+                if !buffer.is_empty() {
+                    contents.push(text!(mem::take(buffer)));
+                }
+                cursor += 2;
+                // safe to unwrap as checked in if condition
+                let next_index = cfind!(line[cursor..], $pat).unwrap();
+                let temp_buf = c2str!(line[cursor..cursor + next_index]);
+
+                if temp_buf.is_empty() {
+                    contents.push(text!($pat.repeat(2)));
+                } else {
+                    let children = inline_formatting(temp_buf);
+                    contents.push(element!($tag, children));
+                }
+                cursor += next_index + 2;
+                continue;
+            }
+        };
+    }
+
     while cursor < line.len() {
         // Escape characters
         if line[cursor] == '\\' {
@@ -79,16 +80,16 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Bold (**)
-        formatting!("strong", s = "**", line, cursor, contents, buffer);
+        formatting!("strong", s = "**");
 
         // Underline (__)
-        formatting!("u", s = "__", line, cursor, contents, buffer);
+        formatting!("u", s = "__");
 
         // Strikethrough (~~)
-        formatting!("s", s = "~~", line, cursor, contents, buffer);
+        formatting!("s", s = "~~");
 
         // Highlight (==)
-        formatting!("mark", s = "==", line, cursor, contents, buffer);
+        formatting!("mark", s = "==");
 
         // Inline math ($$)
         if c2str!(line[cursor..]).starts_with("$$") && c2str!(line[cursor + 2..]).contains("$$") {
@@ -111,7 +112,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Italics (_)
-        formatting!("em", c = '_', line, cursor, contents, buffer);
+        formatting!("em", c = '_');
 
         // Code (`)
         if line[cursor] == '`' && line[cursor + 1..].contains(&'`') {
@@ -134,10 +135,10 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Subscript (~)
-        formatting!("sub", c = '~', line, cursor, contents, buffer);
+        formatting!("sub", c = '~');
 
         // Superscript (^)
-        formatting!("sup", c = '^', line, cursor, contents, buffer);
+        formatting!("sup", c = '^');
 
         // Links
         if line[cursor] == '['
