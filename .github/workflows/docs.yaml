@@ -2,12 +2,6 @@ on: push
 
 jobs:
   docs:
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -21,8 +15,7 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo doc --no-deps
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: target/doc/
-      - uses: actions/deploy-pages@v4
-        id: deployment
+      - uses: oven-sh/setup-bun@v2
+      - run: bunx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

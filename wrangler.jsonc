@@ -1,0 +1,8 @@
+{
+  "$schema": "https://unpkg.com/wrangler/config-schema.json",
+  "name": "znak",
+  "compatibility_date": "2025-11-02",
+  "assets": {
+    "directory": "target/doc",
+  },
+}
