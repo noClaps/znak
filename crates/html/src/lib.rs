@@ -8,6 +8,7 @@
 
 mod macros;
 mod parser;
+mod render;
 mod types;
 
 pub use types::Node;
