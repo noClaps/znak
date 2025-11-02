@@ -8,11 +8,13 @@ mod types;
 #[cfg(test)]
 mod tests;
 
-/// Parses HTML into a tree of [Nodes](Node). The parser is pretty simple, and
-/// doesn't fully support all of the shenanigans of HTML. However, any panics
-/// should be [reported as a bug](https://github.com/noClaps/znak/issues/new).
-/// While the goal isn't to make a full HTML5-compliant parser, it still
-/// shouldn't panic if it encounters some strangely formatted HTML.
+/// Parses HTML into a tree of [Nodes](Node).
+///
+/// The parser is pretty simple, and doesn't fully support all of the strange
+/// behaviors of HTML. However, any panics should be
+/// [reported as a bug](https://github.com/noClaps/znak/issues/new). While the
+/// goal isn't to make a full HTML5-compliant parser, it still shouldn't panic
+/// if it encounters some strangely formatted HTML.
 ///
 /// ```rust
 /// use std::collections::HashMap;
