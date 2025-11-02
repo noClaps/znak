@@ -1,9 +1,6 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, str::FromStr};
 
-pub use crate::parser::types::Node;
-use crate::parser::types::{comment, doctype, element, root, text};
-
-mod types;
+use crate::types::{Node, comment, doctype, element, root, text};
 
 #[cfg(test)]
 mod tests;
@@ -18,10 +15,10 @@ mod tests;
 ///
 /// ```rust
 /// use std::collections::HashMap;
-/// use html::{Node, parse};
+/// use html::Node;
 ///
 /// let html = "<!doctype html><html></html>";
-/// let parsed = parse(html);
+/// let parsed: Node = html.parse().unwrap();
 /// assert_eq!(parsed, Node::Root(vec![
 ///     Node::DocType,
 ///     Node::Element {
@@ -31,18 +28,21 @@ mod tests;
 ///     },
 /// ]));
 /// ```
-pub fn parse(input: impl ToString) -> Node {
-    let input = input.to_string();
-    let root = parse_impl(input, |c| c.is_whitespace());
-    Node::Root(vec![
-        Node::DocType,
-        Node::Element {
-            tag_name: "html".to_string(),
-            properties: HashMap::new(),
-            children: vec![],
-        },
-    ]);
-    root!(root)
+impl FromStr for Node {
+    type Err = String;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let input = s.to_string();
+        let root = parse_impl(input, |c| c.is_whitespace());
+        Node::Root(vec![
+            Node::DocType,
+            Node::Element {
+                tag_name: "html".to_string(),
+                properties: HashMap::new(),
+                children: vec![],
+            },
+        ]);
+        Ok(root!(root))
+    }
 }
 
 macro_rules! clen {

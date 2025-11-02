@@ -8,5 +8,6 @@
 
 mod macros;
 mod parser;
+mod types;
 
-pub use parser::{Node, parse};
+pub use types::Node;

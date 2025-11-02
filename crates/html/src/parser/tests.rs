@@ -1,16 +1,13 @@
-use crate::parser::{
-    parse,
-    types::{Node, comment, doctype, element, root, text},
-};
+use crate::types::{Node, comment, doctype, element, root, text};
 
 #[test]
 fn doctype() {
     let want = root!([doctype!()]);
-    let got = parse("<!doctype html>");
+    let got = "<!doctype html>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([doctype!()]);
-    let got = parse(" \n <!DOCTYPE html>");
+    let got = " \n <!DOCTYPE html>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([
@@ -21,59 +18,61 @@ fn doctype() {
         doctype!(),
         text!("text after\n"),
     ]);
-    let got = parse(
-        "<!DOCTYPE html>
+    let got = "<!DOCTYPE html>
 <!DoCtYpE html>
 <!doctype HTML>
 text before <!doctype html> text after
-",
-    );
+"
+    .parse()
+    .unwrap();
     assert_eq!(want, got);
 
     let want = root!([
         doctype!(),
         element!("html", [element!("body", [text!("x")])]),
     ]);
-    let got = parse("<!doctype html><html><body>x</body></html>");
+    let got = "<!doctype html><html><body>x</body></html>"
+        .parse()
+        .unwrap();
     assert_eq!(want, got);
 }
 
 #[test]
 fn comment() {
     let want = root!([doctype!(), comment!("This is a comment")]);
-    let got = parse(
-        "
+    let got = "
             <!doctype html>
             <!-- This is a comment -->
-    ",
-    );
+    "
+    .parse()
+    .unwrap();
     assert_eq!(want, got);
 
     let want = root!([comment!("This is a comment")]);
-    let got = parse("<!-- This is a comment -->");
+    let got = "<!-- This is a comment -->".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([comment!("hi")]);
-    let got = parse("<!--hi-->");
+    let got = "<!--hi-->".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([comment!("I love cookies 🍪")]);
-    let got = parse("<!-- I love cookies 🍪 -->");
+    let got = "<!-- I love cookies 🍪 -->".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([text!("a"), comment!("I love cookies 🍪"), text!("b"),]);
-    let got = parse("a<!-- I love cookies 🍪 -->b");
+    let got = "a<!-- I love cookies 🍪 -->b".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([comment!("unterminated comment")]);
-    let got = parse("<!--unterminated comment");
+    let got = "<!--unterminated comment".parse().unwrap();
     assert_eq!(want, got);
 }
 
 #[test]
 fn text() {
     let want = root!([text!("This is some text")]);
-    let got = parse("This is some text");
+    let got = "This is some text".parse().unwrap();
     assert_eq!(want, got);
 }
 
@@ -84,7 +83,7 @@ fn element() {
         {id: "heading-1"},
         [text!("Heading 1")]
     )]);
-    let got = parse("<h1 id=\"heading-1\">Heading 1</h1>");
+    let got = "<h1 id=\"heading-1\">Heading 1</h1>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([
@@ -92,9 +91,8 @@ fn element() {
         element!("h3",{id: "heading-1"},[text!("Heading")]),
         element!("h4",{id: "heading-2"},[text!("Heading")]),
     ]);
-    let got = parse(
-        r#"<h2 id="heading">Heading</h2><h3 id="heading-1">Heading</h3><h4 id="heading-2">Heading</h4>"#,
-    );
+    let got =
+        r#"<h2 id="heading">Heading</h2><h3 id="heading-1">Heading</h3><h4 id="heading-2">Heading</h4>"#.parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!(
@@ -108,8 +106,9 @@ fn element() {
             ]
         )]
     )]);
-    let got =
-        parse("<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>");
+    let got = "<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>"
+        .parse()
+        .unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!(
@@ -119,11 +118,13 @@ fn element() {
             element!("p", [text!("multiline blockquote")])
         ]
     )]);
-    let got = parse("<blockquote><p>This is a</p><p>multiline blockquote</p></blockquote>");
+    let got = "<blockquote><p>This is a</p><p>multiline blockquote</p></blockquote>"
+        .parse()
+        .unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!("hr")]);
-    let got = parse("<hr />");
+    let got = "<hr />".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!(
@@ -142,18 +143,16 @@ fn element() {
             )
         ]
     )]);
-    let got = parse(
-        "<figure><img src=\"https://picsum.photos/300\" alt=\"This contains a [link](https://picsum.photos)\" /><figcaption>This contains a <a href=\"https://picsum.photos\">link</a></figcaption></figure>",
-    );
+    let got =
+        "<figure><img src=\"https://picsum.photos/300\" alt=\"This contains a [link](https://picsum.photos)\" /><figcaption>This contains a <a href=\"https://picsum.photos\">link</a></figcaption></figure>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!("div", {class: "znak-container note"}, [
         element!("p", {class: "note-heading"}, [element!("b", [text!("A NOTE")])]),
         element!("p", [text!("This is some text in a note.")])
     ])]);
-    let got = parse(
-        "<div class=\"znak-container note\"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>",
-    );
+    let got =
+        "<div class=\"znak-container note\"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!("div",
@@ -174,9 +173,8 @@ fn element() {
                 ])
             ]
     )]);
-    let got = parse(
-        "<div class=\"znak-container block1\"><p class=\"block1-heading\"><b>This is the outer container</b></p><p>You can have some text here.</p><div class=\"znak-container block2\"><p class=\"block2-heading\"><b>This is the inner container</b></p><p>This can have some more text.</p></div></div>",
-    );
+    let got =
+        "<div class=\"znak-container block1\"><p class=\"block1-heading\"><b>This is the outer container</b></p><p>You can have some text here.</p><div class=\"znak-container block2\"><p class=\"block2-heading\"><b>This is the inner container</b></p><p>This can have some more text.</p></div></div>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([
@@ -187,9 +185,8 @@ fn element() {
             element!("p", [text!("This is some text in a note.")])
         ])
     ]);
-    let got = parse(
-        "<div id=\"my-note\" class=\"znak-container note\"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>",
-    );
+    let got =
+        "<div id=\"my-note\" class=\"znak-container note\"><p class=\"note-heading\"><b>A NOTE</b></p><p>This is some text in a note.</p></div>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([element!(
@@ -198,12 +195,12 @@ fn element() {
             element!("p", [text!("Some content here")])
         ])]
     )]);
-    let got = parse(
-        r#"<div>
+    let got = r#"<div>
 <div class="nested">
 <p>Some content here</p>
 </div>
-</div>"#,
-    );
+</div>"#
+        .parse()
+        .unwrap();
     assert_eq!(want, got);
 }

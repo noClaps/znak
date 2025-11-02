@@ -19,7 +19,10 @@
 #[macro_export]
 macro_rules! assert_html_eq {
     ($expr1:expr, $expr2:expr) => {
-        assert_eq!(html::parse($expr1), html::parse($expr2))
+        assert_eq!(
+            $expr1.parse::<html::Node>().unwrap(),
+            $expr2.parse::<html::Node>().unwrap()
+        )
     };
 }
 
