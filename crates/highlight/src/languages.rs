@@ -19,9 +19,9 @@ impl Highlight {
     /// # Usage
     ///
     /// ```rust
-    /// use highlight::{Highlight, HighlightConfiguration, Theme};
+    /// use highlight::{Highlight, HighlightConfiguration};
     ///
-    /// let theme = Theme::new(include_str!("../../../theme.css")).unwrap();
+    /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
     /// let config = HighlightConfiguration::new(
     ///     tree_sitter_haskell::LANGUAGE.into(),

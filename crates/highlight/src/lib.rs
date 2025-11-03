@@ -63,9 +63,9 @@ impl Highlight {
     /// # Usage
     ///
     /// ```rust
-    /// use highlight::{Highlight, Theme};
+    /// use highlight::Highlight;
     ///
-    /// let theme = Theme::new(include_str!("../../../theme.css")).unwrap();
+    /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let hl = Highlight::new(theme);
     /// ```
     pub fn new(theme: Theme) -> Self {
@@ -94,9 +94,9 @@ impl Highlight {
     /// # Usage
     ///
     /// ```rust
-    /// use highlight::{Highlight, Theme};
+    /// use highlight::Highlight;
     ///
-    /// let theme = Theme::new(include_str!("../../../theme.css")).unwrap();
+    /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let hl = Highlight::new(theme);
     ///
     /// let code = r#"

@@ -1,4 +1,4 @@
-use std::{collections::HashMap, error::Error, fmt::Display};
+use std::{collections::HashMap, error::Error, fmt::Display, str::FromStr};
 
 #[derive(Debug)]
 pub struct ThemeError {
@@ -62,38 +62,33 @@ impl Error for ThemeError {}
 /// You can look at
 /// [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an
 /// example theme.
+///
+/// # Usage
+///
+/// You can create a new theme using the `.parse()` method on a string, or the
+/// [Theme::from_str] method.
+///
+/// ```rust
+/// use highlight::Theme;
+///
+/// let css = include_str!("../../../theme.css");
+/// let theme: Theme = css.parse().unwrap();
+/// ```
 #[derive(Debug, PartialEq, Clone)]
 pub struct Theme {
     pub(crate) root: String,
     pub(crate) highlights: HashMap<String, String>,
 }
 
-impl Theme {
-    /// Creates a new [Theme].
-    ///
-    /// # Parameters
-    ///
-    /// - `css`: The CSS text to parse into a theme.
-    ///
-    /// # Usage
-    ///
-    /// ```rust
-    /// use highlight::Theme;
-    ///
-    /// let css = include_str!("../../../theme.css");
-    /// let theme = Theme::new(css).unwrap();
-    /// ```
-    pub fn new(css: impl Into<String>) -> Result<Theme, ThemeError> {
+impl FromStr for Theme {
+    type Err = ThemeError;
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut theme = Theme {
             root: String::new(),
             highlights: HashMap::new(),
         };
 
-        let css = css
-            .into()
-            .replace('\n', "")
-            .replace(' ', "")
-            .replace('\t', "");
+        let css = s.replace('\n', "").replace(' ', "").replace('\t', "");
         let mut minified_css = String::new();
         let mut i = 0;
         while i < css.len() {
@@ -161,7 +156,7 @@ mod tests {
 
     #[test]
     fn blank_theme() {
-        let blank = Theme::new("").unwrap();
+        let blank: Theme = "".parse().unwrap();
         assert_eq!(
             blank,
             Theme {
@@ -174,6 +169,6 @@ mod tests {
     #[test]
     fn css_theme() {
         let css = include_str!("../../../theme.css");
-        Theme::new(css).unwrap();
+        css.parse::<Theme>().unwrap();
     }
 }

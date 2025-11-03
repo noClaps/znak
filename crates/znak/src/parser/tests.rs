@@ -1,11 +1,10 @@
-use highlight::{Highlight, Theme};
+use highlight::Highlight;
 use html::assert_html_eq;
 
 use crate::render;
 
 pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
-    let css = include_str!("../../../../theme.css");
-    let theme = Theme::new(css).unwrap();
+    let theme = include_str!("../../../../theme.css").parse().unwrap();
     let hl = Highlight::new(theme);
 
     let output = render(input.into(), &hl);
@@ -83,8 +82,7 @@ fn images() {
 #[test]
 fn code_blocks() {
     test_render("```", "<p>```</p>");
-    let css = include_str!("../../../../theme.css");
-    let theme = Theme::new(css).unwrap();
+    let theme = include_str!("../../../../theme.css").parse().unwrap();
     let hl = Highlight::new(theme);
     let highlighted = hl.highlight("print(\"Your code here\")".to_string(), "py".to_string());
     test_render(
