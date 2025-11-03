@@ -1,6 +1,6 @@
 function get() {
     lang=$1
-    output_dir="crates/highlight/queries/$lang/"
+    output_dir="crates/tree-sitter-languages/queries/$lang/"
     mkdir -p $output_dir
     curl -fsSLO $2 --output-dir $output_dir &
 }

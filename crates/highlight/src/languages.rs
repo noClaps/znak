@@ -1,6 +1,12 @@
 use std::sync::Arc;
 
 use tree_sitter_highlight::HighlightConfiguration;
+#[cfg(feature = "ocaml")]
+use tree_sitter_languages::ocaml;
+#[cfg(feature = "php")]
+use tree_sitter_languages::php;
+#[cfg(feature = "typescript")]
+use tree_sitter_languages::typescript;
 
 use crate::Highlight;
 
@@ -43,7 +49,7 @@ impl Highlight {
 
     pub(crate) fn default_langs(&mut self) {
         macro_rules! add_lang {
-            ([$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, $inj:expr, $loc:expr) => {
+            ([$name:literal$(,$alias:literal)*], $lang:expr, $hl:expr, $inj:expr, $loc:expr) => {
                 self.add_language(
                     &[$name$(,$alias)*],
                     tree_sitter_highlight::HighlightConfiguration::new(
@@ -55,37 +61,53 @@ impl Highlight {
                     ).unwrap()
                 )
             };
-            ([$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, inj=$inj:expr) => {
+            ($name:ident$(,$alias:literal)*, inj, loc) => {
+                let name = stringify!($name);
                 self.add_language(
-                    &[$name$(,$alias)*],
+                    &[name$(,$alias)*],
                     tree_sitter_highlight::HighlightConfiguration::new(
-                        $lang.into(),
-                        $name,
-                        $hl,
-                        $inj,
+                        tree_sitter_languages::$name::GRAMMAR.into(),
+                        name,
+                        tree_sitter_languages::$name::HIGHLIGHTS,
+                        tree_sitter_languages::$name::INJECTIONS,
+                        tree_sitter_languages::$name::LOCALS,
+                    ).unwrap()
+                )
+            };
+            ($name:ident$(,$alias:literal)*, inj) => {
+                let name = stringify!($name);
+                self.add_language(
+                    &[name$(,$alias)*],
+                    tree_sitter_highlight::HighlightConfiguration::new(
+                        tree_sitter_languages::$name::GRAMMAR.into(),
+                        name,
+                        tree_sitter_languages::$name::HIGHLIGHTS,
+                        tree_sitter_languages::$name::INJECTIONS,
                         "",
                     ).unwrap()
                 )
             };
-            ([$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr, loc=$loc:expr) => {
+            ($name:ident$(,$alias:literal)*, loc) => {
+                let name = stringify!($name);
                 self.add_language(
-                    &[$name$(,$alias)*],
+                    &[name$(,$alias)*],
                     tree_sitter_highlight::HighlightConfiguration::new(
-                        $lang.into(),
-                        $name,
-                        $hl,
+                        tree_sitter_languages::$name::GRAMMAR.into(),
+                        name,
+                        tree_sitter_languages::$name::HIGHLIGHTS,
                         "",
-                        $loc,
+                        tree_sitter_languages::$name::LOCALS,
                     ).unwrap()
                 )
             };
-            ([$name:expr$(,$alias:expr)*], $lang:expr, $hl:expr) => {
+            ($name:ident$(,$alias:literal)*) => {
+                let name = stringify!($name);
                 self.add_language(
-                    &[$name$(,$alias)*],
+                    &[name$(,$alias)*],
                     tree_sitter_highlight::HighlightConfiguration::new(
-                        $lang.into(),
-                        $name,
-                        $hl,
+                        tree_sitter_languages::$name::GRAMMAR.into(),
+                        name,
+                        tree_sitter_languages::$name::HIGHLIGHTS,
                         "",
                         "",
                     ).unwrap()
@@ -94,105 +116,38 @@ impl Highlight {
         }
 
         #[cfg(feature = "agda")]
-        add_lang!(
-            ["agda"],
-            tree_sitter_agda::LANGUAGE,
-            tree_sitter_agda::HIGHLIGHTS_QUERY
-        );
+        add_lang!(agda);
         #[cfg(feature = "bash")]
-        add_lang!(
-            ["bash", "shellscript", "shell", "zsh", "sh"],
-            tree_sitter_bash::LANGUAGE,
-            tree_sitter_bash::HIGHLIGHT_QUERY
-        );
+        add_lang!(bash, "shellscript", "shell", "zsh", "sh");
         #[cfg(feature = "c")]
-        add_lang!(
-            ["c"],
-            tree_sitter_c::LANGUAGE,
-            tree_sitter_c::HIGHLIGHT_QUERY
-        );
+        add_lang!(c);
         #[cfg(feature = "cpp")]
-        add_lang!(
-            ["cpp", "c++"],
-            tree_sitter_cpp::LANGUAGE,
-            &[
-                tree_sitter_c::HIGHLIGHT_QUERY,
-                tree_sitter_cpp::HIGHLIGHT_QUERY
-            ]
-            .join("\n"),
-            inj = include_str!("../queries/cpp/injections.scm")
-        );
+        add_lang!(cpp, "c++", inj);
         #[cfg(feature = "css")]
-        add_lang!(
-            ["css"],
-            tree_sitter_css::LANGUAGE,
-            tree_sitter_css::HIGHLIGHTS_QUERY
-        );
+        add_lang!(css);
         #[cfg(feature = "go")]
-        add_lang!(
-            ["go"],
-            tree_sitter_go::LANGUAGE,
-            tree_sitter_go::HIGHLIGHTS_QUERY
-        );
+        add_lang!(go);
         #[cfg(feature = "haskell")]
-        add_lang!(
-            ["haskell", "hs"],
-            tree_sitter_haskell::LANGUAGE,
-            tree_sitter_haskell::HIGHLIGHTS_QUERY,
-            tree_sitter_haskell::INJECTIONS_QUERY,
-            tree_sitter_haskell::LOCALS_QUERY
-        );
+        add_lang!(haskell, "hs", inj, loc);
         #[cfg(feature = "html")]
-        add_lang!(
-            ["html"],
-            tree_sitter_html::LANGUAGE,
-            tree_sitter_html::HIGHLIGHTS_QUERY,
-            inj = tree_sitter_html::INJECTIONS_QUERY
-        );
+        add_lang!(html, inj);
         #[cfg(feature = "java")]
-        add_lang!(
-            ["java"],
-            tree_sitter_java::LANGUAGE,
-            tree_sitter_java::HIGHLIGHTS_QUERY
-        );
+        add_lang!(java);
         #[cfg(feature = "javascript")]
-        add_lang!(
-            ["javascript", "js", "jsx"],
-            tree_sitter_javascript::LANGUAGE,
-            &[
-                tree_sitter_javascript::HIGHLIGHT_QUERY,
-                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
-                include_str!("../queries/javascript/highlights-params.scm")
-            ]
-            .join("\n"),
-            tree_sitter_javascript::INJECTIONS_QUERY,
-            tree_sitter_javascript::LOCALS_QUERY
-        );
+        add_lang!(javascript, "js", "jsx", inj, loc);
         #[cfg(feature = "jsdoc")]
-        add_lang!(
-            ["jsdoc"],
-            tree_sitter_jsdoc::LANGUAGE,
-            tree_sitter_jsdoc::HIGHLIGHTS_QUERY
-        );
+        add_lang!(jsdoc);
         #[cfg(feature = "json")]
-        add_lang!(
-            ["json"],
-            tree_sitter_json::LANGUAGE,
-            tree_sitter_json::HIGHLIGHTS_QUERY
-        );
+        add_lang!(json);
         #[cfg(feature = "julia")]
-        add_lang!(
-            ["julia", "jl"],
-            tree_sitter_julia::LANGUAGE,
-            include_str!("../queries/julia/highlights.scm"),
-            loc = include_str!("../queries/julia/locals.scm")
-        );
+        add_lang!(julia, "jl", loc);
         #[cfg(feature = "ocaml")]
         add_lang!(
             ["ocaml"],
-            tree_sitter_ocaml::LANGUAGE_OCAML,
-            tree_sitter_ocaml::HIGHLIGHTS_QUERY,
-            loc = tree_sitter_ocaml::LOCALS_QUERY
+            ocaml::GRAMMAR_OCAML,
+            ocaml::HIGHLIGHTS,
+            "",
+            ocaml::LOCALS
         );
         // #[cfg(feature = "ocaml")]
         // self.add_language(
@@ -221,86 +176,44 @@ impl Highlight {
         #[cfg(feature = "php")]
         add_lang!(
             ["php"],
-            tree_sitter_php::LANGUAGE_PHP,
-            tree_sitter_php::HIGHLIGHTS_QUERY,
-            inj = &[
-                tree_sitter_php::INJECTIONS_QUERY,
-                include_str!("../queries/php/injections-text.scm")
-            ]
-            .join("\n")
+            php::GRAMMAR_PHP,
+            php::HIGHLIGHTS,
+            php::INJECTIONS_PHP,
+            ""
         );
         #[cfg(feature = "php")]
         add_lang!(
             ["php_only"],
-            tree_sitter_php::LANGUAGE_PHP_ONLY,
-            tree_sitter_php::HIGHLIGHTS_QUERY,
-            inj = tree_sitter_php::INJECTIONS_QUERY
+            php::GRAMMAR_PHP_ONLY,
+            php::HIGHLIGHTS,
+            php::INJECTIONS_PHP_ONLY,
+            ""
         );
         #[cfg(feature = "python")]
-        add_lang!(
-            ["python", "py"],
-            tree_sitter_python::LANGUAGE,
-            tree_sitter_python::HIGHLIGHTS_QUERY
-        );
+        add_lang!(python, "py");
         #[cfg(feature = "regex")]
-        add_lang!(
-            ["regex", "regexp"],
-            tree_sitter_regex::LANGUAGE,
-            tree_sitter_regex::HIGHLIGHTS_QUERY
-        );
+        add_lang!(regex, "regexp");
         #[cfg(feature = "ruby")]
-        add_lang!(
-            ["ruby", "rb"],
-            tree_sitter_ruby::LANGUAGE,
-            tree_sitter_ruby::HIGHLIGHTS_QUERY,
-            loc = tree_sitter_ruby::LOCALS_QUERY
-        );
+        add_lang!(ruby, "rb", loc);
         #[cfg(feature = "rust")]
-        add_lang!(
-            ["rust", "rs"],
-            tree_sitter_rust::LANGUAGE,
-            tree_sitter_rust::HIGHLIGHTS_QUERY,
-            inj = tree_sitter_rust::INJECTIONS_QUERY
-        );
+        add_lang!(rust, "rs", inj);
         #[cfg(feature = "scala")]
-        add_lang!(
-            ["scala"],
-            tree_sitter_scala::LANGUAGE,
-            tree_sitter_scala::HIGHLIGHTS_QUERY,
-            loc = tree_sitter_scala::LOCALS_QUERY
-        );
+        add_lang!(scala, loc);
         #[cfg(feature = "typescript")]
         add_lang!(
             ["typescript", "ts"],
-            tree_sitter_typescript::LANGUAGE_TYPESCRIPT,
-            &[
-                tree_sitter_typescript::HIGHLIGHTS_QUERY,
-                tree_sitter_javascript::HIGHLIGHT_QUERY,
-            ]
-            .join("\n"),
-            tree_sitter_javascript::INJECTIONS_QUERY,
-            &[
-                tree_sitter_typescript::LOCALS_QUERY,
-                tree_sitter_javascript::LOCALS_QUERY,
-            ]
-            .join("\n")
+            typescript::GRAMMAR_TYPESCRIPT,
+            typescript::HIGHLIGHTS_TYPESCRIPT,
+            typescript::INJECTIONS,
+            typescript::LOCALS
         );
         #[cfg(feature = "typescript")]
         add_lang!(
             ["tsx"],
-            tree_sitter_typescript::LANGUAGE_TSX,
-            &[
-                tree_sitter_typescript::HIGHLIGHTS_QUERY,
-                tree_sitter_javascript::JSX_HIGHLIGHT_QUERY,
-                tree_sitter_javascript::HIGHLIGHT_QUERY,
-            ]
-            .join("\n"),
-            tree_sitter_javascript::INJECTIONS_QUERY,
-            &[
-                tree_sitter_typescript::LOCALS_QUERY,
-                tree_sitter_javascript::LOCALS_QUERY,
-            ]
-            .join("\n")
+            typescript::GRAMMAR_TSX,
+            typescript::HIGHLIGHTS_TSX,
+            typescript::INJECTIONS,
+            typescript::LOCALS
         );
     }
 }

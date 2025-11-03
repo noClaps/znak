@@ -7,28 +7,8 @@ workspace = true
 
 [dependencies]
 html = { path = "../html" }
-tree-sitter-agda = { version = "1.3.3", optional = true }
-tree-sitter-bash = { version = "0.25.0", optional = true }
-tree-sitter-c = { version = "0.24.1", optional = true }
-tree-sitter-cpp = { version = "0.23.4", optional = true }
-tree-sitter-css = { version = "0.25.0", optional = true }
-tree-sitter-go = { version = "0.25.0", optional = true }
-tree-sitter-haskell = { version = "0.23.1", optional = true }
 tree-sitter-highlight = "0.25.10"
-tree-sitter-html = { version = "0.23.2", optional = true }
-tree-sitter-java = { version = "0.23.5", optional = true }
-tree-sitter-javascript = { version = "0.25.0", optional = true }
-tree-sitter-jsdoc = { version = "0.25.0", optional = true }
-tree-sitter-json = { version = "0.24.8", optional = true }
-tree-sitter-julia = { version = "0.23.1", optional = true }
-tree-sitter-ocaml = { version = "0.24.2", optional = true }
-tree-sitter-php = { version = "0.24.2", optional = true }
-tree-sitter-python = { version = "0.25.0", optional = true }
-tree-sitter-regex = { version = "0.25.0", optional = true }
-tree-sitter-ruby = { version = "0.23.1", optional = true }
-tree-sitter-rust = { version = "0.24.0", optional = true }
-tree-sitter-scala = { version = "0.24.0", optional = true }
-tree-sitter-typescript = { version = "0.23.2", optional = true }
+tree-sitter-languages = { path = "../tree-sitter-languages" }
 
 [features]
 all = [
@@ -54,27 +34,27 @@ all = [
   "scala",
   "typescript"
 ]
-agda = ["dep:tree-sitter-agda"]
-bash = ["dep:tree-sitter-bash"]
-c = ["dep:tree-sitter-c"]
-cpp = ["c", "dep:tree-sitter-cpp"]
-css = ["dep:tree-sitter-css"]
-go = ["dep:tree-sitter-go"]
-haskell = ["dep:tree-sitter-haskell"]
-html = ["dep:tree-sitter-html"]
-java = ["dep:tree-sitter-java"]
-javascript = ["dep:tree-sitter-javascript"]
-jsdoc = ["dep:tree-sitter-jsdoc"]
-json = ["dep:tree-sitter-json"]
-julia = ["dep:tree-sitter-julia"]
-ocaml = ["dep:tree-sitter-ocaml"]
-php = ["dep:tree-sitter-php"]
-python = ["dep:tree-sitter-python"]
-regex = ["dep:tree-sitter-regex"]
-ruby = ["dep:tree-sitter-ruby"]
-rust = ["dep:tree-sitter-rust"]
-scala = ["dep:tree-sitter-scala"]
-typescript = ["dep:tree-sitter-typescript", "javascript"]
+agda = ["tree-sitter-languages/agda"]
+bash = ["tree-sitter-languages/bash"]
+c = ["tree-sitter-languages/c"]
+cpp = ["tree-sitter-languages/cpp"]
+css = ["tree-sitter-languages/css"]
+go = ["tree-sitter-languages/go"]
+haskell = ["tree-sitter-languages/haskell"]
+html = ["tree-sitter-languages/html"]
+java = ["tree-sitter-languages/java"]
+javascript = ["tree-sitter-languages/javascript"]
+jsdoc = ["tree-sitter-languages/jsdoc"]
+json = ["tree-sitter-languages/json"]
+julia = ["tree-sitter-languages/julia"]
+ocaml = ["tree-sitter-languages/ocaml"]
+php = ["tree-sitter-languages/php"]
+python = ["tree-sitter-languages/python"]
+regex = ["tree-sitter-languages/regex"]
+ruby = ["tree-sitter-languages/ruby"]
+rust = ["tree-sitter-languages/rust"]
+scala = ["tree-sitter-languages/scala"]
+typescript = ["tree-sitter-languages/typescript"]
 
 [dev-dependencies]
 tree-sitter-haskell = "0.23.1"
