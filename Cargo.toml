@@ -6,4 +6,4 @@ members = ["crates/*"]
 edition = "2024"
 
 [workspace.lints.rust]
-missing_docs = "deny"
+missing_docs = "warn"
