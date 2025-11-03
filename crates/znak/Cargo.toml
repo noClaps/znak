@@ -2,6 +2,9 @@
 name = "znak"
 edition.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 highlight = { path = "../highlight" }
 html = { path = "../html" }

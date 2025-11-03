@@ -2,4 +2,7 @@
 name = "html"
 edition.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]

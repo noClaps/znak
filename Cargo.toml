@@ -4,3 +4,6 @@ members = ["crates/*"]
 
 [workspace.package]
 edition = "2024"
+
+[workspace.lints.rust]
+missing_docs = "deny"

@@ -2,6 +2,9 @@
 name = "highlight"
 edition.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 html = { path = "../html" }
 tree-sitter-agda = { version = "1.3.3", optional = true }
