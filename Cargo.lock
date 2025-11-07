@@ -511,6 +511,7 @@ dependencies = [
  "tree-sitter-css",
  "tree-sitter-go",
  "tree-sitter-haskell",
+ "tree-sitter-highlight",
  "tree-sitter-html",
  "tree-sitter-java",
  "tree-sitter-javascript",
@@ -621,4 +622,5 @@ dependencies = [
  "highlight",
  "html",
  "math",
+ "tree-sitter-languages",
 ]

@@ -20,16 +20,11 @@ impl Highlight {
     ///
     /// ```rust
     /// use highlight::{Highlight, HighlightConfiguration};
+    /// use tree_sitter_languages::haskell;
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// let config = HighlightConfiguration::new(
-    ///     tree_sitter_haskell::LANGUAGE.into(),
-    ///     "haskell",
-    ///     tree_sitter_haskell::HIGHLIGHTS_QUERY,
-    ///     tree_sitter_haskell::INJECTIONS_QUERY,
-    ///     tree_sitter_haskell::LOCALS_QUERY,
-    /// ).unwrap();
+    /// let config = haskell::highlight_configuration();
     /// let language_names = &["haskell", "hs"];
     /// hl.add_language(language_names, config);
     /// ```
