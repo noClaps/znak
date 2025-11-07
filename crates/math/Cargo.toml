@@ -2,8 +2,5 @@
 name = "math"
 edition.workspace = true
 
-[lints]
-workspace = true
-
 [dependencies]
 math-core = "0.1.1"

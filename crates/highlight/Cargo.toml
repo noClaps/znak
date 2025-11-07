@@ -2,9 +2,6 @@
 name = "highlight"
 edition.workspace = true
 
-[lints]
-workspace = true
-
 [dependencies]
 html = { path = "../html" }
 tree-sitter-highlight = "0.25.10"
