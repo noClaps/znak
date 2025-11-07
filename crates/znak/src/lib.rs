@@ -251,7 +251,7 @@ use crate::parser::{parse, renderer};
 /// # Usage
 ///
 /// ```rust
-/// use znak::{Highlight, Heading, render};
+/// use znak::{Highlight, render};
 ///
 /// let css = include_str!("../../../theme.css");
 /// let theme = css.parse().unwrap();
