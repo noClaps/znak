@@ -1,10 +1,4 @@
-//! An HTML parsing and manipulation library.
-//!
-//! You can add this library to your project with:
-//!
-//! ```bash
-//! cargo add --git https://github.com/noClaps/znak html
-//! ```
+#![doc = include_str!("../README.md")]
 
 mod macros;
 mod parser;
