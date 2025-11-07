@@ -1,9 +1,6 @@
-A parser for a Markdown-like markup language that supports a smaller subset
-of Markdown syntax, and is stricter and more opinionated. It has features
-like syntax highlighting, LaTeX, and heading IDs built-in.
+A parser for a Markdown-like markup language that supports a smaller subset of Markdown syntax, and is stricter and more opinionated. It has features like syntax highlighting, LaTeX, and heading IDs built-in.
 
-You can read the syntax below. You can also read the documentation for
-Highlight (the syntax highlighter in Znak) [here](highlight).
+You can read the syntax below. You can also read the documentation for Highlight (the syntax highlighter in Znak) [here](highlight).
 
 You can add this library to your project with:
 
@@ -27,9 +24,7 @@ Most of the syntax is similar to what you may expect from Markdown.
 
 ## Code block
 
-Code blocks are highlighted using [Highlight](highlight). To get
-syntax highlighting, you'll need to create a CSS file with your theme. See
-[Theme] for details on how to do this.
+Code blocks are highlighted using [Highlight](highlight). To get syntax highlighting, you'll need to create a CSS file with your theme. See [Theme] for details on how to do this.
 
 ````md
 ```py
@@ -49,9 +44,7 @@ This is a quote container
 :::
 ```
 
-The default title of containers is simply the type of the container in full
-caps. For the Quote container above, its title would be "QUOTE", for
-example. However, these can also have a custom title:
+The default title of containers is simply the type of the container in full caps. For the Quote container above, its title would be "QUOTE", for example. However, these can also have a custom title:
 
 ```md
 ::: note Note title
@@ -67,9 +60,7 @@ This is a warning container
 :::
 ```
 
-Attributes should be separated by spaces. These attributes are added to the
-container's outer `<div>` element. However, if an `href` attribute is
-provided, the title automatically becomes a link:
+Attributes should be separated by spaces. These attributes are added to the container's outer `<div>` element. However, if an `href` attribute is provided, the title automatically becomes a link:
 
 ```md
 ::: quote A wise quote {href="https://zerolimits.dev"}
@@ -106,8 +97,7 @@ description: Document description
 Your content here
 ```
 
-This will be skipped during regular parsing. If you'd like to get this
-frontmatter out, you can use [parse_frontmatter].
+This will be skipped during regular parsing. If you'd like to get this frontmatter out, you can use [parse_frontmatter].
 
 ## Headings
 
@@ -131,9 +121,7 @@ frontmatter out, you can use [parse_frontmatter].
 ---
 ```
 
-Any number of dashes can be used, as long as it is more than 3, and there
-are no other characters on the line. So `----` is also valid, but
-`-----nope` is not.
+Any number of dashes can be used, as long as it is more than 3, and there are no other characters on the line. So `----` is also valid, but `-----nope` is not.
 
 ## HTML elements
 
@@ -151,8 +139,7 @@ HTML elements are output as-is.
 ![alt text](https://picsum.photos/300)
 ```
 
-Images are output in a `<figure>` element, with the `alt` text also being a
-`<figcaption>`.
+Images are output in a `<figure>` element, with the `alt` text also being a `<figcaption>`.
 
 ## Inline formatting
 
@@ -180,8 +167,7 @@ Inline $$x+y$$ math
 __underlined text__
 ```
 
-These can also be used inside most other text blocks, such as inside
-blockquotes:
+These can also be used inside most other text blocks, such as inside blockquotes:
 
 ```md
 > This is quite a **bold** statement!
