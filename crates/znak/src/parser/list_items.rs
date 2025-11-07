@@ -1,5 +1,6 @@
+use std::mem;
+
 use highlight::Highlight;
-use regex::Regex;
 
 use crate::parser::{
     parse,
@@ -12,15 +13,47 @@ pub(crate) enum ListType {
 }
 
 pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> Vec<Node> {
-    let (re, seg_match) = match list_type {
-        // can unwrap as known safe regex
-        ListType::Ordered => (Regex::new(r#"(?m)^\d+\. "#).unwrap(), "   "),
-        ListType::Unordered => (Regex::new("(?m)^- ").unwrap(), "  "),
+    let (split_input, seg_match) = match list_type {
+        ListType::Ordered => {
+            let input = input.lines();
+            let mut lines = vec![];
+            let mut val = String::new();
+            for line in input {
+                let mut chars = line.chars().skip_while(|c| c.is_digit(10));
+                if chars.next().is_some_and(|c| c == '.') && chars.next().is_some_and(|c| c == ' ')
+                {
+                    lines.push(mem::take(&mut val));
+                    val += chars.collect::<String>().as_str();
+                    val += "\n";
+                } else {
+                    val += line;
+                    val += "\n";
+                };
+            }
+            lines.push(mem::take(&mut val));
+            (lines[1..].to_vec(), "   ")
+        }
+        ListType::Unordered => {
+            let input = input.lines();
+            let mut lines = vec![];
+            let mut val = String::new();
+            for line in input {
+                if line.starts_with("- ") {
+                    lines.push(mem::take(&mut val));
+                    val += &line[2..];
+                    val += "\n";
+                } else {
+                    val += line;
+                    val += "\n";
+                }
+            }
+            lines.push(mem::take(&mut val));
+            (lines, "  ")
+        }
     };
 
-    let re_split_input = re.split(input.as_str());
     let mut lines = vec![];
-    for line in re_split_input {
+    for line in split_input.iter().map(|l| l.as_str()) {
         if line == "" {
             continue;
         }

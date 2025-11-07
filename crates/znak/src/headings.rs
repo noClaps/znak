@@ -1,7 +1,5 @@
 use std::collections::HashMap;
 
-use regex::Regex;
-
 /// A heading. This was adapted from [Astro](https://astro.build)'s
 /// MarkdownHeading type.
 #[derive(Debug, PartialEq)]
@@ -34,22 +32,13 @@ pub struct Heading {
 pub fn parse_headings(input: impl Into<String>) -> Vec<Heading> {
     let input = input.into();
     let mut slugger = Slugger::new();
-    let re = Regex::new("(?m)^(#{1,6}) (.+)").unwrap(); // can unwrap as known safe regex
-
-    for re_match in re.captures_iter(&input) {
-        let level = match re_match.get(1) {
-            Some(level) => level,
-            None => continue,
+    for line in input.lines() {
+        let mut line = line.chars();
+        let mut level = 0;
+        while let Some('#') = line.next() {
+            level += 1;
         }
-        .len()
-        .try_into()
-        .unwrap();
-        let heading = match re_match.get(2) {
-            Some(heading) => heading,
-            None => continue,
-        }
-        .as_str()
-        .to_string();
+        let heading = line.collect::<String>().trim().to_string();
         slugger.slug(heading, level);
     }
 
@@ -70,8 +59,9 @@ impl Slugger {
     }
 
     pub(crate) fn slug(&mut self, heading: String, depth: usize) -> String {
-        let heading_re = Regex::new("[^a-zA-Z0-9]").unwrap(); // can unwrap as known safe regex
-        let clean_heading = heading_re.replace_all(&heading, "-").to_lowercase();
+        let clean_heading = heading
+            .replace(|c: char| !c.is_alphanumeric(), "-")
+            .to_lowercase();
         let mut slug = clean_heading.clone();
 
         match self.occurrences.get(&clean_heading) {

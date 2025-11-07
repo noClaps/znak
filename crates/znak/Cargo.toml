@@ -9,7 +9,6 @@ workspace = true
 highlight = { path = "../highlight" }
 html = { path = "../html" }
 math = { path = "../math" }
-regex = "1.12.2"
 
 [dev-dependencies]
 highlight = { path = "../highlight", features = ["python"] }

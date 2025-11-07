@@ -622,5 +622,4 @@ dependencies = [
  "highlight",
  "html",
  "math",
- "regex",
 ]

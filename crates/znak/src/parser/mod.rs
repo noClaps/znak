@@ -1,6 +1,5 @@
 use highlight::Highlight;
 use math::{MathDisplay, render_math};
-use regex::Regex;
 
 pub(crate) use crate::parser::renderer::renderer;
 use crate::{
@@ -38,14 +37,16 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
         let line = lines[line_cursor];
 
         // Headings
-        if Regex::new("^#{1,6} .+").unwrap().is_match(line) {
-            let mut cursor = 0;
-            while &line[cursor..cursor + 1] == "#" {
-                cursor += 1;
-            }
-            let level = cursor;
-            let heading = &line[cursor..].trim();
-
+        if let Some(level) = match line {
+            _ if line.starts_with("# ") => Some(1),
+            _ if line.starts_with("## ") => Some(2),
+            _ if line.starts_with("### ") => Some(3),
+            _ if line.starts_with("#### ") => Some(4),
+            _ if line.starts_with("##### ") => Some(5),
+            _ if line.starts_with("###### ") => Some(6),
+            _ => None,
+        } {
+            let heading = &line[level..].trim();
             let slug = slugger.slug(heading.to_string(), level);
             let children = inline_formatting(heading.to_string());
             tokens.push(element!(format!("h{level}"), [id = slug], children));
@@ -118,14 +119,18 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
         }
 
         // Ordered list (1., 3 space indentation)
-        // can unwrap as known safe regex
-        if Regex::new(r#"^\d+\. "#).unwrap().is_match(line) {
+        if {
+            let mut chars = line.chars().skip_while(|c| c.is_digit(10));
+            chars.next().is_some_and(|c| c == '.') && chars.next().is_some_and(|c| c == ' ')
+        } {
             let mut buffer = String::new();
             while line_cursor < lines.len()
-                && (Regex::new(r#"(^\d+\. |   )"#)
-                    .unwrap()
-                    .is_match(lines[line_cursor])
-                    || lines[line_cursor] == "")
+                && ({
+                    let chars = line.chars();
+                    let mut chars = chars.skip_while(|c| c.is_digit(10));
+                    chars.next().is_some_and(|c| c == '.') && chars.next().is_some_and(|c| c == ' ')
+                } || lines[line_cursor] == ""
+                    || lines[line_cursor].starts_with("   "))
             {
                 buffer += format!("{}\n", lines[line_cursor]).as_str();
                 line_cursor += 1;
