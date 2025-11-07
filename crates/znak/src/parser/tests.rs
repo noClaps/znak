@@ -1,11 +1,13 @@
 use highlight::Highlight;
 use html::assert_html_eq;
+use tree_sitter_languages::python;
 
 use crate::render;
 
 pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
     let theme = include_str!("../../../../theme.css").parse().unwrap();
-    let hl = Highlight::new(theme);
+    let mut hl = Highlight::new(theme);
+    hl.add_language(&["python", "py"], python::highlight_configuration());
 
     let output = render(input.into(), &hl);
     assert_html_eq!(output, test.into());
@@ -83,7 +85,9 @@ fn images() {
 fn code_blocks() {
     test_render("```", "<p>```</p>");
     let theme = include_str!("../../../../theme.css").parse().unwrap();
-    let hl = Highlight::new(theme);
+    let mut hl = Highlight::new(theme);
+    hl.add_language(&["python", "py"], python::highlight_configuration());
+
     let highlighted = hl.highlight("print(\"Your code here\")".to_string(), "py".to_string());
     test_render(
         r#"

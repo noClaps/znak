@@ -5,53 +5,6 @@ edition.workspace = true
 [dependencies]
 html = { path = "../html" }
 tree-sitter-highlight = "0.25.10"
-tree-sitter-languages = { path = "../tree-sitter-languages" }
-
-[features]
-all = [
-  "agda",
-  "bash",
-  "c",
-  "cpp",
-  "css",
-  "go",
-  "haskell",
-  "html",
-  "java",
-  "javascript",
-  "jsdoc",
-  "json",
-  "julia",
-  "ocaml",
-  "php",
-  "python",
-  "regex",
-  "ruby",
-  "rust",
-  "scala",
-  "typescript"
-]
-agda = ["tree-sitter-languages/agda"]
-bash = ["tree-sitter-languages/bash"]
-c = ["tree-sitter-languages/c"]
-cpp = ["tree-sitter-languages/cpp"]
-css = ["tree-sitter-languages/css"]
-go = ["tree-sitter-languages/go"]
-haskell = ["tree-sitter-languages/haskell"]
-html = ["tree-sitter-languages/html"]
-java = ["tree-sitter-languages/java"]
-javascript = ["tree-sitter-languages/javascript"]
-jsdoc = ["tree-sitter-languages/jsdoc"]
-json = ["tree-sitter-languages/json"]
-julia = ["tree-sitter-languages/julia"]
-ocaml = ["tree-sitter-languages/ocaml"]
-php = ["tree-sitter-languages/php"]
-python = ["tree-sitter-languages/python"]
-regex = ["tree-sitter-languages/regex"]
-ruby = ["tree-sitter-languages/ruby"]
-rust = ["tree-sitter-languages/rust"]
-scala = ["tree-sitter-languages/scala"]
-typescript = ["tree-sitter-languages/typescript"]
 
 [dev-dependencies]
 tree-sitter-haskell = "0.23.1"

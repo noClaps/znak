@@ -39,14 +39,11 @@ impl Highlight {
             .keys()
             .map(|k| k.to_owned())
             .collect::<Vec<String>>();
-        let mut hl = Self {
+        Self {
             theme,
             recognised_names,
             languages: HashMap::new(),
-        };
-        hl.default_langs();
-
-        hl
+        }
     }
 
     /// Used to highlight the given source code as the given language.

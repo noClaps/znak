@@ -68,7 +68,6 @@ name = "highlight"
 version = "0.0.0"
 dependencies = [
  "html",
- "tree-sitter-haskell",
  "tree-sitter-highlight",
  "tree-sitter-languages",
 ]

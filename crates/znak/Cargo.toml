@@ -8,4 +8,4 @@ html = { path = "../html" }
 math = { path = "../math" }
 
 [dev-dependencies]
-highlight = { path = "../highlight", features = ["python"] }
+tree-sitter-languages = { path = "../tree-sitter-languages", features = ["python"] }
