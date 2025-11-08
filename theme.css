@@ -8,44 +8,35 @@
 boolean,
 constant,
 constructor,
-label,
-link_uri,
+markup.link.url,
 number,
 property,
 string.special,
-string.special.symbol,
-text.literal {
+string.special.symbol {
     color: #79c0ffff;
 }
 
 comment,
-comment.doc {
+comment.documentation {
     color: #9198a1ff;
 }
 
 embedded,
 keyword,
-preproc,
-punctuation.special,
-variable.special {
+punctuation.special {
     color: #ff7b72ff;
 }
 
-enum,
-punctuation.list_marker,
-type,
-variant {
+markup.list,
+type {
     color: #ffa657ff;
 }
 
-function,
-function.method,
-function.special.definition {
+function {
     color: #d2a8ffff;
 }
 
 operator,
-primary,
 punctuation,
 punctuation.bracket,
 punctuation.delimiter,
@@ -54,29 +45,21 @@ variable {
 }
 
 string,
-string.regex {
+string.regexp {
     color: #a5d6ffff;
 }
 
-emphasis {
+markup.italic {
     font-style: italic;
 }
-emphasis.strong {
+markup.bold {
     font-weight: 700;
 }
-hint {
-    color: #9198a1ff;
-    font-weight: 700;
-}
-link_text {
+markup.link {
     color: #a5d6ffff;
     font-style: italic;
 }
 
-predictive {
-    color: #9198a1ff;
-    font-style: italic;
-}
 string.escape {
     color: #7ee787ff;
     font-weight: 700;
@@ -84,7 +67,7 @@ string.escape {
 tag {
     color: #7ee787ff;
 }
-title {
+markup.heading {
     color: #79c0ffff;
     font-weight: 700;
 }
