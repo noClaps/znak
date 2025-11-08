@@ -1,3 +1,12 @@
+; Most content in this file is borrowed from the reference queries in
+; https://github.com/tree-sitter/tree-sitter-julia/blob/master/queries/highlights.scm
+;
+; Search for "Zed" to see changes and additions. For instance, some captures
+; have different names in Zed and in the reference which is based on Neovim.
+;
+; Please mark future deviations from the reference with "Zed" when making
+; changes here.
+
 ; Identifiers
 (identifier) @variable
 
@@ -26,6 +35,13 @@
 (broadcast_call_expression
   (field_expression
     (identifier) @function.call .))
+
+; Zed - added: Function calls in pipes
+(binary_expression
+  (_)
+  (operator) @_pipe
+  (identifier) @function.call
+  (#any-of? @_pipe "|>" ".|>"))
 
 ; Macros
 (macro_identifier
@@ -211,7 +227,7 @@
     "mutable"
     "struct"
     "end"
-  ] @keyword.type)
+  ] @keyword) ; Zed - changed `@keyword.type` to `@keyword`
 
 (abstract_definition
   [
@@ -259,6 +275,47 @@
   "}"
 ] @punctuation.bracket
 
+; Zed - added: Interpolated variables and expressions in parentheses
+(string_interpolation
+[
+  "$"
+  "("
+  ")"
+] @punctuation.special)
+
+; Zed - added: Match the dot in the @. macro
+(macro_identifier
+  "@"
+  (operator "." @function.macro))
+
+; Zed - added: Function definitions
+; (1) `function foo end` after docstrings
+; (2) `function foo() ... end`
+; (3) `function Base.show() ... end`
+(function_definition
+  (signature
+    .
+    [
+      (identifier) @function.definition
+      (call_expression (identifier) @function.definition)
+      (call_expression (field_expression (identifier) @function.definition .))
+    ]))
+
+; Zed - added: Short function definitions like `foo(x) = 2x`
+(assignment
+  .
+  [
+    (call_expression (identifier) @function.definition)
+    (typed_expression . (call_expression (identifier) @function.definition))
+    (where_expression . (call_expression (identifier) @function.definition))
+    (where_expression . (typed_expression . (call_expression (identifier) @function.definition)))
+    (call_expression (field_expression (identifier) @function.definition .))
+    (typed_expression . (call_expression (field_expression (identifier) @function.definition .)))
+    (where_expression . (call_expression (field_expression (identifier) @function.definition .)))
+    (where_expression . (typed_expression . (call_expression (field_expression (identifier) @function.definition .))))
+  ]
+  (operator) @keyword.function)
+
 ; Keyword operators
 ((operator) @keyword.operator
   (#any-of? @keyword.operator "in" "isa"))
@@ -284,7 +341,7 @@
 ((identifier) @number.float
   (#any-of? @number.float "NaN" "NaN16" "NaN32" "Inf" "Inf16" "Inf32"))
 
-(character_literal) @character
+(character_literal) @string ; Zed - changed `@character` to `@string`
 
 (escape_sequence) @string.escape
 
@@ -298,17 +355,60 @@
 (prefixed_command_literal
   prefix: (identifier) @function.macro) @string.special
 
-((string_literal) @string.documentation
+; Zed - modified queries for docstrings (3 queries):
+
+; (1) doc macro docstrings:
+; @doc "..." x
+((macrocall_expression
+  (macro_identifier "@" (identifier)) @function.macro
+  (macro_argument_list
+    .
+    [(string_literal) (prefixed_string_literal)] @comment.doc))
+  (#eq? @function.macro "@doc"))
+
+; (2) docstrings preceding documentable elements at the top of a source file:
+(source_file
+  (string_literal) @comment.doc
   .
   [
-    (abstract_definition)
     (assignment)
     (const_statement)
+    (global_statement)
+    (abstract_definition)
     (function_definition)
     (macro_definition)
     (module_definition)
     (struct_definition)
+    (macrocall_expression) ; Covers things like @kwdef struct X ... end
+    (identifier)
+    (open_tuple
+      (identifier))
   ])
+
+; (3) docstrings preceding documentable elements at the top of a module:
+(module_definition
+  (string_literal) @comment.doc
+  .
+  [
+    (assignment)
+    (const_statement)
+    (global_statement)
+    (abstract_definition)
+    (function_definition)
+    (macro_definition)
+    (module_definition)
+    (struct_definition)
+    (macrocall_expression) ; Covers things like @kwdef struct X ... end
+    (identifier)
+    (open_tuple
+      (identifier))
+  ])
+
+; (4) struct field docstrings:
+(struct_definition
+  (string_literal) @comment.doc
+  .
+  [(identifier) (typed_expression)])
 
 [
   (line_comment)
