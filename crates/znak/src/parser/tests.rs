@@ -297,6 +297,19 @@ fn lists() {
 "#,
         "<ul><li><p>list item 1 (only - allowed for list)</p></li><li><p>list item 2</p></li><li><p>list item 3</p><ul><li><p>nested list item 1</p></li><li><p>nested list item 2</p><ul><li><p>You can nest as far as you want</p></li></ul></li></ul></li></ul>",
     );
+
+    test_render(
+        r#"
+1. Repeat steps 2-4 until you reach the beginning of the array
+
+\[...]
+
+```
+code block
+```
+"#,
+        r#"<ol><li><p>Repeat steps 2-4 until you reach the beginning of the array</p></li></ol><p>[...]</p><pre class="ts-highlight" style="background-color:#161616;color:#fff;"><code>code block</code></pre>"#,
+    );
 }
 
 #[test]

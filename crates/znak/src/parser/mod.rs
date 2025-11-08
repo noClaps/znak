@@ -126,7 +126,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             let mut buffer = String::new();
             while line_cursor < lines.len()
                 && ({
-                    let chars = line.chars();
+                    let chars = lines[line_cursor].chars();
                     let mut chars = chars.skip_while(|c| c.is_digit(10));
                     chars.next().is_some_and(|c| c == '.') && chars.next().is_some_and(|c| c == ' ')
                 } || lines[line_cursor] == ""
