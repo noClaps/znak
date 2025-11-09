@@ -1,85 +1,66 @@
-/* Adapted from https://github.com/helix-editor/helix/blob/master/runtime/themes/github_dark.toml */
-
 :root {
-    /* canvas.default */
-    background-color: #0d1117;
-    /* fg.muted */
-    color: #8b949e;
+    background-color: #222;
+    color: #ccc;
 }
 
 attribute,
+variable.other.member {
+    color: #83d288;
+}
+
+constant.builtin.boolean,
+markup.link.text,
+constant.numeric {
+    color: #ff732e;
+}
+
+comment,
 punctuation,
+punctuation.bracket,
 punctuation.delimiter,
-variable {
-    /* fg.default */
-    color: #c9d1d9;
+markup.list {
+    color: #666;
 }
 
-keyword,
-keyword.directive,
-variable.builtin,
-label {
-    /* scale.red.3 */
-    color: #ff7b72;
-}
-
-namespace,
-variable.parameter,
-type {
-    /* scale.orange.2 */
-    color: #ffa657;
-}
-
-operator,
-special,
-variable.other.member,
-string,
-markup.link.text {
-    /* scale.blue.1 */
-    color: #a5d6ff;
-}
-
-type.builtin,
-constant,
-constant.builtin,
-constant.numeric,
-constant.character.escape,
-markup.heading,
-markup.raw {
-    /* scale.blue.2 */
-    color: #79c0ff;
+constant {
+    color: #99c7ff;
 }
 
 constructor,
-function,
-function.macro {
-    /* scale.purple.2 */
-    color: #d2a8ff;
-}
-
-tag {
-    /* scale.green.1 */
-    color: #7ee787;
-}
-
-comment {
-    /* fg.muted */
-    color: #8b949e;
-}
-
-markup.bold {
-    font-weight: bold;
+string,
+type {
+    color: #ff9f5b;
 }
 
 markup.italic {
     font-style: italic;
 }
 
-markup.strikethrough {
-    text-decoration: line-through;
+markup.bold,
+markup.heading {
+    font-weight: 700;
 }
 
-markup.link.url,
-markup.link.text {
-    text-decoration: underline;
+function {
+    color: #bf89ff;
+}
+
+keyword,
+keyword.function,
+keyword.storage.type,
+tag {
+    color: #ff6b68;
+}
+
+markup.link.url {
+    color: #3984f2;
+}
+
+operator,
+constant.character.escape {
+    color: #aaa;
+}
+
+variable {
+    color: #ccc;
 }
