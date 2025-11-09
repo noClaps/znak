@@ -1,22 +1,4 @@
-use std::{collections::HashMap, error::Error, fmt::Display, str::FromStr};
-
-#[derive(Debug)]
-pub struct ThemeError {
-    cause: String,
-}
-impl ThemeError {
-    fn new(cause: impl Into<String>) -> Self {
-        Self {
-            cause: cause.into(),
-        }
-    }
-}
-impl Display for ThemeError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Error parsing theme: {}", self.cause)
-    }
-}
-impl Error for ThemeError {}
+use std::{collections::HashMap, str::FromStr};
 
 /// A theme object used to apply styles for syntax highlighting.
 ///
@@ -81,7 +63,7 @@ pub struct Theme {
 }
 
 impl FromStr for Theme {
-    type Err = ThemeError;
+    type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut theme = Theme {
             root: String::new(),
@@ -96,10 +78,7 @@ impl FromStr for Theme {
                 let comment_close = match css[i..].find("*/") {
                     Some(close) => close,
                     None => {
-                        return Err(ThemeError::new(format!(
-                            "Unterminated comment found: {}",
-                            &css[i..i + 10]
-                        )));
+                        return Err(format!("Unterminated comment found: {}", &css[i..i + 10]));
                     }
                 };
                 i = i + comment_close + 2;
@@ -114,7 +93,7 @@ impl FromStr for Theme {
             // parsing selectors
             let open_brace = match css[i..].find('{') {
                 Some(brace) => brace,
-                None => return Err(ThemeError::new("No opening braces found in CSS")),
+                None => return Err("No opening braces found in CSS".to_string()),
             };
             let selectors = css[i..i + open_brace].split(',');
             i = i + open_brace + 1;
@@ -123,10 +102,10 @@ impl FromStr for Theme {
             let close_brace = match css[i..].find('}') {
                 Some(brace) => brace,
                 None => {
-                    return Err(ThemeError::new(format!(
+                    return Err(format!(
                         "Mismatched opening and closing braces, closing brace not found: {}",
                         &css[i..i + 10]
-                    )));
+                    ));
                 }
             };
             let styles = &css[i..i + close_brace];
