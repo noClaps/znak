@@ -11,7 +11,10 @@ use tree_sitter_highlight::{Highlighter, HtmlRenderer};
 
 pub use crate::theme::Theme;
 
-/// A highlighter configuration object.
+/// A highlighter configuration object. As it can be expensive to create
+/// Highlight objects, mainly due to creating
+/// [HighlightConfigurations](HighlightConfiguration), you should initialise
+/// it once and reuse it everywhere you need, instead of creating multiple.
 pub struct Highlight {
     theme: Theme,
     recognised_names: Vec<String>,
