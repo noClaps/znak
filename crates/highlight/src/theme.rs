@@ -113,12 +113,15 @@ impl FromStr for Theme {
 
             for selector in selectors {
                 match selector {
-                    ":root" => theme.root = styles.to_string(),
-                    _ => {
-                        theme
-                            .highlights
-                            .insert(selector.to_string(), styles.to_string());
-                    }
+                    ":root" => theme.root += styles,
+                    _ => match theme.highlights.get_mut(selector) {
+                        None => {
+                            theme
+                                .highlights
+                                .insert(selector.to_string(), styles.to_string());
+                        }
+                        Some(h) => h.push_str(styles),
+                    },
                 }
             }
 
