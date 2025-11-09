@@ -1,52 +1,55 @@
-; upstream: https://github.com/tree-sitter/tree-sitter-regex/blob/e1cfca3c79896ff79842f057ea13e529b66af636/queries/highlights.scm
-
 [
   "("
   ")"
   "(?"
   "(?:"
   "(?<"
+  "(?P="
+  "<"
   ">"
   "["
   "]"
   "{"
   "}"
-] @punctuation.bracket
+] @punctuation.bracket.regex
 
-[
-  "*"
-  "+"
-  "|"
-  "="
-  "<="
-  "!"
-  "<!"
-  "?"
-] @operator
+(group_name) @label.regex
 
 [
   (identity_escape)
   (control_letter_escape)
   (character_class_escape)
   (control_escape)
+] @string.escape.regex
+
+[
+  "*"
+  "+"
+  "?"
+  "|"
+  "="
+  "!"
   (start_assertion)
   (end_assertion)
+  (any_character)
+  (lazy)
+] @operator.regex
+
+[
   (boundary_assertion)
   (non_boundary_assertion)
-] @constant.character.escape
-
-(group_name) @label
+  (backreference_escape)
+  (decimal_escape)
+] @keyword.operator.regex
 
 (count_quantifier
   [
-    (decimal_digits) @constant.numeric
-    "," @punctuation.delimiter
+    (decimal_digits) @number.quantifier.regex
+    "," @punctuation.delimiter.regex
   ])
 
 (character_class
   [
-    "^" @operator
-    (class_range "-" @operator)
+    "^" @operator.regex
+    (class_range "-" @operator.regex)
   ])
-
-(class_character) @constant.character

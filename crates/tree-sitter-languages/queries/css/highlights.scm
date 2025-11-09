@@ -11,6 +11,7 @@
   ">"
   "+"
   "-"
+  "|"
   "*"
   "/"
   "="
@@ -23,77 +24,86 @@
 
 [
   "and"
+  "or"
   "not"
   "only"
-  "or"
 ] @keyword.operator
 
-(attribute_selector (plain_value) @string)
+(id_name) @selector.id
+(class_name) @selector.class
 
-(property_name) @variable.other.member
-(plain_value) @constant
-
-((property_name) @variable
-  (#match? @variable "^--"))
-((plain_value) @variable
-  (#match? @variable "^--"))
-
-(class_name) @label
-(feature_name) @variable.other.member
-(function_name) @function
-(id_name) @label
 (namespace_name) @namespace
+(namespace_selector (tag_name) @namespace "|")
 
 (attribute_name) @attribute
-(pseudo_element_selector (tag_name) @attribute)
-(pseudo_class_selector (class_name) @attribute)
+(pseudo_element_selector "::" (tag_name) @selector.pseudo)
+(pseudo_class_selector ":" (class_name) @selector.pseudo)
 
 [
-  "@charset"
-  "@import"
-  "@keyframes"
+  (feature_name)
+  (property_name)
+] @property
+
+(function_name) @function
+
+[
+  (plain_value)
+  (keyframes_name)
+  (keyword_query)
+] @constant.builtin
+
+(attribute_selector
+  (plain_value) @string)
+
+(parenthesized_query
+  (keyword_query) @property)
+
+(
+  [
+    (property_name)
+    (plain_value)
+  ] @variable
+  (#match? @variable "^--")
+)
+
+[
   "@media"
+  "@import"
+  "@charset"
   "@namespace"
   "@supports"
+  "@keyframes"
   (at_keyword)
+  (to)
   (from)
   (important)
-  (to)
-  (keyword_query)
-  (keyframes_name)
-  (unit)
 ] @keyword
 
-; @apply something;
-(at_rule
-  . (at_keyword) @keyword
-  . (keyword_query) @constant
-  (#eq? @keyword "@apply"))
-
-[
-  "#"
-  "."
-] @punctuation
-
 (string_value) @string
-(color_value "#" @string.special)
 (color_value) @string.special
 
-(integer_value) @constant.numeric.integer
-(float_value) @constant.numeric.float
-
 [
-  ")"
-  "("
-  "["
-  "]"
-  "{"
-  "}"
-] @punctuation.bracket
+  (integer_value)
+  (float_value)
+] @number
+
+(unit) @type.unit
 
 [
   ","
-  ";"
   ":"
+  "."
   "::"
+  ";"
 ] @punctuation.delimiter
+
+(id_selector "#" @punctuation.delimiter)
+
+[
+  "{"
+  ")"
+  "("
+  "}"
+  "["
+  "]"
+] @punctuation.bracket

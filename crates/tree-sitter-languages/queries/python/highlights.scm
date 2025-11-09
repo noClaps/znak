@@ -1,16 +1,198 @@
-; -------
-; Punctuation
-; -------
+; Identifier naming conventions; these "soft conventions" should stay at the top of the file as they're often overridden
+(identifier) @variable
+(attribute attribute: (identifier) @property)
 
-["," "." ":" ";" (ellipsis)] @punctuation.delimiter
-["(" ")" "[" "]" "{" "}"] @punctuation.bracket
+; CamelCase for classes
+((identifier) @type.class
+  (#match? @type.class "^_*[A-Z][A-Za-z0-9_]*$"))
+
+; ALL_CAPS for constants:
+((identifier) @constant
+  (#match? @constant "^_*[A-Z][A-Z0-9_]*$"))
+
+(type (identifier) @type)
+(generic_type (identifier) @type)
+(comment) @comment
+(string) @string
+(escape_sequence) @string.escape
+
+; Type alias
+(type_alias_statement "type" @keyword)
+
+; TypeVar with constraints in type parameters
+(type
+  (tuple (identifier) @type)
+)
+
+; Forward references
+(type
+  (string) @type
+)
+
+
+; Function calls
+
+(call
+  function: (attribute attribute: (identifier) @function.method.call))
+(call
+  function: (identifier) @function.call)
+
+(decorator "@" @punctuation.special)
+(decorator
+  "@" @punctuation.special
+  [
+    (identifier) @function.decorator
+    (attribute attribute: (identifier) @function.decorator)
+    (call function: (identifier) @function.decorator.call)
+    (call (attribute attribute: (identifier) @function.decorator.call))
+  ])
+
+; Function and class definitions
+
+(function_definition
+  name: (identifier) @function.definition)
+
+((call
+  function: (identifier) @_isinstance
+  arguments: (argument_list
+    (_)
+    (identifier) @type))
+  (#eq? @_isinstance "isinstance"))
+
+((call
+  function: (identifier) @_issubclass
+  arguments: (argument_list
+    (identifier) @type
+    (identifier) @type))
+  (#eq? @_issubclass "issubclass"))
+
+; Function arguments
+(function_definition
+  parameters: (parameters
+  [
+      (identifier) @variable.parameter; Simple parameters
+      (typed_parameter
+        (identifier) @variable.parameter) ; Typed parameters
+      (default_parameter
+        name: (identifier) @variable.parameter) ; Default parameters
+      (typed_default_parameter
+        name: (identifier) @variable.parameter) ; Typed default parameters
+  ]))
+
+; Keyword arguments
+(call
+  arguments: (argument_list
+    (keyword_argument
+      name: (identifier) @function.kwargs)))
+
+; Class definitions and calling: needs to come after the regex matching above
+
+(class_definition
+  name: (identifier) @type.class.definition)
+
+(class_definition
+  superclasses: (argument_list
+  (identifier) @type.class.inheritance))
+
+(call
+  function: (identifier) @type.class.call
+  (#match? @type.class.call "^_*[A-Z][A-Za-z0-9_]*$"))
+
+; Builtins
+
+((call
+  function: (identifier) @function.builtin)
+ (#any-of?
+   @function.builtin
+   "abs" "all" "any" "ascii" "bin" "bool" "breakpoint" "bytearray" "bytes" "callable" "chr" "classmethod" "compile" "complex" "delattr" "dict" "dir" "divmod" "enumerate" "eval" "exec" "filter" "float" "format" "frozenset" "getattr" "globals" "hasattr" "hash" "help" "hex" "id" "input" "int" "isinstance" "issubclass" "iter" "len" "list" "locals" "map" "max" "memoryview" "min" "next" "object" "oct" "open" "ord" "pow" "print" "property" "range" "repr" "reversed" "round" "set" "setattr" "slice" "sorted" "staticmethod" "str" "sum" "super" "tuple" "type" "vars" "zip" "__import__"))
+
+; Literals
+
+[
+  (true)
+  (false)
+] @boolean
+
+[
+  (none)
+  (ellipsis)
+] @constant.builtin
+
+[
+  (integer)
+  (float)
+] @number
+
+; Self references
+
+[
+  (parameters (identifier) @variable.special)
+  (attribute (identifier) @variable.special)
+  (#any-of? @variable.special "self" "cls")
+]
+
+[
+  "."
+  ","
+  ":"
+] @punctuation.delimiter
+
+[
+  "("
+  ")"
+  "["
+  "]"
+  "{"
+  "}"
+] @punctuation.bracket
+
 (interpolation
   "{" @punctuation.special
-  "}" @punctuation.special)
+  "}" @punctuation.special) @embedded
 
-; -------
-; Operators
-; -------
+; Docstrings.
+([
+  (expression_statement (assignment))
+  (type_alias_statement)
+]
+. (expression_statement (string) @string.doc)+)
+
+(module
+  .(expression_statement (string) @string.doc)+)
+
+(class_definition
+  body: (block .(expression_statement (string) @string.doc)+))
+
+(function_definition
+  "async"?
+  "def"
+  name: (_)
+  (parameters)?
+  body: (block .(expression_statement (string) @string.doc)+))
+
+(class_definition
+  body: (block
+    . (comment) @comment*
+    . (expression_statement (string) @string.doc)+))
+
+(module
+  . (comment) @comment*
+  . (expression_statement (string) @string.doc)+)
+
+(class_definition
+  body: (block
+    (expression_statement (assignment))
+    . (expression_statement (string) @string.doc)+))
+
+(class_definition
+  body: (block
+    (function_definition
+      name: (identifier) @function.method.constructor
+      (#eq? @function.method.constructor "__init__")
+      body: (block
+        (expression_statement (assignment))
+        . (expression_statement (string) @string.doc)+))))
+
 
 [
   "-"
@@ -25,17 +207,15 @@
   "//="
   "/="
   "&"
-  "&="
   "%"
   "%="
+  "@"
   "^"
-  "^="
   "+"
   "->"
   "+="
   "<"
   "<<"
-  "<<="
   "<="
   "<>"
   "="
@@ -44,265 +224,80 @@
   ">"
   ">="
   ">>"
-  ">>="
   "|"
-  "|="
   "~"
+  "&="
+  "<<="
+  ">>="
   "@="
+  "^="
+  "|="
 ] @operator
 
-; -------
-; Variables
-; -------
-
-(identifier) @variable
-
-; - Member
-(attribute attribute: (identifier) @variable.other.member)
-
-; - Parameter
-(parameters (identifier) @variable.parameter)
-(parameters (typed_parameter (identifier) @variable.parameter))
-(parameters (default_parameter name: (identifier) @variable.parameter))
-(parameters (typed_default_parameter name: (identifier) @variable.parameter))
-(parameters
-  (list_splat_pattern ; *args
-    (identifier) @variable.parameter))
-(parameters
-  (dictionary_splat_pattern ; **kwargs
-    (identifier) @variable.parameter))
-
-(lambda_parameters
-  (identifier) @variable.parameter)
-
-(keyword_argument
-  name: (identifier) @variable.parameter)
-
-; - Builtin
-((identifier) @variable.builtin
- (#any-of? @variable.builtin "self" "cls"))
-
-; -------
-; Keywords
-; -------
-
-[
-  "async"
-  "class"
-  "exec"
-  "global"
-  "nonlocal"
-  "print"
-  "type"
-] @keyword
-
-; Operators
 [
   "and"
-  "or"
-  "not in"
-  "in" ; Has to be before loop keywords because "in" is overloaded
-  "not"
-  "del"
-  "is not"
+  "in"
   "is"
+  "not"
+  "or"
+  "is not"
+  "not in"
 ] @keyword.operator
 
-; Control
 [
   "as"
   "assert"
+  "async"
   "await"
-  "from"
-  "pass"
-
-  "with"
-] @keyword.control
-
-; Conditionals
-[
-  "if"
+  "break"
+  "class"
+  "continue"
+  "def"
+  "del"
   "elif"
   "else"
+  "except"
+  "exec"
+  "finally"
+  "for"
+  "from"
+  "global"
+  "if"
+  "import"
+  "lambda"
+  "nonlocal"
+  "pass"
+  "print"
+  "raise"
+  "return"
+  "try"
+  "while"
+  "with"
+  "yield"
   "match"
   "case"
-] @keyword.control.conditional
+] @keyword
 
-; Exceptions
+; Definition keywords def, class, async def, lambda
 [
-  "raise"
-  "try"
-  "except"
-  "finally"
-] @keyword.control.exception
-(raise_statement "from" @keyword.control.exception)
-
-; Functions
-[
+  "async"
   "def"
+  "class"
   "lambda"
-] @keyword.function
+] @keyword.definition
 
-; Import
-"import" @keyword.control.import
+(decorator (identifier) @attribute.builtin
+  (#any-of? @attribute.builtin "classmethod" "staticmethod" "property"))
 
-; Loops
+; Builtin types as identifiers
 [
-  "while"
-  "for"
-  "break"
-  "continue"
-] @keyword.control.repeat
-
-(for_statement "in" @keyword.control.repeat)
-(for_in_clause "in" @keyword.control.repeat)
-
-; Return
-[
-  "return"
-  "yield"
-] @keyword.control.return
-(yield "from" @keyword.control.return)
-
-; -------
-; Imports
-; -------
- 
-(dotted_name
-  (identifier)* @namespace)
-
-(aliased_import
-  alias: (identifier) @namespace)
-
-; - Builtins
-(none) @constant.builtin ; Has to be before types
-
-; -------
-; Types
-; -------
- 
-((identifier) @type 
- (#match? @type "^[A-Z]")) ; Has to be before constructor due to this being a more general match 
-
-; In type hints make everything types to catch non-conforming identifiers
-; (e.g., datetime.datetime) and None
-(type [(identifier) (none)] @type)
-; Handle [] . and | nesting 4 levels deep
-(type
-  (_ [(identifier) (none)]? @type
-    (_ [(identifier) (none)]? @type
-      (_ [(identifier) (none)]? @type
-        (_ [(identifier) (none)]? @type)))))
-
-; Classes
-(class_definition name: (identifier) @type)
-(class_definition superclasses: (argument_list (identifier) @type))
-
-; -------
-; Functions
-; -------
-
-(function_definition
-  name: (identifier) @function)
-
-(call
-  function: (identifier) @function)
-
-; Decorators
-(decorator) @function
-(decorator (identifier) @function)
-(decorator (attribute attribute: (identifier) @function))
-(decorator (call
-  function: (attribute attribute: (identifier) @function)))
-
-; Methods
-(call
-  function: (attribute attribute: (identifier) @function.method))
-
-; Builtin functions
-((call
-  function: (identifier) @function.builtin)
- (#any-of?
-   @function.builtin
-   "abs" "all" "any" "ascii" "bin" "breakpoint" "bytearray" "callable" "chr"
-   "classmethod" "compile" "complex" "delattr" "dir" "divmod" "enumerate"
-   "eval" "exec" "filter" "format" "getattr" "globals" "hasattr" "hash" "help"
-   "hex" "id" "input" "isinstance" "issubclass" "iter" "len" "locals" "map"
-   "max" "memoryview" "min" "next" "object" "oct" "open" "ord" "pow" "print"
-   "property" "range" "repr" "reversed" "round" "setattr" "slice" "sorted"
-   "staticmethod" "sum" "super" "type" "vars" "zip" "__import__"))
-
-; Constructors
-(call
-  function: (attribute attribute: (identifier) @constructor)
-  (#any-of?
-    @constructor
-    "__new__" "__init__"))
-
-((call
-  function: (identifier) @constructor)
- (#any-of?
-   @constructor
-   "__new__" "__init__"))
-
-(function_definition
-  name: (identifier) @constructor
- (#any-of? @constructor "__new__" "__init__"))
-
-(call
-  function: (attribute attribute: (identifier) @constructor)
- (#match? @constructor "^[A-Z]"))
-(call
-  function: (identifier) @constructor
- (#match? @constructor "^[A-Z]"))
-
-; Builtin types
-((identifier) @type.builtin ; Has to be after functions due to broad matching
- (#any-of?
-   @type.builtin
-   "bool" "bytes" "dict" "float" "frozenset" "int" "list" "set" "str" "tuple"))
-
-; Builtin error types
-((identifier) @type.builtin ; Has to be after constructors due to broad matching of constructor
-  (#any-of? @type.builtin
-    "BaseException" "Exception" "ArithmeticError" "BufferError" "LookupError"
-    "AssertionError" "AttributeError" "EOFError" "FloatingPointError" "GeneratorExit"
-    "ImportError" "ModuleNotFoundError" "IndexError" "KeyError" "KeyboardInterrupt"
-    "MemoryError" "NameError" "NotImplementedError" "OSError" "OverflowError"
-    "RecursionError" "ReferenceError" "RuntimeError" "StopIteration" "StopAsyncIteration"
-    "SyntaxError" "IndentationError" "TabError" "SystemError" "SystemExit" "TypeError"
-    "UnboundLocalError" "UnicodeError" "UnicodeEncodeError" "UnicodeDecodeError"
-    "UnicodeTranslateError" "ValueError" "ZeroDivisionError" "EnvironmentError"
-    "IOError" "WindowsError" "BlockingIOError" "ChildProcessError" "ConnectionError"
-    "BrokenPipeError" "ConnectionAbortedError" "ConnectionRefusedError"
-    "ConnectionResetError" "FileExistsError" "FileNotFoundError" "InterruptedError"
-    "IsADirectoryError" "NotADirectoryError" "PermissionError" "ProcessLookupError"
-    "TimeoutError" "Warning" "UserWarning" "DeprecationWarning" "PendingDeprecationWarning"
-    "SyntaxWarning" "RuntimeWarning" "FutureWarning" "ImportWarning" "UnicodeWarning"
-    "BytesWarning" "ResourceWarning"))
-
-; -------
-; Constants
-; -------
-
-((identifier) @constant
- (#match? @constant "^_*[A-Z][A-Z\\d_]*$"))
-
-(escape_sequence) @constant.character.escape
-
-[
-  (true)
-  (false)
-] @constant.builtin.boolean
-
-
-; - Numbers
-(integer) @constant.numeric.integer
-(float) @constant.numeric.float
-
-; -------
-; Other literals
-; -------
- 
-(comment) @comment
-(string) @string
+  (call
+    function: (identifier) @type.builtin)
+  (type (identifier) @type.builtin)
+  (generic_type (identifier) @type.builtin)
+  ; also check if type binary operator left identifier for union types
+  (type
+    (binary_operator
+      left: (identifier) @type.builtin))
+  (#any-of? @type.builtin "bool" "bytearray" "bytes" "complex" "dict" "float" "frozenset" "int" "list" "memoryview" "object" "range" "set" "slice" "str" "tuple")
+]

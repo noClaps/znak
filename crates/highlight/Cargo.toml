@@ -7,4 +7,4 @@ html = { path = "../html" }
 tree-sitter-highlight = "0.25.10"
 
 [dev-dependencies]
-tree-sitter-languages = { path = "../tree-sitter-languages", features = ["haskell"] }
+tree-sitter-languages = { path = "../tree-sitter-languages", features = ["rust"] }

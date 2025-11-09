@@ -57,15 +57,18 @@ impl Highlight {
     ///
     /// ```rust
     /// use highlight::Highlight;
+    /// use tree_sitter_languages::rust;
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
-    /// let hl = Highlight::new(theme);
+    /// let mut hl = Highlight::new(theme);
+    /// hl.add_language(&["rust", "rs"], rust::highlight_configuration());
     ///
     /// let code = r#"
-    /// main :: IO()
-    /// main = putStrLn "Hello World"
+    /// fn main() {
+    ///     println!("Hello World");
+    /// }
     /// "#.to_string();
-    /// let language = "haskell".to_string();
+    /// let language = "rust".to_string();
     ///
     /// let highlighted = hl.highlight(code, language);
     /// ```

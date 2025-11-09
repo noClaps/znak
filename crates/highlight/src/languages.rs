@@ -20,12 +20,12 @@ impl Highlight {
     ///
     /// ```rust
     /// use highlight::{Highlight, HighlightConfiguration};
-    /// use tree_sitter_languages::haskell;
+    /// use tree_sitter_languages::rust;
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// let config = haskell::highlight_configuration();
-    /// let language_names = &["haskell", "hs"];
+    /// let config = rust::highlight_configuration();
+    /// let language_names = &["rust", "rs"];
     /// hl.add_language(language_names, config);
     /// ```
     pub fn add_language(&mut self, names: &[&str], mut config: HighlightConfiguration) {

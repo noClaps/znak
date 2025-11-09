@@ -1,47 +1,32 @@
-
-(identifier) @variable
-
-((identifier) @constant
-  (#match? @constant "^[A-Z][A-Z\\d_]*$"))
-
-"sizeof" @keyword
-
 [
+  "const"
   "enum"
+  "extern"
+  "inline"
+  "sizeof"
+  "static"
   "struct"
   "typedef"
   "union"
-] @keyword.storage.type
+  "volatile"
+] @keyword
 
 [
-  (type_qualifier)
-  (storage_class_specifier)
-] @keyword.storage.modifier
-
-[
-  "goto"
   "break"
+  "case"
   "continue"
+  "default"
+  "do"
+  "else"
+  "for"
+  "goto"
+  "if"
+  "return"
+  "switch"
+  "while"
 ] @keyword.control
 
 [
-  "do"
-  "for"
-  "while"
-] @keyword.control.repeat
-
-[
-  "if"
-  "else"
-  "switch"
-  "case"
-  "default"
-] @keyword.control.conditional
-
-"return" @keyword.control.return
-
-[
-  "defined"
   "#define"
   "#elif"
   "#else"
@@ -51,117 +36,99 @@
   "#ifndef"
   "#include"
   (preproc_directive)
-] @keyword.directive
-
-"..." @punctuation
-
-["," "." ":" "::" ";" "->"] @punctuation.delimiter
-
-["(" ")" "[" "]" "{" "}" "[[" "]]"] @punctuation.bracket
+] @keyword
 
 [
-  "+"
-  "-"
-  "*"
-  "/"
-  "++"
-  "--"
-  "%"
-  "=="
-  "!="
-  ">"
-  "<"
-  ">="
-  "<="
-  "&&"
-  "||"
-  "!"
-  "&"
-  "|"
-  "^"
-  "~"
-  "<<"
-  ">>"
   "="
   "+="
   "-="
   "*="
   "/="
   "%="
+  "&="
+  "|="
+  "^="
   "<<="
   ">>="
-  "&="
-  "^="
-  "|="
+  "++"
+  "--"
+  "+"
+  "-"
+  "*"
+  "/"
+  "%"
+  "~"
+  "&"
+  "|"
+  "^"
+  "<<"
+  ">>"
+  "!"
+  "&&"
+  "||"
+  "=="
+  "!="
+  "<"
+  ">"
+  "<="
+  ">="
+  "->"
   "?"
+  ":"
 ] @operator
 
-(conditional_expression ":" @operator) ; After punctuation
+[
+  "."
+  ";"
+  ","
+] @punctuation.delimiter
 
-(pointer_declarator "*" @type.builtin) ; After Operators
-(abstract_pointer_declarator "*" @type.builtin)
+[
+  "{"
+  "}"
+  "("
+  ")"
+  "["
+  "]"
+] @punctuation.bracket
 
+[
+  (string_literal)
+  (system_lib_string)
+  (char_literal)
+] @string
 
-[(true) (false)] @constant.builtin.boolean
+(comment) @comment
 
-(enumerator name: (identifier) @type.enum.variant)
+(number_literal) @number
 
-(string_literal) @string
-(system_lib_string) @string
+[
+  (true)
+  (false)
+] @boolean
 
-(null) @constant
-(number_literal) @constant.numeric
-(char_literal) @constant.character
-(escape_sequence) @constant.character.escape
+(null) @constant.builtin
 
-(field_identifier) @variable.other.member
-(statement_identifier) @label
-(type_identifier) @type
-(primitive_type) @type.builtin
-(sized_type_specifier) @type.builtin
+(identifier) @variable
+
+((identifier) @constant
+ (#match? @constant "^_*[A-Z][A-Z\\d_]*$"))
 
 (call_expression
   function: (identifier) @function)
 (call_expression
   function: (field_expression
     field: (field_identifier) @function))
-(call_expression (argument_list (identifier) @variable))
 (function_declarator
-  declarator: [(identifier) (field_identifier)] @function)
-
-; Up to 6 layers of declarators
-(parameter_declaration
-  declarator: (identifier) @variable.parameter)
-(parameter_declaration
-  (_
-    (identifier) @variable.parameter))
-(parameter_declaration
-  (_
-    (_
-      (identifier) @variable.parameter)))
-(parameter_declaration
-  (_
-    (_
-      (_
-        (identifier) @variable.parameter))))
-(parameter_declaration
-  (_
-    (_
-      (_
-        (_
-          (identifier) @variable.parameter)))))
-(parameter_declaration
-  (_
-    (_
-      (_
-        (_
-          (_
-            (identifier) @variable.parameter))))))
-
+  declarator: (identifier) @function)
 (preproc_function_def
   name: (identifier) @function.special)
 
-(attribute
-  name: (identifier) @attribute)
+(field_identifier) @property
+(statement_identifier) @label
 
-(comment) @comment
+[
+  (type_identifier)
+  (primitive_type)
+  (sized_type_specifier)
+] @type

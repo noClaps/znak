@@ -1,14 +1,15 @@
 #![doc = include_str!("../README.md")]
 
-#[cfg(feature = "agda")]
-pub mod agda {
+#[cfg(feature = "angular")]
+pub mod angular {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR: LanguageFn = tree_sitter_agda::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/agda/highlights.scm");
+    pub const GRAMMAR: LanguageFn = tree_sitter_angular::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/angular/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/angular/injections.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "agda", HIGHLIGHTS, "", "").unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "angular", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
 #[cfg(feature = "bash")]
@@ -31,21 +32,19 @@ pub mod c {
     pub const GRAMMAR: LanguageFn = tree_sitter_c::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/c/highlights.scm");
     pub const INJECTIONS: &str = include_str!("../queries/c/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/c/locals.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "c", HIGHLIGHTS, INJECTIONS, LOCALS).unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "c", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
-#[cfg(feature = "cpp")]
-pub mod cpp {
+#[cfg(feature = "comment")]
+pub mod comment {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR: LanguageFn = tree_sitter_cpp::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/cpp/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/cpp/injections.scm");
+    pub const GRAMMAR: LanguageFn = tree_sitter_comment::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/comment/highlights.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "cpp", HIGHLIGHTS, INJECTIONS, "").unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "comment", HIGHLIGHTS, "", "").unwrap()
     }
 }
 #[cfg(feature = "css")]
@@ -60,6 +59,64 @@ pub mod css {
         HighlightConfiguration::new(GRAMMAR.into(), "css", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
+#[cfg(feature = "csv")]
+pub mod csv {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_csv::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/csv/highlights.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "csv", HIGHLIGHTS, "", "").unwrap()
+    }
+}
+#[cfg(feature = "git")]
+pub mod git {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    // gitattributes
+    pub const GRAMMAR_ATTRIBUTES: LanguageFn = tree_sitter_gitattributes::LANGUAGE;
+    pub const HIGHLIGHTS_ATTRIBUTES: &str = include_str!("../queries/gitattributes/highlights.scm");
+    pub fn highlight_configuration_attributes() -> HighlightConfiguration {
+        HighlightConfiguration::new(
+            GRAMMAR_ATTRIBUTES.into(),
+            "gitattributes",
+            HIGHLIGHTS_ATTRIBUTES,
+            "",
+            "",
+        )
+        .unwrap()
+    }
+
+    // gitconfig
+    pub const GRAMMAR_CONFIG: LanguageFn = tree_sitter_gitconfig::LANGUAGE;
+    pub const HIGHLIGHTS_CONFIG: &str = include_str!("../queries/gitconfig/highlights.scm");
+    pub fn highlight_configuration_config() -> HighlightConfiguration {
+        HighlightConfiguration::new(
+            GRAMMAR_CONFIG.into(),
+            "gitconfig",
+            HIGHLIGHTS_CONFIG,
+            "",
+            "",
+        )
+        .unwrap()
+    }
+
+    // gitignore
+    pub const GRAMMAR_IGNORE: LanguageFn = tree_sitter_gitignore::LANGUAGE;
+    pub const HIGHLIGHTS_IGNORE: &str = include_str!("../queries/gitignore/highlights.scm");
+    pub fn highlight_configuration_ignore() -> HighlightConfiguration {
+        HighlightConfiguration::new(
+            GRAMMAR_IGNORE.into(),
+            "gitignore",
+            HIGHLIGHTS_IGNORE,
+            "",
+            "",
+        )
+        .unwrap()
+    }
+}
 #[cfg(feature = "go")]
 pub mod go {
     use tree_sitter_highlight::HighlightConfiguration;
@@ -68,23 +125,19 @@ pub mod go {
     pub const GRAMMAR: LanguageFn = tree_sitter_go::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/go/highlights.scm");
     pub const INJECTIONS: &str = include_str!("../queries/go/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/go/locals.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "go", HIGHLIGHTS, INJECTIONS, LOCALS).unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "go", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
-#[cfg(feature = "haskell")]
-pub mod haskell {
+#[cfg(feature = "graphql")]
+pub mod graphql {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR: LanguageFn = tree_sitter_haskell::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/haskell/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/haskell/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/haskell/locals.scm");
+    pub const GRAMMAR: LanguageFn = tree_sitter_graphql::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/graphql/highlights.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "haskell", HIGHLIGHTS, INJECTIONS, LOCALS)
-            .unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "graphql", HIGHLIGHTS, "", "").unwrap()
     }
 }
 #[cfg(feature = "html")]
@@ -99,18 +152,6 @@ pub mod html {
         HighlightConfiguration::new(GRAMMAR.into(), "html", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
-#[cfg(feature = "java")]
-pub mod java {
-    use tree_sitter_highlight::HighlightConfiguration;
-    use tree_sitter_language::LanguageFn;
-
-    pub const GRAMMAR: LanguageFn = tree_sitter_java::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/java/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/java/injections.scm");
-    pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "java", HIGHLIGHTS, INJECTIONS, "").unwrap()
-    }
-}
 #[cfg(feature = "javascript")]
 pub mod javascript {
     use tree_sitter_highlight::HighlightConfiguration;
@@ -118,32 +159,11 @@ pub mod javascript {
 
     pub const GRAMMAR: LanguageFn = tree_sitter_javascript::LANGUAGE;
 
-    pub const HIGHLIGHTS_JAVASCRIPT: &str = include_str!("../queries/javascript/highlights.scm");
-    pub const INJECTIONS_JAVASCRIPT: &str = include_str!("../queries/javascript/injections.scm");
-    pub const LOCALS_JAVASCRIPT: &str = include_str!("../queries/javascript/locals.scm");
-    pub fn highlight_configuration_javascript() -> HighlightConfiguration {
-        HighlightConfiguration::new(
-            GRAMMAR.into(),
-            "javascript",
-            HIGHLIGHTS_JAVASCRIPT,
-            INJECTIONS_JAVASCRIPT,
-            LOCALS_JAVASCRIPT,
-        )
-        .unwrap()
-    }
-
-    pub const HIGHLIGHTS_JSX: &str = include_str!("../queries/jsx/highlights.scm");
-    pub const INJECTIONS_JSX: &str = include_str!("../queries/jsx/injections.scm");
-    pub const LOCALS_JSX: &str = include_str!("../queries/jsx/locals.scm");
-    pub fn highlight_configuration_jsx() -> HighlightConfiguration {
-        HighlightConfiguration::new(
-            GRAMMAR.into(),
-            "jsx",
-            HIGHLIGHTS_JSX,
-            INJECTIONS_JSX,
-            LOCALS_JSX,
-        )
-        .unwrap()
+    pub const HIGHLIGHTS: &str = include_str!("../queries/javascript/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/javascript/injections.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "javascript", HIGHLIGHTS, INJECTIONS, "")
+            .unwrap()
     }
 }
 #[cfg(feature = "jsdoc")]
@@ -153,9 +173,8 @@ pub mod jsdoc {
 
     pub const GRAMMAR: LanguageFn = tree_sitter_jsdoc::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/jsdoc/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/jsdoc/injections.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "jsdoc", HIGHLIGHTS, INJECTIONS, "").unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "jsdoc", HIGHLIGHTS, "", "").unwrap()
     }
 }
 #[cfg(feature = "json")]
@@ -163,10 +182,26 @@ pub mod json {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR: LanguageFn = tree_sitter_json::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/json/highlights.scm");
-    pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "json", HIGHLIGHTS, "", "").unwrap()
+    // json
+    pub const GRAMMAR_JSON: LanguageFn = tree_sitter_json::LANGUAGE;
+    pub const HIGHLIGHTS_JSON: &str = include_str!("../queries/json/highlights.scm");
+    pub fn highlight_configuration_json() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR_JSON.into(), "json", HIGHLIGHTS_JSON, "", "").unwrap()
+    }
+
+    // jsonc
+    pub const GRAMMAR_JSONC: LanguageFn = tree_sitter_json::LANGUAGE;
+    pub const HIGHLIGHTS_JSONC: &str = include_str!("../queries/jsonc/highlights.scm");
+    pub const INJECTIONS_JSONC: &str = include_str!("../queries/jsonc/injections.scm");
+    pub fn highlight_configuration_jsonc() -> HighlightConfiguration {
+        HighlightConfiguration::new(
+            GRAMMAR_JSONC.into(),
+            "jsonc",
+            HIGHLIGHTS_JSONC,
+            INJECTIONS_JSONC,
+            "",
+        )
+        .unwrap()
     }
 }
 #[cfg(feature = "julia")]
@@ -177,76 +212,75 @@ pub mod julia {
     pub const GRAMMAR: LanguageFn = tree_sitter_julia::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/julia/highlights.scm");
     pub const INJECTIONS: &str = include_str!("../queries/julia/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/julia/locals.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "julia", HIGHLIGHTS, INJECTIONS, LOCALS)
-            .unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "julia", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
-#[cfg(feature = "ocaml")]
-pub mod ocaml {
+#[cfg(feature = "latex")]
+pub mod latex {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR_OCAML: LanguageFn = tree_sitter_ocaml::LANGUAGE_OCAML;
-    pub const HIGHLIGHTS_OCAML: &str = include_str!("../queries/ocaml/highlights.scm");
-    pub const INJECTIONS_OCAML: &str = include_str!("../queries/ocaml/injections.scm");
-    pub const LOCALS_OCAML: &str = include_str!("../queries/ocaml/locals.scm");
-    pub fn highlight_configuration_ocaml() -> HighlightConfiguration {
-        HighlightConfiguration::new(
-            GRAMMAR_OCAML.into(),
-            "ocaml",
-            HIGHLIGHTS_OCAML,
-            INJECTIONS_OCAML,
-            LOCALS_OCAML,
-        )
-        .unwrap()
+    pub const GRAMMAR: LanguageFn = tree_sitter_latex::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/latex/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/latex/injections.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "latex", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
+}
+#[cfg(feature = "lua")]
+pub mod lua {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR_OCAML_INTERFACE: LanguageFn = tree_sitter_ocaml::LANGUAGE_OCAML_INTERFACE;
-    pub const HIGHLIGHTS_OCAML_INTERFACE: &str =
-        include_str!("../queries/ocaml-interface/highlights.scm");
-    pub const INJECTIONS_OCAML_INTERFACE: &str =
-        include_str!("../queries/ocaml-interface/injections.scm");
-    pub fn highlight_configuration_ocaml_interface() -> HighlightConfiguration {
+    pub const GRAMMAR: LanguageFn = tree_sitter_lua::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/lua/highlights.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "lua", HIGHLIGHTS, "", "").unwrap()
+    }
+}
+#[cfg(feature = "make")]
+pub mod make {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_make::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/make/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/make/injections.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "make", HIGHLIGHTS, INJECTIONS, "").unwrap()
+    }
+}
+#[cfg(feature = "markdown")]
+pub mod markdown {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    // markdown
+    pub const GRAMMAR_MARKDOWN: LanguageFn = tree_sitter_md::LANGUAGE;
+    pub const HIGHLIGHTS_MARKDOWN: &str = include_str!("../queries/markdown/highlights.scm");
+    pub const INJECTIONS_MARKDOWN: &str = include_str!("../queries/markdown/injections.scm");
+    pub fn highlight_configuration_markdown() -> HighlightConfiguration {
         HighlightConfiguration::new(
-            GRAMMAR_OCAML_INTERFACE.into(),
-            "ocaml_interface",
-            HIGHLIGHTS_OCAML_INTERFACE,
-            INJECTIONS_OCAML_INTERFACE,
+            GRAMMAR_MARKDOWN.into(),
+            "markdown",
+            HIGHLIGHTS_MARKDOWN,
+            INJECTIONS_MARKDOWN,
             "",
         )
         .unwrap()
     }
-}
-#[cfg(feature = "php")]
-pub mod php {
-    use tree_sitter_highlight::HighlightConfiguration;
-    use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR_PHP: LanguageFn = tree_sitter_php::LANGUAGE_PHP;
-    pub const HIGHLIGHTS_PHP: &str = include_str!("../queries/php/highlights.scm");
-    pub const INJECTIONS_PHP: &str = include_str!("../queries/php/injections.scm");
-    pub fn highlight_configuration_php() -> HighlightConfiguration {
+    // markdown-inline
+    pub const GRAMMAR_MARKDOWN_INLINE: LanguageFn = tree_sitter_md::INLINE_LANGUAGE;
+    pub const HIGHLIGHTS_MARKDOWN_INLINE: &str =
+        include_str!("../queries/markdown-inline/highlights.scm");
+    pub fn highlight_configuration_markdown_inline() -> HighlightConfiguration {
         HighlightConfiguration::new(
-            GRAMMAR_PHP.into(),
-            "php",
-            HIGHLIGHTS_PHP,
-            INJECTIONS_PHP,
+            GRAMMAR_MARKDOWN_INLINE.into(),
+            "markdown-inline",
+            HIGHLIGHTS_MARKDOWN_INLINE,
             "",
-        )
-        .unwrap()
-    }
-
-    pub const GRAMMAR_PHP_ONLY: LanguageFn = tree_sitter_php::LANGUAGE_PHP_ONLY;
-    pub const HIGHLIGHTS_PHP_ONLY: &str = include_str!("../queries/php-only/highlights.scm");
-    pub const INJECTIONS_PHP_ONLY: &str = include_str!("../queries/php-only/injections.scm");
-    pub fn highlight_configuration_php_only() -> HighlightConfiguration {
-        HighlightConfiguration::new(
-            GRAMMAR_PHP_ONLY.into(),
-            "php_only",
-            HIGHLIGHTS_PHP_ONLY,
-            INJECTIONS_PHP_ONLY,
             "",
         )
         .unwrap()
@@ -260,10 +294,8 @@ pub mod python {
     pub const GRAMMAR: LanguageFn = tree_sitter_python::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/python/highlights.scm");
     pub const INJECTIONS: &str = include_str!("../queries/python/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/python/locals.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "python", HIGHLIGHTS, INJECTIONS, LOCALS)
-            .unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "python", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
 #[cfg(feature = "regex")]
@@ -277,19 +309,6 @@ pub mod regex {
         HighlightConfiguration::new(GRAMMAR.into(), "regex", HIGHLIGHTS, "", "").unwrap()
     }
 }
-#[cfg(feature = "ruby")]
-pub mod ruby {
-    use tree_sitter_highlight::HighlightConfiguration;
-    use tree_sitter_language::LanguageFn;
-
-    pub const GRAMMAR: LanguageFn = tree_sitter_ruby::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/ruby/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/ruby/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/ruby/locals.scm");
-    pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "ruby", HIGHLIGHTS, INJECTIONS, LOCALS).unwrap()
-    }
-}
 #[cfg(feature = "rust")]
 pub mod rust {
     use tree_sitter_highlight::HighlightConfiguration;
@@ -298,23 +317,57 @@ pub mod rust {
     pub const GRAMMAR: LanguageFn = tree_sitter_rust::LANGUAGE;
     pub const HIGHLIGHTS: &str = include_str!("../queries/rust/highlights.scm");
     pub const INJECTIONS: &str = include_str!("../queries/rust/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/rust/locals.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "rust", HIGHLIGHTS, INJECTIONS, LOCALS).unwrap()
+        HighlightConfiguration::new(GRAMMAR.into(), "rust", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
-#[cfg(feature = "scala")]
-pub mod scala {
+#[cfg(feature = "scheme")]
+pub mod scheme {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
-    pub const GRAMMAR: LanguageFn = tree_sitter_scala::LANGUAGE;
-    pub const HIGHLIGHTS: &str = include_str!("../queries/scala/highlights.scm");
-    pub const INJECTIONS: &str = include_str!("../queries/scala/injections.scm");
-    pub const LOCALS: &str = include_str!("../queries/scala/locals.scm");
+    pub const GRAMMAR: LanguageFn = tree_sitter_scheme::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/scheme/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/scheme/injections.scm");
     pub fn highlight_configuration() -> HighlightConfiguration {
-        HighlightConfiguration::new(GRAMMAR.into(), "scala", HIGHLIGHTS, INJECTIONS, LOCALS)
+        HighlightConfiguration::new(GRAMMAR.into(), "scheme", HIGHLIGHTS, INJECTIONS, "").unwrap()
+    }
+}
+#[cfg(feature = "sql")]
+pub mod sql {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_sequel::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/sql/highlights.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "sql", HIGHLIGHTS, "", "").unwrap()
+    }
+}
+#[cfg(feature = "swift")]
+pub mod swift {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_swift::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/swift/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/swift/injections.scm");
+    pub const LOCALS: &str = include_str!("../queries/swift/locals.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "swift", HIGHLIGHTS, INJECTIONS, LOCALS)
             .unwrap()
+    }
+}
+#[cfg(feature = "toml")]
+pub mod toml {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_toml_ng::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/toml/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/toml/injections.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "toml", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }
 #[cfg(feature = "typescript")]
@@ -322,33 +375,56 @@ pub mod typescript {
     use tree_sitter_highlight::HighlightConfiguration;
     use tree_sitter_language::LanguageFn;
 
+    // typescript
     pub const GRAMMAR_TYPESCRIPT: LanguageFn = tree_sitter_typescript::LANGUAGE_TYPESCRIPT;
     pub const HIGHLIGHTS_TYPESCRIPT: &str = include_str!("../queries/typescript/highlights.scm");
     pub const INJECTIONS_TYPESCRIPT: &str = include_str!("../queries/typescript/injections.scm");
-    pub const LOCALS_TYPESCRIPT: &str = include_str!("../queries/typescript/locals.scm");
     pub fn highlight_configuration_typescript() -> HighlightConfiguration {
         HighlightConfiguration::new(
             GRAMMAR_TYPESCRIPT.into(),
             "typescript",
             HIGHLIGHTS_TYPESCRIPT,
             INJECTIONS_TYPESCRIPT,
-            LOCALS_TYPESCRIPT,
+            "",
         )
         .unwrap()
     }
 
+    // tsx
     pub const GRAMMAR_TSX: LanguageFn = tree_sitter_typescript::LANGUAGE_TSX;
     pub const HIGHLIGHTS_TSX: &str = include_str!("../queries/tsx/highlights.scm");
     pub const INJECTIONS_TSX: &str = include_str!("../queries/tsx/injections.scm");
-    pub const LOCALS_TSX: &str = include_str!("../queries/tsx/locals.scm");
     pub fn highlight_configuration_tsx() -> HighlightConfiguration {
         HighlightConfiguration::new(
             GRAMMAR_TSX.into(),
-            "typescript",
+            "tsx",
             HIGHLIGHTS_TSX,
             INJECTIONS_TSX,
-            LOCALS_TSX,
+            "",
         )
         .unwrap()
+    }
+}
+#[cfg(feature = "xml")]
+pub mod xml {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_xml::LANGUAGE_XML;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/xml/highlights.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "xml", HIGHLIGHTS, "", "").unwrap()
+    }
+}
+#[cfg(feature = "yaml")]
+pub mod yaml {
+    use tree_sitter_highlight::HighlightConfiguration;
+    use tree_sitter_language::LanguageFn;
+
+    pub const GRAMMAR: LanguageFn = tree_sitter_yaml::LANGUAGE;
+    pub const HIGHLIGHTS: &str = include_str!("../queries/yaml/highlights.scm");
+    pub const INJECTIONS: &str = include_str!("../queries/yaml/injections.scm");
+    pub fn highlight_configuration() -> HighlightConfiguration {
+        HighlightConfiguration::new(GRAMMAR.into(), "yaml", HIGHLIGHTS, INJECTIONS, "").unwrap()
     }
 }

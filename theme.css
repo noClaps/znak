@@ -4,13 +4,13 @@
 }
 
 attribute,
-variable.other.member {
+property {
     color: #83d288;
 }
 
-constant.builtin.boolean,
-markup.link.text,
-constant.numeric {
+boolean,
+link_text,
+number {
     color: #ff732e;
 }
 
@@ -18,27 +18,30 @@ comment,
 punctuation,
 punctuation.bracket,
 punctuation.delimiter,
-markup.list {
+punctuation.list_marker {
     color: #666;
 }
 
-constant {
+constant,
+label {
     color: #99c7ff;
 }
 
 constructor,
+enum,
 string,
+text.literal,
 type {
     color: #ff9f5b;
 }
 
-markup.italic {
+emphasis {
     font-style: italic;
 }
 
-markup.bold,
-markup.heading {
-    font-weight: 700;
+emphasis.strong,
+title {
+    font-weight: bold;
 }
 
 function {
@@ -46,18 +49,17 @@ function {
 }
 
 keyword,
-keyword.function,
-keyword.storage.type,
+preproc,
 tag {
     color: #ff6b68;
 }
 
-markup.link.url {
+link_uri {
     color: #3984f2;
 }
 
 operator,
-constant.character.escape {
+string.escape {
     color: #aaa;
 }
 

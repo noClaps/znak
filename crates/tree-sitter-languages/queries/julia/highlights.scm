@@ -1,30 +1,19 @@
-; ------------
-; Variables identifiers
-; ------------
+; Most content in this file is borrowed from the reference queries in
+; https://github.com/tree-sitter/tree-sitter-julia/blob/master/queries/highlights.scm
+;
+; Search for "Zed" to see changes and additions. For instance, some captures
+; have different names in Zed and in the reference which is based on Neovim.
+;
+; Please mark future deviations from the reference with "Zed" when making
+; changes here.
 
+; Identifiers
 (identifier) @variable
 
-; Remaining identifiers that start with capital letters should be types (PascalCase)
-(
-  (identifier) @type
-  (#match? @type "^[A-Z]"))
-
-; SCREAMING_SNAKE_CASE
-(
-  (identifier) @constant
-  (#match? @constant "^[A-Z][A-Z0-9_]*$"))
-
-(const_statement
-  (assignment
-    . (identifier) @constant))
-
-; Field expressions are either module content or struct fields.
-; Module types and constants should already be captured, so this
-; assumes the remaining identifiers to be struct fields.
 (field_expression
-  (_)
-  (identifier) @variable.other.member)
+  (identifier) @variable.member .)
 
+; Symbols
 (quote_expression
   ":" @string.special.symbol
   [
@@ -32,227 +21,82 @@
     (operator)
   ] @string.special.symbol)
 
-; ------
+; Function calls
+(call_expression
+  (identifier) @function.call)
+
+(call_expression
+  (field_expression
+    (identifier) @function.call .))
+
+(broadcast_call_expression
+  (identifier) @function.call)
+
+(broadcast_call_expression
+  (field_expression
+    (identifier) @function.call .))
+
+; Zed - added: Function calls in pipes
+(binary_expression
+  (_)
+  (operator) @_pipe
+  (identifier) @function.call
+  (#any-of? @_pipe "|>" ".|>"))
+
 ; Macros
-; ------
-
-(macro_definition
-  name: (identifier) @function.macro)
-
 (macro_identifier
   "@" @function.macro
-  (identifier) @function.macro)
+  (_) @function.macro)
 
-; -------------------
-; Modules and Imports
-; -------------------
+(macro_definition
+  (signature
+    (call_expression
+      .
+      (identifier) @function.macro)))
 
-(module_definition
-  name: (identifier) @namespace)
-  
-(import_statement
-  (identifier) @namespace)
-  
-(selected_import
-  . (identifier) @namespace)
-
-(scoped_identifier
-  (identifier) @namespace)
-
-; -------------------
-; Function definition
-; -------------------
-
-(
-  (function_definition
-    name: [
-      (identifier) @function
-      (scoped_identifier
-        (identifier) @namespace
-        (identifier) @function)
-    ])
-  ; prevent constructors (PascalCase) to be highlighted as functions
-  (#match? @function "^[^A-Z]"))
-
-(
-  (short_function_definition
-    name: [
-      (identifier) @function
-      (scoped_identifier
-        (identifier) @namespace
-        (identifier) @function)
-    ])
-  ; prevent constructors (PascalCase) to be highlighted as functions
-  (#match? @function "^[^A-Z]"))
-
-; ---------------
-; Functions calls
-; ---------------
-
-(
-  (call_expression
-    (identifier) @function)
-  ; prevent constructors (PascalCase) to be highlighted as functions
-  (#match? @function "^[^A-Z]"))
-
-(
-  (call_expression
-    (field_expression (identifier) @function .))
-  (#match? @function "^[^A-Z]"))
-
-(
-  (broadcast_call_expression
-    (identifier) @function)
-  (#match? @function "^[^A-Z]"))
-
-(
-  (broadcast_call_expression
-    (field_expression (identifier) @function .))
-  (#match? @function "^[^A-Z]"))
-
-
-; -------------------
-; Functions builtins
-; -------------------
-
+; Built-in functions
+; print.("\"", filter(name -> getglobal(Core, name) isa Core.Builtin, names(Core)), "\" ")
 ((identifier) @function.builtin
   (#any-of? @function.builtin
-    "_abstracttype" "_apply_iterate" "_apply_pure" "_call_in_world" "_call_in_world_total"
-    "_call_latest" "_equiv_typedef" "_expr" "_primitivetype" "_setsuper!" "_structtype" "_typebody!"
-    "_typevar" "applicable" "apply_type" "arrayref" "arrayset" "arraysize" "const_arrayref"
-    "donotdelete" "fieldtype" "get_binding_type" "getfield" "ifelse" "invoke" "isa" "isdefined"
-    "modifyfield!" "nfields" "replacefield!" "set_binding_type!" "setfield!" "sizeof" "svec"
-    "swapfield!" "throw" "tuple" "typeassert" "typeof"))
+    "applicable" "fieldtype" "getfield" "getglobal" "invoke" "isa" "isdefined" "isdefinedglobal" "modifyfield!" "modifyglobal!" "nfields" "replacefield!" "replaceglobal!" "setfield!" "setfieldonce!" "setglobal!" "setglobalonce!" "swapfield!" "swapglobal!" "throw" "tuple" "typeassert" "typeof"))
 
-; -----------
-; Parameters
-; -----------
+; Type definitions
+(type_head (_) @type.definition)
 
-(parameter_list
-  (identifier) @variable.parameter)
-
-(optional_parameter
-  . (identifier) @variable.parameter)
-
-(slurp_parameter
-  (identifier) @variable.parameter)
-
-(typed_parameter
-  parameter: (identifier)? @variable.parameter
-  type: (_) @type)
-
-(function_expression
-  . (identifier) @variable.parameter) ; Single parameter arrow functions
-
-; -----
-; Types
-; -----
-
-; Definitions
-(abstract_definition
-  name: (identifier) @type.definition) @keyword
-
-(primitive_definition
-  name: (identifier) @type.definition) @keyword
-
-(struct_definition
-  name: (identifier) @type)
-
-(struct_definition
-  . (_)
-    (identifier) @variable.other.member)
-
-(struct_definition
-  . (_)
-  (typed_expression
-    . (identifier) @variable.other.member))
-
-(type_clause
-  [
-    (identifier) @type
-    (field_expression
-      (identifier) @type .)
-  ])
-
-; Annotations
+; Type annotations
 (parametrized_type_expression
-  (_) @type
+  [
+   (identifier) @type
+   (field_expression
+     (identifier) @type .)
+  ]
   (curly_expression
     (_) @type))
-
-(type_parameter_list
-  (identifier) @type)
 
 (typed_expression
-  (identifier) @type . )
+  (identifier) @type .)
 
-(function_definition
-  return_type: (identifier) @type)
+(unary_typed_expression
+  (identifier) @type .)
 
-(short_function_definition
-  return_type: (identifier) @type)
+(where_expression
+  (_) @type .)
 
-(where_clause
-  (identifier) @type)
+(binary_expression
+  (_) @type
+  (operator) @operator
+  (_) @type
+  (#any-of? @operator "<:" ">:"))
 
-(where_clause
-  (curly_expression
-    (_) @type))
-
-; ---------
-; Builtins
-; ---------
-
-; This list was generated with:
-;
-;  istype(x) = typeof(x) === DataType || typeof(x) === UnionAll
-;  get_types(m) = filter(x -> istype(Base.eval(m, x)), names(m))
-;  type_names = sort(union(get_types(Core), get_types(Base)))
-;
+; Built-in types
+; print.("\"", filter(name -> typeof(Base.eval(Core, name)) in [DataType, UnionAll], names(Core)), "\" ")
 ((identifier) @type.builtin
   (#any-of? @type.builtin
-    "AbstractArray" "AbstractChannel" "AbstractChar" "AbstractDict" "AbstractDisplay"
-    "AbstractFloat" "AbstractIrrational" "AbstractLock" "AbstractMatch" "AbstractMatrix"
-    "AbstractPattern" "AbstractRange" "AbstractSet" "AbstractSlices" "AbstractString"
-    "AbstractUnitRange" "AbstractVecOrMat" "AbstractVector" "Any" "ArgumentError" "Array"
-    "AssertionError" "Atomic" "BigFloat" "BigInt" "BitArray" "BitMatrix" "BitSet" "BitVector" "Bool"
-    "BoundsError" "By" "CanonicalIndexError" "CapturedException" "CartesianIndex" "CartesianIndices"
-    "Cchar" "Cdouble" "Cfloat" "Channel" "Char" "Cint" "Cintmax_t" "Clong" "Clonglong" "Cmd" "Colon"
-    "ColumnSlices" "Complex" "ComplexF16" "ComplexF32" "ComplexF64" "ComposedFunction"
-    "CompositeException" "ConcurrencyViolationError" "Condition" "Cptrdiff_t" "Cshort" "Csize_t"
-    "Cssize_t" "Cstring" "Cuchar" "Cuint" "Cuintmax_t" "Culong" "Culonglong" "Cushort" "Cvoid"
-    "Cwchar_t" "Cwstring" "DataType" "DenseArray" "DenseMatrix" "DenseVecOrMat" "DenseVector" "Dict"
-    "DimensionMismatch" "Dims" "DivideError" "DomainError" "EOFError" "Enum" "ErrorException"
-    "Exception" "ExponentialBackOff" "Expr" "Float16" "Float32" "Float64" "Function" "GlobalRef"
-    "HTML" "IO" "IOBuffer" "IOContext" "IOStream" "IdDict" "IndexCartesian" "IndexLinear"
-    "IndexStyle" "InexactError" "InitError" "Int" "Int128" "Int16" "Int32" "Int64" "Int8" "Integer"
-    "InterruptException" "InvalidStateException" "Irrational" "KeyError" "LazyString" "LinRange"
-    "LineNumberNode" "LinearIndices" "LoadError" "Lt" "MIME" "Matrix" "Method" "MethodError"
-    "Missing" "MissingException" "Module" "NTuple" "NamedTuple" "Nothing" "Number" "Ordering"
-    "OrdinalRange" "OutOfMemoryError" "OverflowError" "Pair" "ParseError" "PartialQuickSort" "Perm"
-    "PermutedDimsArray" "Pipe" "ProcessFailedException" "Ptr" "QuoteNode" "Rational" "RawFD"
-    "ReadOnlyMemoryError" "Real" "ReentrantLock" "Ref" "Regex" "RegexMatch" "Returns"
-    "ReverseOrdering" "RoundingMode" "RowSlices" "SegmentationFault" "Set" "Signed" "Slices" "Some"
-    "SpinLock" "StackFrame" "StackOverflowError" "StackTrace" "Stateful" "StepRange" "StepRangeLen"
-    "StridedArray" "StridedMatrix" "StridedVecOrMat" "StridedVector" "String" "StringIndexError"
-    "SubArray" "SubString" "SubstitutionString" "Symbol" "SystemError" "Task" "TaskFailedException"
-    "Text" "TextDisplay" "Timer" "Tmstruct" "Tuple" "Type" "TypeError" "TypeVar" "UInt" "UInt128"
-    "UInt16" "UInt32" "UInt64" "UInt8" "UndefInitializer" "UndefKeywordError" "UndefRefError"
-    "UndefVarError" "Union" "UnionAll" "UnitRange" "Unsigned" "Val" "VecElement" "VecOrMat" "Vector"
-    "VersionNumber" "WeakKeyDict" "WeakRef"))
+    "AbstractArray" "AbstractChar" "AbstractFloat" "AbstractString" "Any" "ArgumentError" "Array" "AssertionError" "AtomicMemory" "AtomicMemoryRef" "Bool" "BoundsError" "Char" "ConcurrencyViolationError" "Cvoid" "DataType" "DenseArray" "DivideError" "DomainError" "ErrorException" "Exception" "Expr" "FieldError" "Float16" "Float32" "Float64" "Function" "GenericMemory" "GenericMemoryRef" "GlobalRef" "IO" "InexactError" "InitError" "Int" "Int128" "Int16" "Int32" "Int64" "Int8" "Integer" "InterruptException" "LineNumberNode" "LoadError" "Memory" "MemoryRef" "Method" "MethodError" "Module" "NTuple" "NamedTuple" "Nothing" "Number" "OutOfMemoryError" "OverflowError" "Pair" "Ptr" "QuoteNode" "ReadOnlyMemoryError" "Real" "Ref" "SegmentationFault" "Signed" "StackOverflowError" "String" "Symbol" "Task" "Tuple" "Type" "TypeError" "TypeVar" "UInt" "UInt128" "UInt16" "UInt32" "UInt64" "UInt8" "UndefInitializer" "UndefKeywordError" "UndefRefError" "UndefVarError" "Union" "UnionAll" "Unsigned" "VecElement" "WeakRef"))
 
-((identifier) @variable.builtin
-  (#any-of? @variable.builtin "begin" "end"))
-
-((identifier) @variable.builtin
-  (#any-of? @variable.builtin "begin" "end"))
-
-
-; --------
 ; Keywords
-; --------
-
 [
+  "const"
   "global"
   "local"
 ] @keyword
@@ -279,88 +123,58 @@
   [
     "if"
     "end"
-  ] @keyword.control.conditional)
+  ] @keyword.conditional)
 
 (elseif_clause
-  "elseif" @keyword.control.conditional)
+  "elseif" @keyword.conditional)
 
 (else_clause
-  "else" @keyword.control.conditional)
-
-(if_clause
-  "if" @keyword.control.conditional) ; `if` clause in comprehensions
+  "else" @keyword.conditional)
 
 (ternary_expression
   [
     "?"
     ":"
-  ] @keyword.control.conditional)
+  ] @keyword.conditional.ternary)
 
 (try_statement
   [
     "try"
     "end"
-  ] @keyword.control.exception)
-
-(finally_clause
-  "finally" @keyword.control.exception)
+  ] @keyword.exception)
 
 (catch_clause
-  "catch" @keyword.control.exception)
+  "catch" @keyword.exception)
+
+(finally_clause
+  "finally" @keyword.exception)
 
 (for_statement
   [
     "for"
     "end"
-  ] @keyword.control.repeat)
+  ] @keyword.repeat)
+
+(for_binding
+  "outer" @keyword.repeat)
+
+; comprehensions
+(for_clause
+  "for" @keyword.repeat)
+
+(if_clause
+  "if" @keyword.conditional)
 
 (while_statement
   [
     "while"
     "end"
-  ] @keyword.control.repeat)
-
-(for_clause
-  "for" @keyword.control.repeat)
+  ] @keyword.repeat)
 
 [
   (break_statement)
   (continue_statement)
-] @keyword.control.repeat
-
-(module_definition
-  [
-    "module"
-    "baremodule"
-    "end"
-  ] @keyword.control.import)
-
-(import_statement
-  [
-    "import"
-    "using"
-  ] @keyword.control.import)
-
-(import_alias
-  "as" @keyword.control.import)
-
-(export_statement
-  "export" @keyword.control.import)
-
-(selected_import
-  ":" @punctuation.delimiter)
-
-(struct_definition
-  [
-    "struct"
-    "end"
-  ] @keyword)
-
-(macro_definition
-  [
-    "macro"
-    "end"
-  ] @keyword)
+] @keyword.repeat
 
 (function_definition
   [
@@ -374,23 +188,63 @@
     "end"
   ] @keyword.function)
 
+(macro_definition
+  [
+    "macro"
+    "end"
+  ] @keyword)
+
 (return_statement
-  "return" @keyword.control.return)
+  "return" @keyword.return)
 
-[
-  "const"
-  "mutable"
-] @keyword.storage.modifier
+(module_definition
+  [
+    "module"
+    "baremodule"
+    "end"
+  ] @keyword.import)
 
-; ---------
-; Operators
-; ---------
+(export_statement
+  "export" @keyword.import)
 
-[
-  (operator)
-  "="
-  "∈"
-] @operator
+(public_statement
+  "public" @keyword.import)
+
+(import_statement
+  "import" @keyword.import)
+
+(using_statement
+  "using" @keyword.import)
+
+(import_alias
+  "as" @keyword.import)
+
+(selected_import
+  ":" @punctuation.delimiter)
+
+(struct_definition
+  [
+    "mutable"
+    "struct"
+    "end"
+  ] @keyword) ; Zed - changed `@keyword.type` to `@keyword`
+
+(abstract_definition
+  [
+    "abstract"
+    "type"
+    "end"
+  ] @keyword.type)
+
+(primitive_definition
+  [
+    "primitive"
+    "type"
+    "end"
+  ] @keyword.type)
+
+; Operators & Punctuation
+(operator) @operator
 
 (adjoint_expression
   "'" @operator)
@@ -398,82 +252,163 @@
 (range_expression
   ":" @operator)
 
+(arrow_function_expression
+  "->" @operator)
+
+[
+  "."
+  "..."
+  "::"
+] @punctuation
+
+[
+  ","
+  ";"
+] @punctuation.delimiter
+
+[
+  "("
+  ")"
+  "["
+  "]"
+  "{"
+  "}"
+] @punctuation.bracket
+
+; Zed - added: Interpolated variables and expressions in parentheses
+(string_interpolation
+[
+  "$"
+  "("
+  ")"
+] @punctuation.special)
+
+; Zed - added: Match the dot in the @. macro
+(macro_identifier
+  "@"
+  (operator "." @function.macro))
+
+; Zed - added: Function definitions
+; (1) `function foo end` after docstrings
+; (2) `function foo() ... end`
+; (3) `function Base.show() ... end`
+(function_definition
+  (signature
+    .
+    [
+      (identifier) @function.definition
+      (call_expression (identifier) @function.definition)
+      (call_expression (field_expression (identifier) @function.definition .))
+    ]))
+
+; Zed - added: Short function definitions like `foo(x) = 2x`
+(assignment
+  .
+  [
+    (call_expression (identifier) @function.definition)
+    (typed_expression . (call_expression (identifier) @function.definition))
+    (where_expression . (call_expression (identifier) @function.definition))
+    (where_expression . (typed_expression . (call_expression (identifier) @function.definition)))
+    (call_expression (field_expression (identifier) @function.definition .))
+    (typed_expression . (call_expression (field_expression (identifier) @function.definition .)))
+    (where_expression . (call_expression (field_expression (identifier) @function.definition .)))
+    (where_expression . (typed_expression . (call_expression (field_expression (identifier) @function.definition .))))
+  ]
+  (operator) @keyword.function)
+
+; Keyword operators
 ((operator) @keyword.operator
   (#any-of? @keyword.operator "in" "isa"))
-
-(for_binding
-  "in" @keyword.operator)
-
-(where_clause
-  "where" @keyword.operator)
 
 (where_expression
   "where" @keyword.operator)
 
-(binary_expression
-  (_)
-  (operator) @operator
-  (identifier) @function
-  (#any-of? @operator "|>" ".|>"))
+; Built-in constants
+((identifier) @constant.builtin
+  (#any-of? @constant.builtin "nothing" "missing"))
 
-; ------------
-; Punctuations
-; ------------
+((identifier) @variable.builtin
+  (#any-of? @variable.builtin "begin" "end")
+  (#has-ancestor? @variable.builtin index_expression))
 
-[
-  "."
-  "," 
-  ";"
-  "::"
-  "->"
-] @punctuation.delimiter
-
-"..." @punctuation.special
-
-[
-  "("
-  ")" 
-  "["
-  "]"
-  "{" 
-  "}"
-] @punctuation.bracket
-
-; ---------
 ; Literals
-; ---------
+(boolean_literal) @boolean
 
-(boolean_literal) @constant.builtin.boolean
+(integer_literal) @number
 
-(integer_literal) @constant.numeric.integer
+(float_literal) @number.float
 
-(float_literal) @constant.numeric.float
+((identifier) @number.float
+  (#any-of? @number.float "NaN" "NaN16" "NaN32" "Inf" "Inf16" "Inf32"))
 
-(
-  ((identifier) @constant.numeric.float)
-  (#match? @constant.numeric.float "^((Inf|NaN)(16|32|64)?)$"))
+(character_literal) @string ; Zed - changed `@character` to `@string`
 
-(
-  ((identifier) @constant.builtin)
-  (#match? @constant.builtin "^(nothing|missing|undef)$"))
-
-(character_literal) @constant.character
-
-(escape_sequence) @constant.character.escape
+(escape_sequence) @string.escape
 
 (string_literal) @string
 
 (prefixed_string_literal
   prefix: (identifier) @function.macro) @string
 
-(command_literal) @string
+(command_literal) @string.special
 
 (prefixed_command_literal
-  prefix: (identifier) @function.macro) @string
+  prefix: (identifier) @function.macro) @string.special
 
-; ---------
-; Comments
-; ---------
+; Zed - modified queries for docstrings (3 queries):
+
+; (1) doc macro docstrings:
+; @doc "..." x
+((macrocall_expression
+  (macro_identifier "@" (identifier)) @function.macro
+  (macro_argument_list
+    .
+    [(string_literal) (prefixed_string_literal)] @comment.doc))
+  (#eq? @function.macro "@doc"))
+
+; (2) docstrings preceding documentable elements at the top of a source file:
+(source_file
+  (string_literal) @comment.doc
+  .
+  [
+    (assignment)
+    (const_statement)
+    (global_statement)
+    (abstract_definition)
+    (function_definition)
+    (macro_definition)
+    (module_definition)
+    (struct_definition)
+    (macrocall_expression) ; Covers things like @kwdef struct X ... end
+    (identifier)
+    (open_tuple
+      (identifier))
+  ])
+
+; (3) docstrings preceding documentable elements at the top of a module:
+(module_definition
+  (string_literal) @comment.doc
+  .
+  [
+    (assignment)
+    (const_statement)
+    (global_statement)
+    (abstract_definition)
+    (function_definition)
+    (macro_definition)
+    (module_definition)
+    (struct_definition)
+    (macrocall_expression) ; Covers things like @kwdef struct X ... end
+    (identifier)
+    (open_tuple
+      (identifier))
+  ])
+
+; (4) struct field docstrings:
+(struct_definition
+  (string_literal) @comment.doc
+  .
+  [(identifier) (typed_expression)])
 
 [
   (line_comment)
