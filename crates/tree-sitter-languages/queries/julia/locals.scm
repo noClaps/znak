@@ -1,71 +1,53 @@
-; References
-(identifier) @local.reference
-
+; -----------
 ; Definitions
-(assignment
+; -----------
+
+; Constants
+(const_statement
+  (assignment
+    . (identifier) @local.definition.constant))
+
+; Parameters
+(parameter_list
+  (identifier) @local.definition.variable.parameter)
+
+(optional_parameter
   .
-  (identifier) @local.definition)
+  (identifier) @local.definition.variable.parameter)
 
-(assignment
+(slurp_parameter
+  (identifier) @local.definition.variable.parameter)
+
+(typed_parameter
+  parameter: (identifier) @local.definition.variable.parameter
+  (_))
+
+; Single parameter arrow function
+(function_expression
   .
-  (tuple_expression
-    (identifier) @local.definition))
+  (identifier) @local.definition.variable.parameter)
 
-(assignment
-  .
-  (open_tuple
-    (identifier) @local.definition))
+; ----------
+; References
+; ----------
 
-(for_binding
-  .
-  (identifier) @local.definition)
-
-(for_binding
-  .
-  (tuple_expression
-    (identifier) @local.definition))
-
-(import_statement
-  (identifier) @local.definition)
-
-(using_statement
-  (identifier) @local.definition)
-
-(selected_import
-  (identifier) @local.definition)
-
-(module_definition
-  .
-  (identifier) @local.definition)
-
-(type_head
-  (identifier) @local.definition)
-
-(type_head
-  (binary_expression
-    .
-    (identifier) @local.definition))
-
-(function_definition
-  (signature
-    (call_expression
-      .
-      (identifier) @local.definition.function))) @local.scope
-
-(macro_definition
-  (signature
-    (call_expression
-      .
-      (identifier) @local.definition.function))) @local.scope
-
+(identifier) @local.reference
+ 
+; ------
 ; Scopes
+; ------
+
 [
-  (quote_statement)
-  (let_statement)
   (for_statement)
   (while_statement)
   (try_statement)
   (catch_clause)
   (finally_clause)
+  (let_statement)
+  (quote_statement)
   (do_clause)
-] @local.scope
+  (function_definition)
+  (short_function_definition)
+  (macro_definition)
+] @local.scope 
+

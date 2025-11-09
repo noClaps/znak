@@ -1,73 +1,85 @@
-/* Adapted from https://github.com/PyaeSoneAungRgn/github-zed-theme */
+/* Adapted from https://github.com/helix-editor/helix/blob/master/runtime/themes/github_dark.toml */
 
 :root {
-    background-color: #161616;
-    color: #fff;
+    /* canvas.default */
+    background-color: #0d1117;
+    /* fg.muted */
+    color: #8b949e;
 }
 
-boolean,
-constant,
-constructor,
-markup.link.url,
-number,
-property,
-string.special,
-string.special.symbol {
-    color: #79c0ffff;
+attribute,
+punctuation,
+punctuation.delimiter,
+variable {
+    /* fg.default */
+    color: #c9d1d9;
 }
 
-comment,
-comment.documentation {
-    color: #9198a1ff;
-}
-
-embedded,
 keyword,
-punctuation.special {
-    color: #ff7b72ff;
+keyword.directive,
+variable.builtin,
+label {
+    /* scale.red.3 */
+    color: #ff7b72;
 }
 
-markup.list,
+namespace,
+variable.parameter,
 type {
-    color: #ffa657ff;
-}
-
-function {
-    color: #d2a8ffff;
+    /* scale.orange.2 */
+    color: #ffa657;
 }
 
 operator,
-punctuation,
-punctuation.bracket,
-punctuation.delimiter,
-variable {
-    color: #f0f6fcff;
+special,
+variable.other.member,
+string,
+markup.link.text {
+    /* scale.blue.1 */
+    color: #a5d6ff;
 }
 
-string,
-string.regexp {
-    color: #a5d6ffff;
+type.builtin,
+constant,
+constant.builtin,
+constant.numeric,
+constant.character.escape,
+markup.heading,
+markup.raw {
+    /* scale.blue.2 */
+    color: #79c0ff;
+}
+
+constructor,
+function,
+function.macro {
+    /* scale.purple.2 */
+    color: #d2a8ff;
+}
+
+tag {
+    /* scale.green.1 */
+    color: #7ee787;
+}
+
+comment {
+    /* fg.muted */
+    color: #8b949e;
+}
+
+markup.bold {
+    font-weight: bold;
 }
 
 markup.italic {
     font-style: italic;
 }
-markup.bold {
-    font-weight: 700;
-}
-markup.link {
-    color: #a5d6ffff;
-    font-style: italic;
+
+markup.strikethrough {
+    text-decoration: line-through;
 }
 
-string.escape {
-    color: #7ee787ff;
-    font-weight: 700;
-}
-tag {
-    color: #7ee787ff;
-}
-markup.heading {
-    color: #79c0ffff;
-    font-weight: 700;
+markup.link.url,
+markup.link.text {
+    text-decoration: underline;
 }

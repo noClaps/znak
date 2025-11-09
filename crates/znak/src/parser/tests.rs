@@ -308,7 +308,7 @@ fn lists() {
 code block
 ```
 "#,
-        r#"<ol><li><p>Repeat steps 2-4 until you reach the beginning of the array</p></li></ol><p>[...]</p><pre class="ts-highlight" style="background-color:#161616;color:#fff;"><code>code block</code></pre>"#,
+        r#"<ol><li><p>Repeat steps 2-4 until you reach the beginning of the array</p></li></ol><p>[...]</p><pre class="ts-highlight" style="background-color:#0d1117;color:#8b949e;"><code>code block</code></pre>"#,
     );
 }
 
