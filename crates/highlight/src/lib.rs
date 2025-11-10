@@ -59,12 +59,18 @@ impl Highlight {
     /// # Usage
     ///
     /// ```rust
-    /// use highlight::Highlight;
-    /// use tree_sitter_languages::rust;
+    /// use highlight::{Highlight, HighlightConfiguration};
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// hl.add_language(&["rust", "rs"], rust::highlight_configuration());
+    /// let rust = HighlightConfiguration::new(
+    ///     tree_sitter_rust::LANGUAGE.into(),
+    ///     "rust",
+    ///     tree_sitter_rust::HIGHLIGHTS_QUERY,
+    ///     tree_sitter_rust::INJECTIONS_QUERY,
+    ///     "",
+    /// ).unwrap();
+    /// hl.add_language(&["rust", "rs"], rust);
     ///
     /// let code = r#"
     /// fn main() {

@@ -1,13 +1,20 @@
-use highlight::Highlight;
+use highlight::{Highlight, HighlightConfiguration};
 use html::assert_html_eq;
-use tree_sitter_languages::python;
 
 use crate::render;
 
 pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
     let theme = include_str!("../../../../theme.css").parse().unwrap();
     let mut hl = Highlight::new(theme);
-    hl.add_language(&["python", "py"], python::highlight_configuration());
+    let python = HighlightConfiguration::new(
+        tree_sitter_python::LANGUAGE.into(),
+        "python",
+        tree_sitter_python::HIGHLIGHTS_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    hl.add_language(&["python", "py"], python);
 
     let output = render(input.into(), &hl);
     assert_html_eq!(output, test.into());
@@ -86,7 +93,15 @@ fn code_blocks() {
     test_render("```", "<p>```</p>");
     let theme = include_str!("../../../../theme.css").parse().unwrap();
     let mut hl = Highlight::new(theme);
-    hl.add_language(&["python", "py"], python::highlight_configuration());
+    let python = HighlightConfiguration::new(
+        tree_sitter_python::LANGUAGE.into(),
+        "python",
+        tree_sitter_python::HIGHLIGHTS_QUERY,
+        "",
+        "",
+    )
+    .unwrap();
+    hl.add_language(&["python", "py"], python);
 
     let highlighted = hl.highlight("print(\"Your code here\")".to_string(), "py".to_string());
     test_render(

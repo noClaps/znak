@@ -20,11 +20,16 @@ impl Highlight {
     ///
     /// ```rust
     /// use highlight::{Highlight, HighlightConfiguration};
-    /// use tree_sitter_languages::rust;
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// let config = rust::highlight_configuration();
+    /// let config = HighlightConfiguration::new(
+    ///     tree_sitter_rust::LANGUAGE.into(),
+    ///     "rust",
+    ///     tree_sitter_rust::HIGHLIGHTS_QUERY,
+    ///     tree_sitter_rust::INJECTIONS_QUERY,
+    ///     "",
+    /// ).unwrap();
     /// let language_names = &["rust", "rs"];
     /// hl.add_language(language_names, config);
     /// ```

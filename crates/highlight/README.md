@@ -8,4 +8,4 @@ cargo add --git https://github.com/noClaps/znak highlight
 
 ## Languages
 
-The highlighter doesn't come with any languages configured by default. To add languages, you can get them from their respective grammar crates, or from [tree_sitter_languages](../tree_sitter_languages/index.html).
+The highlighter doesn't come with any languages configured by default. To add languages, you can get them from their respective grammar crates.
