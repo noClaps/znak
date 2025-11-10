@@ -14,7 +14,7 @@ jobs:
             ~/.cargo/git/db/
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - run: cargo doc --all-features --no-deps
+      - run: cargo doc --no-deps
       - run: echo "/ /znak/" > target/doc/_redirects
       - uses: oven-sh/setup-bun@v2
       - run: bunx wrangler deploy
