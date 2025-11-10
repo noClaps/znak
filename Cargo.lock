@@ -412,15 +412,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "tree-sitter-gitconfig"
-version = "0.0.0"
-source = "git+https://github.com/tree-sitter-regrown/tree-sitter-git-config#fc25c4ac374dbb7bf2bd3611de58337684a0736b"
-dependencies = [
- "cc",
- "tree-sitter-language",
-]
-
-[[package]]
 name = "tree-sitter-gitignore"
 version = "0.1.0"
 source = "git+https://github.com/tree-sitter-regrown/tree-sitter-gitignore#f796cbf1e402b2a9504195d70018c4ae943fa49d"
@@ -527,7 +518,6 @@ dependencies = [
  "tree-sitter-css",
  "tree-sitter-csv",
  "tree-sitter-gitattributes",
- "tree-sitter-gitconfig",
  "tree-sitter-gitignore",
  "tree-sitter-go",
  "tree-sitter-graphql",

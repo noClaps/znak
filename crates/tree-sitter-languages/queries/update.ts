@@ -38,10 +38,6 @@ const queries: Record<
     highlights:
       "https://github.com/zed-extensions/git_firefly/raw/refs/heads/main/languages/gitattributes/highlights.scm",
   },
-  gitconfig: {
-    highlights:
-      "https://github.com/zed-extensions/git_firefly/raw/refs/heads/main/languages/gitconfig/highlights.scm",
-  },
   gitignore: {
     highlights:
       "https://github.com/zed-extensions/git_firefly/raw/refs/heads/main/languages/gitignore/highlights.scm",

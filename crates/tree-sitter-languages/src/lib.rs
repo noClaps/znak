@@ -89,20 +89,6 @@ pub mod git {
         .unwrap()
     }
 
-    // gitconfig
-    pub const GRAMMAR_CONFIG: LanguageFn = tree_sitter_gitconfig::LANGUAGE;
-    pub const HIGHLIGHTS_CONFIG: &str = include_str!("../queries/gitconfig/highlights.scm");
-    pub fn highlight_configuration_config() -> HighlightConfiguration {
-        HighlightConfiguration::new(
-            GRAMMAR_CONFIG.into(),
-            "gitconfig",
-            HIGHLIGHTS_CONFIG,
-            "",
-            "",
-        )
-        .unwrap()
-    }
-
     // gitignore
     pub const GRAMMAR_IGNORE: LanguageFn = tree_sitter_gitignore::LANGUAGE;
     pub const HIGHLIGHTS_IGNORE: &str = include_str!("../queries/gitignore/highlights.scm");
