@@ -87,7 +87,7 @@ impl Highlight {
         if language == "plaintext" || language == "plain" || language == "text" || language == "txt"
         {
             return format!(
-                "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
+                "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
                 global_style,
                 escape_html!(code)
             );
@@ -99,7 +99,7 @@ impl Highlight {
             None => {
                 eprintln!("Language not supported: {language}, continuing as plaintext");
                 return format!(
-                    "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
+                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
                     escape_html!(code)
                 );
@@ -113,7 +113,7 @@ impl Highlight {
             Err(err) => {
                 eprintln!("Error while highlighting: {err}. Continuing as plaintext");
                 return format!(
-                    "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
+                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
                     escape_html!(code)
                 );
@@ -137,7 +137,7 @@ impl Highlight {
                     "Error rendering highlighted text to HTML: {err}. Continuing as plaintext",
                 );
                 return format!(
-                    "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
+                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
                     global_style,
                     escape_html!(code)
                 );
@@ -146,7 +146,7 @@ impl Highlight {
         let highlighted_text = html_renderer.lines().collect::<Vec<&str>>().join("\n");
 
         format!(
-            "<pre class=\"ts-highlight\" style=\"{}\"><code>{}</code></pre>",
+            "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
             global_style,
             highlighted_text.trim()
         )
