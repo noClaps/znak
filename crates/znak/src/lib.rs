@@ -6,7 +6,7 @@ mod parser;
 
 pub use frontmatter::parse_frontmatter;
 pub use headings::{Heading, parse_headings};
-pub use highlight::{Highlight, Theme};
+pub use highlight::{Highlight, HighlightConfiguration, Theme};
 
 use crate::parser::{parse, renderer};
 
