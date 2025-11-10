@@ -41,7 +41,7 @@ fn headings() {
 #[test]
 fn blockquotes() {
     test_render(
-        "> This is quite a **bold** statement!",
+        "> This is quite a *bold* statement!",
         "<blockquote><p>This is quite a <strong>bold</strong> statement!</p></blockquote>",
     );
     test_render(
@@ -164,14 +164,14 @@ I've really gotten into this stuff over the last 2 years or so. I probably shoul
 
 #[test]
 fn inline_formatting() {
-    test_render("**bold text**", "<p><strong>bold text</strong></p>");
+    test_render("*bold text*", "<p><strong>bold text</strong></p>");
     test_render("_italic text_", "<p><em>italic text</em></p>");
     test_render(
-        "_**bold and italic text**_",
+        "_*bold and italic text*_",
         "<p><em><strong>bold and italic text</strong></em></p>",
     );
     test_render(
-        "**_bold and italic text_**",
+        "*_bold and italic text_*",
         "<p><strong><em>bold and italic text</em></strong></p>",
     );
     test_render(
@@ -183,11 +183,11 @@ fn inline_formatting() {
         "<p>This is a <a href=\"https://zerolimits.dev\">link</a></p>",
     );
     test_render(
-        "This is a **[bold link](https://zerolimits.dev)**",
+        "This is a *[bold link](https://zerolimits.dev)*",
         "<p>This is a <strong><a href=\"https://zerolimits.dev\">bold link</a></strong></p>",
     );
     test_render(
-        "This is a [**bold link**](https://zerolimits.dev)",
+        "This is a [*bold link*](https://zerolimits.dev)",
         "<p>This is a <a href=\"https://zerolimits.dev\"><strong>bold link</strong></a></p>",
     );
     test_render(
@@ -207,18 +207,8 @@ fn inline_formatting() {
         "<p>This is a <a href=\"https://zerolimits.dev\"><code>code link</code></a></p>",
     );
     test_render(
-        "This is formatting inside a `**code** _block_`",
-        "<p>This is formatting inside a <code>**code** _block_</code></p>",
-    );
-    test_render("~~strikethrough~~", "<p><s>strikethrough</s></p>");
-    test_render(
-        "This is a sentence with ~~strikethrough~~ in it",
-        "<p>This is a sentence with <s>strikethrough</s> in it</p>",
-    );
-    test_render("==highlight==", "<p><mark>highlight</mark></p>");
-    test_render(
-        "This is a sentence with ==highlight== in it",
-        "<p>This is a sentence with <mark>highlight</mark> in it</p>",
+        "This is formatting inside a `*code* _block_`",
+        "<p>This is formatting inside a <code>*code* _block_</code></p>",
     );
     test_render("~sub~script", "<p><sub>sub</sub>script</p>");
     test_render(
@@ -239,20 +229,12 @@ fn inline_formatting() {
         "<p><a href=\"https://zerolimits.dev\">Some [square braces] inside a link</a></p>",
     );
     test_render(
-        "Inline $$x+y$$ math",
+        "Inline $x+y$ math",
         "<p>Inline <math><mi>x</mi><mo>+</mo><mi>y</mi></math> math</p>",
     );
     test_render(
-        "This is a **line** with multiple **bold** words",
+        "This is a *line* with multiple *bold* words",
         "<p>This is a <strong>line</strong> with multiple <strong>bold</strong> words</p>",
-    );
-    test_render(
-        "This is some __underlined__ text",
-        "<p>This is some <u>underlined</u> text</p>",
-    );
-    test_render(
-        "This is some ___italic text_ in some underlined__ text",
-        "<p>This is some <u><em>italic text</em> in some underlined</u> text</p>",
     );
     test_render(
         "Special characters: “_voilà_!”",
@@ -266,17 +248,14 @@ fn inline_formatting() {
 
 #[test]
 fn escaped_characters() {
-    test_render(
-        "This is \\**escaped bold**",
-        "<p>This is **escaped bold**</p>",
-    );
+    test_render("This is \\*escaped bold*", "<p>This is *escaped bold*</p>");
 }
 
 #[test]
 fn empty_inline() {
-    test_render("****", "<p>****</p>");
+    test_render("**", "<p>**</p>");
     test_render("__", "<p>__</p>");
-    test_render("$$$$", "<p>$$$$</p>");
+    test_render("$$", "<p>$$</p>");
     test_render(
         "[](https://zerolimits.dev)",
         "<p>[](https://zerolimits.dev)</p>",
@@ -284,8 +263,6 @@ fn empty_inline() {
     test_render("[link]()", "<p>[link]()</p>");
     test_render("^^", "<p>^^</p>");
     test_render("~~", "<p>~~</p>");
-    test_render("====", "<p>====</p>");
-    test_render("~~~~", "<p>~~~~</p>");
 }
 
 #[test]

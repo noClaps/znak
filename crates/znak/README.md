@@ -144,15 +144,11 @@ Images are output in a `<figure>` element, with the `alt` text also being a `<fi
 ## Inline formatting
 
 ```md
-**bold text**
+*bold text*
 
 _italic text_
 
 `inline code`
-
-~~strikethrough~~
-
-==highlight==
 
 ~sub~script
 
@@ -162,9 +158,7 @@ _italic text_
 
 [link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)
 
-Inline $$x+y$$ math
-
-__underlined text__
+Inline $x+y$ math
 ```
 
 These can also be used inside most other text blocks, such as inside blockquotes:

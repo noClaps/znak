@@ -14,7 +14,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
     let mut cursor = 0;
 
     macro_rules! formatting {
-        ($tag:literal, c=$pat:literal) => {
+        ($tag:literal, $pat:literal) => {
             if line[cursor] == $pat
                 && let Some(next_index) = line[cursor + 1..].iter().position(|&c| c == $pat)
             {
@@ -34,31 +34,6 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
                 continue;
             }
         };
-        ($tag:literal, s=$pat:literal) => {
-            if cursor + 1 < line.len()
-                && line[cursor] == $pat
-                && line[cursor + 1] == $pat
-                && let Some(next_index) = line[cursor + 2..].windows(2).position(|w| match w {
-                    [$pat, $pat] => true,
-                    _ => false,
-                })
-            {
-                if !buffer.is_empty() {
-                    contents.push(text!(mem::take(buffer)));
-                }
-                cursor += 2;
-                let temp_buf: String = line[cursor..cursor + next_index].iter().collect();
-
-                if temp_buf.is_empty() {
-                    contents.push(text!(format!("{}{}{}{}", $pat, $pat, $pat, $pat)));
-                } else {
-                    let children = inline_formatting(temp_buf);
-                    contents.push(element!($tag, children));
-                }
-                cursor += next_index + 2;
-                continue;
-            }
-        };
     }
 
     while cursor < line.len() {
@@ -70,45 +45,31 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             continue;
         }
 
-        // Bold (**)
-        formatting!("strong", s = '*');
-
-        // Underline (__)
-        formatting!("u", s = '_');
-
-        // Strikethrough (~~)
-        formatting!("s", s = '~');
-
-        // Highlight (==)
-        formatting!("mark", s = '=');
+        // Bold (*)
+        formatting!("strong", '*');
 
         // Inline math ($$)
-        if cursor + 1 < line.len()
-            && line[cursor] == '$'
-            && line[cursor + 1] == '$'
-            && let Some(next_index) = line[cursor + 2..].windows(2).position(|w| match w {
-                ['$', '$'] => true,
-                _ => false,
-            })
+        if line[cursor] == '$'
+            && let Some(next_index) = line[cursor + 1..].iter().position(|&c| c == '$')
         {
             if !buffer.is_empty() {
                 contents.push(text!(mem::take(buffer)));
             }
-            cursor += 2;
+            cursor += 1;
             let temp_buf: String = line[cursor..cursor + next_index].iter().collect();
 
             if temp_buf.is_empty() {
-                contents.push(text!("$$$$"));
+                contents.push(text!("$$"));
             } else {
                 let math = render_math(temp_buf, MathDisplay::Inline);
                 contents.push(text!(math));
             }
-            cursor += next_index + 2;
+            cursor += next_index + 1;
             continue;
         }
 
         // Italics (_)
-        formatting!("em", c = '_');
+        formatting!("em", '_');
 
         // Code (`)
         if line[cursor] == '`'
@@ -131,10 +92,10 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
         }
 
         // Subscript (~)
-        formatting!("sub", c = '~');
+        formatting!("sub", '~');
 
         // Superscript (^)
-        formatting!("sup", c = '^');
+        formatting!("sup", '^');
 
         // Links
         if line[cursor] == '['
