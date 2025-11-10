@@ -2,12 +2,6 @@ const queries: Record<
   string,
   { highlights: string; injections?: string; locals?: string }
 > = {
-  angular: {
-    highlights:
-      "https://github.com/nathansbradshaw/zed-angular/raw/refs/heads/main/languages/angular/highlights.scm",
-    injections:
-      "https://github.com/nathansbradshaw/zed-angular/raw/refs/heads/main/languages/angular/injections.scm",
-  },
   bash: {
     highlights:
       "https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/bash/highlights.scm",
@@ -30,27 +24,15 @@ const queries: Record<
     injections:
       "https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/css/injections.scm",
   },
-  csv: {
-    highlights:
-      "https://github.com/huacnlee/zed-csv/raw/refs/heads/main/languages/csv/highlights.scm",
-  },
   gitattributes: {
     highlights:
       "https://github.com/zed-extensions/git_firefly/raw/refs/heads/main/languages/gitattributes/highlights.scm",
-  },
-  gitignore: {
-    highlights:
-      "https://github.com/zed-extensions/git_firefly/raw/refs/heads/main/languages/gitignore/highlights.scm",
   },
   go: {
     highlights:
       "https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/go/highlights.scm",
     injections:
       "https://github.com/zed-industries/zed/raw/refs/heads/main/crates/languages/src/go/injections.scm",
-  },
-  graphql: {
-    highlights:
-      "https://github.com/11bit/zed-extension-graphql/raw/refs/heads/main/languages/graphql/highlights.scm",
   },
   html: {
     highlights:
@@ -83,12 +65,6 @@ const queries: Record<
       "https://github.com/JuliaEditorSupport/zed-julia/raw/refs/heads/main/languages/julia/highlights.scm",
     injections:
       "https://github.com/JuliaEditorSupport/zed-julia/raw/refs/heads/main/languages/julia/injections.scm",
-  },
-  latex: {
-    highlights:
-      "https://github.com/rzukic/zed-latex/raw/refs/heads/main/languages/latex/highlights.scm",
-    injections:
-      "https://github.com/rzukic/zed-latex/raw/refs/heads/main/languages/latex/injections.scm",
   },
   lua: {
     highlights:

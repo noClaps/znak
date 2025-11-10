@@ -3,16 +3,12 @@ name = "tree-sitter-languages"
 edition.workspace = true
 
 [dependencies]
-tree-sitter-angular = { git = "https://github.com/tree-sitter-regrown/tree-sitter-angular", version = "0.7.0", optional = true }
 tree-sitter-bash = { version = "0.25.0", optional = true }
 tree-sitter-c = { version = "0.24.1", optional = true }
 tree-sitter-comment = { git = "https://github.com/thedadams/tree-sitter-comment", branch = "zed", optional = true }
 tree-sitter-css = { version = "0.25.0", optional = true }
-tree-sitter-csv = { git = "https://github.com/tree-sitter-regrown/tree-sitter-csv", optional = true }
 tree-sitter-gitattributes = { optional = true, git = "https://github.com/tree-sitter-grammars/tree-sitter-gitattributes" }
-tree-sitter-gitignore = { git = "https://github.com/tree-sitter-regrown/tree-sitter-gitignore", optional = true }
 tree-sitter-go = { version = "0.25.0", optional = true }
-tree-sitter-graphql = { optional = true, git = "https://github.com/tree-sitter-regrown/tree-sitter-graphql" }
 tree-sitter-highlight = "0.25.10"
 tree-sitter-html = { version = "0.23.2", optional = true }
 tree-sitter-javascript = { version = "0.25.0", optional = true }
@@ -20,7 +16,6 @@ tree-sitter-jsdoc = { version = "0.25.0", optional = true }
 tree-sitter-json = { version = "0.24.8", optional = true }
 tree-sitter-julia = { version = "0.23.1", optional = true }
 tree-sitter-language = "0.1.5"
-tree-sitter-latex = { git = "https://github.com/tree-sitter-regrown/tree-sitter-latex", optional = true }
 tree-sitter-lua = { git = "https://github.com/tree-sitter-grammars/tree-sitter-lua", optional = true }
 tree-sitter-make = { version = "1.1.1", optional = true }
 tree-sitter-md = { version = "0.5.1", optional = true }
@@ -36,22 +31,19 @@ tree-sitter-xml = { version = "0.7.0", optional = true }
 tree-sitter-yaml = { version = "0.7.2", optional = true }
 
 [features]
+default = ["all"]
 all = [
-    "angular",
     "bash",
     "c",
     "comment",
     "css",
-    "csv",
     "git",
     "go",
-    "graphql",
     "html",
     "javascript",
     "jsdoc",
     "json",
     "julia",
-    "latex",
     "lua",
     "make",
     "markdown",
@@ -66,21 +58,17 @@ all = [
     "xml",
     "yaml"
 ]
-angular = ["dep:tree-sitter-angular"]
 bash = ["dep:tree-sitter-bash"]
 c = ["dep:tree-sitter-c"]
 comment = ["dep:tree-sitter-comment"]
 css = ["dep:tree-sitter-css"]
-csv = ["dep:tree-sitter-csv"]
-git = ["dep:tree-sitter-gitattributes", "dep:tree-sitter-gitignore"]
+git = ["dep:tree-sitter-gitattributes"]
 go = ["dep:tree-sitter-go"]
-graphql = ["dep:tree-sitter-graphql"]
 html = ["dep:tree-sitter-html"]
 javascript = ["dep:tree-sitter-javascript"]
 jsdoc = ["dep:tree-sitter-jsdoc"]
 json = ["dep:tree-sitter-json"]
 julia = ["dep:tree-sitter-julia"]
-latex = ["dep:tree-sitter-latex"]
 lua = ["dep:tree-sitter-lua"]
 make = ["dep:tree-sitter-make"]
 markdown = ["dep:tree-sitter-md"]
