@@ -24,13 +24,13 @@ impl Highlight {
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
     /// let config = HighlightConfiguration::new(
-    ///     tree_sitter_rust::LANGUAGE.into(),
-    ///     "rust",
-    ///     tree_sitter_rust::HIGHLIGHTS_QUERY,
-    ///     tree_sitter_rust::INJECTIONS_QUERY,
+    ///     tree_sitter_python::LANGUAGE.into(),
+    ///     "python",
+    ///     tree_sitter_python::HIGHLIGHTS_QUERY,
+    ///     "",
     ///     "",
     /// ).unwrap();
-    /// let language_names = &["rust", "rs"];
+    /// let language_names = &["python", "py"];
     /// hl.add_language(language_names, config);
     /// ```
     pub fn add_language(&mut self, names: &[&str], mut config: HighlightConfiguration) {

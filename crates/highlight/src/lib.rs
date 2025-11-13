@@ -63,21 +63,22 @@ impl Highlight {
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// let rust = HighlightConfiguration::new(
-    ///     tree_sitter_rust::LANGUAGE.into(),
-    ///     "rust",
-    ///     tree_sitter_rust::HIGHLIGHTS_QUERY,
-    ///     tree_sitter_rust::INJECTIONS_QUERY,
+    /// let python = HighlightConfiguration::new(
+    ///     tree_sitter_python::LANGUAGE.into(),
+    ///     "python",
+    ///     tree_sitter_python::HIGHLIGHTS_QUERY,
+    ///     "",
     ///     "",
     /// ).unwrap();
-    /// hl.add_language(&["rust", "rs"], rust);
+    /// hl.add_language(&["python", "py"], python);
     ///
     /// let code = r#"
-    /// fn main() {
-    ///     println!("Hello World");
-    /// }
+    /// def main():
+    ///     print("Hello world")
+    ///
+    /// main()
     /// "#.to_string();
-    /// let language = "rust".to_string();
+    /// let language = "python".to_string();
     ///
     /// let highlighted = hl.highlight(code, language);
     /// ```
