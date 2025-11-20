@@ -332,6 +332,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "tmpl"
+version = "0.0.0"
+
+[[package]]
 name = "tree-sitter"
 version = "0.25.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
