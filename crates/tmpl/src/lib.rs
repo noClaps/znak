@@ -1,3 +1,5 @@
+#![doc = include_str!("../README.md")]
+
 /// This macro can be used to apply a struct field to a value in the provided
 /// template. Your field type must implement [std::fmt::Display], or must be a
 /// [Vec] of a type that implements [Tmpl].
