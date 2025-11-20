@@ -1,22 +1,4 @@
-use std::{collections::HashMap, error::Error, fmt::Display};
-
-#[derive(Debug)]
-pub struct ParseError {
-    cause: String,
-}
-impl ParseError {
-    fn new(cause: &str) -> Self {
-        Self {
-            cause: cause.to_string(),
-        }
-    }
-}
-impl Display for ParseError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Error parsing frontmatter: {}", self.cause)
-    }
-}
-impl Error for ParseError {}
+use std::collections::HashMap;
 
 /// A function that returns the frontmatter in the given input text as a map.
 ///
@@ -34,14 +16,14 @@ impl Error for ParseError {}
 /// let input = include_str!("../demo.md");
 /// let frontmatter = parse_frontmatter(input).unwrap();
 /// ```
-pub fn parse_frontmatter(input: &str) -> Result<HashMap<String, String>, ParseError> {
+pub fn parse_frontmatter(input: &str) -> Result<HashMap<String, String>, String> {
     let mut fm_vals = HashMap::new();
     let mut lines = input.trim().lines();
 
     match lines.next() {
-        None => return Err(ParseError::new("Input is empty")),
+        None => return Err(format!("Input is empty")),
         Some(first) if first != "---" => {
-            return Err(ParseError::new(&format!("No frontmatter found: {}", input)));
+            return Err(format!("No frontmatter found: {}", input));
         }
         Some(_) => (),
     };
@@ -53,10 +35,10 @@ pub fn parse_frontmatter(input: &str) -> Result<HashMap<String, String>, ParseEr
         let (key, val) = match line.split_once(':') {
             Some(split) => split,
             None => {
-                return Err(ParseError::new(&format!(
+                return Err(format!(
                     "Line is formatted incorrectly, missing `:` between key and value: {}",
                     input
-                )));
+                ));
             }
         };
         fm_vals.insert(key.trim().to_string(), val.trim().to_string());
