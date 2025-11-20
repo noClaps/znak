@@ -33,8 +33,7 @@ use crate::parser::{parse, renderer};
 /// let input = include_str!("../demo.md");
 /// let rendered_html = render(input, &hl);
 /// ```
-pub fn render(input: impl Into<String>, hl: &Highlight) -> String {
-    let input = input.into();
+pub fn render(input: &str, hl: &Highlight) -> String {
     let lines = input.trim().lines().collect::<Vec<&str>>();
     let mut cur = 0;
 

@@ -24,12 +24,10 @@ use math_core::{LatexToMathML, MathCoreConfig};
 /// let mathml_inline = render_math(latex, MathDisplay::Inline);
 /// ```
 // TODO: replace with Typst when their MathML export is ready
-pub fn render_math(math: impl AsRef<str>, display: MathDisplay) -> String {
+pub fn render_math(math: &str, display: MathDisplay) -> String {
     let config = MathCoreConfig::default();
     let converter = LatexToMathML::new(&config).unwrap(); // safe to unwrap as no macros
-    let mathml = converter
-        .convert_with_local_counter(math.as_ref(), display)
-        .unwrap(); // good to unwrap as it should panic if invalid LaTeX is passed in
+    let mathml = converter.convert_with_local_counter(math, display).unwrap(); // good to unwrap as it should panic if invalid LaTeX is passed in
     mathml
 }
 

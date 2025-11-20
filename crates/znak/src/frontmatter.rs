@@ -5,9 +5,9 @@ pub struct ParseError {
     cause: String,
 }
 impl ParseError {
-    fn new(cause: impl Into<String>) -> Self {
+    fn new(cause: &str) -> Self {
         Self {
-            cause: cause.into(),
+            cause: cause.to_string(),
         }
     }
 }
@@ -34,15 +34,14 @@ impl Error for ParseError {}
 /// let input = include_str!("../demo.md");
 /// let frontmatter = parse_frontmatter(input).unwrap();
 /// ```
-pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, String>, ParseError> {
-    let input = input.into();
+pub fn parse_frontmatter(input: &str) -> Result<HashMap<String, String>, ParseError> {
     let mut fm_vals = HashMap::new();
     let mut lines = input.trim().lines();
 
     match lines.next() {
         None => return Err(ParseError::new("Input is empty")),
         Some(first) if first != "---" => {
-            return Err(ParseError::new(format!("No frontmatter found: {}", input)));
+            return Err(ParseError::new(&format!("No frontmatter found: {}", input)));
         }
         Some(_) => (),
     };
@@ -54,7 +53,7 @@ pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, Str
         let (key, val) = match line.split_once(':') {
             Some(split) => split,
             None => {
-                return Err(ParseError::new(format!(
+                return Err(ParseError::new(&format!(
                     "Line is formatted incorrectly, missing `:` between key and value: {}",
                     input
                 )));
@@ -70,10 +69,10 @@ pub fn parse_frontmatter(input: impl Into<String>) -> Result<HashMap<String, Str
 mod tests {
     use super::*;
 
-    fn make_map(vals: Vec<(impl Into<String>, impl Into<String>)>) -> HashMap<String, String> {
+    fn make_map(vals: Vec<(&str, &str)>) -> HashMap<String, String> {
         let mut map = HashMap::new();
-        for (key, val) in vals {
-            map.insert(key.into(), val.into());
+        for (k, v) in vals {
+            map.insert(k.to_string(), v.to_string());
         }
         map
     }
@@ -87,8 +86,7 @@ title: A title
 description: Some description here
 date: 2025-03-11
 ---
-"#
-            .to_string(),
+"#,
         )
         .unwrap();
         let check = make_map(vec![
@@ -107,8 +105,7 @@ date: 2025-03-11
 ---
 
 Some extra text here.
-"#
-            .to_string(),
+"#,
         )
         .unwrap();
         let check = make_map(vec![
@@ -127,8 +124,7 @@ title: Google: A Misrepresented Evil
 This was a post about Google. There's also a <hr /> below to see what happens
 
 ---
-"#
-            .to_string(),
+"#,
         )
         .unwrap();
         let check = make_map(vec![("title", "Google: A Misrepresented Evil")]);
@@ -145,7 +141,7 @@ lastmod: 2023-03-09
 ---
 
 I've really gotten into this stuff over the last 2 years or so. I probably shouldn't have, since I had a lot of (arguably) more important stuff going on during that time, and focusing on that might have been better for me and my future. But I digress.
-"#.to_string()).unwrap();
+"#).unwrap();
         let check = make_map(vec![
             ("title", "Intro to Privacy, Security and Anonymity"),
             (

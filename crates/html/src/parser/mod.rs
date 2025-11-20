@@ -148,7 +148,7 @@ fn parse_impl(input: String, skip: fn(char) -> bool) -> Vec<Node> {
     nodes
 }
 
-fn parse_attrs(attrs: impl ToString) -> HashMap<String, String> {
+fn parse_attrs(attrs: &str) -> HashMap<String, String> {
     let attrs = attrs.to_string();
     if attrs.is_empty() {
         return HashMap::new();

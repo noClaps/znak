@@ -61,7 +61,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             if temp_buf.is_empty() {
                 contents.push(text!("$$"));
             } else {
-                let math = render_math(temp_buf, MathDisplay::Inline);
+                let math = render_math(&temp_buf, MathDisplay::Inline);
                 contents.push(text!(math));
             }
             cursor += next_index + 1;

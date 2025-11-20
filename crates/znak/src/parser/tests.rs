@@ -3,7 +3,7 @@ use html::assert_html_eq;
 
 use crate::render;
 
-pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
+pub(crate) fn test_render(input: &str, test: &str) {
     let theme = include_str!("../../../../theme.css").parse().unwrap();
     let mut hl = Highlight::new(theme);
     let python = HighlightConfiguration::new(
@@ -16,8 +16,8 @@ pub(crate) fn test_render(input: impl Into<String>, test: impl Into<String>) {
     .unwrap();
     hl.add_language(&["python", "py"], python);
 
-    let output = render(input.into(), &hl);
-    assert_html_eq!(output, test.into());
+    let output = render(input, &hl);
+    assert_html_eq!(output, test);
 }
 
 #[test]
@@ -109,9 +109,8 @@ fn code_blocks() {
 ```py
 print("Your code here")
 ```
-"#
-        .to_string(),
-        highlighted,
+"#,
+        &highlighted,
     );
 
     let highlighted = hl.highlight(
@@ -123,9 +122,8 @@ print("Your code here")
 ```
 This is some text in a code block
 ```
-"#
-        .to_string(),
-        highlighted,
+"#,
+        &highlighted,
     );
 
     let highlighted = hl.highlight(
@@ -137,9 +135,8 @@ This is some text in a code block
 ```skajdlas
 This is for a language that doesn't exist
 ```
-"#
-        .to_string(),
-        highlighted,
+"#,
+        &highlighted,
     );
 }
 
@@ -303,7 +300,7 @@ fn lists() {
 code block
 ```
 "#,
-        format!(
+        &format!(
             r#"<ol><li><p>Repeat steps 2-4 until you reach the beginning of the array</p></li></ol><p>[...]</p>{}"#,
             code_block
         ),

@@ -29,8 +29,7 @@ pub struct Heading {
 /// let input = include_str!("../demo.md");
 /// let headings = parse_headings(input);
 /// ```
-pub fn parse_headings(input: impl Into<String>) -> Vec<Heading> {
-    let input = input.into();
+pub fn parse_headings(input: &str) -> Vec<Heading> {
     let mut slugger = Slugger::new();
     for line in input.lines() {
         let mut line = line.chars();
@@ -89,7 +88,7 @@ mod tests {
 
     #[test]
     fn headings() {
-        let headings = parse_headings("## Heading 2".to_string());
+        let headings = parse_headings("## Heading 2");
         assert_eq!(
             headings,
             vec![Heading {
@@ -99,7 +98,7 @@ mod tests {
             }]
         );
 
-        let headings = parse_headings("### This_is-a🍪heading".to_string());
+        let headings = parse_headings("### This_is-a🍪heading");
         assert_eq!(
             headings,
             vec![Heading {

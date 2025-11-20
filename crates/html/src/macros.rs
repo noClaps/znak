@@ -4,8 +4,7 @@
 ///
 /// # Parameters
 ///
-/// The two HTML strings to be compared. These can be [&str], [String], or any
-/// other type that implements [ToString].
+/// The two HTML strings to be compared.
 ///
 /// # Usage
 ///

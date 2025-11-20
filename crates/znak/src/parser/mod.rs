@@ -23,8 +23,8 @@ mod types;
 #[cfg(test)]
 mod tests;
 
-fn count_chars(input: impl Into<String>, char: char) -> usize {
-    input.into().chars().filter(|&c| c == char).count()
+fn count_chars(input: &str, char: char) -> usize {
+    input.chars().filter(|&c| c == char).count()
 }
 
 pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
@@ -202,7 +202,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let math = render_math(buffer, MathDisplay::Block);
+            let math = render_math(&buffer, MathDisplay::Block);
             tokens.push(text!(math));
             line_cursor += 1;
             continue;
