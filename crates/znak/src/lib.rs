@@ -45,7 +45,7 @@ pub fn render(input: &str, hl: &Highlight) -> String {
     }
 
     let input = lines[cur..].join("\n");
-    let parser_output = parse(input, hl);
+    let parser_output = parse(&input, hl);
 
     let mut output = String::new();
     for node in parser_output {

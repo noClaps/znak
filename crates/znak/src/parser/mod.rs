@@ -27,7 +27,7 @@ fn count_chars(input: &str, char: char) -> usize {
     input.chars().filter(|&c| c == char).count()
 }
 
-pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
+pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
     let mut slugger = Slugger::new();
     let lines = input.lines().collect::<Vec<&str>>();
     let mut tokens = vec![];
@@ -62,7 +62,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                     format!("{}\n", lines[line_cursor].trim_start_matches(">").trim()).as_str();
                 line_cursor += 1;
             }
-            let children = parse(blockquote_lines, hl);
+            let children = parse(&blockquote_lines, hl);
             tokens.push(element!("blockquote", children));
             line_cursor += 1;
             continue;
@@ -166,7 +166,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let tables = tables(buffer);
+            let tables = tables(&buffer);
             tokens.push(tables);
             line_cursor += 1;
             continue;

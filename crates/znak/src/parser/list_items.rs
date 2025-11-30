@@ -64,7 +64,7 @@ pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> 
     for line in lines {
         let segments = line.split("\n").collect::<Vec<&str>>();
         if segments.len() == 1 {
-            let children = parse(segments[0].to_string(), hl);
+            let children = parse(segments[0], hl);
             tokens.push(element!("li", children));
         } else {
             let mut remaining_lines = String::new();
@@ -72,7 +72,7 @@ pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> 
                 remaining_lines += format!("{}\n", line.replacen(seg_match, "", 1)).as_str();
             }
             let input = format!("{}\n\n{}", segments[0], remaining_lines);
-            let children = parse(input, hl);
+            let children = parse(&input, hl);
             tokens.push(element!("li", children));
         }
     }

@@ -3,7 +3,7 @@ use crate::parser::{
     types::{Node, element},
 };
 
-pub(crate) fn tables(input: String) -> Node {
+pub(crate) fn tables(input: &str) -> Node {
     let lines = input.trim().lines().collect::<Vec<&str>>();
     let head_row = lines[0];
     let align_row = lines[1];

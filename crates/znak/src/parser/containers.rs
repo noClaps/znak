@@ -53,7 +53,7 @@ pub(crate) fn containers(input: String, hl: &Highlight) -> Node {
 
     let href = attr_map.remove("href");
 
-    let content = parse(body.to_string(), hl);
+    let content = parse(body, hl);
 
     element!(
         "div",
