@@ -1,5 +1,0 @@
-[package]
-name = "tmpl"
-edition.workspace = true
-
-[dependencies]
