@@ -77,12 +77,12 @@ impl Highlight {
     ///     print("Hello world")
     ///
     /// main()
-    /// "#.to_string();
-    /// let language = "python".to_string();
+    /// "#;
+    /// let language = "python";
     ///
     /// let highlighted = hl.highlight(code, language);
     /// ```
-    pub fn highlight(&self, code: String, language: String) -> String {
+    pub fn highlight(&self, code: &str, language: &str) -> String {
         let global_style = self.theme.root.clone();
 
         if language == "plaintext" || language == "plain" || language == "text" || language == "txt"

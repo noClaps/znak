@@ -103,7 +103,7 @@ fn code_blocks() {
     .unwrap();
     hl.add_language(&["python", "py"], python);
 
-    let highlighted = hl.highlight("print(\"Your code here\")".to_string(), "py".to_string());
+    let highlighted = hl.highlight("print(\"Your code here\")", "py");
     test_render(
         r#"
 ```py
@@ -113,10 +113,7 @@ print("Your code here")
         &highlighted,
     );
 
-    let highlighted = hl.highlight(
-        "This is some text in a code block".to_string(),
-        "plaintext".to_string(),
-    );
+    let highlighted = hl.highlight("This is some text in a code block", "plaintext");
     test_render(
         r#"
 ```
@@ -126,10 +123,7 @@ This is some text in a code block
         &highlighted,
     );
 
-    let highlighted = hl.highlight(
-        "This is for a language that doesn't exist".to_string(),
-        "plaintext".to_string(),
-    );
+    let highlighted = hl.highlight("This is for a language that doesn't exist", "plaintext");
     test_render(
         r#"
 ```skajdlas
@@ -289,7 +283,7 @@ fn lists() {
 
     let theme = include_str!("../../../../theme.css").parse().unwrap();
     let hl = Highlight::new(theme);
-    let code_block = hl.highlight("code block".to_string(), "plaintext".to_string());
+    let code_block = hl.highlight("code block", "plaintext");
     test_render(
         r#"
 1. Repeat steps 2-4 until you reach the beginning of the array
