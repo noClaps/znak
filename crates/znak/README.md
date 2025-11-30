@@ -66,7 +66,7 @@ Attributes should be separated by spaces. These attributes are added to the cont
 ::: quote A wise quote {href="https://zerolimits.dev"}
 The title above becomes [a wise quote](https://zerolimits.dev).
 
-Oh yeah, you can use **formatting** _inside_ here. Everything works.
+Oh yeah, you can use *formatting* _inside_ here. Everything works.
 :::
 ```
 
@@ -164,7 +164,7 @@ Inline $x+y$ math
 These can also be used inside most other text blocks, such as inside blockquotes:
 
 ```md
-> This is quite a **bold** statement!
+> This is quite a *bold* statement!
 ```
 
 ## Math blocks

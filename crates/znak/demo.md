@@ -30,7 +30,7 @@ This is a warning container
 ::: quote A wise quote {href="https://zerolimits.dev"}
 The title above becomes [a wise quote](https://zerolimits.dev).
 
-Oh yeah, you can use **formatting** _inside_ here. Everything works.
+Oh yeah, you can use *formatting* _inside_ here. Everything works.
 :::
 
 :::: block1 This is the outer container
@@ -61,15 +61,11 @@ Content here
 
 ![alt text](https://picsum.photos/300)
 
-**bold text**
+*bold text*
 
 _italic text_
 
 `inline code`
-
-~~strikethrough~~
-
-==highlight==
 
 ~sub~script
 
@@ -79,11 +75,9 @@ _italic text_
 
 [link with parentheses](<https://en.wikipedia.org/wiki/Rust_(programming_language)>)
 
-Inline $$x+y$$ math
+Inline $x+y$ math
 
-__underlined text__
-
-> This is quite a **bold** statement!
+> This is quite a *bold* statement!
 
 $$
 a^2 + b^2 = c^2
