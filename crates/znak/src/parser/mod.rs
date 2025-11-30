@@ -48,7 +48,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
         } {
             let heading = &line[level..].trim();
             let slug = slugger.slug(heading, level);
-            let children = inline_formatting(heading.to_string());
+            let children = inline_formatting(heading);
             tokens.push(element!(format!("h{level}"), [id = slug], children));
             line_cursor += 1;
             continue;
@@ -82,7 +82,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
             let image_title = &line[2..image_split];
             let image_url = &line[image_split + 2..line.len() - 1];
 
-            let children = inline_formatting(image_title.to_string());
+            let children = inline_formatting(image_title);
             tokens.push(element!(
                 "figure",
                 vec![
@@ -136,7 +136,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let children = list_items(buffer, hl, ListType::Ordered);
+            let children = list_items(&buffer, hl, ListType::Ordered);
             tokens.push(element!("ol", children));
             continue;
         }
@@ -153,7 +153,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let children = list_items(buffer, hl, ListType::Unordered);
+            let children = list_items(&buffer, hl, ListType::Unordered);
             tokens.push(element!("ul", children));
             continue;
         }
@@ -227,7 +227,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
                 line_cursor += 1;
             }
 
-            let container = containers(buffer, hl);
+            let container = containers(&buffer, hl);
             tokens.push(container);
             line_cursor += 1;
             continue;
@@ -239,7 +239,7 @@ pub(crate) fn parse(input: &str, hl: &Highlight) -> Vec<Node> {
             line_cursor += 1;
         }
         if buffer != "" {
-            let children = inline_formatting(buffer);
+            let children = inline_formatting(&buffer);
             tokens.push(element!("p", children));
         }
         line_cursor += 1;

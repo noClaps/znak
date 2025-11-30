@@ -12,7 +12,7 @@ pub(crate) enum ListType {
     Unordered,
 }
 
-pub(crate) fn list_items(input: String, hl: &Highlight, list_type: ListType) -> Vec<Node> {
+pub(crate) fn list_items(input: &str, hl: &Highlight, list_type: ListType) -> Vec<Node> {
     let (split_input, seg_match) = match list_type {
         ListType::Ordered => {
             let input = input.lines();

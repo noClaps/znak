@@ -12,7 +12,7 @@ fn concat_vec<T>(mut vec_a: Vec<T>, mut vec_b: Vec<T>) -> Vec<T> {
     vec_a
 }
 
-pub(crate) fn containers(input: String, hl: &Highlight) -> Node {
+pub(crate) fn containers(input: &str, hl: &Highlight) -> Node {
     let (head, body) = input.split_once("\n").unwrap();
     let body = body.trim();
 

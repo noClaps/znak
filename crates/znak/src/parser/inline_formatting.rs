@@ -6,7 +6,7 @@ use math::{MathDisplay, render_math};
 use crate::parser::types::{Node, element, text};
 
 // TODO: rewrite this in terms of a char iterator, and DO NOT .collect() TO A String
-pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
+pub(crate) fn inline_formatting(line: &str) -> Vec<Node> {
     let mut contents = vec![];
     let buffer = &mut String::new();
     let line: Vec<_> = line.chars().collect();
@@ -27,7 +27,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
                 if temp_buf.is_empty() {
                     contents.push(text!(format!("{}{}", $pat, $pat)));
                 } else {
-                    let children = inline_formatting(temp_buf);
+                    let children = inline_formatting(&temp_buf);
                     contents.push(element!($tag, children));
                 }
                 cursor += next_index + 1;
@@ -144,7 +144,7 @@ pub(crate) fn inline_formatting(line: String) -> Vec<Node> {
             if link_title.is_empty() || link_url.is_empty() {
                 contents.push(text!(format!("[{}]({})", link_title, link_url)));
             } else {
-                let children = inline_formatting(link_title);
+                let children = inline_formatting(&link_title);
                 contents.push(element!("a", [href = link_url.as_str()], children));
             }
 

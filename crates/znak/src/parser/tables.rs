@@ -28,7 +28,7 @@ pub(crate) fn tables(input: &str) -> Node {
 
     let mut thead_nodes = vec![];
     for (i, th) in thead.enumerate() {
-        let children = inline_formatting(th.to_string());
+        let children = inline_formatting(th);
         thead_nodes.push(element!("th", [align = alignments[i]], children));
     }
 
@@ -36,7 +36,7 @@ pub(crate) fn tables(input: &str) -> Node {
     for line in tbody {
         let mut tr_nodes = vec![];
         for (i, col) in line[1..line.len() - 1].split("|").enumerate() {
-            let children = inline_formatting(col.trim().to_string());
+            let children = inline_formatting(col.trim());
             tr_nodes.push(element!("td", [align = alignments[i]], children));
         }
         tbody_nodes.push(element!("tr", tr_nodes));
