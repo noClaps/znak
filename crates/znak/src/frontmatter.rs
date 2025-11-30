@@ -51,12 +51,12 @@ pub fn parse_frontmatter(input: &str) -> Result<HashMap<String, String>, String>
 mod tests {
     use super::*;
 
-    fn make_map(vals: Vec<(&str, &str)>) -> HashMap<String, String> {
-        let mut map = HashMap::new();
-        for (k, v) in vals {
-            map.insert(k.to_string(), v.to_string());
-        }
-        map
+    macro_rules! make_map {
+        ($($key:literal: $value:literal$(,)?)*) => {
+            std::collections::HashMap::from([
+                $(($key.to_string(), $value.to_string()),)*
+            ])
+        };
     }
 
     #[test]
@@ -71,11 +71,11 @@ date: 2025-03-11
 "#,
         )
         .unwrap();
-        let check = make_map(vec![
-            ("title", "A title"),
-            ("description", "Some description here"),
-            ("date", "2025-03-11"),
-        ]);
+        let check = make_map! {
+            "title": "A title",
+            "description": "Some description here",
+            "date": "2025-03-11"
+        };
         assert_eq!(fm, check);
 
         let fm = parse_frontmatter(
@@ -90,11 +90,11 @@ Some extra text here.
 "#,
         )
         .unwrap();
-        let check = make_map(vec![
-            ("title", "A title"),
-            ("description", "Some description here"),
-            ("date", "2025-03-11"),
-        ]);
+        let check = make_map! {
+            "title": "A title",
+            "description": "Some description here",
+            "date": "2025-03-11",
+        };
         assert_eq!(fm, check);
 
         let fm = parse_frontmatter(
@@ -109,7 +109,7 @@ This was a post about Google. There's also a <hr /> below to see what happens
 "#,
         )
         .unwrap();
-        let check = make_map(vec![("title", "Google: A Misrepresented Evil")]);
+        let check = make_map! {"title": "Google: A Misrepresented Evil"};
         assert_eq!(fm, check);
 
         let fm = parse_frontmatter(r#"
@@ -124,15 +124,12 @@ lastmod: 2023-03-09
 
 I've really gotten into this stuff over the last 2 years or so. I probably shouldn't have, since I had a lot of (arguably) more important stuff going on during that time, and focusing on that might have been better for me and my future. But I digress.
 "#).unwrap();
-        let check = make_map(vec![
-            ("title", "Intro to Privacy, Security and Anonymity"),
-            (
-                "description",
-                "How to protect yourself from the internet, on the internet",
-            ),
-            ("date", "2022-04-06"),
-            ("lastmod", "2023-03-09"),
-        ]);
+        let check = make_map! {
+            "title": "Intro to Privacy, Security and Anonymity",
+            "description": "How to protect yourself from the internet, on the internet",
+            "date": "2022-04-06",
+            "lastmod": "2023-03-09",
+        };
         assert_eq!(fm, check);
     }
 }
