@@ -31,8 +31,7 @@ mod tests;
 impl FromStr for Node {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let input = s.to_string();
-        let root = parse_impl(input, |c| c.is_whitespace());
+        let root = parse_impl(s, |c| c.is_whitespace());
         Ok(root!(root))
     }
 }
@@ -49,7 +48,7 @@ macro_rules! c2str {
     };
 }
 
-fn parse_impl(input: String, skip: fn(char) -> bool) -> Vec<Node> {
+fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
     let mut nodes = vec![];
     let chars: Vec<_> = input.chars().collect();
 
@@ -128,7 +127,7 @@ fn parse_impl(input: String, skip: fn(char) -> bool) -> Vec<Node> {
                 "p" => |c: char| c.is_whitespace() && c != ' ' && c != '\t',
                 _ => skip,
             };
-            let children = parse_impl(inner_html, skip);
+            let children = parse_impl(&inner_html, skip);
             nodes.push(element!(tag_name, attributes, children));
 
             i += clen!(close_tag);

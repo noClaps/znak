@@ -37,8 +37,8 @@ pub fn parse_headings(input: &str) -> Vec<Heading> {
         while let Some('#') = line.next() {
             level += 1;
         }
-        let heading = line.collect::<String>().trim().to_string();
-        slugger.slug(heading, level);
+        let heading = line.collect::<String>();
+        slugger.slug(heading.trim(), level);
     }
 
     return slugger.headings;
@@ -57,7 +57,7 @@ impl Slugger {
         }
     }
 
-    pub(crate) fn slug(&mut self, heading: String, depth: usize) -> String {
+    pub(crate) fn slug(&mut self, heading: &str, depth: usize) -> String {
         let clean_heading = heading
             .replace(|c: char| !c.is_alphanumeric(), "-")
             .to_lowercase();
@@ -76,7 +76,7 @@ impl Slugger {
         self.headings.push(Heading {
             depth,
             slug: slug.clone(),
-            title: heading,
+            title: heading.to_string(),
         });
         slug
     }

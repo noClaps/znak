@@ -47,7 +47,7 @@ pub(crate) fn parse(input: String, hl: &Highlight) -> Vec<Node> {
             _ => None,
         } {
             let heading = &line[level..].trim();
-            let slug = slugger.slug(heading.to_string(), level);
+            let slug = slugger.slug(heading, level);
             let children = inline_formatting(heading.to_string());
             tokens.push(element!(format!("h{level}"), [id = slug], children));
             line_cursor += 1;
