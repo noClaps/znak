@@ -48,7 +48,7 @@ pub(crate) fn inline_formatting(line: &str) -> Vec<Node> {
         // Bold (*)
         formatting!("strong", '*');
 
-        // Inline math ($$)
+        // Inline math ($)
         if line[cursor] == '$'
             && let Some(next_index) = line[cursor + 1..].iter().position(|&c| c == '$')
         {
