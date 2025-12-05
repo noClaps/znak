@@ -15,8 +15,7 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo doc --no-deps
-      - run: echo "/ /znak/" > target/doc/_redirects
-      - uses: oven-sh/setup-bun@v2
-      - run: bunx wrangler deploy
+      - run: echo "/ /highlight/" > target/doc/_redirects
+      - run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
