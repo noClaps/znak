@@ -1,7 +1,11 @@
 use std::{collections::HashMap, str::FromStr};
 
-use crate::types::{Node, comment, doctype, element, root, text};
+use crate::{
+    parser::tags::SELF_CLOSING_TAGS,
+    types::{Node, comment, doctype, element, root, text},
+};
 
+mod tags;
 #[cfg(test)]
 mod tests;
 
@@ -90,8 +94,13 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
 
                     i += 1; // exit opening tag
 
-                    if opening_tag.ends_with("/") {
-                        let attributes = parse_attrs(&attrs[..attrs.len() - 1]);
+                    if opening_tag.ends_with("/") || SELF_CLOSING_TAGS.contains(&tag_name.as_str())
+                    {
+                        let attributes = if attrs.len() > 0 {
+                            parse_attrs(&attrs[..attrs.len() - 1])
+                        } else {
+                            HashMap::new()
+                        };
                         nodes.push(element!(tag_name, attributes, vec![]));
                         continue;
                     }
@@ -122,7 +131,7 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
                     }
 
                     let skip = match tag_name.as_str() {
-                        "pre" => |_| false,
+                        "pre" | "code" => |_| false,
                         "p" => |c: char| c.is_whitespace() && c != ' ' && c != '\t',
                         _ => skip,
                     };

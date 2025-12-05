@@ -66,7 +66,7 @@ mod tests {
         let want = "<!doctype html><html lang=\"en\"><head /><body /></html>";
         let got = root!([
             doctype!(),
-            element!("html", {lang: "en"}, [element!("head"), element!("body")])
+            element!("html", {"lang" => "en"}, [element!("head"), element!("body")])
         ]);
         assert_eq!(want, got.to_string());
 

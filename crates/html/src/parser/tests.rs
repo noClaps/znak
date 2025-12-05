@@ -80,16 +80,16 @@ fn text() {
 fn element() {
     let want = root!([element!(
         "h1",
-        {id: "heading-1"},
+        {"id" => "heading-1"},
         [text!("Heading 1")]
     )]);
     let got = "<h1 id=\"heading-1\">Heading 1</h1>".parse().unwrap();
     assert_eq!(want, got);
 
     let want = root!([
-        element!("h2",{id: "heading"},[text!("Heading")]),
-        element!("h3",{id: "heading-1"},[text!("Heading")]),
-        element!("h4",{id: "heading-2"},[text!("Heading")]),
+        element!("h2",{"id" => "heading"},[text!("Heading")]),
+        element!("h3",{"id" => "heading-1"},[text!("Heading")]),
+        element!("h4",{"id" => "heading-2"},[text!("Heading")]),
     ]);
     let got =
         r#"<h2 id="heading">Heading</h2><h3 id="heading-1">Heading</h3><h4 id="heading-2">Heading</h4>"#.parse().unwrap();
@@ -131,14 +131,14 @@ fn element() {
         "figure",
         [
             element!("img", {
-                src: "https://picsum.photos/300",
-                alt: "This contains a [link](https://picsum.photos)"
+                "src" => "https://picsum.photos/300",
+                "alt" => "This contains a [link](https://picsum.photos)"
             }),
             element!(
                 "figcaption",
                 [
                     text!("This contains a "),
-                    element!("a", {href: "https://picsum.photos"}, [text!("link")])
+                    element!("a", {"href" => "https://picsum.photos"}, [text!("link")])
                 ]
             )
         ]
@@ -147,8 +147,8 @@ fn element() {
         "<figure><img src=\"https://picsum.photos/300\" alt=\"This contains a [link](https://picsum.photos)\" /><figcaption>This contains a <a href=\"https://picsum.photos\">link</a></figcaption></figure>".parse().unwrap();
     assert_eq!(want, got);
 
-    let want = root!([element!("div", {class: "znak-container note"}, [
-        element!("p", {class: "note-heading"}, [element!("b", [text!("A NOTE")])]),
+    let want = root!([element!("div", {"class" => "znak-container note"}, [
+        element!("p", {"class" => "note-heading"}, [element!("b", [text!("A NOTE")])]),
         element!("p", [text!("This is some text in a note.")])
     ])]);
     let got =
@@ -156,17 +156,17 @@ fn element() {
     assert_eq!(want, got);
 
     let want = root!([element!("div",
-            {class: "znak-container block1"},
+            {"class" => "znak-container block1"},
             [
                 element!("p",
-                    {class: "block1-heading"},
+                    {"class" => "block1-heading"},
                     [
                         element!("b", [text!("This is the outer container")])
                     ]
                 )
                 element!("p", [text!("You can have some text here.")]),
-                element!("div", {class: "znak-container block2"}, [
-                    element!("p", {class: "block2-heading"}, [
+                element!("div", {"class" => "znak-container block2"}, [
+                    element!("p", {"class" => "block2-heading"}, [
                         element!("b", [text!("This is the inner container")])
                     ]),
                     element!("p", [text!("This can have some more text.")])
@@ -178,8 +178,8 @@ fn element() {
     assert_eq!(want, got);
 
     let want = root!([
-        element!("div", {id: "my-note" class: "znak-container note"}, [
-            element!("p", {class: "note-heading"}, [
+        element!("div", {"id" => "my-note", "class" => "znak-container note"}, [
+            element!("p", {"class" => "note-heading"}, [
                 element!("b", [text!("A NOTE")])
             ]),
             element!("p", [text!("This is some text in a note.")])
@@ -191,7 +191,7 @@ fn element() {
 
     let want = root!([element!(
         "div",
-        [element!("div", {class: "nested"}, [
+        [element!("div", {"class" => "nested"}, [
             element!("p", [text!("Some content here")])
         ])]
     )]);
@@ -205,8 +205,8 @@ fn element() {
     assert_eq!(want, got);
 
     let want = root!([
-        element!("link", {rel: "stylesheet", href: "/styles/style.css"}),
-        element!("link", {rel: "alternate", href: "/feed.atom"})
+        element!("link", {"rel" => "stylesheet", "href" => "/styles/style.css"}),
+        element!("link", {"rel" => "alternate", "href" => "/feed.atom"})
     ]);
     let got = r#"
         <link rel="stylesheet" href="/styles/style.css">
@@ -214,4 +214,22 @@ fn element() {
         .parse()
         .unwrap();
     assert_eq!(want, got);
+
+    let want = root!([element!("code", {"data-lang" => "json"}, [
+        text!("{"),
+        element!("br"),
+        text!(r#"  "ip": "[REDACTED]","#),
+        element!("br"),
+        text!(r#"  "count": 10,"#),
+        element!("br"),
+        text!(r#"  "limit": 10,"#),
+        element!("br"),
+        text!(r#"  "remaining": 0,"#),
+        element!("br")
+        text!(r#"  "resetAt": "2025-06-23T17:17:24.201Z""#),
+        element!("br"),
+        text!("}")
+    ])]);
+    let got = r#"<code data-lang="json">{<br>  "ip": "[REDACTED]",<br>  "count": 10,<br>  "limit": 10,<br>  "remaining": 0,<br>  "resetAt": "2025-06-23T17:17:24.201Z"<br>}</code>"#.parse().unwrap();
+    assert_eq!(want, got)
 }

@@ -82,17 +82,17 @@ macro_rules! doctype {
 }
 
 macro_rules! element {
-    ($tag:expr, {$($key:ident: $val:expr$(,)?)+}, [$($child:expr$(,)?)+]) => {
+    ($tag:expr, {$($key:expr => $val:expr$(,)?)+}, [$($child:expr$(,)?)+]) => {
         Node::Element {
             tag_name: $tag.to_string(),
-            properties: std::collections::HashMap::from([$((stringify!($key).to_string(), $val.to_string()),)*]),
+            properties: std::collections::HashMap::from([$(($key.to_string(), $val.to_string()),)*]),
             children: vec![$($child,)*],
         }
     };
-    ($tag:expr, {$($key:ident: $val:expr$(,)?)+}) => {
+    ($tag:expr, {$($key:expr => $val:expr$(,)?)+}) => {
         Node::Element {
             tag_name: $tag.to_string(),
-            properties: std::collections::HashMap::from([$((stringify!($key).to_string(), $val.to_string()),)*]),
+            properties: std::collections::HashMap::from([$(($key.to_string(), $val.to_string()),)*]),
             children: vec![],
         }
     };
