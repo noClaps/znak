@@ -36,18 +36,6 @@ impl FromStr for Node {
     }
 }
 
-macro_rules! clen {
-    ($str:expr) => {
-        $str.chars().count()
-    };
-}
-
-macro_rules! c2str {
-    ($iter:expr) => {
-        $iter.iter().collect::<String>()
-    };
-}
-
 fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
     let mut nodes = vec![];
     let chars: Vec<_> = input.chars().collect();
@@ -59,93 +47,99 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
             continue;
         }
 
-        if c2str!(chars[i..])
-            .to_lowercase()
-            .starts_with("<!doctype html>")
-        {
-            nodes.push(doctype!());
-            i += clen!("<!doctype html>");
-            continue;
-        }
-
-        if c2str!(chars[i..]).starts_with("<!--") {
-            i += clen!("<!--");
-            let mut comment = String::new();
-            while i < chars.len() && !c2str!(chars[i..]).starts_with("-->") {
-                comment.push(chars[i]);
-                i += 1;
-            }
-            nodes.push(comment!(comment.trim()));
-            i += clen!("-->");
-            continue;
-        }
-
         if chars[i] == '<' {
-            i += 1; // enter opening tag
-            let mut opening_tag = String::new();
-            let mut inside = false;
-            while chars[i] != '>' || inside {
-                if chars[i] == '"' {
-                    inside = !inside;
+            // parsing tag
+            match chars[i + 1] {
+                '!' => {
+                    // either doctype or comment
+                    i += 1;
+                    let mut tag = String::new();
+                    while i < chars.len() && chars[i] != '>' {
+                        tag.push(chars[i]);
+                        i += 1;
+                    }
+                    if tag.to_lowercase() == "!doctype html" {
+                        nodes.push(doctype!());
+                        i += 1;
+                        continue;
+                    }
+                    if tag.starts_with("!--") {
+                        nodes.push(comment!(
+                            tag.trim_start_matches("!--").trim_end_matches("--")
+                        ));
+                        i += 1;
+                        continue;
+                    }
                 }
-                opening_tag.push(chars[i]);
-                i += 1;
+                _ => {
+                    i += 1; // enter opening tag
+                    let mut opening_tag = String::new();
+                    let mut inside = false;
+                    while chars[i] != '>' || inside {
+                        if chars[i] == '"' {
+                            inside = !inside;
+                        }
+                        opening_tag.push(chars[i]);
+                        i += 1;
+                    }
+
+                    let (tag_name, attrs) = match opening_tag.split_once(" ") {
+                        Some((t, a)) => (t.to_string(), a),
+                        None => (opening_tag.clone(), ""),
+                    };
+
+                    i += 1; // exit opening tag
+
+                    if opening_tag.ends_with("/") {
+                        let attributes = parse_attrs(&attrs[..attrs.len() - 1]);
+                        nodes.push(element!(tag_name, attributes, vec![]));
+                        continue;
+                    }
+
+                    let attributes = parse_attrs(attrs);
+
+                    let close_tag: Vec<_> = format!("</{}>", tag_name).chars().collect();
+                    let open_tag: Vec<_> = format!("<{}", tag_name).chars().collect();
+                    let mut inner_html = String::new();
+                    let mut depth = 0;
+                    let original_i = i;
+
+                    while i < chars.len() && !chars[i..].starts_with(&close_tag) || depth > 0 {
+                        if chars[i..].starts_with(&open_tag) {
+                            depth += 1;
+                        }
+                        if chars[i..].starts_with(&close_tag) {
+                            depth -= 1;
+                        }
+                        inner_html.push(chars[i]);
+                        i += 1;
+                        if i == chars.len() {
+                            // turns out it was a self-closing element
+                            inner_html.clear();
+                            i = original_i;
+                            break;
+                        }
+                    }
+
+                    let skip = match tag_name.as_str() {
+                        "pre" => |_| false,
+                        "p" => |c: char| c.is_whitespace() && c != ' ' && c != '\t',
+                        _ => skip,
+                    };
+                    let children = parse_impl(&inner_html, skip);
+                    nodes.push(element!(tag_name, attributes, children));
+
+                    i += close_tag.len();
+                    continue;
+                }
             }
-
-            let (tag_name, attrs) = match opening_tag.split_once(" ") {
-                Some((t, a)) => (t.to_string(), a),
-                None => (opening_tag.clone(), ""),
-            };
-
-            i += 1; // exit opening tag
-
-            if opening_tag.ends_with("/") {
-                let attributes = parse_attrs(&attrs[..attrs.len() - 1]);
-                nodes.push(element!(tag_name, attributes, vec![]));
-                continue;
-            }
-
-            let attributes = parse_attrs(attrs);
-
-            let close_tag = format!("</{}>", tag_name);
-            let open_tag = format!("<{}", tag_name);
-            let mut inner_html = String::new();
-            let mut depth = 0;
-            let original_i = i;
-            while i < chars.len() && !c2str!(chars[i..]).starts_with(&close_tag) || depth > 0 {
-                if c2str!(chars[i..]).starts_with(&open_tag) {
-                    depth += 1;
-                }
-                if c2str!(chars[i..]).starts_with(&close_tag) {
-                    depth -= 1;
-                }
-                inner_html.push(chars[i]);
-                i += 1;
-                if i == chars.len() {
-                    // turns out it was a self-closing element
-                    inner_html.clear();
-                    i = original_i;
-                    break;
-                }
-            }
-
-            let skip = match tag_name.as_str() {
-                "pre" => |_| false,
-                "p" => |c: char| c.is_whitespace() && c != ' ' && c != '\t',
-                _ => skip,
-            };
-            let children = parse_impl(&inner_html, skip);
-            nodes.push(element!(tag_name, attributes, children));
-
-            i += clen!(close_tag);
-            continue;
         }
 
         let text_pos = match chars[i..].iter().position(|&c| c == '<') {
             Some(pos) => pos,
             None => chars[i..].len(),
         };
-        let text = c2str!(chars[i..i + text_pos]);
+        let text: String = chars[i..i + text_pos].iter().collect();
         nodes.push(text!(text));
 
         i += text_pos;

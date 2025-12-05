@@ -39,7 +39,7 @@ text before <!doctype html> text after
 
 #[test]
 fn comment() {
-    let want = root!([doctype!(), comment!("This is a comment")]);
+    let want = root!([doctype!(), comment!(" This is a comment ")]);
     let got = "
             <!doctype html>
             <!-- This is a comment -->
@@ -48,7 +48,7 @@ fn comment() {
     .unwrap();
     assert_eq!(want, got);
 
-    let want = root!([comment!("This is a comment")]);
+    let want = root!([comment!(" This is a comment ")]);
     let got = "<!-- This is a comment -->".parse().unwrap();
     assert_eq!(want, got);
 
@@ -56,11 +56,11 @@ fn comment() {
     let got = "<!--hi-->".parse().unwrap();
     assert_eq!(want, got);
 
-    let want = root!([comment!("I love cookies 🍪")]);
+    let want = root!([comment!(" I love cookies 🍪 ")]);
     let got = "<!-- I love cookies 🍪 -->".parse().unwrap();
     assert_eq!(want, got);
 
-    let want = root!([text!("a"), comment!("I love cookies 🍪"), text!("b"),]);
+    let want = root!([text!("a"), comment!(" I love cookies 🍪 "), text!("b"),]);
     let got = "a<!-- I love cookies 🍪 -->b".parse().unwrap();
     assert_eq!(want, got);
 
