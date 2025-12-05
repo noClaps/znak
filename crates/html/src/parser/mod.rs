@@ -111,6 +111,7 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
             let open_tag = format!("<{}", tag_name);
             let mut inner_html = String::new();
             let mut depth = 0;
+            let original_i = i;
             while i < chars.len() && !c2str!(chars[i..]).starts_with(&close_tag) || depth > 0 {
                 if c2str!(chars[i..]).starts_with(&open_tag) {
                     depth += 1;
@@ -120,6 +121,12 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
                 }
                 inner_html.push(chars[i]);
                 i += 1;
+                if i == chars.len() {
+                    // turns out it was a self-closing element
+                    inner_html.clear();
+                    i = original_i;
+                    break;
+                }
             }
 
             let skip = match tag_name.as_str() {

@@ -203,4 +203,15 @@ fn element() {
         .parse()
         .unwrap();
     assert_eq!(want, got);
+
+    let want = root!([
+        element!("link", {rel: "stylesheet", href: "/styles/style.css"}),
+        element!("link", {rel: "alternate", href: "/feed.atom"})
+    ]);
+    let got = r#"
+        <link rel="stylesheet" href="/styles/style.css">
+        <link rel="alternate" href="/feed.atom">"#
+        .parse()
+        .unwrap();
+    assert_eq!(want, got);
 }
