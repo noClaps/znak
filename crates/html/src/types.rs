@@ -43,7 +43,7 @@ use std::collections::HashMap;
 /// let root = Node::Root(vec![Node::DocType]);
 /// assert_eq!(root.to_string(), "<!doctype html>");
 /// ```
-#[derive(Debug, PartialEq, Eq)]
+#[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Node {
     /// The node type that represents the root of an HTML document. It contains
     /// a list of child nodes.
