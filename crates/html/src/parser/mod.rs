@@ -87,7 +87,7 @@ fn parse_impl(input: &str, skip: fn(char) -> bool) -> Vec<Node> {
                         i += 1;
                     }
 
-                    let (tag_name, attrs) = match opening_tag.split_once(" ") {
+                    let (tag_name, attrs) = match opening_tag.split_once(char::is_whitespace) {
                         Some((t, a)) => (t.to_string(), a),
                         None => (opening_tag.clone(), ""),
                     };
@@ -174,13 +174,13 @@ fn parse_attrs(attrs: &str) -> HashMap<String, String> {
 
         // parse key
         let mut key = String::new();
-        while i < attrs.len() && attrs[i] != '=' && attrs[i] != ' ' {
+        while i < attrs.len() && attrs[i] != '=' && !attrs[i].is_whitespace() {
             key.push(attrs[i]);
             i += 1;
         }
 
         // parse value
-        if i == attrs.len() || attrs[i] == ' ' {
+        if i == attrs.len() || attrs[i].is_whitespace() {
             attributes.insert(key, "true".to_string());
             i += 1;
             continue;
@@ -194,7 +194,7 @@ fn parse_attrs(attrs: &str) -> HashMap<String, String> {
                 i += 1;
             }
         } else {
-            while i < attrs.len() && attrs[i] != ' ' {
+            while i < attrs.len() && !attrs[i].is_whitespace() {
                 val.push(attrs[i]);
                 i += 1;
             }

@@ -231,5 +231,18 @@ fn element() {
         text!("}")
     ])]);
     let got = r#"<code data-lang="json">{<br>  "ip": "[REDACTED]",<br>  "count": 10,<br>  "limit": 10,<br>  "remaining": 0,<br>  "resetAt": "2025-06-23T17:17:24.201Z"<br>}</code>"#.parse().unwrap();
-    assert_eq!(want, got)
+    assert_eq!(want, got);
+
+    let want = root!([element!("img", {
+        "src" => "./assets/2025/PXL_20250805_135159467.RAW-01.COVER.jpg",
+        "alt" => "University of Bristol Botanic Garden, Bristol, August 2025"
+    })]);
+    let got = r#"
+<img
+    src="./assets/2025/PXL_20250805_135159467.RAW-01.COVER.jpg"
+    alt="University of Bristol Botanic Garden, Bristol, August 2025"
+/>"#
+    .parse()
+    .unwrap();
+    assert_eq!(want, got);
 }
