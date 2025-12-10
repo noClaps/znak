@@ -4,7 +4,7 @@ edition.workspace = true
 
 [dependencies]
 html = { path = "../html" }
-tree-sitter-highlight = "0.25.10"
+tree-sitter-highlight = "0.26.2"
 
 [dev-dependencies]
 tree-sitter-python = "0.25.0"
