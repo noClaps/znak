@@ -6,15 +6,13 @@ mod theme;
 use std::{collections::HashMap, sync::Arc};
 
 use html::escape_html;
-pub use tree_sitter_highlight::HighlightConfiguration;
-use tree_sitter_highlight::{Highlighter, HtmlRenderer};
+use tree_sitter_highlight::{HighlightConfiguration, Highlighter, HtmlRenderer};
 
 pub use crate::theme::Theme;
 
-/// A highlighter configuration object. As it can be expensive to create
-/// Highlight objects, mainly due to creating
-/// [HighlightConfigurations](HighlightConfiguration), you should initialise
-/// it once and reuse it everywhere you need, instead of creating multiple.
+/// A highlighter configuration object. As it can be expensive to create Highlight objects, mainly
+/// due to creating HighlightConfigurations, you should initialise it once and reuse it everywhere
+/// you need, instead of creating multiple.
 pub struct Highlight {
     theme: Theme,
     recognised_names: Vec<String>,
@@ -59,18 +57,17 @@ impl Highlight {
     /// # Usage
     ///
     /// ```rust
-    /// use highlight::{Highlight, HighlightConfiguration};
+    /// use highlight::Highlight;
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// let python = HighlightConfiguration::new(
+    /// hl.add_language(
+    ///     &["python", "py"],
     ///     tree_sitter_python::LANGUAGE.into(),
-    ///     "python",
     ///     tree_sitter_python::HIGHLIGHTS_QUERY,
     ///     "",
     ///     "",
-    /// ).unwrap();
-    /// hl.add_language(&["python", "py"], python);
+    /// );
     ///
     /// let code = r#"
     /// def main():

@@ -4,9 +4,9 @@ use std::{collections::HashMap, str::FromStr};
 ///
 /// A theme is a CSS file, supporting a very basic CSS syntax.
 ///
-/// - You can define global styles on the `:root` pseudo-element. These will be
-///   applied to the parent `<pre>` element, and used by the content inside if
-///   no styles are present for that syntax.
+/// - You can define global styles on the `:root` pseudo-element. These will be applied to the
+///   parent `<pre>` element, and used by the content inside if no styles are present for that
+///   syntax.
 ///
 ///   ```css
 ///   :root {
@@ -16,10 +16,9 @@ use std::{collections::HashMap, str::FromStr};
 ///   }
 ///   ```
 ///
-/// - You can configure highlights by defining your syntax type as the
-///   selector, and apply styles to that selector. Syntax types with dots in
-///   them are allowed, as well as using multiple selectors for the same
-///   styles, are allowed.
+/// - You can configure highlights by defining your syntax type as the selector, and apply styles
+///   to that selector. Syntax types with dots in them are allowed, as well as using multiple
+///   selectors for the same styles, are allowed.
 ///
 ///   ```css
 ///   type {
@@ -36,10 +35,9 @@ use std::{collections::HashMap, str::FromStr};
 ///   }
 ///   ```
 ///
-/// Note that advanced CSS features, like nesting, combinators, other
-/// pseudo-elements, media queries, etc., are not supported. Everything inside
-/// the `{}` braces will be used as-is for the inline style, so only properties
-/// will work inside.
+/// Note that advanced CSS features, like nesting, combinators, other pseudo-elements, media
+/// queries, etc., are not supported. Everything inside the `{}` braces will be used as-is for the
+/// inline style, so only properties will work inside.
 ///
 /// You can look at
 /// [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an
@@ -47,8 +45,8 @@ use std::{collections::HashMap, str::FromStr};
 ///
 /// # Usage
 ///
-/// You can create a new theme using the `.parse()` method on a string, or the
-/// [Theme::from_str] method.
+/// You can create a new theme using the `.parse()` method on a string, or the [Theme::from_str]
+/// method.
 ///
 /// ```rust
 /// use highlight::Theme;

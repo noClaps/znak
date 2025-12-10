@@ -44,6 +44,7 @@ name = "highlight"
 version = "0.0.0"
 dependencies = [
  "html",
+ "tree-sitter",
  "tree-sitter-highlight",
  "tree-sitter-python",
 ]
