@@ -5,8 +5,5 @@ jobs:
     runs-on: codeberg-tiny-lazy
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v5
-      - uses: https://codeberg.org/wackbyte/rust-toolchain@trunk
-        with:
-          toolchain: stable
-          default: true
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
       - run: cargo test

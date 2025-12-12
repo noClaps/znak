@@ -6,10 +6,7 @@ jobs:
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v6
 
-      - uses: https://codeberg.org/wackbyte/rust-toolchain@trunk
-        with:
-          toolchain: stable
-          default: true
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
       - run: cargo doc --no-deps
       - run: echo "/ /highlight/" > target/doc/_redirects
 
