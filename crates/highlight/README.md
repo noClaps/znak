@@ -3,7 +3,7 @@ A syntax highlighting library that uses [Tree-sitter](https://tree-sitter.github
 You can add this library to your project with:
 
 ```bash
-cargo add --git https://github.com/noClaps/znak highlight
+cargo add --git https://codeberg.org/noClaps/znak highlight
 ```
 
 ## Languages

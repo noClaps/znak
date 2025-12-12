@@ -4,11 +4,11 @@ use std::collections::HashMap;
 ///
 /// # Parsing
 ///
-/// You can parse a string to a Node using the `.parse()` method on it. It is
-/// safe to unwrap since the parser never panics, and any panics should be
-/// [reported as bugs](https://github.com/noClaps/znak/issues/new). While the
-/// goal isn’t to make a full HTML5-compliant parser, it still shouldn’t panic
-/// if it encounters some strangely formatted HTML.
+/// You can parse a string to a Node using the `.parse()` method on it. It is safe to unwrap since
+/// the parser never panics, and any panics should be
+/// [reported as bugs](https://codeberg.org/noClaps/znak/issues/new). While the goal isn’t to make
+/// a full HTML5-compliant parser, it still shouldn’t panic if it encounters some strangely
+/// formatted HTML.
 ///
 /// ```rust
 /// use html::Node;
@@ -34,8 +34,8 @@ use std::collections::HashMap;
 ///
 /// # Rendering
 ///
-/// When starting with a [Node], you can render it to an HTML string using the
-/// `to_string()` method.
+/// When starting with a [Node], you can render it to an HTML string using the `to_string()`
+/// method.
 ///
 /// ```rust
 /// use html::Node;
@@ -45,14 +45,13 @@ use std::collections::HashMap;
 /// ```
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub enum Node {
-    /// The node type that represents the root of an HTML document. It contains
-    /// a list of child nodes.
+    /// The node type that represents the root of an HTML document. It contains a list of child
+    /// nodes.
     Root(Vec<Node>),
-    /// The node type that represents `<!doctype html>`. No other doctypes are
-    /// accepted.
+    /// The node type that represents `<!doctype html>`. No other doctypes are accepted.
     DocType,
-    /// The node type that represents `<!-- HTML comments -->`. It contains a
-    /// string with the comment contents.
+    /// The node type that represents `<!-- HTML comments -->`. It contains a string with the
+    /// comment contents.
     Comment(String),
     /// The node type that represents an HTML element.
     Element {
@@ -60,12 +59,11 @@ pub enum Node {
         tag_name: String,
         /// A key-value map of the attributes of the element.
         properties: HashMap<String, String>,
-        /// The children of the element. This is empty if the element is empty,
-        /// or if it's a self-closing element.
+        /// The children of the element. This is empty if the element is empty, or if it's a
+        /// self-closing element.
         children: Vec<Node>,
     },
-    /// The node type that represents text. It contains a string with the text
-    /// contents.
+    /// The node type that represents text. It contains a string with the text contents.
     Text(String),
 }
 

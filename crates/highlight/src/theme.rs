@@ -40,8 +40,8 @@ use std::{collections::HashMap, str::FromStr};
 /// inline style, so only properties will work inside.
 ///
 /// You can look at
-/// [`theme.css`](https://github.com/noClaps/znak/blob/main/theme.css) for an
-/// example theme.
+/// [`theme.css`](https://codeberg.org/noClaps/znak/src/branch/main/theme.css) for an example
+/// theme.
 ///
 /// # Usage
 ///
