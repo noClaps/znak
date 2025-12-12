@@ -4,9 +4,10 @@ jobs:
   docs:
     runs-on: codeberg-tiny
     steps:
-      - uses: actions/checkout@v5
+      - uses: https://code.forgejo.org/actions/checkout@v6
+
       - uses: https://github.com/dtolnay/rust-toolchain@stable
-      - uses: actions/cache@v4
+      - uses: https://code.forgejo.org/actions/cache@v5
         with:
           path: |
             ~/.cargo/bin/
@@ -17,6 +18,8 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - run: cargo doc --no-deps
       - run: echo "/ /highlight/" > target/doc/_redirects
+
+      - uses: https://code.forgejo.org/actions/setup-node@v6
       - run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
