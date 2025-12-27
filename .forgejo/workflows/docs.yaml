@@ -2,7 +2,7 @@ on: push
 
 jobs:
   docs:
-    runs-on: codeberg-tiny-lazy
+    runs-on: codeberg-small-lazy
     steps:
       - uses: https://code.forgejo.org/actions/checkout@v6
 
