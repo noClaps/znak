@@ -134,7 +134,7 @@ impl Highlight {
                 );
             }
         };
-        let highlighted_text = html_renderer.lines().collect::<Vec<_>>().join("\n");
+        let highlighted_text: String = html_renderer.lines().collect();
 
         format!(
             "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
