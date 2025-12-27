@@ -40,11 +40,14 @@ impl Highlight {
             .keys()
             .map(|k| k.to_owned())
             .collect::<Vec<String>>();
-        Self {
+        let mut hl = Self {
             theme,
             recognised_names,
             languages: HashMap::new(),
-        }
+        };
+        hl.default_languages();
+
+        hl
     }
 
     /// Used to highlight the given source code as the given language.
@@ -61,13 +64,6 @@ impl Highlight {
     ///
     /// let theme = include_str!("../../../theme.css").parse().unwrap();
     /// let mut hl = Highlight::new(theme);
-    /// hl.add_language(
-    ///     &["python", "py"],
-    ///     tree_sitter_python::LANGUAGE.into(),
-    ///     tree_sitter_python::HIGHLIGHTS_QUERY,
-    ///     "",
-    ///     "",
-    /// );
     ///
     /// let code = r#"
     /// def main():
@@ -92,16 +88,13 @@ impl Highlight {
         }
 
         let mut highlighter = Highlighter::new();
-        let config = match self.get_language(&language) {
-            Some(config) => config,
-            None => {
-                eprintln!("Language not supported: {language}, continuing as plaintext");
-                return format!(
-                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-                    global_style,
-                    escape_html!(code)
-                );
-            }
+        let Some(config) = self.get_language(&language) else {
+            eprintln!("Language not supported: {language}, continuing as plaintext");
+            return format!(
+                "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
+                global_style,
+                escape_html!(code)
+            );
         };
 
         let highlights = match highlighter.highlight(&config, code.as_bytes(), None, |capture| {
@@ -120,14 +113,14 @@ impl Highlight {
 
         let mut html_renderer = HtmlRenderer::new();
         match html_renderer.render(highlights, code.as_bytes(), &|h, output| {
-            let attr = match self.theme.highlights.get(&self.recognised_names[h.0]) {
-                Some(style) => format!(
-                    "class=\"{}\" style=\"{}\"",
-                    self.recognised_names[h.0], style
-                ),
-                None => format!("class=\"{}\"", self.recognised_names[h.0]),
+            let Some(style) = self.theme.highlights.get(&self.recognised_names[h.0]) else {
+                unreachable!()
             };
-            return output.extend(attr.as_bytes());
+            let attr = format!(
+                "class=\"{}\" style=\"{}\"",
+                self.recognised_names[h.0], style
+            );
+            output.extend(attr.as_bytes())
         }) {
             Ok(()) => (),
             Err(err) => {
@@ -141,7 +134,7 @@ impl Highlight {
                 );
             }
         };
-        let highlighted_text = html_renderer.lines().collect::<Vec<&str>>().join("\n");
+        let highlighted_text = html_renderer.lines().collect::<Vec<_>>().join("\n");
 
         format!(
             "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",

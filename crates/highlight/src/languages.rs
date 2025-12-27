@@ -9,34 +9,7 @@ impl Highlight {
         Some(self.languages.get(name)?.as_ref())
     }
 
-    /// Add your own language to the highlighter.
-    ///
-    /// # Parameters
-    ///
-    /// - `names`: The names of the language.
-    /// - `language`: The Tree-sitter Language object.
-    /// - `highlights_query`: The highlights query for the language. If this is empty, there will
-    ///   be no syntax highlighting.
-    /// - `injection_query`: The injections query for the language.
-    /// - `locals_query`: The locals query for the language.
-    ///
-    /// # Usage
-    ///
-    /// ```rust
-    /// use highlight::Highlight;
-    ///
-    /// let theme = include_str!("../../../theme.css").parse().unwrap();
-    /// let mut hl = Highlight::new(theme);
-    /// let language_names = &["python", "py"];
-    /// hl.add_language(
-    ///     language_names,
-    ///     tree_sitter_python::LANGUAGE.into(),
-    ///     tree_sitter_python::HIGHLIGHTS_QUERY,
-    ///     "",
-    ///     "",
-    /// );
-    /// ```
-    pub fn add_language(
+    pub(crate) fn add_language(
         &mut self,
         names: &[&str],
         language: tree_sitter::Language,
@@ -52,11 +25,56 @@ impl Highlight {
             locals_query,
         )
         .unwrap();
-
         config.configure(&self.recognised_names);
+
         let config = Arc::new(config);
         for &name in names.as_ref() {
             self.languages.insert(name.into(), config.clone());
         }
+    }
+
+    pub(crate) fn default_languages(&mut self) {
+        self.add_language(
+            &["bash", "sh"],
+            tree_sitter_bash::LANGUAGE.into(),
+            include_str!("../queries/bash/highlights.scm"),
+            "",
+            "",
+        );
+        self.add_language(
+            &["c"],
+            tree_sitter_c::LANGUAGE.into(),
+            include_str!("../queries/c/highlights.scm"),
+            include_str!("../queries/c/injections.scm"),
+            "",
+        );
+        self.add_language(
+            &["html"],
+            tree_sitter_html::LANGUAGE.into(),
+            include_str!("../queries/html/highlights.scm"),
+            include_str!("../queries/html/injections.scm"),
+            "",
+        );
+        self.add_language(
+            &["json"],
+            tree_sitter_json::LANGUAGE.into(),
+            include_str!("../queries/json/highlights.scm"),
+            "",
+            "",
+        );
+        self.add_language(
+            &["python", "py"],
+            tree_sitter_python::LANGUAGE.into(),
+            include_str!("../queries/python/highlights.scm"),
+            include_str!("../queries/python/injections.scm"),
+            "",
+        );
+        self.add_language(
+            &["typescript", "ts"],
+            tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into(),
+            include_str!("../queries/typescript/highlights.scm"),
+            include_str!("../queries/typescript/injections.scm"),
+            "",
+        );
     }
 }

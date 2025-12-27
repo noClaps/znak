@@ -8,4 +8,11 @@ cargo add --git https://codeberg.org/noClaps/znak highlight
 
 ## Languages
 
-The highlighter doesn't come with any languages configured by default. To add languages, you can get them from their respective grammar crates.
+The highlighter comes with the following languages:
+
+- Bash
+- C
+- HTML
+- JSON
+- Python
+- TypeScript
