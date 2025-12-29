@@ -94,14 +94,8 @@ impl Highlight {
 
         let mut html_renderer = HtmlRenderer::new();
         match html_renderer.render(highlights, code.as_bytes(), &|h, output| {
-            let Some(style) = self.theme.0.get(&self.recognised_names[h.0]) else {
-                unreachable!()
-            };
-            let attr = format!(
-                "class=\"{}\" style=\"{}\"",
-                self.recognised_names[h.0], style
-            );
-            output.extend(attr.as_bytes())
+            let style = self.theme.0.get(&self.recognised_names[h.0]).unwrap();
+            output.extend(format!("style=\"{}\"", style).as_bytes())
         }) {
             Ok(()) => (),
             Err(err) => {
