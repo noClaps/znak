@@ -1,9 +1,7 @@
 use std::{collections::HashMap, str::FromStr};
 
-use crate::{
-    parser::tags::SELF_CLOSING_TAGS,
-    types::{Node, comment, doctype, element, root, text},
-};
+pub use crate::parser::tags::SELF_CLOSING_TAGS;
+use crate::types::{Node, comment, doctype, element, root, text};
 
 mod tags;
 #[cfg(test)]

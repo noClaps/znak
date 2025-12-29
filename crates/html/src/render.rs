@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::Node;
+use crate::{Node, parser::SELF_CLOSING_TAGS};
 
 impl Display for Node {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -14,18 +14,17 @@ impl Display for Node {
                 tag_name,
                 properties,
                 children,
-            } => match children.len() {
-                0 => {
+            } => {
+                if SELF_CLOSING_TAGS.contains(&tag_name.as_str()) {
                     output += &format!(
-                        "<{tag_name}{} />",
+                        "<{tag_name}{}>",
                         properties
                             .iter()
                             .map(|(k, v)| format!(" {k}=\"{v}\""))
                             .collect::<Vec<_>>()
                             .join("")
                     );
-                }
-                _ => {
+                } else {
                     output += &format!(
                         "<{tag_name}{}>{}</{tag_name}>",
                         properties
@@ -40,7 +39,7 @@ impl Display for Node {
                             .join("")
                     );
                 }
-            },
+            }
             Node::Text(text) => output += text,
             Node::Root(root) => {
                 output += &root
@@ -63,14 +62,14 @@ mod tests {
 
     #[test]
     fn render() {
-        let want = "<!doctype html><html lang=\"en\"><head /><body /></html>";
+        let want = "<!doctype html><html lang=\"en\"><head></head><body></body></html>";
         let got = root!([
             doctype!(),
             element!("html", {"lang" => "en"}, [element!("head"), element!("body")])
         ]);
         assert_eq!(want, got.to_string());
 
-        let start = "<html><head /></html>";
+        let start = "<html><head></head></html>";
         assert_eq!(start, start.parse::<Node>().unwrap().to_string())
     }
 }
