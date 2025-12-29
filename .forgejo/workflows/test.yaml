@@ -1,9 +1,0 @@
-on: push
-
-jobs:
-  test:
-    runs-on: codeberg-tiny-lazy
-    steps:
-      - uses: https://code.forgejo.org/actions/checkout@v5
-      - uses: https://github.com/dtolnay/rust-toolchain@stable
-      - run: cargo test
