@@ -4,36 +4,24 @@ use std::{collections::HashMap, str::FromStr};
 ///
 /// A theme is a CSS file, supporting a very basic CSS syntax.
 ///
-/// - You can define global styles on the `:root` pseudo-element. These will be applied to the
-///   parent `<pre>` element, and used by the content inside if no styles are present for that
-///   syntax.
+/// You can configure highlights by defining your syntax type as the selector, and apply styles to
+/// that selector. Syntax types with dots in them are allowed, as well as using multiple selectors
+/// for the same styles, are allowed.
 ///
-///   ```css
-///   :root {
-///       color: #fff;
-///       background-color: #111;
-///       /* any other css property */
-///   }
-///   ```
+/// ```css
+/// type {
+///     color: #5ac8f5;
+///     font-weight: 500;
+///     font-style: normal;
+///     background-color: #111;
+/// }
 ///
-/// - You can configure highlights by defining your syntax type as the selector, and apply styles
-///   to that selector. Syntax types with dots in them are allowed, as well as using multiple
-///   selectors for the same styles, are allowed.
-///
-///   ```css
-///   type {
-///       color: #5ac8f5;
-///       font-weight: 500;
-///       font-style: normal;
-///       background-color: #111;
-///   }
-///
-///   /* an example of using multiple selectors and types with dots */
-///   comment,
-///   comment.doc {
-///       color: #9198a1;
-///   }
-///   ```
+/// /* an example of using multiple selectors and types with dots */
+/// comment,
+/// comment.doc {
+///     color: #9198a1;
+/// }
+/// ```
 ///
 /// Note that advanced CSS features, like nesting, combinators, other pseudo-elements, media
 /// queries, etc., are not supported. Everything inside the `{}` braces will be used as-is for the
@@ -67,11 +55,8 @@ impl FromStr for Theme {
         let mut i = 0;
         while i < css.len() {
             if css[i..].starts_with("/*") {
-                let comment_close = match css[i..].find("*/") {
-                    Some(close) => close,
-                    None => {
-                        return Err(format!("Unterminated comment found: {}", &css[i..i + 10]));
-                    }
+                let Some(comment_close) = css[i..].find("*/") else {
+                    return Err(format!("Unterminated comment found: {}", &css[i..i + 10]));
                 };
                 i = i + comment_close + 2;
             }
@@ -83,22 +68,18 @@ impl FromStr for Theme {
         let mut i = 0;
         while i < css.len() {
             // parsing selectors
-            let open_brace = match css[i..].find('{') {
-                Some(brace) => brace,
-                None => return Err("No opening braces found in CSS".to_string()),
+            let Some(open_brace) = css[i..].find('{') else {
+                return Err("No opening braces found in CSS".to_string());
             };
             let selectors = css[i..i + open_brace].split(',');
             i = i + open_brace + 1;
 
             // parsing styles
-            let close_brace = match css[i..].find('}') {
-                Some(brace) => brace,
-                None => {
-                    return Err(format!(
-                        "Mismatched opening and closing braces, closing brace not found: {}",
-                        &css[i..i + 10]
-                    ));
-                }
+            let Some(close_brace) = css[i..].find('}') else {
+                return Err(format!(
+                    "Mismatched opening and closing braces, closing brace not found: {}",
+                    &css[i..i + 10]
+                ));
             };
             let styles = &css[i..i + close_brace];
             i = i + close_brace;

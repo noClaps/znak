@@ -5,7 +5,6 @@ mod theme;
 
 use std::{collections::HashMap, rc::Rc};
 
-use html::escape_html;
 use tree_sitter_highlight::{HighlightConfiguration, Highlighter, HtmlRenderer};
 
 pub use crate::theme::Theme;
@@ -76,35 +75,22 @@ impl Highlight {
     /// let highlighted = hl.highlight(code, language);
     /// ```
     pub fn highlight(&self, code: &str, language: &str) -> String {
-        let Some(config) = self.get_language(&language) else {
-            eprintln!("Language not supported: {language}, continuing as plaintext");
-            return escape_html!(code);
-        };
+        let config = self.get_language(&language).unwrap();
 
         let mut highlighter = Highlighter::new();
-        let highlights = match highlighter.highlight(&config, code.as_bytes(), None, |capture| {
-            self.get_language(capture)
-        }) {
-            Ok(highlights) => highlights,
-            Err(err) => {
-                eprintln!("Error while highlighting: {err}. Continuing as plaintext");
-                return escape_html!(code);
-            }
-        };
+        let highlights = highlighter
+            .highlight(&config, code.as_bytes(), None, |capture| {
+                self.get_language(capture)
+            })
+            .unwrap();
 
         let mut html_renderer = HtmlRenderer::new();
-        match html_renderer.render(highlights, code.as_bytes(), &|h, output| {
-            let style = self.theme.0.get(&self.recognised_names[h.0]).unwrap();
-            output.extend(format!("style=\"{}\"", style).as_bytes())
-        }) {
-            Ok(()) => (),
-            Err(err) => {
-                eprintln!(
-                    "Error rendering highlighted text to HTML: {err}. Continuing as plaintext",
-                );
-                return escape_html!(code);
-            }
-        };
+        html_renderer
+            .render(highlights, code.as_bytes(), &|h, output| {
+                let style = self.theme.0.get(&self.recognised_names[h.0]).unwrap();
+                output.extend(format!("style=\"{}\"", style).as_bytes())
+            })
+            .unwrap();
         let highlighted_text: String = html_renderer.lines().collect();
 
         highlighted_text.trim().to_string()
