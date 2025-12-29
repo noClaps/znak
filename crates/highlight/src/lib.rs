@@ -3,7 +3,7 @@
 mod languages;
 mod theme;
 
-use std::{collections::HashMap, sync::Arc};
+use std::{collections::HashMap, rc::Rc};
 
 use html::escape_html;
 use tree_sitter_highlight::{HighlightConfiguration, Highlighter, HtmlRenderer};
@@ -16,7 +16,7 @@ pub use crate::theme::Theme;
 pub struct Highlight {
     theme: Theme,
     recognised_names: Vec<String>,
-    languages: HashMap<String, Arc<HighlightConfiguration>>,
+    languages: HashMap<String, Rc<HighlightConfiguration>>,
 }
 
 impl Highlight {
@@ -43,7 +43,7 @@ impl Highlight {
         let mut hl = Self {
             theme,
             recognised_names,
-            languages: HashMap::new(),
+            languages: HashMap::with_capacity(9),
         };
         hl.default_languages();
 

@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::rc::Rc;
 
 use tree_sitter_highlight::HighlightConfiguration;
 
@@ -27,7 +27,7 @@ impl Highlight {
         .unwrap();
         config.configure(&self.recognised_names);
 
-        let config = Arc::new(config);
+        let config = Rc::new(config);
         for &name in names.as_ref() {
             self.languages.insert(name.into(), config.clone());
         }
