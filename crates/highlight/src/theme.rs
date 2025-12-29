@@ -55,18 +55,12 @@ use std::{collections::HashMap, str::FromStr};
 /// let theme: Theme = css.parse().unwrap();
 /// ```
 #[derive(Debug, PartialEq, Clone)]
-pub struct Theme {
-    pub(crate) root: String,
-    pub(crate) highlights: HashMap<String, String>,
-}
+pub struct Theme(pub HashMap<String, String>);
 
 impl FromStr for Theme {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let mut theme = Theme {
-            root: String::new(),
-            highlights: HashMap::new(),
-        };
+        let mut theme = HashMap::new();
 
         let css = s.replace('\n', "").replace(' ', "").replace('\t', "");
         let mut minified_css = String::new();
@@ -110,23 +104,18 @@ impl FromStr for Theme {
             i = i + close_brace;
 
             for selector in selectors {
-                match selector {
-                    ":root" => theme.root += styles,
-                    _ => match theme.highlights.get_mut(selector) {
-                        None => {
-                            theme
-                                .highlights
-                                .insert(selector.to_string(), styles.to_string());
-                        }
-                        Some(h) => h.push_str(styles),
-                    },
+                match theme.get_mut(selector) {
+                    None => {
+                        theme.insert(selector.to_string(), styles.to_string());
+                    }
+                    Some(h) => h.push_str(styles),
                 }
             }
 
             i += 1;
         }
 
-        Ok(theme)
+        Ok(Self(theme))
     }
 }
 
@@ -137,13 +126,7 @@ mod tests {
     #[test]
     fn blank_theme() {
         let blank: Theme = "".parse().unwrap();
-        assert_eq!(
-            blank,
-            Theme {
-                root: String::new(),
-                highlights: HashMap::new()
-            }
-        )
+        assert_eq!(blank, Theme(HashMap::new()))
     }
 
     #[test]

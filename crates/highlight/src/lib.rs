@@ -36,7 +36,7 @@ impl Highlight {
     /// ```
     pub fn new(theme: Theme) -> Self {
         let recognised_names = theme
-            .highlights
+            .0
             .keys()
             .map(|k| k.to_owned())
             .collect::<Vec<String>>();
@@ -76,44 +76,25 @@ impl Highlight {
     /// let highlighted = hl.highlight(code, language);
     /// ```
     pub fn highlight(&self, code: &str, language: &str) -> String {
-        let global_style = self.theme.root.clone();
-
-        if language == "plaintext" || language == "plain" || language == "text" || language == "txt"
-        {
-            return format!(
-                "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-                global_style,
-                escape_html!(code)
-            );
-        }
-
-        let mut highlighter = Highlighter::new();
         let Some(config) = self.get_language(&language) else {
             eprintln!("Language not supported: {language}, continuing as plaintext");
-            return format!(
-                "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-                global_style,
-                escape_html!(code)
-            );
+            return escape_html!(code);
         };
 
+        let mut highlighter = Highlighter::new();
         let highlights = match highlighter.highlight(&config, code.as_bytes(), None, |capture| {
             self.get_language(capture)
         }) {
             Ok(highlights) => highlights,
             Err(err) => {
                 eprintln!("Error while highlighting: {err}. Continuing as plaintext");
-                return format!(
-                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-                    global_style,
-                    escape_html!(code)
-                );
+                return escape_html!(code);
             }
         };
 
         let mut html_renderer = HtmlRenderer::new();
         match html_renderer.render(highlights, code.as_bytes(), &|h, output| {
-            let Some(style) = self.theme.highlights.get(&self.recognised_names[h.0]) else {
+            let Some(style) = self.theme.0.get(&self.recognised_names[h.0]) else {
                 unreachable!()
             };
             let attr = format!(
@@ -127,19 +108,11 @@ impl Highlight {
                 eprintln!(
                     "Error rendering highlighted text to HTML: {err}. Continuing as plaintext",
                 );
-                return format!(
-                    "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-                    global_style,
-                    escape_html!(code)
-                );
+                return escape_html!(code);
             }
         };
         let highlighted_text: String = html_renderer.lines().collect();
 
-        format!(
-            "<pre class=\"znak-highlight\" style=\"{}\"><code>{}</code></pre>",
-            global_style,
-            highlighted_text.trim()
-        )
+        highlighted_text.trim().to_string()
     }
 }
