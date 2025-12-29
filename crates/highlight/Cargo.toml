@@ -3,7 +3,6 @@ name = "highlight"
 edition.workspace = true
 
 [dependencies]
-tree-sitter = "0.26.3"
 tree-sitter-bash = "0.25.1"
 tree-sitter-c = "0.24.1"
 tree-sitter-highlight = "0.26.3"
