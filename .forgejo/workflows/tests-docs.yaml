@@ -9,7 +9,7 @@ jobs:
       - uses: https://github.com/dtolnay/rust-toolchain@stable
       - run: cargo test
       - run: cargo doc --no-deps
-      - run: echo "/ /highlight/" > target/doc/_redirects
+      - run: echo "/ /html/" > target/doc/_redirects
 
       - uses: https://code.forgejo.org/actions/setup-node@v6
         with:
