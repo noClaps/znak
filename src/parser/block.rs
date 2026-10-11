@@ -97,8 +97,12 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             while i < lines.len() && lines[i].starts_with(prefix) {
                 let mut list_item = vec![&lines[i][2..]];
                 i += 1;
-                while i < lines.len() && lines[i].starts_with("  ") {
-                    list_item.push(&lines[i][2..]);
+                while i < lines.len() && (lines[i].starts_with("  ") || lines[i].is_empty()) {
+                    if lines[i].is_empty() {
+                        list_item.push(lines[i]);
+                    } else {
+                        list_item.push(&lines[i][2..]);
+                    }
                     i += 1;
                 }
                 list_items.push(Token::element(

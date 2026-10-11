@@ -1,7 +1,13 @@
 use crate::{compile, frontmatter};
 
 fn render(source: &str) -> String {
-    compile(source).unwrap()
+    match compile(source) {
+        Ok(s) => s,
+        Err(e) => {
+            eprintln!("{e}");
+            String::new()
+        }
+    }
 }
 
 #[test]
@@ -221,6 +227,36 @@ print(\"nested hello world\")
 print("nested hello world")
 ```</code></pre>"#
     );
+    assert_eq!(
+        render(
+            r#"
++ Make a new Python program and type in the following code:
+
+  ```py
+  def collatz(n:int): # make collatz function
+      while n != 1: # tell code to keep running until it reaches 1
+          if n % 2: # if number is odd, multiply by 3 and add 1
+              n = n*3 + 1
+          else: # else, if number is even, halve it
+              n //= 2
+          print(n) # output number onto screen
+
+  num = int(input("Enter a number to test: ")) # ask user for number to test
+  collatz(num) # run the collatz function with the number you type in
+  ```
+"#
+        ),
+        r#"<ol><li><p>Make a new Python program and type in the following code:</p><pre data-lang="py"><code>def collatz(n:int): # make collatz function
+    while n != 1: # tell code to keep running until it reaches 1
+        if n % 2: # if number is odd, multiply by 3 and add 1
+            n = n*3 + 1
+        else: # else, if number is even, halve it
+            n //= 2
+        print(n) # output number onto screen
+
+num = int(input("Enter a number to test: ")) # ask user for number to test
+collatz(num) # run the collatz function with the number you type in</code></pre></li></ol>"#
+    )
 }
 
 #[test]
