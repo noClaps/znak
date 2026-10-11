@@ -2,6 +2,21 @@
 
 A new markup language I'm working on.
 
+## Build instructions
+
+Clone the repository:
+
+```sh
+git clone https://codeberg.org/noClaps/znak.git
+cd znak
+```
+
+Build the project:
+
+```sh
+cargo build --release
+```
+
 ## Syntax
 
 ### Comments

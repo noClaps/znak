@@ -7,3 +7,8 @@ edition = "2024"
 
 [lints.clippy]
 pedantic = "warn"
+
+[profile.release]
+strip = true
+lto = true
+panic = "abort"
