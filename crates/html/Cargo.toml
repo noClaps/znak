@@ -1,5 +1,0 @@
-[package]
-name = "html"
-edition.workspace = true
-
-[dependencies]

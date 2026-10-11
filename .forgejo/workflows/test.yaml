@@ -1,0 +1,8 @@
+on: [push, workflow_dispatch]
+jobs:
+  test:
+    runs-on: codeberg-tiny-lazy
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@v7
+      - uses: https://github.com/dtolnay/rust-toolchain@stable
+      - run: cargo test

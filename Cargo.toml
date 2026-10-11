@@ -1,6 +1,9 @@
-[workspace]
-resolver = "3"
-members = ["crates/*"]
-
-[workspace.package]
+[package]
+name = "znak"
+version = "0.1.0"
 edition = "2024"
+
+[dependencies]
+
+[lints.clippy]
+pedantic = "warn"
