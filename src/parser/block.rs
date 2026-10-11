@@ -314,6 +314,19 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             i += 1;
             continue;
         }
+        // raw
+        if lines[i].starts_with("{{") {
+            push_p!();
+            i += 1;
+            let mut content = vec![];
+            while i < lines.len() && lines[i] != "}}" {
+                content.push(lines[i]);
+                i += 1;
+            }
+            tokens.push(Token::text(&content.join("\n")));
+            i += 1;
+            continue;
+        }
 
         if !lines[i].trim().is_empty() {
             paragraph_lines.push(lines[i]);

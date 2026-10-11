@@ -169,6 +169,19 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
             i += 1;
             continue;
         }
+        // raw
+        if chars[i..].starts_with(&['{', '{']) {
+            push_text!();
+            i += 2;
+            let mut contents = String::new();
+            while i + 1 < chars.len() && chars[i..=i + 1] != ['}', '}'] {
+                contents.push(chars[i]);
+                i += 1;
+            }
+            tokens.push(Token::text(&contents));
+            i += 2;
+            continue;
+        }
 
         plaintext.push(chars[i]);
         i += 1;

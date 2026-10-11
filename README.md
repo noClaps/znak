@@ -173,3 +173,13 @@ This is a sentence with \*bold*, \/italics/, \~strikethrough~, \_subscript_, \^s
 \=highlight=, \`inline code`, \``py print("highlighted inline code")``, \[a link]\<https://example.org>,
 \<https://example.org/a/bare/link>, and inline \$x+y$ math.
 ```
+
+### Raw blocks
+
+```znak
+{{
+<p>This contains raw code that'll be embedded as-is into the final output<p>
+}}
+
+It can be used to embed raw {{<html>}}.
+```

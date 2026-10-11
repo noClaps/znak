@@ -346,3 +346,20 @@ fn inline_formatting() {
         r#"<p>This is a sentence with *bold*, /italics/, ~strikethrough~, _subscript_, ^superscript^, =highlight=, `inline code`, ``py print("highlighted inline code")``, [a link]<https://example.org>, <https://example.org/a/bare/link>, and inline $x+y$ math.</p>"#
     )
 }
+
+#[test]
+fn raw() {
+    assert_eq!(
+        render(
+            "\
+{{
+<figure>
+}}"
+        ),
+        "<figure>"
+    );
+    assert_eq!(
+        render("This is a sentence with a {{<raw>}} block"),
+        "<p>This is a sentence with a <raw> block</p>"
+    )
+}
