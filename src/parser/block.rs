@@ -141,7 +141,12 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 &[Token::element(
                     "code",
                     &[],
-                    &[Token::text(&code_lines.join("\n"))],
+                    &[Token::text(
+                        &code_lines
+                            .join("\n")
+                            .replace('&', "&amp;")
+                            .replace('<', "&lt;"),
+                    )],
                 )],
             ));
             i += 1;

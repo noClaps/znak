@@ -84,7 +84,9 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
             tokens.push(Token::element(
                 "code",
                 &[("data-lang", lang)],
-                &[Token::text(code)],
+                &[Token::text(
+                    &code.replace('&', "&amp;").replace('<', "&lt;"),
+                )],
             ));
             i += 2;
             continue;
@@ -98,7 +100,13 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
                 contents.push(chars[i]);
                 i += 1;
             }
-            tokens.push(Token::element("code", &[], &[Token::text(&contents)]));
+            tokens.push(Token::element(
+                "code",
+                &[],
+                &[Token::text(
+                    &contents.replace('&', "&amp;").replace('<', "&lt;"),
+                )],
+            ));
             i += 1;
             continue;
         }
