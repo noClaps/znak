@@ -328,7 +328,9 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             continue;
         }
 
-        if !lines[i].trim().is_empty() {
+        if lines[i].trim().is_empty() {
+            push_p!();
+        } else {
             paragraph_lines.push(lines[i]);
         }
         i += 1;

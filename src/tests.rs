@@ -363,3 +363,18 @@ fn raw() {
         "<p>This is a sentence with a <raw> block</p>"
     )
 }
+
+#[test]
+fn paragraphs() {
+    assert_eq!(
+        render(
+            "\
+This is a paragraph.
+This is a second line of this paragraph.
+
+This is another paragraph.
+"
+        ),
+        "<p>This is a paragraph. This is a second line of this paragraph.</p><p>This is another paragraph.</p>"
+    )
+}
