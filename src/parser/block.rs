@@ -193,9 +193,11 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             }
             tokens.push(Token::element(
                 "div",
-                &[("class", "math display")],
+                &[("class", "math block")],
                 &[Token::text(&math_lines.join("\n"))],
             ));
+            i += 1;
+            continue;
         }
         // table
         if lines[i].starts_with("| ") {

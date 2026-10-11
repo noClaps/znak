@@ -414,3 +414,21 @@ This is another paragraph.
         "<p>This is a paragraph. This is a second line of this paragraph.</p><p>This is another paragraph.</p>"
     )
 }
+
+#[test]
+fn math_block() {
+    assert_eq!(
+        render(
+            "\
+$$
+3x+1
+$$
+
+$$
+x/2
+$$
+"
+        ),
+        r#"<div class="math block">3x+1</div><div class="math block">x/2</div>"#
+    )
+}
