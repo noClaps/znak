@@ -136,12 +136,12 @@ $$
 ### Tables
 
 ```znak
-| Table | header |  here |
-| :---- | :----: | ----: |
-| Table |  body  |  here |
+| Table | header | here  |
+| ----- | ------ | ----- |
+| Table | body   | here  |
 | left  | center | right |
-| ---   |  ---   |   --- |
-| Table | footer |  here |
+| ----- | ------ | ----- |
+| Table | footer | here  |
 ```
 
 ### Horizontal rule
@@ -163,14 +163,12 @@ Any line consisting of only hyphens `-` with at least 3 hyphens is a horiontal r
 ### Inline formatting
 
 ```znak
-This is a sentence with *bold*, /italics/, ~strikethrough~, _subscript_, ^superscript^,
-=highlight=, `inline code`, ``py print("highlighted inline code")``, [a link]<https://example.org>,
+This is a sentence with *bold*, _italics_, ^superscript^, `inline code`, [a link]<https://example.org>,
 <https://example.org/a/bare/link>, and inline $x+y$ math.
 
 You can escape these by escaping the first character with `\`:
 
-This is a sentence with \*bold*, \/italics/, \~strikethrough~, \_subscript_, \^superscript^,
-\=highlight=, \`inline code`, \``py print("highlighted inline code")``, \[a link]\<https://example.org>,
+This is a sentence with \*bold\*, \_italics\_, \^superscript\^, \`inline code\`, \[a link]\<https://example.org>,
 \<https://example.org/a/bare/link>, and inline \$x+y$ math.
 ```
 

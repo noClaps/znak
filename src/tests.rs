@@ -350,19 +350,12 @@ fn inline_formatting() {
     );
     assert_eq!(render(r"An \*escaped bold\*"), "<p>An *escaped bold*</p>");
     assert_eq!(render(r"*bold*"), "<p><strong>bold</strong></p>");
-    assert_eq!(render(r"/italics/"), "<p><em>italics</em></p>");
-    assert_eq!(render(r"~strikethrough~"), "<p><s>strikethrough</s></p>");
-    assert_eq!(render(r"_subscript_"), "<p><sub>subscript</sub></p>");
+    assert_eq!(render(r"_italics_"), "<p><em>italics</em></p>");
     assert_eq!(render(r"^superscript^"), "<p><sup>superscript</sup></p>");
-    assert_eq!(render(r"=highlight="), "<p><mark>highlight</mark></p>");
     assert_eq!(render(r"`code`"), "<p><code>code</code></p>");
     assert_eq!(
         render(r"`code with *formatting*`"),
         "<p><code>code with *formatting*</code></p>"
-    );
-    assert_eq!(
-        render(r"``py print('hello world')``"),
-        r#"<p><code data-lang="py">print('hello world')</code></p>"#
     );
     assert_eq!(
         render(r"[a link]<https://example.org>"),
@@ -378,15 +371,15 @@ fn inline_formatting() {
     );
     assert_eq!(
         render(
-            r#"This is a sentence with *bold*, /italics/, ~strikethrough~, _subscript_, ^superscript^, =highlight=, `inline code`, ``py print("highlighted inline code")``, [a link]<https://example.org>, <https://example.org/a/bare/link>, and inline $x+y$ math."#
+            r#"This is a sentence with *bold*, _italics_, ^superscript^, `inline code`, [a link]<https://example.org>, <https://example.org/a/bare/link>, and inline $x+y$ math."#
         ),
-        r#"<p>This is a sentence with <strong>bold</strong>, <em>italics</em>, <s>strikethrough</s>, <sub>subscript</sub>, <sup>superscript</sup>, <mark>highlight</mark>, <code>inline code</code>, <code data-lang="py">print("highlighted inline code")</code>, <a href="https://example.org">a link</a>, <a href="https://example.org/a/bare/link">https://example.org/a/bare/link</a>, and inline <span class="math inline">x+y</span> math.</p>"#
+        r#"<p>This is a sentence with <strong>bold</strong>, <em>italics</em>, <sup>superscript</sup>, <code>inline code</code>, <a href="https://example.org">a link</a>, <a href="https://example.org/a/bare/link">https://example.org/a/bare/link</a>, and inline <span class="math inline">x+y</span> math.</p>"#
     );
     assert_eq!(
         render(
-            r#"This is a sentence with \*bold\*, \/italics\/, \~strikethrough\~, \_subscript\_, \^superscript\^, \=highlight\=, \`inline code\`, \`\`py print("highlighted inline code")\`\`, \[a link]\<https:\/\/example.org>, \<https:\/\/example.org\/a\/bare\/link>, and inline \$x+y\$ math."#
+            r#"This is a sentence with \*bold\*, \_italics\_, \^superscript\^, \`inline code\`, \[a link]\<https://example.org>, \<https://example.org/a/bare/link>, and inline \$x+y\$ math."#
         ),
-        r#"<p>This is a sentence with *bold*, /italics/, ~strikethrough~, _subscript_, ^superscript^, =highlight=, `inline code`, ``py print("highlighted inline code")``, [a link]<https://example.org>, <https://example.org/a/bare/link>, and inline $x+y$ math.</p>"#
+        r#"<p>This is a sentence with *bold*, _italics_, ^superscript^, `inline code`, [a link]<https://example.org>, <https://example.org/a/bare/link>, and inline $x+y$ math.</p>"#
     )
 }
 

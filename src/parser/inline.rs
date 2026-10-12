@@ -1,10 +1,7 @@
-use crate::{
-    errors::{Error, Result},
-    token::Token,
-};
+use crate::token::Token;
 
 #[allow(clippy::too_many_lines)]
-pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
+pub fn parse_inline(line: &str) -> Vec<Token> {
     let chars: Vec<_> = line.chars().collect();
     let mut i = 0;
     let mut tokens = vec![];
@@ -29,7 +26,7 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
                     contents.push(chars[i]);
                     i += 1;
                 }
-                tokens.push(Token::element($el, &[], &parse_inline(&contents)?));
+                tokens.push(Token::element($el, &[], &parse_inline(&contents)));
                 i += 1;
                 continue;
             }
@@ -57,40 +54,9 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
         // bold
         parse_inline!('*', "strong");
         // italics
-        parse_inline!('/', "em");
-        // strikethrough
-        parse_inline!('~', "s");
-        // subscript
-        parse_inline!('_', "sub");
+        parse_inline!('_', "em");
         // superscript
         parse_inline!('^', "sup");
-        // highlight
-        parse_inline!('=', "mark");
-        // highlighted code
-        if chars[i..].starts_with(&['`', '`']) {
-            push_text!();
-            i += 2;
-            let mut contents = String::new();
-            while i + 1 < chars.len() && chars[i..=i + 1] != ['`', '`'] {
-                contents.push(chars[i]);
-                i += 1;
-            }
-            let Some((lang, code)) = contents.split_once(' ') else {
-                return Err(Error::content(
-                    line,
-                    "Expected language for syntax highlighting. Use a single backtick if you don't want to specify a language.",
-                ));
-            };
-            tokens.push(Token::element(
-                "code",
-                &[("data-lang", lang)],
-                &[Token::text(
-                    &code.replace('&', "&amp;").replace('<', "&lt;"),
-                )],
-            ));
-            i += 2;
-            continue;
-        }
         // code
         if chars[i] == '`' {
             push_text!();
@@ -155,7 +121,7 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
             tokens.push(Token::element(
                 "a",
                 &[("href", &href)],
-                &parse_inline(&text)?,
+                &parse_inline(&text),
             ));
             i += 1;
             continue;
@@ -196,5 +162,5 @@ pub fn parse_inline(line: &str) -> Result<Vec<Token>> {
     }
 
     push_text!();
-    Ok(tokens)
+    tokens
 }

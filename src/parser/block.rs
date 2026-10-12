@@ -17,7 +17,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 tokens.push(Token::element(
                     "p",
                     &[],
-                    &parse_inline(&paragraph_lines.join(" "))?,
+                    &parse_inline(&paragraph_lines.join(" ")),
                 ));
                 paragraph_lines.clear();
             }
@@ -40,7 +40,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 heading_level += 1;
             }
             if &lines[i][heading_level..=heading_level] != " " {
-                tokens.push(Token::element("p", &[], &parse_inline(lines[i])?));
+                tokens.push(Token::element("p", &[], &parse_inline(lines[i])));
                 i += 1;
                 continue;
             }
@@ -49,7 +49,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             tokens.push(Token::element(
                 &format!("h{heading_level}"),
                 &[("id", &id)],
-                &parse_inline(body)?,
+                &parse_inline(body),
             ));
             i += 1;
             continue;
@@ -84,7 +84,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 tokens.push(Token::element(
                     "p",
                     &[],
-                    &parse_inline(&attribution_lines.join(" "))?,
+                    &parse_inline(&attribution_lines.join(" ")),
                 ));
             }
             i += 1;
@@ -180,7 +180,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             let mut children = vec![Token::element(
                 "p",
                 &[("class", "container-heading")],
-                &parse_inline(&heading)?,
+                &parse_inline(&heading),
             )];
             children.append(&mut parse_block(&body.join("\n"))?);
             tokens.push(Token::element(
@@ -329,7 +329,7 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                     &[],
                     &[
                         Token::element("img", &[("src", url.as_str()), ("alt", alt.as_str())], &[]),
-                        Token::element("figcaption", &[], &parse_inline(&alt)?),
+                        Token::element("figcaption", &[], &parse_inline(&alt)),
                     ],
                 ));
             }
