@@ -59,7 +59,12 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
             push_p!();
             let mut blockquote_lines = vec![];
             while i < lines.len() && (lines[i].starts_with("> ") || lines[i] == ">") {
-                blockquote_lines.push(lines[i][1..].trim());
+                if lines[i] == ">" {
+                    blockquote_lines.push(&lines[i][1..]);
+                } else {
+                    blockquote_lines.push(&lines[i][2..]);
+                }
+
                 i += 1;
             }
             tokens.push(Token::element(
