@@ -316,11 +316,18 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 j += 1;
             }
 
-            let mut attributes = vec![("src", url.as_str())];
-            if !alt.is_empty() {
-                attributes.push(("alt", alt.as_str()));
+            if alt.is_empty() {
+                tokens.push(Token::element("img", &[("src", url.as_str())], &[]));
+            } else {
+                tokens.push(Token::element(
+                    "figure",
+                    &[],
+                    &[
+                        Token::element("img", &[("src", url.as_str()), ("alt", alt.as_str())], &[]),
+                        Token::element("figcaption", &[], &parse_inline(&alt)?),
+                    ],
+                ));
             }
-            tokens.push(Token::element("img", &attributes, &[]));
             i += 1;
             continue;
         }

@@ -330,11 +330,11 @@ fn tables() {
 fn images() {
     assert_eq!(
         render("![Image with caption]<https://example.org/image.png>"),
-        r#"<img src="https://example.org/image.png" alt="Image with caption">"#
+        r#"<figure><img src="https://example.org/image.png" alt="Image with caption"><figcaption>Image with caption</figcaption></figure>"#
     );
     assert_eq!(
         render("![Image with caption and [brackets]]<https://example.org/image.png>"),
-        r#"<img src="https://example.org/image.png" alt="Image with caption and [brackets]">"#
+        r#"<figure><img src="https://example.org/image.png" alt="Image with caption and [brackets]"><figcaption>Image with caption and [brackets]</figcaption></figure>"#
     );
     assert_eq!(
         render("![]<https://example.org/image.png>"),
