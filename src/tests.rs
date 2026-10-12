@@ -202,6 +202,13 @@ fn ordered_list() {
         ),
         "<ol><li><p>ordered list item</p></li><li><p>list item</p><ol><li><p>2 space indentation</p></li><li><p>nested list item</p><ul><li><p>nested unordered list item</p></li></ul></li></ol></li></ol>"
     );
+    assert_eq!(render("\
++ Corn cobs. As I said before, weird but used fairly commonly in the Western world.
++ Newspapers and magazines, which were first introduced in the 18^th^ century.
+
+> The 'legend' goes that people were using Sears catalogs in outhouses, but when the catalog began to be printed in glossy paper, people needed to find a replacement
+>
+>-- Barry Kudrowitz, associate professor and director of product design at the University of Minnesota"), "<ol><li><p>Corn cobs. As I said before, weird but used fairly commonly in the Western world.</p></li><li><p>Newspapers and magazines, which were first introduced in the 18<sup>th</sup> century.</p></li></ol><blockquote><p>The 'legend' goes that people were using Sears catalogs in outhouses, but when the catalog began to be printed in glossy paper, people needed to find a replacement</p></blockquote><p>— Barry Kudrowitz, associate professor and director of product design at the University of Minnesota</p>");
 }
 
 #[test]

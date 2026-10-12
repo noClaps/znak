@@ -112,7 +112,6 @@ pub fn parse_block(source: &str) -> Result<Vec<Token>> {
                 ));
             }
             tokens.push(Token::element(tag, &[], &list_items));
-            i += 1;
             continue;
         }
         // code blocks
