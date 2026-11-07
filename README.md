@@ -7,7 +7,7 @@ A new markup language I'm working on.
 Clone the repository:
 
 ```sh
-git clone https://codeberg.org/noClaps/znak.git
+git clone https://github.com/noClaps/znak.git
 cd znak
 ```
 
